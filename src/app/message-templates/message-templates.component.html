@@ -1,0 +1,202 @@
+
+<div class="section-body">
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Message Templates</h4>
+                    <div class="addBtn">
+                        <button type="button" class="btn btn-primary" (click)="addDepartment()">+ Add Template</button>
+                    </div>
+                    <a (click)="showdoc('https://baobabgroup.mconnectapps.com/api/v1.0/pro_contents/pro_sms_temp.pdf')"  target="_blank"><i style="font-size: 24px;
+                        float: right;" class="fa fa-exclamation-circle"></i></a>
+					<!-- <a href="https://baobabgroup.mconnectapps.com/api/v1.0/pro_contents/pro_sms_temp.pdf" target="_blank"><i style="font-size:24px;padding-left: 20px;" class="fa fa-exclamation-circle"></i></a> -->
+
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                       <table class="table table-bordered table-striped table-md">
+                         
+                        <tr>
+                            <th>S.no </th>
+                            <!-- <th>Depatment</th> -->
+                            <th>Template Name</th>
+                            <th>Template Content</th>
+                            <th>Action</th>
+                        </tr>
+
+                        <tbody>
+                            <tr *ngFor="let queue of queue_list; let i=index">
+                                <td>{{0+i+1}}</td>
+                                <!-- <td>{{queue.dept}}</td> -->
+                                <td>{{queue.template_name}}</td>
+                                <td>{{queue.template_message}}</td>
+                                
+                                    <td>
+                                        <span class="user-icon" style="cursor: pointer;"><i class="far fa-edit" (click)="editDepartmentSettings(queue.template_id)"></i></span>
+                                        <span class="user-icon" style="cursor: pointer;"><i class="far fa-trash-alt" (click)="deletedata(queue.template_id)"></i></span>
+                                    </td>
+                                </tr>
+
+                            <tr *ngIf="recordNotFound == true">
+                             <td colspan="12">Data not found</td>
+                         </tr>
+                     </tbody>
+                     
+                 </table>
+             </div>
+         </div>
+         
+     </div>
+ </div>
+</div>
+</div>
+
+
+
+
+<div class="modal fade bd-example-modal-md" id="edit_deptform">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form [formGroup]="editDept" (ngSubmit)="editDepartment(dep_id)">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myLargeModalLabel">Update Template</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+                    <div class="row">
+
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="department">Select Department</label>
+                                <select name="Upd_queue_no" multiple id="Upd_queue_no"  class="form-control has-multiple-select">
+                                    <option *ngFor="let dept of dept_list"  value="{{dept.dept_id}}">{{dept.department_name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="template_name">Template Name</label>
+                                <input id="template_name" class="form-control" formControlName="template_name">                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="template">Template Content</label>
+                               <!-- <textarea  class="form-control" id="template"  placeholder="Type a message" style="height: 50px;"   #message></textarea> -->
+                                <textarea id="template" class="form-control" ></textarea>   
+                                                     </div>
+                        </div>
+                        
+                        <!-- <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="status">Status</label>
+                                <input type="checkbox" id="status" class="form-control" formControlName="status">
+                            </div>
+                        </div> -->
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <div class="buttons">
+                        <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                        <input type="submit" class="btn btn-primary update_agent" value="Submit" [disabled]="!editDept.valid">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="modal fade bd-example-modal-md" id="add_deptform">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form [formGroup]="addDept" (ngSubmit)="addDeptData()">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myLargeModalLabel">Add Template</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="department">Select Department</label>
+                                <select name="queue_no" multiple id="queue_no"  class="form-control  has-multiple-select">
+                                    <option *ngFor="let dept of dept_list" value="{{dept.dept_id}}">{{dept.department_name}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="template_name">Template Name</label>
+                                <input class="form-control" formControlName="template_name">                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="add_template">Template Content</label>
+                                <textarea  class="form-control" id="add_template" placeholder="Type a message" style="height: 50px;"  #chat_message></textarea>
+                                <!-- style="white-space: pre-wrap;" -->
+                                <!-- <textarea id="add_template" class="form-control"></textarea> -->
+                            </div>
+                        </div>
+
+                        
+
+                        <!-- <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="status">Status</label>
+                                <input type="checkbox" id="status" class="form-control" formControlName="status">
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="buttons">
+                        <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                        <input type="submit" class="btn btn-primary update_agent" value="Submit" [disabled]="!addDept.valid">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade bd-example-modal-md" id="document_model">
+	<div class="modal-dialog modal-md"  style="max-width: 1200px;">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" style="color:crimson" >Help Manual</h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+				  <!-- <iframe [src]="this.doc_link | safe"  width="100%" style="height: 575px;" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+				  <!-- style="margin-bottom: -6px;" width="100%" height="325"  -->
+				<embed [src]="this.doc_link | safe"  width="100%" style="height: 575px;" />
+		</div>     
+		<div class="modal-footer" >
+			<div class="buttons">
+				<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="close">
+			</div>
+		</div>
+  
+	  </div>
+	</div>
+  </div>

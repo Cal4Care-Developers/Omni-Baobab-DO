@@ -1,0 +1,668 @@
+
+<div class="section-body">
+	<div class="row">
+		<div class="col-12 col-md-12 col-lg-12">
+		
+			<div class="card">
+				<div class="card-header">
+					<h4>Compose New Email Blasting</h4>
+				</div>
+				<div class="card-body p-30">
+					<form [formGroup]="compGroupSMS" (ngSubmit)="sendGroupSMS()">
+
+						<div class="row">
+							<div class="col-md-12" >
+								<div class="form-group">
+									<label for="group">Selct Group</label>
+									<select name="group"  id="group" class="form-control"  formControlName="group">
+										<option *ngFor="let time of groups_list" value="{{time.group_id}}" >{{time.group_name}}</option>
+									</select>
+								</div>
+							</div>	
+							<div class="col-md-12">
+								<div class="form-group">
+									<label for="subject">Enter Mail Subject</label>
+									<textarea id="subject" class="form-control" formControlName="subject" ></textarea>
+								</div>
+							</div>	
+							<div class="col-md-12">
+								<div class="form-group">
+									<select id="dialer_type" class="form-control" (change)="embTemp()" >
+										
+                                        <option value=''>Select Template</option>
+										<option value='temp1'>Blog Template</option>
+										
+									</select>
+								</div>
+							</div>					
+							<div class="col-md-12">
+								<div class="form-group">
+									<label for="message">Enter Message</label>
+									<!-- <editor 
+									id="myTextarea"
+									  initialValue="<p>Initial content of the editor</p>"
+									  apiKey="yap9vgeib9vhg5f81cuvu9hbisk6rdr6pcvcjcltvolqk317"
+									  [init]="{
+										height: 500,
+										menubar: false,
+										image_uploadtab: true,
+										file_picker_types: 'file image media',
+										automatic_uploads: true,
+										plugins: [
+										  'advlist autolink lists link file image charmap print',
+										  'preview anchor searchreplace visualblocks code',
+										  'fullscreen insertdatetime media table paste',
+										  'help wordcount','save'
+										],
+										toolbar:
+										  'undo redo | formatselect | bold italic | \ undo redo | link image file| code | \
+										  alignleft aligncenter alignright alignjustify | \
+										  bullist numlist outdent indent | help'
+										  
+									  }"
+									>
+									 toolbar2: 'print preview media | forecolor backcolor emoticons'
+									</editor> -->
+									<editor 
+									id="myTextarea"
+									  initialValue="<p>Initial content of the editor</p>"
+									  apiKey="yap9vgeib9vhg5f81cuvu9hbisk6rdr6pcvcjcltvolqk317"
+									  [init]="{																			
+										theme: modern,
+										paste_data_images: true,
+										height: 500,
+										menubar: false,
+										
+										plugins: [
+										  'advlist autolink lists link file image charmap print',
+										  'preview anchor searchreplace visualblocks code',
+										  'fullscreen insertdatetime media table paste',
+										  'help wordcount','save'
+										],
+										toolbar:
+										  'undo redo | formatselect | bold italic | \ undo redo | link image file| code | \
+										  alignleft aligncenter alignright alignjustify | \
+										  bullist numlist outdent indent | help'
+									 
+
+										
+									  }"
+									>
+									</editor>
+								</div>
+							</div>
+								
+						
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<button  class="btn btn-outline-secondary" routerLink="/bulk-mail-list" ><i class="fas fa-paper-plane"></i> back</button>
+
+									<button type="submit" class="btn btn-primary" ><i class="fas fa-paper-plane"></i> Send</button>
+								</div>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div style="display:none" id=temp1>
+<!-- <body style="margin: 0; padding: 0;"> -->
+  <table bgcolor="#efefef" role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+      <td style="padding: 20px 0 30px 0;">
+
+        <table align="center" border="0" cellpadding="0" cellspacing="0" width="640" style="border-collapse: collapse; border: 1px solid #cccccc;">
+          <tr>
+            <td align="center" bgcolor="#ffffff" style="padding: 10px 0 10px 0;">
+              <img src="https://erp.cal4care.com/img/email-template/blog-monthly/cal4care-logo.png" alt="Creating Email Magic." width="auto" height="97" style="display: block;" />
+            </td>
+          </tr>
+
+
+          <tr>
+            <td bgcolor="#7354c4" style="padding: 40px 30px 0px 30px;">
+              <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+                <tr>
+                  <td style="color: #ffffff; font-family: 'Poppins', sans-serif;">
+                    <h1 style="font-size: 18px; margin: 0; text-align: center; font-weight: normal;">Monthly Blog for Recent</h1>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="color: #ffffff; font-family: 'Poppins', sans-serif; font-size: 32px; font-weight: 700; line-height: 24px; padding: 12px 0 30px 0;">
+                    <p style="margin: 0; font-weight: 700; text-align: center;">Cal4care Updates and Events</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+<!----------------------------------
+  Button
+----------------------------------->
+             <tr>
+            <td bgcolor="#7354c4" align="center" style="padding: 0px 0 0px 0;">
+              <table border="0" cellpadding="0" cellspacing="0"  width="100%">
+                <tr>
+                  <td align="center" style="padding: 0px 0 0 0;  font-family: 'Poppins', sans-serif;">
+                    <table border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td bgcolor="#ffffff" style=" font-family: 'Poppins', sans-serif; padding: 12px 22px 12px 22px; border: 2px solid rgb(115, 84, 196); -webkit-border-radius: 30px; border-radius: 30px;" align="left" class="mobile-button">
+                          <a href="javascript:void(0);" target="_blank" style="font-size: 14px;  font-family: 'Poppins', sans-serif; text-transform: uppercase; font-weight: bold; color: #7354c4; text-decoration: none;-webkit-border-radius: 30px; border-radius: 30px;">Contact Now</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <!----------------------------------
+  Button End
+----------------------------------->
+
+          <tr>
+            <td align="center" bgcolor="#7354c4" style="padding: 12px 0 0px 0;">
+              <img src="https://erp.cal4care.com/img/email-template/blog-monthly/main-banner.png" alt="Creating Email Magic." width="100%" height="auto" style="display: block;" />
+            </td>
+          </tr>
+          <tr>
+            <td bgcolor="#efefef" style="padding: 25px 30px 40px 30px;">
+              <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+                <tr>
+                  <td style="color: #000; font-family: 'Poppins', sans-serif; text-align: center; padding: 0px 0 15px 0;">
+                    <h1 style="font-size: 24px; margin: 0;">Introducing the Upcoming Top Updates</h1>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+                      <tr>
+                        <td bgcolor="#ffffff" width="260" valign="top" style="padding: 15px 25px 20px 25px;">
+                          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+                           <tr>
+                            <td style="color: #000; font-family: 'Poppins', sans-serif; font-size: 16px; line-height: 24px; padding: 10px 0 5px 0;">
+                             <h1 style="font-size: 16px; margin: 0;">Introducing the Upcoming Top Updates</h1>
+                           </td>
+                         </tr>
+                         <tr>
+                          <td style="color: #153643; font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 24px; padding: 6px 0 0 0;">
+                            <p style="margin: 0;"><span style="font-size: 12px; color: #7354c4;">►&nbsp;</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                          </td>
+                        </tr>
+                          <tr>
+                <td style="color: #153643; font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 24px; padding: 6px 0 0 0;">
+                  <p style="margin: 0;"><span style="font-size: 12px; color: #7354c4;">►&nbsp;</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </td>
+              </tr>
+                        <tr>
+                          <td style="color: #153643; font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 24px; padding: 6px 0 0 0;">
+                            <p style="margin: 0;"><span style="font-size: 12px; color: #7354c4;">►&nbsp;</span> Lorem ipsum dolor sit amet</p>
+                          </td>
+                        </tr>
+                        <!-- TABLE-BASED BUTTON -->
+                        <tr>
+                          <td align="left" style="padding: 0px 0 0px 0;">
+                            <table border="0" cellpadding="0" cellspacing="0"  width="100%">
+                              <tr>
+                                <td align="left" style="padding: 12px 0 0 0;  font-family: 'Poppins', sans-serif;">
+                                  <table border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                      <td bgcolor="#7354c4" style=" font-family: 'Poppins', sans-serif; padding: 9px 22px 9px 22px; -webkit-border-radius: 30px; border-radius: 30px; color: #ffffff;" align="left" class="mobile-button">
+                                        <a href="javascript:void(0);" target="_blank" style="font-size: 13px;  font-family: 'Poppins', sans-serif; text-transform: uppercase; font-weight: normal; color: #ffffff; text-decoration: none;">Read More</a>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <!-- TABLE-BASED BUTTON ENd -->
+                      </table>
+                    </td>
+
+                    <td bgcolor="#efefef" style="font-size: 0; line-height: 0;" width="20">&nbsp;</td>
+
+                    <td bgcolor="#ffffff" width="260" valign="top" style="padding: 15px 25px 20px 25px;">
+                      <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+                       <tr>
+                        <td style="color: #000; font-family: 'Poppins', sans-serif; font-size: 16px; line-height: 24px; padding: 10px 0 5px 0;">
+                         <h1 style="font-size: 16px; margin: 0;">Introducing the Upcoming Top Updates</h1>
+                       </td>
+                     </tr>
+                     <tr>
+                      <td style="color: #153643; font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 24px; padding: 6px 0 0 0;">
+                        <p style="margin: 0;"><span style="font-size: 12px; color: #7354c4;">►&nbsp;</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="color: #153643; font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 24px; padding: 6px 0 0 0;">
+                        <p style="margin: 0;"><span style="font-size: 12px; color: #7354c4;">►&nbsp;</span> Lorem ipsum dolor sit amet</p>
+                      </td>
+                    </tr>
+                    <!-- TABLE-BASED BUTTON -->
+                    <tr>
+                      <td align="left" style="padding: 0px 0 0px 0;">
+                        <table border="0" cellpadding="0" cellspacing="0"  width="100%">
+                          <tr>
+                            <td align="left" style="padding: 12px 0 0 0;  font-family: 'Poppins', sans-serif;">
+                              <table border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                  <td bgcolor="#7354c4" style=" font-family: 'Poppins', sans-serif; padding: 9px 22px 9px 22px; -webkit-border-radius: 30px; border-radius: 30px; color: #ffffff;" align="left" class="mobile-button">
+                                    <a href="javascript:void(0);" target="_blank" style="font-size: 13px;  font-family: 'Poppins', sans-serif; text-transform: uppercase; font-weight: normal; color: #ffffff; text-decoration: none;">Read More</a>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <!-- TABLE-BASED BUTTON ENd -->
+                  </table>
+                </td>
+
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <tr>
+          <td bgcolor="#efefef">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+             <tr>
+              <td bgcolor="#efefef" width="100%" height="16" valign="top">
+              </td>
+            </tr>
+          </table>  
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+            <tr>
+              <td bgcolor="#ffffff" width="260" valign="top" style="padding: 15px 25px 20px 25px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+                 <tr>
+                  <td style="color: #000; font-family: 'Poppins', sans-serif; font-size: 16px; line-height: 24px; padding: 10px 0 5px 0;">
+                   <h1 style="font-size: 16px; margin: 0;">Introducing the Upcoming Top Updates</h1>
+                 </td>
+               </tr>
+               <tr>
+                <td style="color: #153643; font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 24px; padding: 6px 0 0 0;">
+                  <p style="margin: 0;"><span style="font-size: 12px; color: #7354c4;">►&nbsp;</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </td>
+              </tr>
+              <tr>
+                <td style="color: #153643; font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 24px; padding: 6px 0 0 0;">
+                  <p style="margin: 0;"><span style="font-size: 12px; color: #7354c4;">►&nbsp;</span> Lorem ipsum dolor sit amet</p>
+                </td>
+              </tr>
+              <!-- TABLE-BASED BUTTON -->
+              <tr>
+                <td align="left" style="padding: 0px 0 0px 0;">
+                  <table border="0" cellpadding="0" cellspacing="0"  width="100%">
+                    <tr>
+                      <td align="left" style="padding: 12px 0 0 0;  font-family: 'Poppins', sans-serif;">
+                        <table border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td bgcolor="#7354c4" style=" font-family: 'Poppins', sans-serif; padding: 9px 22px 9px 22px; -webkit-border-radius: 30px; border-radius: 30px; color: #ffffff;" align="left" class="mobile-button">
+                              <a href="javascript:void(0);" target="_blank" style="font-size: 13px;  font-family: 'Poppins', sans-serif; text-transform: uppercase; font-weight: normal; color: #ffffff; text-decoration: none;">Read More</a>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <!-- TABLE-BASED BUTTON ENd -->
+            </table>
+          </td>
+
+          <td bgcolor="#efefef" style="font-size: 0; line-height: 0;" width="20">&nbsp;</td>
+
+          <td bgcolor="#ffffff" width="260" valign="top" style="padding: 15px 25px 20px 25px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+             <tr>
+              <td style="color: #000; font-family: 'Poppins', sans-serif; font-size: 16px; line-height: 24px; padding: 10px 0 5px 0;">
+               <h1 style="font-size: 16px; margin: 0;">Introducing the Upcoming Top Updates</h1>
+             </td>
+           </tr>
+           <tr>
+            <td style="color: #153643; font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 24px; padding: 6px 0 0 0;">
+              <p style="margin: 0;"><span style="font-size: 12px; color: #7354c4;">►&nbsp;</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="color: #153643; font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 24px; padding: 6px 0 0 0;">
+              <p style="margin: 0;"><span style="font-size: 12px; color: #7354c4;">►&nbsp;</span> Lorem ipsum dolor sit amet</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="color: #153643; font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 24px; padding: 6px 0 0 0;">
+              <p style="margin: 0;"><span style="font-size: 12px; color: #7354c4;">►&nbsp;</span> Lorem ipsum dolor sit amet</p>
+            </td>
+          </tr>
+          <!-- TABLE-BASED BUTTON -->
+          <tr>
+            <td align="left" style="padding: 0px 0 0px 0;">
+              <table border="0" cellpadding="0" cellspacing="0"  width="100%">
+                <tr>
+                  <td align="left" style="padding: 12px 0 0 0;  font-family: 'Poppins', sans-serif;">
+                    <table border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td bgcolor="#7354c4" style=" font-family: 'Poppins', sans-serif; padding: 9px 22px 9px 22px; -webkit-border-radius: 30px; border-radius: 30px; color: #ffffff;" align="left" class="mobile-button">
+                          <a href="javascript:void(0);" target="_blank" style="font-size: 13px;  font-family: 'Poppins', sans-serif; text-transform: uppercase; font-weight: normal; color: #ffffff; text-decoration: none;">Read More</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <!-- TABLE-BASED BUTTON ENd -->
+        </table>
+      </td>
+    </tr>
+  </table>
+</td>
+</tr>
+
+   <tr>
+            <td align="center" style="padding: 12px 0 0px 0;">
+              <table border="0" cellpadding="0" cellspacing="0"  width="100%">
+                <tr>
+                  <td align="center" style="padding: 12px 0 0 0;  font-family: 'Poppins', sans-serif;">
+                    <table border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td bgcolor="#efefef" style=" font-family: 'Poppins', sans-serif; padding: 9px 22px 9px 22px; border: 2px solid rgb(115, 84, 196); -webkit-border-radius: 30px; border-radius: 30px;" align="left" class="mobile-button">
+                          <a href="javascript:void(0);" target="_blank" style="font-size: 13px;  font-family: 'Poppins', sans-serif; text-transform: uppercase; font-weight: bold; color: #000; text-decoration: none;-webkit-border-radius: 30px; border-radius: 30px;">Discover More</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <!-- TABLE-BASED BUTTON ENd -->
+
+          <tr>
+  <td bgcolor="#efefef">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+     <tr>
+      <td bgcolor="#efefef" width="100%" height="30" valign="top">
+      </td>
+    </tr>
+  </table>  
+</td>
+</tr>
+
+
+<tr>
+ <td bgcolor="#ffffff" width="260" valign="top" style="padding: 15px 25px 20px 25px;">
+  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+   <tr>
+    <td style="color: #000; font-family: 'Poppins', sans-serif; font-size: 16px; line-height: 24px; padding: 10px 0 5px 0;">
+     <h1 style="font-size: 16px; margin: 0;">Introducing the Upcoming Top Updates</h1>
+   </td>
+ </tr>
+ <tr>
+  <td style="color: #153643; font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 24px; padding: 6px 0;">
+    <p style="margin: 0;">Lorem ipsum dolor sit amet, consectetur adipiscing elit consectetur adipiscing elit consectetur adipiscing elit consectetur adipiscing elit.</p>
+  </td>
+</tr>
+<tr>
+  <td style="color: #153643; font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 24px; padding: 6px 0;">
+    <p style="margin: 0;">Lorem ipsum dolor sit amet, consectetur adipiscing elit consectetur adipiscing elit consectetur adipiscing elit consectetur adipiscing elit.</p>
+  </td>
+</tr>
+<tr>
+  <td style="color: #153643; font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 24px; padding: 6px 0;">
+    <p style="margin: 0;">Lorem ipsum dolor sit amet, consectetur adipiscing elit consectetur adipiscing elit consectetur adipiscing elit consectetur adipiscing elit.</p>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <img src="https://erp.cal4care.com/img/email-template/blog-monthly/image-05_4.jpg" alt="" width="100%" height="auto" style="display: block;" />
+  </td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+  <td bgcolor="#efefef">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+     <tr>
+      <td bgcolor="#efefef" width="100%" height="16" valign="top">
+      </td>
+    </tr>
+  </table>  
+</td>
+</tr>
+<!---------------------------------------
+Events
+  --------------------------------------->
+ <tr>
+                  <td style="color: #000; font-family: 'Poppins', sans-serif; text-align: center; padding: 0px 0 15px 0;">
+                    <h1 style="font-size: 24px; margin: 0;">Introducing the Upcoming Top Updates</h1>
+                  </td>
+                </tr>
+
+    <tr>
+        <td>
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+            <tr>
+              <td bgcolor="#ffffff" width="260" valign="top">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+                   <tr>
+                <td>
+                  <img src="https://erp.cal4care.com/img/email-template/blog-monthly/video-conference-new.jpg" alt="" width="100%" height="140" style="display: block; object-fit: cover;" />
+                </td>
+              </tr>
+                 <tr>
+                  <td style="color: #000; font-family: 'Poppins', sans-serif; font-size: 16px; line-height: 24px; padding: 10px 15px 5px 15px;">
+                   <h1 style="font-size: 16px; margin: 0;">Introducing the Upcoming Top Updates</h1>
+                 </td>
+               </tr>
+               <tr>
+                <td style="color: #153643; font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 24px; padding: 6px 15px 0 15px;">
+                  <p style="margin: 0;"><span style="font-size: 12px; color: #7354c4;">►&nbsp;</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </td>
+              </tr>
+              <tr>
+                <td style="color: #153643; font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 24px; padding: 6px 15px 0 15px;">
+                  <p style="margin: 0;"><span style="font-size: 12px; color: #7354c4;">►&nbsp;</span> Lorem ipsum dolor sit amet</p>
+                </td>
+              </tr>
+              <!-- TABLE-BASED BUTTON -->
+              <tr>
+                <td align="left" style="padding: 0px 15px 25px 15px;">
+                  <table border="0" cellpadding="0" cellspacing="0"  width="100%">
+                    <tr>
+                      <td align="left" style="padding: 12px 0 0 0;  font-family: 'Poppins', sans-serif;">
+                        <table border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td bgcolor="#7354c4" style=" font-family: 'Poppins', sans-serif; padding: 9px 22px 9px 22px; -webkit-border-radius: 30px; border-radius: 30px; color: #ffffff;" align="left" class="mobile-button">
+                              <a href="javascript:void(0);" target="_blank" style="font-size: 13px;  font-family: 'Poppins', sans-serif; text-transform: uppercase; font-weight: normal; color: #ffffff; text-decoration: none;">Read More</a>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <!-- TABLE-BASED BUTTON ENd -->
+            </table>
+          </td>
+
+          <td bgcolor="#efefef" style="font-size: 0; line-height: 0;" width="20">&nbsp;</td>
+
+        <td bgcolor="#ffffff" width="260" valign="top">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+                   <tr>
+                <td>
+                  <img src="https://erp.cal4care.com/img/email-template/blog-monthly/video-conference-new.jpg" alt="" width="100%" height="140" style="display: block; object-fit: cover;" />
+                </td>
+              </tr>
+                 <tr>
+                  <td style="color: #000; font-family: 'Poppins', sans-serif; font-size: 16px; line-height: 24px; padding: 10px 15px 5px 15px;">
+                   <h1 style="font-size: 16px; margin: 0;">Introducing the Upcoming Top Updates</h1>
+                 </td>
+               </tr>
+               <tr>
+                <td style="color: #153643; font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 24px; padding: 6px 15px 0 15px;">
+                  <p style="margin: 0;"><span style="font-size: 12px; color: #7354c4;">►&nbsp;</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </td>
+              </tr>
+              <tr>
+                <td style="color: #153643; font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 24px; padding: 6px 15px 0 15px;">
+                  <p style="margin: 0;"><span style="font-size: 12px; color: #7354c4;">►&nbsp;</span> Lorem ipsum dolor sit amet</p>
+                </td>
+              </tr>
+              <!-- TABLE-BASED BUTTON -->
+              <tr>
+                <td align="left" style="padding: 0px 15px 25px 15px;">
+                  <table border="0" cellpadding="0" cellspacing="0"  width="100%">
+                    <tr>
+                      <td align="left" style="padding: 12px 0 0 0;  font-family: 'Poppins', sans-serif;">
+                        <table border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td bgcolor="#7354c4" style="font-family: 'Poppins', sans-serif; padding: 9px 22px 9px 22px; -webkit-border-radius: 30px; border-radius: 30px; color: #ffffff;" align="left" class="mobile-button">
+                              <a href="javascript:void(0);" target="_blank" style="font-size: 13px;  font-family: 'Poppins', sans-serif; text-transform: uppercase; font-weight: normal; color: #ffffff; text-decoration: none;">Read More</a>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <!-- TABLE-BASED BUTTON ENd -->
+            </table>
+          </td>
+    </tr>
+  </table>
+</td>
+</tr>
+<!----------------------------------------
+  Events End
+  ---------------------------------------->
+
+<!---------------------------------------
+Call to Action
+  ------------------------------------->
+<tr>
+      <td align="center">
+        <table align="center" width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tbody><tr>
+            <td height="20"></td>
+          </tr>
+          <tr>
+            <td align="center" bgcolor="#7354c4" background="https://erp.cal4care.com/img/email-template/blog-monthly/image-08_3.jpg" height="185">
+              <table class="col-600" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
+                <tbody><tr>
+                  <td height="25"></td>
+                </tr>
+                  <tr>
+                  <td align="center" style="font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 500; color:#ffffff;">You can also</td>
+                  </tr>
+                  <tr>
+                  <td align="center" style="font-family: 'Poppins', sans-serif; font-size:26px; font-weight: 500; color:#ffffff;">Reach us From Online and Phone</td>
+                  </tr>
+
+                    <!-- TABLE-BASED BUTTON -->
+              <tr>
+                <td align="center" style="padding: 0px 15px 25px 15px;">
+                  <table border="0" cellpadding="0" cellspacing="0"  width="100%">
+                    <tr>
+                      <td align="center" style="padding: 12px 0 0 0;  font-family: 'Poppins', sans-serif;">
+                        <table border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td bgcolor="#ffffff" style="font-family: 'Poppins', sans-serif; padding: 9px 22px 9px 22px; -webkit-border-radius: 30px; border-radius: 30px; color: #7354c4;" align="left" class="mobile-button">
+                              <a href="https://www.cal4care.com/contact-us/" target="_blank" style="font-size: 14px;  font-family: 'Poppins', sans-serif; text-transform: uppercase; font-weight: bold; color: #7354c4; text-decoration: none;">Contact Us</a>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <!-- TABLE-BASED BUTTON ENd -->
+            
+                </tbody>
+              </table>
+              </td></tr></tbody></table>
+            </td>
+          </tr>
+
+<!---------------------------------------
+Call to Action End
+  ------------------------------------->
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td bgcolor="#7354c4" style="padding: 30px 30px;">
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+        <tr>
+           <td align="center">
+            <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+              <tr>
+                <td>
+                  <a href="https://www.facebook.com/Cal4care/" target="_blank">
+                    <img src="https://erp.cal4care.com/img/email-template/cal4care-promotion/facebook.png" alt="Facebook" width="38" height="38" style="display: block;" border="0" />
+                  </a>
+                </td>
+                <td bgcolor="#7354c4" style="font-size: 0; line-height: 0;" width="20">&nbsp;</td>
+                <td>
+                  <a href="https://twitter.com/calncall" target="_blank">
+                    <img src="https://erp.cal4care.com/img/email-template/cal4care-promotion/twitter.png" alt="Twitter" width="38" height="38" style="display: block;" border="0" />
+                  </a>
+                </td>
+                 <td bgcolor="#7354c4" style="font-size: 0; line-height: 0;" width="20">&nbsp;</td>
+                  <td>
+                  <a href="https://www.linkedin.com/company/cal4care-pte-ltd/?viewAsMember=true" target="_blank">
+                    <img src="https://erp.cal4care.com/img/email-template/cal4care-promotion/linkedin.png" alt="Linkedin" width="38" height="38" style="display: block;" border="0" />
+                  </a>
+                </td>
+                <td bgcolor="#7354c4" style="font-size: 0; line-height: 0;" width="20">&nbsp;</td>
+                <td>
+                  <a href="https://www.instagram.com/cal4care/" target="_blank">
+                    <img src="https://erp.cal4care.com/img/email-template/cal4care-promotion/instagram.png" alt="Twitter" width="38" height="38" style="display: block;" border="0" />
+                  </a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+              <tr>
+                  <td align="center" style="color: #e3e3e3; font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 24px; padding: 10px 15px 5px 15px; font-weight: 500;">
+                   <h1 style="font-size: 14px; font-weight: 500; margin: 0;">©2021 Cal4care. All Rights Reserved</h1>
+                 </td>
+               </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+</td>
+</tr>
+</table>
+</div>

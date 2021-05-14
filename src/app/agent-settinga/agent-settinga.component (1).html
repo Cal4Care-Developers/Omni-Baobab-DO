@@ -1,0 +1,1008 @@
+<div class="section-body">
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Agents</h4>
+                    <div class="addBtn" >
+                        <button type="button" class="btn btn-primary" (click)="addAgents()">+ Add Agent</button>
+                        <input type="hidden" value="0" id="agentsList" (click)="agentsList({})">
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-md">
+                            <tr>
+                                <td colspan="20" class="search-text-tbl">
+                                    <div class="input-group"><input type="text" class="form-control" (keyup.enter)="agentsList({'search_text':agent_search.value})" #agent_search>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" (click)="agentsList({'search_text':agent_search.value})"><i class="fas fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                           
+
+                            <tr>
+                                <th>S.no</th>
+                                <th>Agent Name</th>
+                                <th>Ext</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+
+                            
+                        <tbody>
+                            <tr *ngFor="let queue of agents_list;let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{queue.agent_name}}</td>
+                                <td>{{queue.sip_login}}</td>
+                                <td><div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox"   checked="{{queue.user_status == 1 ? 'checked' : ''}}" (click)="actCamp('user_status',queue.user_id)"> 
+                                        <div class="state p-success">
+                                            <label for="has_status"></label>
+                                        </div>
+                                    </div>
+                                </div></td>
+                                   
+                                    <td>
+                                        <span class="user-icon" style="cursor: pointer;"><i class="far fa-edit" (click)="editAgents(queue.user_id)"></i></span>
+                                        <span class="user-icon" style="cursor: pointer;"><i class="far fa-trash-alt" (click)="deletedata(queue.user_id)"></i></span>
+                                    </td>
+                                </tr>
+
+                            <tr *ngIf="recordNotFound == true">
+                             <td colspan="16">Data not found</td>
+                         </tr>
+                     </tbody>
+                     </table>
+                 </div>
+             </div>
+             <div class="card-footer text-right">
+                <nav class="d-inline-block">
+                    <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+
+                        <li class="page-item">
+                            <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'" href="javascript:void(0)" (click)="paginationData.backtab=='show' ? agentsList({'search_text':agent_search.value,'offset':paginationData.start}) : false"><i class="fas fa-angle-left"></i></a>
+                        </li>
+                        <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                            <a class="page-link" href="javascript:void(0)" (click)="agentsList({'search_text':agent_search.value,'offset':paginationData.back})"><i class="fas fa-angle-double-left"></i></a>
+                        </li>
+                        <li [class]="pagination.load ==false ? 'page-item active' :'page-item'" *ngFor="let pagination of paginationData.data;let i=index">
+                            <a class="page-link" href="javascript:void(0)" (click)=" pagination.load ==true ? agentsList({'search_text':agent_search.value,'offset':pagination.offset_count}) : false">{{pagination.btn_length}} <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                        </li>
+
+                        <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                            <a class="page-link" href="javascript:void(0)" (click)="agentsList({'search_text':agent_search.value,'offset':paginationData.next})"><i class="fas fa-angle-double-right"></i></a>
+                        </li>
+
+                        <li class="page-item">
+                            <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'" href="javascript:void(0)" (click)="paginationData.nexttab =='show' ? agentsList({'search_text':agent_search.value,'offset':paginationData.end}) : false"><i class="fas fa-angle-right"></i></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade bd-example-modal-md" id="add_agents_form">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form [formGroup]="addAgent" (ngSubmit)="addAgentData()">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myLargeModalLabel">Add Agent</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="agent_name">Name</label>
+                                <input type="text" id="agent_name" class="form-control" formControlName="agent_name">
+                                <label class="error-message message-small" *ngIf="!addAgent.get('agent_name').valid && addAgent.get('agent_name').touched">Please enter the name</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="agent_emailid">Email Id</label>
+                                <input type="text" id="agent_emailid" class="form-control" formControlName="emailid">
+                                <label class="error-message message-small" *ngIf="!addAgent.get('emailid').valid && addAgent.get('emailid').touched">Please enter the email id</label>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="agent_phone_number">Phone number</label>
+                                <input type="text" id="agent_phone_number" class="form-control" formControlName="phone_number">
+                               
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="agent_user_name">User Name</label>
+                                <input type="text" id="agent_user_name" class="form-control" formControlName="user_name">
+                                <label class="error-message message-small" *ngIf="!addAgent.get('user_name').valid && addAgent.get('user_name').touched">Please enter the username</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="agent_user_pwd">User password</label>
+                                <input type="text" id="agent_user_pwd" class="form-control" formControlName="user_pwd">
+                                <label class="error-message message-small" *ngIf="!addAgent.get('user_pwd').valid && addAgent.get('user_pwd').touched">Please enter the password</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="agent_user_pwd">Extension *</label>
+                                <input type="text" id="sip_login" class="form-control" formControlName="sip_login">
+                                <label class="error-message message-small" *ngIf="!addAgent.get('sip_login').valid && addAgent.get('sip_login').touched">Please enter the Extension</label>
+
+                            </div>
+                        </div>
+                       
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="reports">Select Report</label>
+                                    <select name="reports" multiple id="add_reports" class="form-control has-multiple-select" >
+                                        <ng-container *ngFor="let items of list_reports;let i=index" >
+                                            <option *ngIf="report_id.indexOf(items.id) > -1; else notSelected" value="{{items.id}}">{{items.report_name}}</option>
+                                          </ng-container>
+                                        <!-- <option *ngFor="let items of list_reports;let i=index" > -->
+                                            <!-- <div *ngIf="{{items.id == report_checked}}"> -->
+                                            <!-- <li *ngIf="report_id.indexOf(items.id) > -1; else notSelected">  -->
+                                                <!-- <li>
+                                               {{items.report_name}}
+                                            </li>
+                                        </option> -->
+                                       
+                                        <!-- <option *ngFor="let report of list_report" value="{{report.id}}" >{{report.report_name}}</option> -->
+                                    </select>
+    
+                                      <!-- <li *ngFor="let item of list_report">
+                                        <input type="checkbox" [(ngModel)]="item.isChecked" (change)="changeSelection()">{{item.report_name}}
+                                      </li> -->
+                                </div>
+                            </div>
+                    
+
+
+                     
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="agent_user_pwd">SIP Username</label>
+                                <input type="text" id="sip_username" class="form-control" formControlName="sip_username">
+                                <label class="error-message message-small" *ngIf="!addAgent.get('sip_username').valid && addAgent.get('sip_username').touched">You should enter the Sip_username</label>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="agent_user_pwd">SIP Password *</label>
+                                <input type="text" id="sip_password" class="form-control" formControlName="sip_password">
+                                <label class="error-message message-small" *ngIf="!addAgent.get('sip_password').valid && addAgent.get('sip_password').touched">You should enter the Sip_password</label>
+                            </div>
+                        </div>
+
+                        
+                        <div class="row has-row-space">
+
+
+
+                            <div class="col-md-6 ">
+                                <div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox" id="admin_permision" formControlName="admin_permision" >
+                                        <div class="state p-success">
+                                            <label for="admin_permision">Has Admin Permision</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+
+
+
+                        <div class="col-md-6">
+                           
+                                <div class="form-check form-check-inline">
+                                 <div class="pretty p-switch p-fill">
+                                     <input type="checkbox"  formControlName="voice_3cx"  >
+                                     <div class="state p-success">
+                                         <label for="voice_3cx">Voice 3CX</label>
+                                     </div>
+                                 </div>
+                             </div>
+                             <div class="hidden-things">
+                                Please Upgrade your package
+                            </div>
+                         </div>
+
+                        <div class="col-md-6 ">
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="close_all_menu" formControlName="close_all_menu" >
+                                    <div class="state p-success">
+                                        <label for="close_all_menu">Close all menu</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+
+                         <div class="col-md-6">
+                           
+                            <div class="form-check form-check-inline">
+                             <div class="pretty p-switch p-fill">
+                                 <input type="checkbox" formControlName="predective_dialer"  >
+                                 <div class="state p-success">
+                                     <label for="predective_dialer">Predective Dialer</label>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="hidden-things">
+                            Please Upgrade your package
+                        </div>
+                     </div>
+                  
+
+                     <div class="col-md-6">
+                              
+                        <div class="form-check form-check-inline">
+                         <div class="pretty p-switch p-fill">
+                             <input type="checkbox"  formControlName="lead" >
+                             <div class="state p-success">
+                                 <label for="lead">Lead</label>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="hidden-things">
+                        Please Upgrade your package
+                    </div>
+                 </div> 
+
+                        <div class="col-md-6  {{this.h_con}}" >
+                           
+                            <div class="form-check form-check-inline">
+                             <div class="pretty p-switch p-fill">
+                                 <input type="checkbox"  formControlName="has_contact"  >
+                                 <div class="state p-success">
+                                     <label for="has_contact">Contact</label>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="hidden-things">
+                            Please Upgrade your package
+                        </div>
+                     </div>   
+                     <div class="col-md-6  {{this.h_sms}}">
+                         <div class="form-check form-check-inline">
+                             <div class="pretty p-switch p-fill">
+                                 <input type="checkbox" formControlName="has_sms"  >
+                                 <div class="state p-success">
+                                     <label for="has_sms">SMS</label>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="hidden-things">
+                            Please Upgrade your package
+                        </div>
+                     </div> 
+                     <div class="col-md-6  {{this.h_chat}}">
+                         <div class="form-check form-check-inline">
+                             <div class="pretty p-switch p-fill">
+                                 <input type="checkbox"  formControlName="has_chat"  >
+                                 <div class="state p-success">
+                                     <label for="has_chat">Web Chat</label>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="hidden-things">
+                            Please Upgrade your package
+                        </div>
+                     </div> 
+
+                     <div class="col-md-6  {{this.h_wp}}">
+                         <div class="form-check form-check-inline">
+                             <div class="pretty p-switch p-fill">
+                                 <input type="checkbox" formControlName="has_whatsapp"  >
+                                 <div class="state p-success">
+                                     <label for="has_whatsapp">Whatsapp</label>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="hidden-things">
+                            Please Upgrade your package
+                        </div>
+                     </div> 
+
+
+                     <div class="col-md-6  {{this.h_cbot}}">
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox"  formControlName="has_chatbot"  >
+                                <div class="state p-success">
+                                    <label for="has_chatbot">Chatbot</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hidden-things">
+                            Please Upgrade your package
+                        </div>
+                    </div> 
+
+                    <div class="col-md-6  {{this.h_fb}}">
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox"  formControlName="has_fb"  >
+                                <div class="state p-success">
+                                    <label for="has_fb">FB</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hidden-things">
+                            Please Upgrade your package
+                        </div>
+                    </div> 
+                    <div class="col-md-6  {{this.has_wechat}}">
+            
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox"  formControlName="has_wechat"  >
+                                <div class="state p-success">
+                                    <label for="has_wechat">WeChat</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hidden-things">
+                            Please Upgrade your package
+                        </div>
+                    </div> 
+                    <div class="col-md-6  {{this.has_telegram}}">
+      
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox"  formControlName="has_telegram"  >
+                                <div class="state p-success">
+                                    <label for="has_telegram">Telegram</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hidden-things">
+                            Please Upgrade your package
+                        </div>
+                    </div> 
+                    <div class="col-md-6  {{this.i_tick}}">
+
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox"  formControlName="has_internal_ticket"  >
+                                <div class="state p-success">
+                                    <label for="has_internal_ticket">Internal Ticket</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hidden-things">
+                            Please Upgrade your package
+                        </div>
+                    </div>  
+                    <div class="col-md-6 {{this.e_tic}}">
+
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox"  formControlName="has_external_ticket"  >
+                                <div class="state p-success">
+                                    <label for="has_external_ticket">External Ticket</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hidden-things">
+                            Please Upgrade your package
+                        </div>
+                    </div> 
+                    <div class="col-md-6 {{this.wall_1}}">
+                           
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox"  formControlName="wallboard_one"  >
+                                <div class="state p-success">
+                                    <label for="wallboard_one">Wallboard 1</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hidden-things">
+                            Please Upgrade your package
+                        </div>
+                    </div> 
+
+                    <div class="col-md-6 {{this.wall_2}}">
+                       
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox"  formControlName="wallboard_two"  >
+                                <div class="state p-success">
+                                    <label for="wallboard_two">Wallboard 2</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hidden-things">
+                            Please Upgrade your package
+                        </div>
+                    </div> 
+                    <div class="col-md-6 {{this.wall_3}}">
+                       
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox"  formControlName="wallboard_three"  >
+                                <div class="state p-success">
+                                    <label for="wallboard_three">Wallboard 3</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hidden-things">
+                            Please Upgrade your package
+                        </div>
+                    </div> 
+                    <div class="col-md-6 {{this.wall_4}}">
+                       
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox"  formControlName="wallboard_four"  >
+                                <div class="state p-success">
+                                    <label for="wallboard_four">Wallboard 4</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hidden-things">
+                            Please Upgrade your package
+                        </div>
+                    </div> 
+
+
+                    <div class="col-md-6 {{this.h_2fa}}">
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox"  formControlName="two_factor" >
+                                <div class="state p-success">
+                                    <label for="two_factor">2FA</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hidden-things">
+                            Please Upgrade your packages
+                        </div>
+                    </div> 
+
+                    
+                    <div class="col-md-6 ">
+                         <div class="form-check form-check-inline">
+                             <div class="pretty p-switch p-fill">
+                                 <input type="checkbox"  formControlName="user_status"  >
+                                 <div class="state p-success">
+                                     <label for="user_status">Status</label>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="hidden-things">
+                            Please Upgrade your package
+                        </div>
+                     </div> 
+                     
+                     
+
+                     <div class="col-md-6 {{this.dsk_access}}" *ngIf="this.admin_id == '128'">
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox" formControlName="dsk_access" (change)="dskAccess('add')">
+                                <div class="state p-success">
+                                    <label for="dsk_access">DKB Access</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row hidden-things">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="dsk_username">DKB Username</label>
+                                    <input type="text"  class="form-control" formControlName="dsk_username">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="dsk_password">DKB Password</label>
+                                    <input type="text"  class="form-control" formControlName="dsk_password">
+                                </div>
+                            </div>
+                       </div>
+                    </div>  
+                    
+
+                 </div> 
+                        
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <div class="buttons">
+                        <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                        <input type="submit" class="btn btn-primary add_agent" value="Add Agent" [disabled]="!addAgent.valid">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<div class="edit_agent_data">
+    <input type="hidden" value="0" id="edit_agents_key" #edit_agent_id>
+    <input type="hidden" value="0" id="edit_agents_button" (click)="editAgentForm(edit_agent_id)">
+   
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade bd-example-modal-md" id="edit_agents_form">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form [formGroup]="editAgent" (ngSubmit)="editAgentData()">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myLargeModalLabel">Update Agent Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="user_name">User Name</label>
+                                <input type="text" id="user_name" class="form-control" formControlName="user_name" >
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="user_name">User password</label>
+                                <input type="text" value="{{this.a_pass}}" class="form-control"  readonly>
+                            </div>
+                        </div>
+                       
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="agent_name">Name</label>
+                                <input type="text" id="agent_name" class="form-control" formControlName="agent_name">
+                            </div>
+                        </div>
+                 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="sip_login">Ext</label>
+                                <input type="text" id="sip_login" class="form-control" formControlName="sip_login" >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="reports">Select Report</label>
+                                <select name="reports" multiple id="edit_reports" class="form-control has-multiple-select" >
+                                       <ng-container *ngFor="let items of list_reports;let i=index" >
+                                        <option *ngIf="report_id.indexOf(items.id) > -1; else notSelected" value="{{items.id}}">{{items.report_name}}</option>
+                                      </ng-container>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="sip_username">Sip Username</label>
+                                <input type="text" id="sip_username" class="form-control" formControlName="sip_username" >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="sip_password">Sip Password</label>
+                                <input type="text" id="sip_password" class="form-control" formControlName="sip_password" >
+                            </div>
+                        </div>
+              
+
+                    
+                         <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="email_id">Email Id</label>
+                                <input type="text" id="email_id" class="form-control" formControlName="email_id">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="phone_number">Phone No</label>
+                                <input type="text" id="phone_number" class="form-control" formControlName="phone_number">
+                                
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="row has-row-space">
+
+                        <div class="col-md-6 {{this.voice_3cx}}">
+                              
+                            <div class="form-check form-check-inline">
+                             <div class="pretty p-switch p-fill">
+                                 <input type="checkbox" id="voice_3cx" formControlName="voice_3cx"  [checked]="selected == this.voice_3cx">
+                                 <div class="state p-success">
+                                     <label for="voice_3cx">Voice 3CX</label>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="hidden-things">
+                            Please Upgrade your package
+                        </div>
+                     </div> 
+
+                    <div class="col-md-6 ">
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox" id="close_all_menu" formControlName="close_all_menu" >
+                                <div class="state p-success">
+                                    <label for="close_all_menu">Close all menu</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+
+                     <div class="col-md-6 {{this.H_PD}}">
+                              
+                        <div class="form-check form-check-inline">
+                         <div class="pretty p-switch p-fill">
+                             <input type="checkbox" id="predective_dialer" formControlName="predective_dialer"  [checked]="selected == this.predective_dialer">
+                             <div class="state p-success">
+                                 <label for="predective_dialer">Predective Dialer</label>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="hidden-things">
+                        Please Upgrade your package
+                    </div>
+                 </div> 
+                 <div class="col-md-6 {{this.lead}}">
+                              
+                    <div class="form-check form-check-inline">
+                     <div class="pretty p-switch p-fill">
+                         <input type="checkbox" id="lead" formControlName="lead"  [checked]="selected == this.lead">
+                         <div class="state p-success">
+                             <label for="lead">Lead</label>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="hidden-things">
+                    Please Upgrade your package
+                </div>
+             </div> 
+
+
+                        <div class="col-md-6 {{this.h_con}}">
+                              
+                               <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="has_contact" formControlName="has_contact"  [checked]="selected == this.has_contacts">
+                                    <div class="state p-success">
+                                        <label for="has_contact">Contact</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hidden-things">
+                                Please Upgrade your package
+                            </div>
+                        </div>   
+                        <div class="col-md-6 {{this.h_sms}}">
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="has_sms" formControlName="has_sms"  [checked]="selected == this.has_smss">
+                                    <div class="state p-success">
+                                        <label for="has_sms">SMS</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hidden-things">
+                                Please Upgrade your package
+                            </div>
+                        </div> 
+                        <div class="col-md-6 {{this.has_wechat}}">
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="has_chat" formControlName="has_chat"  [checked]="selected == this.has_chats">
+                                    <div class="state p-success">
+                                        <label for="has_chat">Web Chat</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hidden-things">
+                                Please Upgrade your package
+                            </div>
+                        </div> 
+
+                        <div class="col-md-6 {{this.h_wp}}">
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="has_whatsapp" formControlName="has_whatsapp"  [checked]="selected == this.has_whatsapps">
+                                    <div class="state p-success">
+                                        <label for="has_whatsapp">Whatsapp</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hidden-things">
+                                Please Upgrade your package
+                            </div>
+                        </div>
+                        <div class="col-md-6 {{this.h_cbot}}">
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="has_chatbot" formControlName="has_chatbot"  [checked]="selected == this.has_chatbots">
+                                    <div class="state p-success">
+                                        <label for="has_chatbot">Chatbot</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hidden-things">
+                                Please Upgrade your package
+                            </div>
+                        </div> 
+                        <div class="col-md-6 {{this.h_fb}}">
+
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="has_fb" formControlName="has_fb"  [checked]="selected == this.has_fb">
+                                    <div class="state p-success">
+                                        <label for="has_fb">FB</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hidden-things">
+                                Please Upgrade your package
+                            </div>
+                        </div> 
+                        <div class="col-md-6 {{this.has_wechat}}">
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="has_wechat" formControlName="has_wechat" [checked]="selected == this.has_wechat">
+                                    <div class="state p-success">
+                                        <label for="has_wechat">WeChat</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hidden-things">
+                                Please Upgrade your package
+                            </div>
+                        </div> 
+                        <div class="col-md-6 {{this.has_telegram}}">
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="has_telegram" formControlName="has_telegram"  [checked]="selected == this.has_telegram">
+                                    <div class="state p-success">
+                                        <label for="has_telegram">Telegram</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hidden-things">
+                                Please Upgrade your package
+                            </div>
+                        </div> 
+                        <div class="col-md-6 {{this.i_tick}}">
+
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="has_internal_ticket" formControlName="has_internal_ticket"  [checked]="selected == this.has_internal_ticket">
+                                    <div class="state p-success">
+                                        <label for="has_internal_ticket">Internal Ticket</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hidden-things">
+                                Please Upgrade your package
+                            </div>
+                        </div>  
+                        <div class="col-md-6 {{this.e_tic}}">
+                           
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="has_external_ticket" formControlName="has_external_ticket"  [checked]="selected == this.has_external_ticket">
+                                    <div class="state p-success">
+                                        <label for="has_external_ticket">External Ticket</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hidden-things">
+                                Please Upgrade your package
+                            </div>
+                        </div> 
+
+
+
+
+                        <div class="col-md-6 {{this.wall_1}}">
+                           
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="wallboard_one" formControlName="wallboard_one"  [checked]="selected == this.wallboard_one">
+                                    <div class="state p-success">
+                                        <label for="wallboard_one">Wallboard 1</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hidden-things">
+                                Please Upgrade your package
+                            </div>
+                        </div> 
+
+                        <div class="col-md-6 {{this.wall_2}}">
+                           
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="wallboard_two" formControlName="wallboard_two"  [checked]="selected == this.wallboard_two">
+                                    <div class="state p-success">
+                                        <label for="wallboard_two">Wallboard 2</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hidden-things">
+                                Please Upgrade your package
+                            </div>
+                        </div> 
+                        <div class="col-md-6 {{this.wall_3}}">
+                           
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="wallboard_three" formControlName="wallboard_three"  [checked]="selected == this.wallboard_three">
+                                    <div class="state p-success">
+                                        <label for="wallboard_three">Wallboard 3</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hidden-things">
+                                Please Upgrade your package
+                            </div>
+                        </div> 
+                        <div class="col-md-6 {{this.wall_4}}">
+                           
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="wallboard_four" formControlName="wallboard_four"  [checked]="selected == this.wallboard_four">
+                                    <div class="state p-success">
+                                        <label for="wallboard_four">Wallboard 4</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hidden-things">
+                                Please Upgrade your package
+                            </div>
+                        </div> 
+
+                        <div class="col-md-6 {{this.h_2fa}}">
+                           
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="two_factor" formControlName="two_factor"  [checked]="selected == this.two_factor">
+                                    <div class="state p-success">
+                                        <label for="two_factor">2FA</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="hidden-things">
+                                Please Upgrade your package
+                            </div>
+
+
+                        </div> 
+
+
+                        <div class="col-md-6">
+                            <!-- <div class="form-group">
+                                <label for="user_status">Status</label>
+                                <input type="checkbox" class="form-control" formControlName="user_status" [checked]="selected == this.user_statuss">
+                            </div> -->
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="user_status" formControlName="user_status"  [checked]="selected == this.user_status">
+                                    <div class="state p-success">
+                                        <label for="user_status">Status</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="col-md-6 {{this.dsk_access}}" *ngIf="this.admin_id == '128'">
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="dsk_access" formControlName="dsk_access" (change)="dskAccess('edit')">
+                                    <div class="state p-success">
+                                        <label for="dsk_access">DKB Access</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row hidden-things">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="dsk_username">DKB Username</label>
+                                        <input type="text" id="dsk_username" class="form-control" formControlName="dsk_username">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="dsk_password">DKB Password</label>
+                                        <input type="text" id="dsk_password" class="form-control" formControlName="dsk_password">
+                                    </div>
+                                </div>
+                           </div>
+                        </div>                    
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <div class="buttons">
+                        <input type="hidden" formControlName="user_id">
+                        <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                        <input type="submit" class="btn btn-primary update_agent" value="Update Agent" [disabled]="!editAgent.valid">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

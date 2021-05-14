@@ -1,0 +1,149 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="card mail-fullHeightCard">
+            <div class="boxs mail_listing" *ngIf="viewMailPanel == 'mail_list'">
+                <div class="inbox-center table-responsive">
+ <table class="table table-hover">
+<thead>
+                          <tr>
+        <!--                     <th class="text-center">
+                              <label class="form-check-label">
+                                <input type="checkbox">
+                                <span class="form-check-sign"></span>
+                              </label>
+                            </th> -->
+                            <th colspan="3">
+                              <div class="inbox-header">
+                                <div class="mail-option">
+                                  <div class="email-btn-group m-l-15">
+                                    <a href="#" class="col-dark-gray waves-effect m-r-20" title="" data-toggle="tooltip" data-original-title="back">
+                                      <i class="material-icons">keyboard_return</i>
+                                    </a>
+                                    <a href="#" class="col-dark-gray waves-effect m-r-20" title="" data-toggle="tooltip" data-original-title="Archive">
+                                      <i class="material-icons">archive</i>
+                                    </a>
+                                    <div class="p-r-20">|</div>
+                                    <a href="#" class="col-dark-gray waves-effect m-r-20" title="" data-toggle="tooltip" data-original-title="Error">
+                                      <i class="material-icons">error</i>
+                                    </a>
+                                    <a href="#" class="col-dark-gray waves-effect m-r-20" title="" data-toggle="tooltip" data-original-title="Delete">
+                                      <i class="material-icons">delete</i>
+                                    </a>
+                                    <a href="#" class="col-dark-gray waves-effect m-r-20" title="" data-toggle="tooltip" data-original-title="Folders">
+                                      <i class="material-icons">folder</i>
+                                    </a>
+                                    <a href="#" class="col-dark-gray waves-effect m-r-20" title="" data-toggle="tooltip" data-original-title="Tag">
+                                      <i class="material-icons">local_offer</i>
+                                    </a>
+                                  </div>
+                                </div>
+                              </div>
+                            </th>
+                            <th class="hidden-xs" colspan="2">
+                              <div class="pull-right">
+                                <div class="email-btn-group m-l-15">
+                                  <a href="#" class="col-dark-gray waves-effect m-r-20" title="" data-toggle="tooltip" data-original-title="previous">
+                                    <i class="material-icons">navigate_before</i>
+                                  </a>
+                                  <a href="#" class="col-dark-gray waves-effect m-r-20" title="" data-toggle="tooltip" data-original-title="next">
+                                    <i class="material-icons">navigate_next</i>
+                                  </a>
+                                </div>
+                              </div>
+                            </th>
+                          </tr>
+                        </thead>
+                    </table>
+                    <table class="table table-hover">
+                        <thead>
+<!--                             <tr>
+                                <th colspan="12">
+                                </th>
+                            </tr>
+                            <tr>
+                                <th colspan="12">
+                                    <div class="search-text-tbl">
+                                        <div class="input-group"><input type="text" class="form-control">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr> -->
+                            <tr>
+                                <th>#</th>
+                                <th>Number</th>
+                                <th class="hidden-xs">From</th>
+                                <th>Subject</th>
+                                <th class="hidden-xs">Queue</th>
+                                <th class="hidden-xs">Agent</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+       
+                            <tr class="unread">
+                                <td><input type="checkbox"></td>
+                                <td><a href='javascript:void(0)' (click)='mailPanelDetail(46)' class="mail_number">MAIL0000001</a><span class="mail_date">11-10-2019 12:30 PM</span></td>
+                                <td class="hidden-xs">kn@cal4care.com</td>
+                                <td><a href='javascript:void(0)'>FW: extension 62 not working [#117562]</a></td>
+                                <td class="hidden-xs"><span class="mail_department">Support</span><span class="mail_status"> <div class="badge badge-success">Assigned</div></span>
+                                </td>
+                                <td class="hidden-xs">Support</td>
+                            </tr>
+                            <tr class="unread">
+                                <td><input type="checkbox"></td>
+                                <td><a href='javascript:void(0)' (click)='mailPanelDetail(46)' class="mail_number">MAIL0000001</a><span class="mail_date">11-10-2019 12:30 PM</span></td>
+                                <td class="hidden-xs">kn@cal4care.com</td>
+                                <td><a href='javascript:void(0)'>FW: extension 62 not working [#117562]</a></td>
+                                <td class="hidden-xs"><span class="mail_department">Support</span><span class="mail_status"> <div class="badge badge-success">Assigned</div></span>
+                                </td>
+                                <td class="hidden-xs">Support</td>
+                            </tr>
+                           
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-sm-7 ">
+                        <p class="p-15">Showing 1 - 15 of 200</p>
+                    </div>
+                </div>
+            </div>
+            <div class="boxs mail_listing" *ngIf="viewMailPanel == 'mail_details'">
+                <div class="inbox-body no-pad">
+                    <section class="mail-list">
+                        <div class="mail-sender">
+                            <div class="mail-heading">
+                                <h4 class="vew-mail-header">
+                                    <b></b>
+                                </h4>
+                            </div>
+                            <hr>
+                            <div class="media">
+                                <a href="#" class="table-img m-r-15">
+                                    <img alt="image" src="assets/img/users/user-2.png" class="rounded-circle" width="35" data-toggle="tooltip" title="" data-original-title="Sachin Pandit">
+                                </a>
+                                <div class="media-body">
+                                    <span class="date pull-right">4:15AM 04 April 2017</span>
+                                    <h5 class="text-primary">Sarah Smith</h5>
+                                    <small class="text-muted">From: sarah@example.com</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="view-mail p-t-20" *ngFor="let mail_detail of mailDetail;let i=index">
+                            <div [innerHTML]="(mail_detail.chat_msg)"></div>
+                            
+                        </div>
+                        <div class="replyBox m-t-20">
+                                <p class="p-b-20">click here to
+                                    <a href="#">Reply</a> or
+                                    <a href="#">Forward</a>
+                                </p>
+                            </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

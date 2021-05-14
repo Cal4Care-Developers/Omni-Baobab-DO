@@ -1,0 +1,149 @@
+<div class="section-body">
+	<div class="row">
+		<div class="col-12 col-md-12">
+			<div class="checkout-step">
+				<ul>
+					<li class="active">
+						<span class="inner-step">
+							<span class="step"><img src="assets/images/marketplace/cart-header-icon-1.svg"></span><br> Shopping Cart</span>
+						</li>
+						<li>
+							<span class="inner-step">
+								<span class="step"><img src="assets/images/marketplace/cart-header-icon-2.svg"></span><br> Checkout</span>
+							</li>
+							<li>
+								<span class="inner-step">
+									<span class="step"><img src="assets/images/marketplace/cart-header-icon-3.png"></span><br> Order Completed</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12 col-xl-12">
+						<div class="card">
+							<div class="card-header">
+								<h4>Shopping Cart</h4>
+								<div class="addBtn">
+									<div class="badge badge-success"><i class="fas fa-shopping-cart"></i>
+										<div class="product-count">2</div>
+									</div>
+								</div>
+							</div>
+							<div class="card-body shopping-cart-list">
+
+								<div class="table-responsive">
+									<table class="table table-bordered table-striped table-md">
+										<thead>
+											<tr>
+												<th style="width: 20px;">
+													<div class="pretty p-default">
+														<input type="checkbox">
+														<div class="state p-primary">
+															<label></label>
+														</div>
+													</div>   
+												</th>
+												<th>Product Image</th>
+												<th>Name</th>
+												<th class="text-right">Price <strong>(USD*)</strong></th>
+												<th class="text-right">Quantity</th>
+												<th class="text-right">Total <strong>(USD*)</strong></th>
+												<th>Trash</th>
+											</tr>
+										</thead>
+										<tbody>
+								   <!----------------
+									single Product
+									----------------->
+									<tr *ngFor="let cart_item of cart_items"> 
+										<td>
+											<div class="pretty p-default">
+												<input type="checkbox">
+												<div class="state p-primary">
+													<label></label>
+												</div>
+											</div>
+										</td>
+										<td class="shopping-product-thumnail" *ngIf="cart_item.item_name == 'Wall Purchase'">
+											<img src="assets/images/wallboard/wall-board-1.jpg">
+										</td>
+										<td class="shopping-product-thumnail" *ngIf="cart_item.item_name=='SMS Purchase'">
+											<img src="assets/images/wallboard/wall-board-1.jpg">
+										</td>
+										<td>{{cart_item.item_name}}</td>
+										<td class="text-right">{{cart_item.price}}</td>
+
+										<td class="text-right quantity-manage">
+											<div class="qty">
+												<span class="minus bg-danger">-</span>
+												<input type="text" class="count" name="qty" value="1">
+												<span class="plus bg-success" (click)="increaseCount()">+</span>
+											</div>
+										</td>
+
+										<td class="text-right cartsTotal" >{{cart_item.tot_amt}}</td>
+										<td><a href="#"><img src="assets/images/marketplace/trash-cart.svg" width="34" (click)="deleteFromCart(cart_item.id)"></a></td>
+									</tr>
+								   <!------------
+									single Product End
+									----------------->
+									 <!----------------
+									single Product
+									----------------->
+								
+								   <!------------
+									single Product End
+									----------------->
+
+
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="row summary-table">
+			<div class="col-12 col-xl-5 ml-auto">
+				<div class="card">
+					<div class="card-header">
+						<h4>Sub Total</h4>
+					</div>
+					<div class="card-body shopping-total">
+						<div class="table-responsive">
+							<table class="table table-bordered table-striped table-md">
+								<thead>
+									<tr>
+										<th colspan="2" class="text-right">Total Summary in USD*</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="text-right">Sub Total</td>
+										<td class="text-right"><strong >$ {{this.total_price}}</strong></td>
+									</tr>
+									<tr>
+										<td class="text-right">GST (15%)</td>
+										<td class="text-right"><strong>$ {{this.mainGST}}</strong></td>
+									</tr>
+									<tr>
+										<td class="text-right">Grand Total</td>
+										<td class="text-right"><strong>${{this.totalmainGST}}</strong></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="settings-btn-group">
+							<a href="#" class="btn btn-warning"><i class="fas fa-shopping-cart"></i> Proceed Checkout</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+

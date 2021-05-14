@@ -1,0 +1,86 @@
+
+<div class="section-body">
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Email Lists</h4>
+                    <div class="addBtn">
+                        <button type="button" class="btn btn-primary" routerLink="/email-bulk">+ Compose Bulk Email</button>
+                    </div>
+					<!-- <a style="margin-left: 20px;" href="https://baobabgroup.mconnectapps.com/api/v1.0/pro_contents/pro_wrapup.pdf" target="_blank"><i style="font-size:24px;" class="fa fa-exclamation-circle"></i></a> -->
+
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                       <table class="table table-bordered table-striped table-md">
+                         
+                        <tr>
+                            <th>S.no </th>
+                            <th>Subject</th>
+                            <th>Created at</th>
+                            <th>Updated at</th>
+                            <th>View</th>
+                        </tr>
+
+                        <tbody>
+                            <tr *ngFor="let queue of queue_list; let i=index">
+                                <td>{{0+i+1}}</td>
+                                <!-- <td>{{queue.id}}</td> -->
+                                <td>{{queue.subject}}</td>
+                                <td>{{queue.created_at}}</td>
+                                <td>{{queue.updated_at}}</td>
+                                
+                                    <td>
+                                        <span  class="user-icon" style="cursor: pointer;"><i class="far fa-eye" (click)="viewmail(queue.message,queue.subject)"></i></span>
+                                    </td>
+                                </tr>
+
+                            <tr *ngIf="recordNotFound == true">
+                             <td colspan="12">Data not found</td>
+                         </tr>
+                     </tbody>
+                     
+                 </table>
+             </div>
+         </div>
+         
+     </div>
+ </div>
+</div>
+</div>
+
+<div class="modal fade bd-example-modal-md" id="view_mail">
+    <div class="modal-dialog modal-md"  style="max-width: 1200px;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="myLargeModalLabel" ><b>{{this.subject}}</b></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div id=template_view class="modal-body" style="height: 575px;">
+                <!-- <iframe [src]="this.doc_link | safe"  width="100%" style="height: 575px;" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+                <!-- style="margin-bottom: -6px;" width="100%" height="325"  -->
+                <!-- <embed [src]="this.doc_link | safe"  width="100%" style="height: 575px;" /> -->
+        </div>     
+        <div class="modal-footer" >
+            <div class="buttons">
+                <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="close">
+            </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>  
+
+<!-- <div class="modal fade bd-example-modal-xl" id="view_mail">
+    <div class="col-12 col-md-12 col-lg-12">
+		
+        <div class="card">
+          
+            <div  id=template_view class="card-body p-30">
+           </div>
+        </div>
+    </div>
+</div> -->

@@ -1,0 +1,502 @@
+<div class="section-body download-section">
+<div *ngIf="pred_dial">
+	<div class="row">
+		<div class="col-12 col-xl-12">
+			<div class="card">
+				<div class="card-header">
+					<h4>Predictive Dialer Versions</h4>
+				</div>
+				<div class="card-body">
+					<div class="form-group">
+						<label>Download Document</label>
+					</div>
+					<div class="download-btn-panel">
+						<ul>
+							<li>
+								<a href="{{this.pd_main}}" class="btn btn-info" target="_blank"><i class="fas fa-eye"></i> View</a>
+							</li>
+							<li>
+								<a href="{{this.pd_main}}" class="btn btn-warning" download><i class="fas fa-file-pdf"></i>  Download</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="card has-watermark-bg has-m-30">
+					<div class="card-header">
+						<h4>Predictive Dialer Version {{this.pd_version}}</h4>
+					</div>
+					<div class="card-body">
+						<div class="row">
+
+
+							<div class="col-xl-6 col-12"  *ngFor="let item of filterItemsOfType('Predictive_Dialler')">
+								<div class="form-group" >
+									<label>{{item.camp_name}}</label>
+								</div>
+								<div class="download-btn-panel" >
+									<ul>
+										
+										<li>
+											<a (click)="predicdownloadZip('camp_1','pd_document',item.camp_id,item.camp_pre)" class="btn btn-success" ><i class="fas fa-file-archive"></i> Download</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+
+
+
+							
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12 col-xl-12">
+			<div class="card">
+				<div class="card-header">
+					<h4>Broadcast dialler Versions</h4>
+				</div>
+				<div class="card-body">
+					<div class="form-group">
+						<label>Download Document</label>
+					</div>
+					<div class="download-btn-panel">
+						<ul>
+							<li>
+								<a href="{{this.bd_main}}" class="btn btn-info" target="_blank"><i class="fas fa-eye"></i> View</a>
+							</li>
+							<li>
+								<a href="{{this.bd_main}}" class="btn btn-warning" download><i class="fas fa-file-pdf"></i> Download</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="card has-watermark-bg has-m-30">
+					<div class="card-header">
+						<h4>Broadcast dialler Version {{this.bd_version}}</h4>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							
+							<div class="col-xl-6 col-12" *ngFor="let item of filterItemsOfType('Broadcast_Dialler')">
+								<div class="form-group" >
+									<label>{{item.camp_name}}</label>
+								</div>
+								<div class="download-btn-panel" *ngIf="isRAK==false">
+									<ul>
+										<li>
+											<a (click)="bd_zipfile_update(item.camp_id,item.camp_pre,item.broadcast_audio)" class="btn btn-success" ><i class="fas fa-file-pdf"></i> Download</a>
+										</li>
+										
+									</ul>
+								</div>
+								<div class="download-btn-panel" *ngIf="isRAK">
+									<ul>
+										<li>
+											<a (click)="bd_zipfile_update_for_RAK(item.id,item.camp_pre,item.broadcast_audio,item.parallel,item.frequency)" class="btn btn-success" ><i class="fas fa-file-pdf"></i> Download</a>
+										</li>
+										
+									</ul>
+								</div>
+							</div>
+							<div class="col-xl-12 col-12" id="pages">
+								
+							</div>
+
+							
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12 col-xl-12">
+			<div class="card">
+				<div class="card-header">
+					<h4>Broadcast Survey dialler Versions</h4>
+				</div>
+				<div class="card-body">
+					<div class="form-group">
+						<label>Download Document</label>
+					</div>
+					<div class="download-btn-panel">
+						<ul>
+							<li>
+								<a href="{{this.bs_main}}" class="btn btn-info" target="_blank"><i class="fas fa-eye"></i> View</a>
+							</li>
+							<li>
+								<a href="{{this.bs_main}}" class="btn btn-warning" download><i class="fas fa-file-alt"></i>Download</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="card has-watermark-bg has-m-30">
+					<div class="card-header">
+						<h4>Broadcast Survey dialler Version {{this.bs_version}}</h4>
+					</div>
+					<div class="card-body">
+						<div class="row">
+
+
+							<div class="col-xl-6 col-12 " *ngFor="let item of filterItemsOfType('Broadcast_Survey_Dialler')">
+								<div class="form-group" >
+									<label>{{item.camp_name}}</label>
+								</div>
+								<div class="download-btn-panel" >
+									<ul>
+										<li>
+											<a (click)="bds_zipfile_update(item.camp_id,item.camp_pre,item.broadcast_audio)" class="btn btn-success" ><i class="fas fa-file-archive"></i> Download</a>
+										</li>
+										
+									</ul>
+								</div>
+							</div>
+							<div class="col-xl-12 col-12" id="pagess">
+								
+							</div>
+
+							
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12 col-xl-12">
+			<div class="card">
+				<div class="card-header">
+					<h4>Poractive dialler Versions</h4>
+				</div>
+				<div class="card-body">
+					<div class="form-group">
+						<label>Download Document</label>
+					</div>
+					<div class="download-btn-panel">
+						<ul>
+							<li>
+								<a href="{{this.agent_rating_main}}" class="btn btn-info" target="_blank"><i class="fas fa-eye"></i> View</a>
+							</li>
+							<li>
+								<a href="{{this.agent_rating_main}}" class="btn btn-warning" download><i class="fas fa-file-pdf"></i> Download</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="card has-watermark-bg has-m-30">
+					<div class="card-header">
+						<h4>Proactive Dialler Version {{this.pro_version}}</h4>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							
+							<div class="col-xl-6 col-12" *ngFor="let item of filterItemsOfType('Proactive_Dialler')">
+								<div class="form-group" >
+									<label>{{item.camp_name}}</label>
+								</div>
+								<div class="download-btn-panel" >
+									<ul>
+										<li>
+											<a (click)="pro_zipfile_update(item.camp_id,item.camp_pre)" class="btn btn-success" ><i class="fas fa-file-archive"></i> Download</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>	
+	<div class="row">
+		<div class="col-12 col-xl-12">
+			<div class="card">
+				<div class="card-header">
+					<h4>Agent Rating Versions</h4>
+				</div>
+				<div class="card-body">
+					<div class="form-group">
+						<label>Download Document</label>
+					</div>
+					<div class="download-btn-panel">
+						<ul>
+							<li>
+								<a href="{{this.agent_rating_main}}" class="btn btn-info" target="_blank"><i class="fas fa-eye"></i> View</a>
+							</li>
+							<li>
+								<a href="{{this.agent_rating_main}}" class="btn btn-warning" download><i class="fas fa-file-pdf"></i> Download</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="card has-watermark-bg has-m-30">
+					<div class="card-header">
+						<h4>Agent Rating Version 1.0</h4>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-xl-6 col-12">
+								<div class="form-group">
+									<label>Agent Rating 1</label>
+								</div>
+								<div class="download-btn-panel">
+									<ul>
+										<!-- <li>
+											<a href="https://www.calncall.com/wp-content/uploads/2018/10/CALNCALL-FAX.pdf" class="btn btn-info" target="_blank"><i class="fas fa-eye"></i> View</a>
+										</li> -->
+										<li>
+											<a  class="btn btn-success" (click)="downloadZip('agent_rating_1','agent_rating_document')"><i class="fas fa-download"></i> Download</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="col-xl-6 col-12">
+								<div class="form-group">
+									<label>Agent Rating 2</label>
+								</div>
+								<div class="download-btn-panel">
+									<ul>
+										<li>
+											<a  class="btn btn-success" (click)="downloadZip('agent_rating_2','agent_rating_document')"><i class="fas fa-file-archive"></i>  Download</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row" *ngIf="alladmin">
+		<div class="col-12 col-xl-12">
+			<div class="card">
+				<div class="card-header">
+					<h4>Mr.VoIP</h4>
+				</div>
+				<div class="card-body">
+					<div class="form-group">
+						<label>Download Mr.VoIP profile</label>
+					</div>
+					<div class="download-btn-panel">
+						<ul>
+							<!-- <li>
+								<a href="{{this.mrvoip_main}}" class="btn btn-info" target="_blank"><i class="fas fa-eye"></i> View</a>
+							</li> -->
+							<li>
+								<a href="{{this.mrvoip_main}}" class="btn btn-warning" download><i class="fas fa-file-pdf"></i>  Download</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- <div class="card has-watermark-bg has-m-30" >
+					<div class="card-header" style="justify-content: space-between;">
+						<h3 style="font-size: 16px;">Platforms</h3>
+						<h3 style="font-size: 18px;">Campatible with 3CX version:{{this.sec_title}}</h3>
+					</div>
+					<div class="card-body">
+
+						<div class="row">
+							<div class="col-xl-6 col-12">
+								<div class="form-group">
+									<label><i class="fab fa-linux"></i> Linux Files</label>
+								</div>
+								<div class="download-btn-panel">
+									<ul>
+										
+										<li>
+											<a href="{{this.mrvoip_lin_file}}" class="btn btn-success" download><i class="fas fa-file-archive"></i>  Download</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="col-xl-6 col-12">
+								<div class="form-group">
+									<label><i class="fab fa-windows"></i> Windows Installer</label>
+								</div>
+								<div class="download-btn-panel">
+									<ul>
+										
+										<li>
+											<a href="{{this.mrvoip_win_file}}" class="btn btn-success" download><i class="fas fa-file-archive"></i>  Download</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-xl-6 col-12">
+								<div class="form-group">
+									<label><i class="fab fa-linux"></i>Configuration Guide</label>
+								</div>
+								<div class="download-btn-panel">
+									<ul>
+										
+										<li>
+											<a href="{{this.mrvoip_lin}}" class="btn btn-success" target="_blank" download><i class="fas fa-file-pdf"></i>  Download</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="col-xl-6 col-12">
+								<div class="form-group">
+									<label><i class="fab fa-windows"></i>Installation Guide</label>
+								</div>
+								<div class="download-btn-panel">
+									<ul>
+										
+										<li>
+											<a href="{{this.mrvoip_win}}" class="btn btn-success" target="_blank" download><i class="fas fa-file-pdf"></i>  Download</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> -->
+<!-- 
+	Version 2 Start
+ -->
+ <div class="card has-watermark-bg has-m-30" >
+	<div class="card-header" style="justify-content: space-between;">
+		<h3 style="font-size: 16px;">Platforms </h3>
+		<h3 style="font-size: 18px;">Campatible with 3CX version:{{this.sec2_title}}</h3>
+	</div>
+	<div class="card-body">
+
+		<div class="row">
+			<div class="col-xl-6 col-12">
+				<div class="form-group">
+					<label><i class="fab fa-linux"></i> Linux Files</label>
+				</div>
+				<div class="download-btn-panel">
+					<ul>
+						
+						<li>
+							<a href="{{this.mrvoip_lin_file2}}" class="btn btn-success" download><i class="fas fa-file-archive"></i>  Download</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-xl-6 col-12">
+				<div class="form-group">
+					<label><i class="fab fa-windows"></i> Windows Installer</label>
+				</div>
+				<div class="download-btn-panel">
+					<ul>
+						
+						<li>
+							<a href="{{this.mrvoip_win_file2}}" class="btn btn-success" download><i class="fas fa-file-archive"></i>  Download</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xl-6 col-12">
+				<div class="form-group">
+					<label><i class="fab fa-linux"></i>Configuration Guide</label>
+				</div>
+				<div class="download-btn-panel">
+					<ul>
+						<!-- <li>
+							<a href="{{this.mrvoip_lin}}" class="btn btn-info" target="_blank"><i class="fas fa-eye"></i> View</a>
+						</li> -->
+						<li>
+							<a href="{{this.mrvoip_lin2}}" class="btn btn-success" target="_blank" download><i class="fas fa-file-pdf"></i> Download</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-xl-6 col-12">
+				<div class="form-group">
+					<label><i class="fab fa-windows"></i>Installation Guide</label>
+				</div>
+				<div class="download-btn-panel">
+					<ul>
+						<!-- <li>
+							<a href="{{this.mrvoip_win}}" class="btn btn-info" target="_blank"><i class="fas fa-eye"></i> View</a>
+						</li> -->
+						<li>
+							<a href="{{this.mrvoip_win2}}" class="btn btn-success" target="_blank" download><i class="fas fa-file-pdf"></i>  Download</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 
+	Version 2 END
+ -->
+
+
+
+			</div>
+		</div>
+	</div>
+
+	<div class="row" *ngIf="dailyfood">
+		<div class="col-12 col-xl-12">
+			<div class="card">
+				<div class="card-header">
+					<h4>MrVoip Universal Tool</h4>
+				</div>
+				<div class="card-body"></div>
+				<div class="card has-watermark-bg has-m-30">
+					<div class="card-header">
+						<h4>Platforms v16</h4>
+						<h4>Campatible with 3CX version: 16.0.5.619</h4>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-xl-6 col-12">
+								<div class="form-group">
+									<label><i class="fab fa-linux"></i> Linux</label>
+								</div>
+								<div class="download-btn-panel">
+									<ul>
+										<li>
+											<a href="http://download.mconnectapps.com/mrvoip/v16/16.0.612/16.0.1/linux/documentation/Configure Mr.VoIP Universal Tool on Linux Debain9 guide.pdf" class="btn btn-info" target="_blank"><i class="fas fa-eye"></i> View</a>
+										</li>
+										<li>
+											<a href="http://download.mconnectapps.com/mrvoip/v16/16.0.612/16.0.1/linux/documentation/Configure Mr.VoIP Universal Tool on Linux Debain9 guide.pdf" class="btn btn-success" download><i class="fas fa-download"></i> Download</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="col-xl-6 col-12">
+								<div class="form-group">
+									<label><i class="fab fa-windows"></i> Windows</label>
+								</div>
+								<div class="download-btn-panel">
+									<ul>
+										<li>
+											<a href="http://download.mconnectapps.com/mrvoip/v16/16.0.612/16.0.1/windows/documentation/Mr.VoIP Tools Installation Guide-Windows.pdf" class="btn btn-info" target="_blank"><i class="fas fa-eye"></i> View</a>
+										</li>
+										<li>
+											<a href="http://download.mconnectapps.com/mrvoip/v16/16.0.612/16.0.1/windows/documentation/Mr.VoIP Tools Installation Guide-Windows.pdf" class="btn btn-success" download><i class="fas fa-download"></i> Download</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>

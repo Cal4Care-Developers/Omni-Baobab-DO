@@ -1,0 +1,105 @@
+<div class="section-body">
+	<div class="card">
+		<div class="card-header">
+			<h4>Notes</h4>
+			<div class="addBtn">
+				<button class="btn btn-primary" (click)="bcktoContc(this.contact_id)" style="float: right;"> Overview</button> </div>
+			</div>
+		</div> 
+
+		<div class="has-color-bg">
+			<div class="row" *ngFor="let note of oldNotes;let i=index">
+				<div class="col-12 col-md-12">
+					<div class="card">
+						<div class="card-header">
+							<h4><i class="fas fa-edit"></i> Note</h4>
+							<div class="addBtn call-date-details">
+								<small><strong>{{note.created_at}}</strong></small>
+							</div>
+						</div>
+						<div class="card-body p-0">
+							<div class="call-detail-panel">
+								<h6>Wrapup Code : {{note.auxcode_name}}</h6>
+								<p>{{note.notes}}</p>
+								<div class="note-detais">
+									<h6><span class="user-icon"><i class="far fa-user-circle"></i></span> &nbsp;&nbsp;{{note.creater}} left a Note</h6>
+									<div class="audio-file" *ngIf="note.call_rec != null ">
+									
+										<h6>Call Recording</h6>
+												<div class="play-audio" *ngIf="note.call_rec != ''" style="text-align: left; margin: 15px 0px;">
+													<a href="{{note.call_rec}}" target="_blank" download="rec.wav">
+													<i class="fas fa-play-circle" ></i>
+												</a>
+												</div>		
+											
+
+											<div class="fl">
+												<button type="button" class="btn btn-primary" (click)="genTicket(note.note)">Generate Ticket</button>
+											</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+			</div>
+
+
+			<div class="modal fade bd-example-modal-md" id="assign_ticket">
+				<div class="modal-dialog modal-md">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="myLargeModalLabel">Generate Ticket</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="departments">Select Department</label>
+										<select name="departments"  id="departments" class="form-control" (change)="getDeptUsers()">
+											<option value='0'> Select Department </option>
+											<option *ngFor="let dept of departments" value="{{dept.dept_id}}">{{dept.department_name}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="activity">Activity</label>
+										<input type="text" id="activity" class="form-control"  >
+
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="res_departments">Select Responsible Department</label>
+										<select name="res_departments"  id="res_departments" class="form-control">
+											<option value='0'> Select Department </option>
+											<option *ngFor="let dept of departments" value="{{dept.dept_id}}">{{dept.department_name}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+
+
+						</div>
+
+						<div class="modal-footer">
+							<div class="buttons">
+								<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+								<input type="submit" class="btn btn-primary update_agent" value="Generate & Assign" (click)="assignTicket(this.note_id)">
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>

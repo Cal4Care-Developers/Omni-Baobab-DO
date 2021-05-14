@@ -1,0 +1,3 @@
+div#chart_div table, div#chart_div { float: dleft; width: 100%; }
+div#chart_div table tr td { width:  33% !important; float: left; }
+div#chart_div table tr td div { margin: 0 auto 25px auto; }

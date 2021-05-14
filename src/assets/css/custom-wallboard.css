@@ -1,0 +1,20 @@
+	.custom-wallboard-box { position: relative; float: left; width: 18.75%; padding: 16px 25px 0px 17px; border-radius: 6px; margin: 0 9px 9px 0; height: 90px; }
+	.wallboard-count-item { font-size: 24px; color: #fff; font-weight: 700; } 
+	.custom-wallboard-item-name { font-weight: 700; font-size: 14px; color: #fff; line-height: 16px; }
+	.custom-wallboard-icon { position: absolute; right: 12px; top: 26px; }
+	.custom-wallboard-icon img { width: 24px; height: 24px; }
+	.call-management-table { float: left; width: 100%; padding: 20px 0 0 0; }
+	.call-management-table th { height: 55px; vertical-align: middle; font-size: 12px; }
+
+	@media only screen and (max-width: 1199px) { 
+		.custom-wallboard-box { width: 20%; margin: 3px 2px; }
+		.wallboard-count-item { font-size: 20px; }
+	}
+
+	@media only screen and (max-width: 991px) { 
+		.custom-wallboard-box { width: 49%; margin: 3px 2px; }
+	}
+
+	@media only screen and (max-width: 767px) { 
+		.custom-wallboard-box { width: 99%; margin: 3px 2px; }
+	}

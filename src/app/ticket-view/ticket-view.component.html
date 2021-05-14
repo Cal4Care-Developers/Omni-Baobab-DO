@@ -1,0 +1,241 @@
+    <div class="section-body">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <!-- Chat 1 -->
+          <div class="card">
+            <div class="boxs mail_listing">
+              <div class="inbox-body no-pad">
+                <section class="mail-list">
+                  <div class="mail-sender" data-toggle="collapse" data-target="#threat_0">
+                    <div class="mail-heading">
+                      <!-- <h4 class="vew-mail-header"> <b>Hi Dear, How are you?</b>   </h4> -->
+                      <div class="mail-option read-mail-option">
+                        <div class="email-btn-group m-l-15">
+                          <a href="#" class="col-dark-gray waves-effect m-r-20" title="back"
+                          data-toggle="tooltip" routerLink="/ticketing-system">
+                          <i class="material-icons">keyboard_return</i>
+                        </a>
+                        <!-- <a href="#" class="col-dark-gray waves-effect m-r-20" title="Archive"
+                        data-toggle="tooltip">
+                        <i class="material-icons">archive</i>
+                      </a>
+                      <div class="p-r-20">|</div>
+                      <a href="#" class="col-dark-gray waves-effect m-r-20" title="Error"
+                      data-toggle="tooltip">
+                      <i class="material-icons">error</i>
+                    </a>
+                    <a href="#" class="col-dark-gray waves-effect m-r-20" title="Delete"
+                    data-toggle="tooltip">
+                    <i class="material-icons">delete</i>
+                  </a>
+                  <a href="#" class="col-dark-gray waves-effect m-r-20" title="Folders"
+                  data-toggle="tooltip">
+                  <i class="material-icons">folder</i>
+                </a>
+                <a href="#" class="col-dark-gray waves-effect m-r-20" title="Tag"
+                data-toggle="tooltip">
+                <i class="material-icons">local_offer</i>
+              </a> -->
+            </div>
+          </div>
+
+        </div>
+        <hr>
+        <div class="media">
+          <a href="#" class="table-img m-r-15">
+            <img alt="image" src="assets/images/user.jpg" class="rounded-circle" width="35"
+            data-toggle="tooltip" title="{{main_list.assigned_by}}">
+          </a>
+          <div class="media-body">
+            <span class="date pull-right">{{main_list.created_at}}</span>
+            <h5 class="text-muted">{{main_list.assigned_by}}</h5>
+            <small class="text-muted">Team: {{main_list.department}}</small>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="threat_0">
+        <div class="view-mail p-t-20">
+          <p>{{main_list.ticket_message}}
+          </p>
+        </div>
+        <!-- <div class="attachment-mail">
+         <p>
+            <span>
+              <i class="fa fa-paperclip"></i> 3 attachments — </span>
+              <a href="#">Download all attachments</a> |
+              <a href="#">View all images</a>
+            </p> -->
+            <!-- <div class="row">
+              <div class="col-md-2">
+                <a href="#" class="attachment-file">
+                  <img class="img-thumbnail img-responsive" alt="attachment"
+                  src="assets/images/attached.svg">
+                </a>
+                <a class="name" href="#"> IMG_001.png
+                  <span>20KB</span>
+                </a>
+              </div>
+              <div class="col-md-2">
+                <a href="#" class="attachment-file">
+                  <img class="img-thumbnail img-responsive" alt="attachment"
+                  src="assets/images/attached.svg">
+                </a>
+                <a class="name" href="#"> IMG_002.png
+                  <span>22KB</span>
+                </a>
+              </div>
+              <div class="col-md-2">
+                <a href="#" class="attachment-file">
+                  <img class="img-thumbnail img-responsive" alt="attachment"
+                  src="assets/images/attached.svg">
+                </a>
+                <a class="name" href="#"> IMG_003.png
+                  <span>28KB</span>
+                </a>
+              </div>
+            </div>
+          </div> -->
+          <!-- <div class="replyBox m-t-20">
+            <p class="p-b-20">click here to
+              <a href="javascript:void(0)" (click)="rplyTicket(this.ticket_id)">Reply</a> or <a href="javascript:void(0)" (click)="genTicket(this.ticket_id)">Re-assign</a>
+            </p>
+          </div> -->
+        </div>
+      </section>
+      <div class="mail-heading">
+        <h4 class="vew-mail-header"> <b>Replies</b>   </h4>
+        
+      </div>
+      <section class="mail-list" *ngFor="let main_list of replay_list">
+        <div class="mail-sender collapsed" data-toggle="collapse" [attr.data-target]="'#threat_'+main_list.ticket_message_id">
+        
+<hr>
+<div class="media">
+<a href="#" class="table-img m-r-15">
+  <img alt="image" src="assets/images/user.jpg" class="rounded-circle" width="35"
+  data-toggle="tooltip" title="{{main_list.assigned_by}}">
+</a>
+<div class="media-body">
+  <span class="date pull-right">{{main_list.created_at}}</span>
+  <h5 class="text-muted">{{main_list.assigned_by}}</h5>
+  <small class="text-muted">Team: {{main_list.department}}</small>
+</div>
+</div>
+</div>
+
+<div id="threat_{{main_list.ticket_message_id}}" class="collapse">
+<div class="view-mail p-t-20">
+<p>{{main_list.ticket_message}}
+</p>
+</div>
+</div>
+</section>
+
+<div class="replyBox m-t-20" *ngIf="this.ticket_status == 1">
+  <p class="p-b-20" >click here to 
+    <a href="javascript:void(0)" (click)="rplyTicket(this.ticket_id)">Reply</a> or <a href="javascript:void(0)" (click)="genTicket(this.ticket_id)">Re-assign</a> or <a href="javascript:void(0)" (click)="closeTicket(this.ticket_id)">Close Ticket</a>
+  </p>
+</div>
+
+<div class="replyBox m-t-20" *ngIf="this.ticket_status == 0">
+  <p class="p-b-20" style="
+  font-size: 20px;
+  color: red;
+">Ticket has been closed by {{this.ticket_closed_by}} 
+  </p>
+</div>
+    </div>
+  </div>
+</div>
+<!-- Chat 1 End -->
+
+
+</div>
+</div>
+</div>
+
+
+
+<div class="modal fade bd-example-modal-md" id="assign_ticket">
+  <div class="modal-dialog modal-md">
+      <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="myLargeModalLabel">Assign Ticket</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="departments">Select Department</label>
+              <select name="departments"  id="departments" class="form-control">
+                <option value='0'> Select Department </option>
+                <option *ngFor="let dept of departments" value="{{dept.dept_id}}">{{dept.department_name}}</option>
+              </select>
+            </div>
+          </div>
+
+                     
+                  </div>
+
+                
+
+              </div>
+
+              <div class="modal-footer">
+                  <div class="buttons">
+                      <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                      <input type="submit" class="btn btn-primary update_agent" value="Assign" (click)="assignTicket(this.ticket_id)">
+                  </div>
+              </div>
+
+      </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="modal fade bd-example-modal-md" id="reply_ticket">
+  <div class="modal-dialog modal-md">
+      <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="myLargeModalLabel">Reply Ticket</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              
+              <label for="departments">Message</label>
+                <textarea class="form-control" placeholder="Message" id="reply_editor" name="reply_editor"></textarea>
+            
+            </div>
+          </div>
+
+                     
+                  </div>
+
+                
+
+              </div>
+
+              <div class="modal-footer">
+                  <div class="buttons">
+                      <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                      <input type="submit" class="btn btn-primary update_agent" value="Reply" (click)="ReplyTicket(this.ticket_id)">
+                  </div>
+              </div>
+
+      </div>
+  </div>
+</div>

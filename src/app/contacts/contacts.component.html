@@ -1,0 +1,137 @@
+
+<div class="section-body">
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card" *ngIf="alladmin">
+                <div class="card-header">
+                    <h4>Contacts</h4>
+                    <div class="addBtn btn-group">
+                        <button *ngIf="show_admin_sett" type="button" class="btn btn-primary" (click)="uploadCSV()">+ Upload CSV</button>
+                        <button type="button" class="btn btn-primary" (click)="addContact()">+ Add Contact</button>
+                    </div>
+                    <a (click)="showdoc('https://baobabgroup.mconnectapps.com/api/v1.0/pro_contents/pro_contacts.pdf')"  target="_blank"><i style="font-size: 24px;
+                        float: right;" class="fa fa-exclamation-circle"></i></a>
+        
+					<!-- <a href="https://baobabgroup.mconnectapps.com/api/v1.0/pro_contents/pro_contacts.pdf" target="_blank"><i style="font-size:24px;padding-left: 20px;" class="fa fa-exclamation-circle"></i></a> -->
+
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-md">
+
+                          <tr class="has-color-label-bg">
+                            <td colspan="12" class="search-text-tbl">
+                                <div class="input-group"><input type="text" class="form-control" (keyup.enter)="contactsList({'search_text':queue_search.value})" #queue_search>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" (click)="contactsList({'search_text':queue_search.value})"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                     <!-- <th style="width: 20px;">
+                             <div class="pretty p-icon p-smooth">
+                              <input type="checkbox" />
+                              <div class="state p-warning">
+                                <i class="icon material-icons">done</i>
+                                <label></label>
+                            </div>
+                        </div>   
+                    </th> -->
+                    <th>S.no</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Contact Owner</th>
+                    <th>Actions</th>
+                </tr>
+
+                <tbody>
+                    <tr *ngFor="let contact of contacts_list;let i=index">
+                        <!-- <td style="width: 20px;"><input type="checkbox" name="checkbox"></td> -->
+                        <td>{{offset_count+i+1}}</td>
+                        <td><span class="user-icon"><i class="far fa-user-circle"></i></span> &nbsp; {{contact.first_name}}</td>
+                        <td>{{contact.email}}</td>
+                        <td><span *ngIf="show_caller_id == 1"><i title="Click to call" class="fa fa-phone-square" aria-hidden="true" (click)="clictToCall(contact.phone)" style="cursor: pointer; margin-right: 10px;font-size: 15px;"></i>{{contact.phone}}</span><span *ngIf="show_caller_id == 0">xxxxxxx</span></td>
+                        <td>{{contact.contact_owner}}</td>
+                        <td>
+                            <span class="user-icon" style="cursor: pointer;"><i class="far fa-edit" (click)="editContact(contact.phone)"></i></span>
+                            <span *ngIf="hide_admin_sett" class="user-icon" style="cursor: pointer;"><i class="far fa-trash-alt" (click)="deleteContact(contact.contact_id)"></i></span>
+                        </td>
+                    </tr>
+                </tbody>
+                
+                
+            </table>
+        </div>
+    </div>
+
+
+    <div class="card-footer text-right">
+        <nav class="d-inline-block">
+            <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+
+                <li class="page-item">
+                    <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'" href="javascript:void(0)" (click)="paginationData.backtab=='show' ? contactsList({'search_text':queue_search.value,'offset':paginationData.start}) : false"><i class="fas fa-angle-left"></i></a>
+                </li>
+                <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                    <a class="page-link" href="javascript:void(0)" (click)="contactsList({'search_text':queue_search.value,'offset':paginationData.back})"><i class="fas fa-angle-double-left"></i></a>
+                </li>
+
+
+                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'" *ngFor="let pagination of paginationData.data;let i=index">
+                    <a class="page-link" href="javascript:void(0)" (click)=" pagination.load ==true ? contactsList({'search_text':queue_search.value,'offset':pagination.offset_count}) : false">{{pagination.btn_length}} <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                </li>
+
+                <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                    <a class="page-link" href="javascript:void(0)" (click)="contactsList({'search_text':queue_search.value,'offset':paginationData.next})"><i class="fas fa-angle-double-right"></i></a>
+                </li>
+
+                <li class="page-item">
+                    <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'" href="javascript:void(0)" (click)="paginationData.nexttab =='show' ? contactsList({'search_text':queue_search.value,'offset':paginationData.end}) : false"><i class="fas fa-angle-right"></i></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+</div>
+<div class="card" *ngIf="dailyfood">
+    <div class="card-header" *ngIf="hasdsk">
+        <h4>Has DSK Access</h4>
+    </div>  
+    <div class="card-header" *ngIf="hasnodsk">
+        <h4>Has No DSK Access</h4>
+    </div> 
+</div>
+</div>
+</div>
+</div>
+
+<div class="modal fade bd-example-modal-md" id="document_model">
+	<div class="modal-dialog modal-md"  style="max-width: 1200px;">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" style="color:crimson" >Help Manual</h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+				  <!-- <iframe [src]="this.doc_link | safe"  width="100%" style="height: 575px;" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+				  <!-- style="margin-bottom: -6px;" width="100%" height="325"  -->
+				<embed [src]="this.doc_link | safe"  width="100%" style="height: 575px;" />
+		</div>     
+		<div class="modal-footer" >
+			<div class="buttons">
+				<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="close">
+			</div>
+		</div>
+  
+	  </div>
+	</div>
+  </div>
+
+
+

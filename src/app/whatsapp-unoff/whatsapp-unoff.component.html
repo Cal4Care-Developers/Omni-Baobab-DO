@@ -1,0 +1,336 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+      <div class="card fullHeightCard">
+        <div class="body">
+          <div id="plist" class="people-list chat-search-list">
+            <div class="chat-search">
+  
+              <div class="sidebar-add-btn">
+                <!-- <div class="download-btn-panel">
+                    <a href="https://whatsapp.mconnectapps.com/83430/qrCode" class="btn btn-info" target="_blank" onclick="window.open(this.href, 'windowName', 'width=500, height=500, left=50, top=50, scrollbars, resizable'); return false;">Scan QR</a> -->
+                  <!-- <a href="https://whatsapp.mconnectapps.com/83430/qrCode"  class="btn btn-info" target="_blank"> Scan QR</a> -->
+                <!-- </div>  -->
+                <div class="row">
+                  <div class="col-md-10">
+                  
+                  <button   class="btn btn-primary" (click)="composenew()">Compose New</button>
+                  </div>
+                    <div class="col-md-2" style="padding-left: 0px;">
+
+                    <button  (click)="refereshInstance2()" class="btn btn-secondary">  <i class="fa fa-redo"></i></button>
+                      
+                    </div>
+                </div>
+              </div>
+              <div class="input-group">
+               <input type="text" class="form-control"  placeholder="Search Contacts..."id='searchText' #chat_search (keyup.enter)="chatPanelList(chat_search.value)">
+               <input type="hidden" name="open_chat_detail_id" id="open_chat_detail_id" value="0" #open_chat_detail_id (click)='chatPanelDetail(open_chat_detail_id.value)'>
+							 <input type="hidden" id="calloncemore" (click)="oncemore()">
+
+               <span ></span>
+               <div class="input-chat_search-append">
+                 <button class="btn btn-primary chat_list_search" (click)="chatPanelList(chat_search.value)"><i class="fas fa-search"></i></button>
+               </div>
+             </div>
+  
+           </div>
+           <div class="m-b-20">
+            
+            
+            <div id="chat-scroll">
+              <!-- <div infiniteScroll [infiniteScrollDistance]="12" [infiniteScrollThrottle]="10" [scrollWindow]="false" 
+            (scrolled)="onScroll()"> -->
+              <ul class="chat-list list-unstyled m-b-0 chat_list_data">
+                <div id="infinitescrool"  class="search-results"
+                                infiniteScroll
+                                [infiniteScrollDistance]="2"
+                                [infiniteScrollThrottle]="50"
+                                (scrolled)="onScroll()"
+                                [scrollWindow]="false">
+               <li id="{{chat_list.chat_id}}" (click)="changestatus(chat_list.chat_id)" style="display:flex;" class="clearfix" *ngFor="let chat_list of chat_panel_list;let i=index" (click)="chatPanelDetail(chat_list.chat_id)">
+                <img  *ngIf="chat_list.group_msg == 0" class="thumbnail-image" src="{{chat_list.prof_image}}"
+                  onerror="this.src='assets/images/user.jpg'" style="width: 60px;" alt="avatar" /> 
+                  <img  *ngIf="chat_list.group_msg == 1" class="thumbnail-image" style="width:60px;" src="{{chat_list.group_icon}}"
+                  onerror="this.src='assets/images/user.jpg'"  alt="avatar" />
+                <div  class="about" >
+                 
+                  <div  class="name" *ngIf="chat_list.group_msg == 0" > {{ chat_list.customer_name }} <span *ngIf="!chat_list.customer_name">Unknown</span>
+                  <i [class]="chat_list.read_status == 0 ? 'fas fa-circle agent_active' : ''" aria-hidden="true" style="font-size: 10px; float: right;"></i>
+                   
+                  </div> 
+
+                  <div class="name" *ngIf="chat_list.group_msg == 1" >{{chat_list.group_name}}  <i class="fa fa-users" aria-hidden="true"></i> 
+                    
+                  <i [class]="chat_list.read_status == 0 ? 'fas fa-circle agent_active' : ''" aria-hidden="true" style="font-size: 10px;float: right;"></i>
+                  
+                  </div>
+                  <div class="text-small text-muted" id="chat-message"> {{chat_list.chat_message}}</div>
+                  <div class="text-small text-muted" id="chat-message"> <div class="bullet"></div> {{chat_list.chat_dt}}</div>
+                </div>
+              </li>
+                </div>
+            </ul>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9" id="chat_details_view">
+    <div class="card fullHeightCard keep-connect-chat-content" *ngIf="chat_panel_detail_type=='chat_screen'">
+      <a (click)="showdoc('https://youtu.be/5EzL_SIr7dw')"  target="_blank"><i style="font-size: 24px;
+        float: right;" class="fa fa-exclamation-circle"></i></a>
+     <!-- <a href="https://baobabgroup.mconnectapps.com/api/v1.0/pro_contents/pro_inst_whatsapp.pdf"  target="_blank"><i style="font-size: 24px;padding-right: 20px;
+        padding-top: 20px;float: right;" class="fa fa-exclamation-circle"></i></a> -->
+      <div class="card-body">
+        <div class="keep-connect">
+          <div class="connect-logo">
+            <img src="assets/img/logo.png">
+            <span class="logo-name">Omni Whatsapp Chat</span>
+          </div>
+          <h3>Keep your device connected.</h3>
+          <p>To reduce the data usage,<br>connect your phone to Wi-Fi.</p>
+        </div>
+      </div> 
+    </div>
+  
+    <div class="card" *ngIf="chat_panel_detail_type=='chat_detail'">
+     <div class="chat">
+       <div class="chat-header clearfix">
+      
+       <a *ngIf="isthisgroup" target="_blank" href="{{group_icon}}"><img src="{{group_icon}}" href="{{group_icon}}" onerror="this.src='assets/images/user.jpg'" alt="avatar"></a> 
+      <a *ngIf="isthisgroup==false" target="_blank" href="{{prof_image}}"> <img src="{{prof_image}}" href="{{prof_image}}" onerror="this.src='assets/images/user.jpg'" alt="avatar"></a> 
+         <div class="chat-about">
+           <div class="chat-with">{{customer_name}}</div>
+           <div *ngIf="isthisgroup==false" class="chat-num-messages">{{customer_number}}</div>
+      <button  *ngIf="transfered==false && isthisgroup==false" type="button" class="btn btn-primary"  style="background-color: green;"(click)="modeltrans()"> <i class="fa fa-forward"></i>Transfer To Agent </button>
+         <div class="chat-num-messages"  *ngIf="transfered==true && transferedforMe==false">
+            <h5>This Specific  Chat Was Tranfered to the Agent  <b>"{{ this.forworduser }}"</b>
+            </h5>
+            <button type="button" class="btn btn-primary" (click)="revokeransfer()" style="float: left;background-color: red;"> <i class="fa fa-backward"></i>Revoke</button>
+        </div>
+        <div class="chat-num-messages"  *ngIf="transferedforMe">
+          <h5> <b>{{ this.username }}</b> Transfered this Chat to you
+        </h5>
+        <!-- <button *ngIf="show_user_sett" type="button" class="btn btn-primary" (click)="revokeransfer()" style="float: right;">Revoke</button> -->
+      </div>
+        </div>
+         <img src="assets/img/mc-dashboard/whatsapp.webp" alt="avatar" style="float: right;">
+       </div>
+     </div>
+     <div class="chat-box" id="mychatbox">
+       <div class="card-body chat-content"  id="infscrollUp"  infiniteScroll
+       [infiniteScrollDistance]="2"
+       [infiniteScrollThrottle]="50"
+       (scrolledUp)="onUp()"
+       [scrollWindow]="false" >
+         <div *ngFor="let chat_details of chat_panel_details;let i=index"> 
+           <div class="chat-item chat-left" *ngIf="chat_details.msg_user_type == 'customer'"><img src="{{chat_details.customer_image}}"  onerror="this.src='assets/images/user.jpg'" alt="avatar">
+             <div class="chat-details">
+              <div *ngIf="isthisgroup">{{chat_details.group_sender_name}}</div>    
+               <div class="chat-text" style="white-space: pre-line;"> <div *ngIf="chat_details.whatsapp_media_url" style="max-width: 650px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img  href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}"></a></div>{{chat_details.chat_msg}}</div>
+               <div class="chat-time">{{chat_details.chat_dt}}   {{chat_details.chat_time}}</div>
+               <!-- <div class="chat-time">{{chat_details.chat_dt}}</div> -->
+             </div>
+           </div>
+  
+  
+           <div class="chat-item chat-right" *ngIf="chat_details.msg_user_type == 'agent' && chat_details.msg_user_id == loginUser || (chat_details.msg_user_type == 'agent' && chat_details.msg_user_id != loginUser)"><img src="{{profile_image}}"  onerror="this.src='assets/images/user.jpg'" alt="avatar"> 
+             <div class="chat-details">
+               <div class="chat-text {{chat_details.msg_status}}" style="white-space: pre-line;"> <div *ngIf="chat_details.whatsapp_media_url" style="max-width: 650px;" > <a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img    href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}"></a></div>{{chat_details.chat_msg}}</div>    
+               <div class="message-status-img">
+                <img *ngIf="chat_details.msg_status == 'DELIVERED'" src="assets/images/whatsapp-double-grey.svg" height="20">
+                <img *ngIf="chat_details.msg_status == 'READ'"  src="assets/images/whatsapp-double-blue.svg" height="20"> 
+                <img *ngIf="chat_details.msg_status == 'SENT'"  src="assets/images/whatsapp-single-grey.svg" height="15">
+  
+              </div>
+              <div class="chat-time">{{chat_details.chat_dt}}  {{chat_details.chat_time}}
+              </div>
+              <div class="chat-time" *ngIf="chat_details.msg_user_type == 'agent' && chat_details.msg_user_id != loginUser">Repliyed By <b>{{chat_details.replied_by}} </b></div>
+
+            </div>
+          </div>
+  
+        </div>
+  
+   
+      </div>
+      <div class="card-footer chat-form"> 
+       <!-- <form id="chat-form"> -->
+         <textarea class="form-control" id="chat_msg" placeholder="Press 'Shift+Enter' to next line and 'Enter' to send" style="height: 50px;" (keydown)="onMessageSend($event)"  #chat_message></textarea>
+         <input type="hidden" name="chat_id" id="chat_detail_id" value="{{chat_detail_key}}" #chat_detail_id>
+         <input type="hidden" name="whatsapp_media_url" id="whatsapp_media_url" >
+         <input type="hidden"  id="hit_image" (click)="sendChatMediaData()">
+         <button type="button" class="btn btn-primary" (click)="template()" style="right: 85px;" >
+          <i class="fas fa-fill-drip"></i>
+        </button>
+         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createNewWidget" style="right: 40px;">
+          <i class="fas fa-link"></i>
+        </button>
+         <button type="button" class="btn btn-primary" (click)="sendChatMessageData()">
+           <i class="far fa-paper-plane"></i>
+         </button>
+  
+       </div>
+     </div>
+   </div>
+  
+  </div>
+  </div>
+  
+
+  <!---------------------
+  Add New Widget Modal
+  ------------------>
+  <div class="modal fade" id="createNewWidget">
+      <div class="modal-dialog modal-md">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="myLargeModalLabel">Upload Media File (Image, Video, Text and PDF files up to 5 mb)</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <div class="row">
+                      <div class="col-12 col-md-12">
+                          <div class="row">
+                              <div class="col-md-12 col-12">
+                                  <div class="form-group">
+                                      <input type="file" class="form-control" name="whatsapp_media" id="whatsapp_media">
+                                  </div>
+                                </div> 
+                                  <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <textarea class="form-control" name="whatsapp_media_with_text" placeholder="Enter text here..." id="whatsapp_media_with_text"></textarea>
+                                    </div>
+                                  </div>
+                             
+  
+  
+                          </div>
+                      </div>
+  
+                  </div>	
+              </div>
+  
+              <div class="modal-footer">
+                  <div class="buttons">
+                      <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                      <input type="button" class="btn btn-primary update_agent" value="Submit"  (click)="addWhatsappMedia()">
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+
+  <div class="modal fade bd-example-modal-md" id="scan_qr">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Enter your Registered WhatsApp number</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+            <!-- <iframe width="100%" height="100%" frameBorder="0" href="https://whatsapp.mconnectapps.com/83430/qrCode"></iframe> -->
+            <div class="modal-body">
+              <form [formGroup]="getWp" id="scan_qr" class="question-panel fl" (ngSubmit)="get_wp_number()">
+                  <div class="row">
+                      <div class="col-12">
+                          <div class="card">
+                              <div class="card-header">
+                                  <div class="form-group">
+                                         <label for="wp_number">PhoneNumer</label>
+                                      <input type="number" id="wp_number" formControlName="wp_number" class="form-control">
+                                  </div>
+                              </div>
+
+                          </div>
+                      </div>
+                  </div>
+  
+                  <div class="col-md-6">
+                      <div class="buttons">
+                           <input type="button" data-dismiss="modal" class="btn btn-secondary" value="Cancel">
+                           <input type="submit" class="btn btn-success" value="Update" [disabled]="!getWp.valid">
+                      </div>
+                  </div>
+                  
+              </form>
+          </div>
+          
+     </div>
+   </div>
+</div>
+
+
+<!---------------------
+Add New Widget Modal
+------------------>
+<div class="modal fade" id="transferModel">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myLargeModalLabel">Transfer Chat to User </h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-12 col-md-12">
+						<div class="row">
+							<div class="col-md-12 col-12">
+								<div class="form-group">
+								  <label for="tranfer_user">Select Department User</label>
+                                  <select  class="chat-widget form-control" id="tranfer_user">
+                                          <option *ngFor="let dept of user_list" value="{{dept.user_id}}" >{{dept.agent_name}}</option>
+                                  </select>
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+
+				</div>	
+			</div>
+
+			<div class="modal-footer">
+				<div class="buttons">
+					<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+					<input type="button" class="btn btn-primary update_agent" value="Submit"  (click)="tranfer_chat()">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade bd-example-modal-md" id="video_play">
+  <div class="modal-dialog modal-md"  style="max-width: 1200px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="color:crimson" id="myLargeModalLabel">mConnect WhatAppChat Solutions</h5>
+        <button type="button" class="close"  (click)="stop()" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+                <iframe  class="myvideo" [src]="this.doc_link | safe"  width="100%" style="height: 575px;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <!-- style="margin-bottom: -6px;" width="100%" height="325"  -->
+              <!-- <embed [src]="this.video_link | safe"  width="100%" style="height: 575px;" /> -->
+      </div>     
+      <div class="modal-footer" >
+          <div class="buttons">
+              <input type="button" data-dismiss="modal"  (click)="stop()" class="btn btn-outline-secondary" value="close">
+          </div>
+      </div>
+
+    </div>
+  </div>
+</div>  

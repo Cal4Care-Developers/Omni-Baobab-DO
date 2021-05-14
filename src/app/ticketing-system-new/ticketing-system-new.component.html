@@ -1,0 +1,1075 @@
+
+<div class="section-body" id="ticketing-system-panel">
+<div class="row">
+<div class="col-12 col-md-12 col-lg-12">
+<div class="card">
+<div class="card-header">
+<div class="ticket-action-group">
+<input type="hidden" id="BAssignTickets" (click)="BAssignTickets()">
+<div class="ticket-assign-btn">
+<ul>
+	<!-- <li><input type="checkbox"  (click)="slectAll()" id="selectAllQ"  /></li> -->
+	<li><a href="javascript:;" (click)="BulkAssign()" class="gradient-btn"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" class="app-icon"><path d="M23.922 23.085h2.638a1.203 1.203 0 110 2.406h-2.638v2.638a1.203 1.203 0 11-2.406 0v-2.638h-2.638a1.203 1.203 0 110-2.406h2.638v-2.638a1.203 1.203 0 112.406 0v2.638zm-8.209-5.961c-3.822 0-6.92-3.117-6.92-6.962S11.891 3.2 15.713 3.2s6.92 3.117 6.92 6.962-3.098 6.962-6.92 6.962zm0-2.421c2.492 0 4.513-2.033 4.513-4.541s-2.02-4.541-4.513-4.541c-2.492 0-4.513 2.033-4.513 4.541s2.02 4.541 4.513 4.541zm-9.04 12.612c0 .669-.539 1.211-1.203 1.211s-1.203-.542-1.203-1.211c0-4.589 3.924-8.274 8.725-8.274h5.014c.665 0 1.203.542 1.203 1.211s-.539 1.211-1.203 1.211h-5.014c-3.507 0-6.318 2.64-6.318 5.852z"></path></svg> Assign</a></li>
+	<li><a href="javascript:;" class="gradient-btn"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" class="app-icon"><path d="M24.403 3.003a1.2 1.2 0 01-1.301 2.017c-5.13-3.31-11.989-2.627-16.349 1.734-5.084 5.084-5.084 13.41 0 18.494s13.41 5.084 18.494 0c2.779-2.779 4.118-6.62 3.755-10.487a1.2 1.2 0 112.39-.224c.429 4.571-1.156 9.118-4.447 12.409-6.021 6.021-15.867 6.021-21.889 0s-6.021-15.867 0-21.889C10.221-.108 18.328-.915 24.403 3.004zM10.47 14.64l4.244 4.467 12.73-11.981a1.2 1.2 0 011.645 1.747l-13.6 12.8a1.2 1.2 0 01-1.692-.047L8.73 16.293a1.201 1.201 0 011.74-1.654z"></path></svg> Close</a></li>
+	<!-- <li><a href="javascript:;" class="gradient-btn"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" class="app-icon"><path d="M5.945 24.349L24.35 5.944c-5.121-4.253-12.795-3.982-17.591.814s-5.067 12.47-.814 17.591zm20.11-16.698L7.65 26.056c5.121 4.253 12.795 3.982 17.591-.814s5.067-12.47.814-17.591zM5.052 26.948c-6.025-6.025-6.025-15.87 0-21.896s15.87-6.025 21.896 0c6.025 6.025 6.025 15.87 0 21.896s-15.87 6.025-21.896 0z"></path></svg> Spam</a></li> -->
+</ul>
+</div>
+</div>
+
+
+<div class="addBtn" style="width: 20%;">
+
+<div class="dropdown select-option header-select-dropdown pt-1" >
+<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+	<div class="dropdown-title">Select View</div>
+</div> 
+
+	
+<div class="dropdown-menu">
+		<div class="pullDown">
+			<a href="javascript:void(0)" class="dropdown-item" (click)="changeMylayout('table')"><div class="green-bg-status status-bg"></div>Table View</a>
+			<a href="javascript:void(0)" class="dropdown-item" (click)="changeMylayout('card')"><div class="green-bg-status status-bg"></div>Card View</a>
+			</div>
+		</div>
+</div>
+<!-- <a href="javascript:void(0)" class="btn btn-success" routerLink="/ticket-create-new">Create Ticket</a> -->
+</div>
+<div class="addBtn" style="width: 24%;">
+
+	<div class="dropdown select-option header-select-dropdown pt-1" >
+	<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+		<div class="dropdown-title">Filter</div>
+	</div> 
+	 <div class="dropdown-menu">
+			 <div class="pullDown">
+				<a href="javascript:void(0)" class="dropdown-item" (click)="filterByStatus('All')"><div class="red-bg-status status-bg"></div>All</a> 
+
+				<a href="javascript:void(0)" *ngFor="let item of status ;let i = index"  class="dropdown-item" (click)="filterByStatus(item.status_id)">{{item.status_desc}}</a>
+
+				<!-- <a href="javascript:void(0)" class="dropdown-item" (click)="SelectFilter('All')"><div class="red-bg-status status-bg"></div>All</a>
+				<a href="javascript:void(0)" class="dropdown-item" (click)="SelectFilter('New')"><div class="green-bg-status status-bg"></div>New</a>
+				<a href="javascript:void(0)" class="dropdown-item" (click)="SelectFilter('Active')"><div class="blue-bg-status status-bg"></div>Active</a>
+				<a href="javascript:void(0)" class="dropdown-item" (click)="SelectFilter('Progress')"><div class="red-bg-status status-bg"></div>Progress</a>
+				<a href="javascript:void(0)" class="dropdown-item" (click)="SelectFilter('Assigned')"><div class="green-bg-status status-bg"></div>Assigned</a>
+				<a href="javascript:void(0)" class="dropdown-item" (click)="SelectFilter('Completed')"><div class="blue-bg-status status-bg"></div>Completed</a>
+				<a href="javascript:void(0)" class="dropdown-item" (click)="SelectFilter('Closed')"><div class="red-bg-status status-bg"></div>Closed</a> -->
+			 </div>
+	 </div>
+	</div>
+	<a href="javascript:void(0)" class="btn btn-success" routerLink="/ticket-create-new">Create Ticket</a>
+</div>
+<a href="https://baobabgroup.mconnectapps.com/api/v1.0/pro_contents/Email-ticket.pdf"  target="_blank"><i class="info-icon fa fa-exclamation-circle"></i></a>
+</div>
+
+</div>
+
+<!--------------------------------------
+Open State Ticket 
+------------------------>
+<!-- <form *ngFor="let item of queue_list"> -->
+<div *ngIf="this.emptyticket==true" class="ticket-details fl">
+<div class="card fullHeightCard keep-connect-chat-content">
+<div class="card-body">
+<div class="keep-connect" style="text-align: center;">
+<div class="connect-logo">
+<img src="assets/img/logo.png">
+<span class="logo-name">Omni Email Ticket</span>
+</div>
+<!-- <h3>Sorry, No Tickets</h3> -->
+<img style="border-radius: 55px;height: 337px;width: 508px;object-fit: cover;" src="https://image.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg" alt="NO dATA">
+<!-- <p > Ticket were empty <i class="fas fa-empty-set"></i></p> -->
+</div>
+</div> 
+</div>
+</div>
+
+
+<!----------------------------------
+Ticket Card View
+------------------------------------>
+<div id="card-ticket-view" style="display: none;">
+<div class="card ticket-status-open ticket-card"  *ngFor="let ticket of queue_list; let i = index" >
+<div class="card-body p-30">
+<div class="ticket-block">
+<div class="row">  
+<div class="col-md-2">
+<div class="agent-name">
+<input type="checkbox" (click)="slectunique()" value="{{ticket.ticket_no}}" id="{{ticket.ticket_no}}" name="emailtickets" class="emailtickets" />
+<div class="agent-name">
+	<div [style.background-color]="color[i]"  class="round-block bg-1 d-flex pointer">{{ticket.first_letter}}</div>
+</div>
+
+</div>
+</div>
+<div class="col-md-7">
+<div class="ticket-details-section fl">
+<div class="tag-section">
+<span [class]="ticket.ticket_status == 'Active' ? 'tag-active tag' : ticket.ticket_status == 'In Active' ? 'tag-inactive tag' :  ticket.ticket_status == 'New' ? 'tag-new tag' :  ticket.ticket_status == 'Pending' ? 'tag-pending tag': ticket.ticket_status == 'Un Assigned' ? 'tag-UnAssigned tag': ticket.ticket_status == 'Assigned' ? 'tag-Assigned tag': ticket.ticket_status == 'Progress' ? 'tag-UnAssigned tag': ticket.ticket_status == 'Completed' ? 'tag-Completed tag':ticket.ticket_status == 'Closed' ? 'tag-closed tag':'tag-new tag'">
+	{{ticket.ticket_status}}
+</span>
+<span class="tag-transparent tag">{{ticket.department}}</span>
+<span class="tag-transparent tag">{{ticket.priority}}</span>
+</div>
+<div class="ticket-details fl">
+<h6 class="pointer"  (click)="viewMyTicket(ticket.ticket_no)"><span class="blk-clr">{{ticket.subject}}</span> #{{ticket.ticket_no}}</h6>
+<!--------------------------
+Custom Tooltip
+-------------------------->
+<div class="custom-tooltip-section">
+<div class="tooltip-header fl">
+
+<div class="agent-name">
+	<div class="round-block bg-1 d-flex pointer">{{ticket.first_letter}}</div>
+</div>
+
+<p><strong><span>{{ticket.ticket_from}}</span></strong><br /><small>Submitted a New Ticket</small></p>
+<div class="fl">
+<h6>{{ticket.ticket_created_at}}</h6>
+</div>
+<div class="text-primary">
+<p class="blk-clr">
+	{{ticket.subject}}
+</p>
+
+</div>
+</div>
+</div>
+<!--------------------------
+Custom Tooltip End
+-------------------------->
+</div>
+
+	<div class="ticket-message-details fl">
+		<strong><i class="far fa-envelope"></i> {{ticket.ticket_status}} <span class="round-shape-xs"></span></strong>
+		{{ticket.ticket_created_at}}
+	</div>
+</div>
+</div>
+
+
+<div *ngIf="ticket.ticket_status!='Closed'" class="col-md-3">
+	<div class="ticket-assign-section">
+		<div class="form-group fl">
+			<div class="dropdown select-option" >
+				<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+					<span class="dropdown-label-icon">
+						<span [class]="ticket.priority == 'Low' ? 'green-bg-status status-bg' : ticket.priority == 'Medium' ? 'blue-bg-status status-bg' :  ticket.priority == 'High' ? 'yellow-bg-status status-bg' :  ticket.priority == 'Urgent' ? 'red-bg-status status-bg':''"></span>
+						{{ticket.priority}}
+					</span> 
+				</div> 
+				<div class="dropdown-menu">
+					<div class="dropdown-title">Select Priority</div>
+
+					<div class="pullDown" *ngFor="let item of priority ;let i = index">
+
+						<a href="javascript:void(0)"  [ngClass]="(item.priority == ticket.priority)? 'dropdown-item active':'dropdown-item'" (click)="changeMyPriority(ticket.ticket_no, item.id)"><div  [class]="item.priority == 'Low' ? 'green-bg-status status-bg' : item.priority == 'Medium' ? 'blue-bg-status status-bg' :  item.priority == 'High' ? 'yellow-bg-status status-bg' :  item.priority == 'Urgent' ? 'red-bg-status status-bg':'' "></div>
+							{{item.priority}}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group fl">
+				<div class="dropdown select-option" >
+					<div class="select-option-label" data-toggle="dropdown"  class="dropdown-toggle">
+						<span class="dropdown-label-icon"><i class="far fa-user"></i>{{ticket.department}}</span> 
+					</div>
+
+					<div  class="dropdown-menu">
+			<!-- <div>
+				<label class="selectgroup-item">
+					<input type="radio" name="value"   value="1" class="selectgroup-input select-layout">
+					<span class="selectgroup-button">Department</span>
+				</label>
+				<label class="selectgroup-item">
+					<input type="radio" name="value"  value="2" class="selectgroup-input select-layout">
+					<span class="selectgroup-button">Agents</span>
+				</label>
+			</div> -->
+			<div class="pullDown">
+				<div class="dropdown-title"> {{ticket.department}}</div>
+				<!-- <div class="searc-bar">
+					<div class="input-group">
+						<input type="text" id="deptsearch" (keydown)=searchdept() class="form-control" placeholder="Search Agent">
+						<div class="input-group-append">
+							<button class="btn btn-primary"  (click)="searchdept()"><i class="fas fa-search"></i></button>
+						</div>
+					</div>
+				</div> -->
+				<div>
+					<a href="javascript:void(0)" id="dept-list" *ngFor="let item of department ;let i = index"  [ngClass]="(item.department_name == ticket.department)? 'dropdown-item active':'dropdown-item'" (click)="changeMyDepartment(ticket.ticket_no, item.department_id)">{{item.department_name}}</a>
+					<div class="dropdown-divider"></div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<!--before edit department 
+		 <div class="form-group fl">
+		 	<div class="dropdown select-option"> -->
+				<!-- <div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+					
+					<select name=""  id="" class="form-control">
+						<span class="dropdown-label-icon"><i class="fas fa-user-plus"></i>
+							<option value='selectedvalue'></option>
+							<option  *ngFor="let name of department">
+									<a href="javascript:void(0)" class="active dropdown-item">{{name.department_name}}</a>
+							<div class="dropdown-divider"></div>
+
+							</option>
+				    	</span> 
+				    </select>	
+				</div> -->
+				<!-- <div class="dropdown-menu"> -->
+					<!-- <div class="pullDown"> -->
+						<!-- <div class="dropdown-title" (click)="noToggle()">Sales - Manikandan</div>
+						<div class="searc-bar" (click)="noToggle()">
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Search Agent">
+								<div class="input-group-append">
+									<button class="btn btn-primary" (click)="contactsList({'search_text':queue_search.value})"><i class="fas fa-search"></i></button>
+								</div>
+							</div>
+						</div> -->
+						<!-- </div> -->
+						<!-- </div> -->
+			<!-- </div>
+		</div> 
+		before edit department end					-->
+		<div class="form-group fl">
+			<div class="dropdown select-option">
+				<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+					<span class="dropdown-label-icon"><i class="fas fa-wave-square"></i>{{ticket.ticket_status}}</span> 
+					
+					<div class="dropdown-menu">
+						<div class="pullDown">
+							
+							<a href="javascript:void(0)"*ngFor="let item of status ;let i = index"  [ngClass]="(item.status_desc == ticket.ticket_status)? 'dropdown-item active':'dropdown-item'" (click)="changeMyStatus(ticket.ticket_no, item.status_id)">{{item.status_desc}}</a>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+<div *ngIf="ticket.ticket_status == 'Closed'" style="margin: auto;" class="col-md-3" >
+	<div class="ticket-message-details fl">
+		<div style="color: red;" class="ticket-details fl">
+			<h6>This Ticket was Closed</h6>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+</div>
+<!-- <h2>Closed Tickets</h2> -->
+
+</div>
+
+</div>
+
+<!--------------------------------------
+Card View End
+---------------------------------------->
+<!--------------------------------------
+Ticket Table View
+---------------------------------------->
+<div id="table_view" style="display: none;">
+<div class="card ticket-table-view"  >
+<div class="card-body p-0" >
+<table class="table table-striped table-md" style="color: #000;">
+<tr class="ticket-table-header">
+<th></th>
+<th>Contact</th>
+<th>Subject</th>
+<th>State</th>
+<!-- <th>Group</th> -->
+<th>Department</th>
+<th>Priority</th>
+<th>Status</th>
+</tr>
+<tbody>
+<tr *ngFor="let ticket of queue_list; let i = index"  [ngClass]="{'closed-ticket' : ticket.ticket_status =='Closed','unread-ticket':ticket.ticket_status != 'Closed'}">
+<td><input type="checkbox" (click)="slectunique()" value="{{ticket.ticket_no}}" id="{{ticket.ticket_no}}" name="emailtickets" class="emailtickets" name="checkbox"></td>
+<td>
+<div class="agent-name">
+	<div [style.background-color]="color[i]"  class="round-block bg-1 d-flex pointer">{{ticket.first_letter}}</div>
+
+	<!-- <div class="round-block bg-1 d-flex pointer">{{ticket.first_letter}}</div>  -->
+</div>
+</td>
+<td><a href="javascript:;" class="pointer fl">
+<span class="ticket-title" (click)="viewMyTicket(ticket.ticket_no)">{{ticket.subject}}
+</span><span class="ticket-id dark-grey-clr">#{{ticket.ticket_no}}</span></a></td>
+<td>
+	<div class="status-tag-wrap status-wrapper">
+		<span [class]="ticket.ticket_status == 'Active' ? 'tag-active tag' : ticket.ticket_status == 'In Active' ? 'tag-inactive tag' :  ticket.ticket_status == 'New' ? 'tag-new tag' :  ticket.ticket_status == 'Pending' ? 'tag-pending tag': ticket.ticket_status == 'Un Assigned' ? 'tag-UnAssigned tag': ticket.ticket_status == 'Assigned' ? 'tag-Assigned tag': ticket.ticket_status == 'Progress' ? 'tag-UnAssigned tag': ticket.ticket_status == 'Completed' ? 'tag-Completed tag':ticket.ticket_status == 'Closed' ? 'tag-closed tag':'tag-new tag'">
+			{{ticket.ticket_status}}
+		</span>
+      <!-- <span data-test-id="new-tag"  [ngClass]="{'tag-new tag' : ticket.ticket_status!='Closed','tag-overdue tag': ticket.ticket_status =='Closed'}">{{ticket.ticket_status}}</span> -->
+</div>
+</td>
+<td>
+<div class="form-group fl">
+	<div   class="dropdown select-option">
+		<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+			<span class="dropdown-label-icon"> {{ticket.department}}</span> 
+		</div>
+
+		<div *ngIf="ticket.ticket_status=='Closed'?callFunction(ticket.ticket_no):true" id="ticket_{{ticket.ticket_no}}"  class="dropdown-menu">
+			<div class="pullDown" *ngFor="let item of department ;let i = index">
+				<!-- <div class="dropdown-title" (click)="noToggle()">Search Group</div> -->
+				<!-- <div class="searc-bar" (click)="noToggle()">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Search..">
+						<div class="input-group-append">
+							<button class="btn btn-info"><i class="fas fa-search"></i></button>
+						</div>
+					</div>
+				</div> -->
+				<!-- <div class="dropdown-options"> -->
+					<a href="javascript:void(0)"   [ngClass]="(item.department_name == ticket.department)? 'dropdown-item active':'dropdown-item'" (click)="changeMyDepartment(ticket.ticket_no, item.department_id)">{{item.department_name}}</a>
+					<div class="dropdown-divider"></div>
+					<!-- <i class="fas fa-check"></i>s -->
+				<!-- </div> -->
+			</div>
+		</div>
+	</div>
+</div>
+</td>
+
+<!-- <td>
+<div class="form-group fl">
+	<div class="dropdown select-option">
+		<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+			<span class="dropdown-label-icon">Manikandan</span> 
+		</div>
+		<div  class="dropdown-menu">
+			<div class="pullDown">
+				<div class="dropdown-title" (click)="noToggle()">Search Agent</div>
+				<div class="searc-bar" (click)="noToggle()">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Search..">
+						<div class="input-group-append">
+							<button class="btn btn-info"><i class="fas fa-search"></i></button>
+						</div>
+					</div>
+				</div>
+				<div class="dropdown-options">
+					<a href="javascript:void(0)" class="dropdown-item active">Naveen
+						<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+					</a>
+					<a href="javascript:void(0)" class="dropdown-item">Manikandan</a>
+					<a href="javascript:void(0)" class="dropdown-item">Rashid</a>
+					<a href="javascript:void(0)" class="dropdown-item active">Naveen
+						<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+					</a>
+					<a href="javascript:void(0)" class="dropdown-item">Manikandan</a>
+					<a href="javascript:void(0)" class="dropdown-item">Rashid</a>
+					<a href="javascript:void(0)" class="dropdown-item active">Naveen
+						<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+					</a>
+					<a href="javascript:void(0)" class="dropdown-item">Manikandan</a>
+					<a href="javascript:void(0)" class="dropdown-item">Rashid</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</td> -->
+<td>
+<div class="form-group fl">
+<div class="dropdown select-option" >
+<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+<span class="dropdown-label-icon">
+<span [class]="ticket.priority == 'Low' ? 'green-bg-status status-bg' : ticket.priority == 'Medium' ? 'blue-bg-status status-bg' :  ticket.priority == 'High' ? 'yellow-bg-status status-bg' :  ticket.priority == 'Urgent' ? 'red-bg-status status-bg':'' "></span> 
+{{ticket.priority}}
+</span> 
+</div> 
+<div class="dropdown-menu" *ngIf="ticket.ticket_status=='Closed'?callFunction(ticket.ticket_no):true" id="ticket_{{ticket.ticket_no}}">
+<!-- <div class="dropdown-title" (click)="noToggle()">Select Priority</div> -->
+<!-- <div class="dropdown-options"> -->
+<div class="pullDown" *ngFor="let item of priority ;let i = index">
+<a (click)="changeMyPriority(ticket.ticket_no, item.id)"  [ngClass]="(item.priority == ticket.priority)? 'dropdown-item active':'dropdown-item'"><div  [class]="item.priority == 'Low' ? 'green-bg-status status-bg' : item.priority == 'Medium' ? 'blue-bg-status status-bg' :  item.priority == 'High' ? 'yellow-bg-status status-bg' :  item.priority == 'Urgent' ? 'red-bg-status status-bg':'' "></div>{{item.priority}}
+	<span *ngIf="item.priority == ticket.priority">
+		<i class="fas fa-check"></i>
+	</span>
+</a>
+<!-- <a href="javascript:void(0)" class="dropdown-item"><div class="blue-bg-status status-bg"></div>Medium</a>
+<a href="javascript:void(0)" class="dropdown-item"><div class="yellow-bg-status status-bg"></div>High</a>
+<a href="javascript:void(0)" class="dropdown-item"><div class="red-bg-status status-bg"></div>Urgent</a> -->
+</div>
+<!-- </div> -->
+</div>
+</div>
+</div>
+</td>
+
+<td>
+<div class="form-group fl">
+	<div class="dropdown select-option">
+		<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+			<span class="dropdown-label-icon">{{ticket.ticket_status}}</span> 
+		</div>
+
+		<div  class="dropdown-menu" *ngIf="ticket.ticket_status=='Closed'?callFunction(ticket.ticket_no):true" id="ticket_{{ticket.ticket_no}}">
+			<div class="pullDown" *ngFor="let item of status ;let i = index">
+				<!-- <div class="dropdown-title" (click)="noToggle()">Status</div> -->
+				<!-- <div class="dropdown-options"> -->
+					<a href="javascript:void(0)" [ngClass]="(item.status_desc == ticket.ticket_status)? 'dropdown-item active':'dropdown-item'" (click)="changeMyStatus(ticket.ticket_no, item.status_id)">{{item.status_desc}}</a>
+<!-- 
+					<a href="javascript:void(0)" class="dropdown-item">Pending</a>
+					<a href="javascript:void(0)" class="dropdown-item">Resolved</a>
+					<a href="javascript:void(0)" class="dropdown-item">Closed</a> -->
+				<!-- </div> -->
+			</div>
+		</div>
+	</div>
+</div>
+</td>
+</tr>
+
+
+<!-- <tr>
+<td><input type="checkbox" name="checkbox"></td>
+<td>
+<div class="agent-name">
+	<div class="round-block bg-2 d-flex pointer">N</div> Zeus News
+</div>
+</td>
+<td><a href="javascript:;" class="pointer fl">
+<span class="ticket-title">Top Story: Modest Development Decline schermata blu
+</span><span class="ticket-id dark-grey-clr">#750989</span></a></td>
+<td>
+	<div class="status-tag-wrap status-wrapper">
+      <span data-test-id="new-tag" class="tag-overdue tag">First Reponse Due</span>
+</div>
+</td>
+<td>
+<div class="form-group fl">
+	<div class="dropdown select-option">
+		<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+			<span class="dropdown-label-icon">Sales: Asia</span> 
+		</div>
+
+		<div  class="dropdown-menu">
+			<div class="pullDown">
+				<div class="dropdown-title" (click)="noToggle()">Search Group</div>
+				<div class="searc-bar" (click)="noToggle()">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Search..">
+						<div class="input-group-append">
+							<button class="btn btn-info"><i class="fas fa-search"></i></button>
+						</div>
+					</div>
+				</div>
+				<div class="dropdown-options">
+					<a href="javascript:void(0)" class="dropdown-item active">Sales
+					<span class="dropdown-active-icon"><i class="fas fa-check"></i></span></a>
+					<a href="javascript:void(0)" class="dropdown-item">Developemnt</a>
+					<a href="javascript:void(0)" class="dropdown-item">Support</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</td>
+
+<td>
+<div class="form-group fl">
+	<div class="dropdown select-option">
+		<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+			<span class="dropdown-label-icon">Manikandan</span> 
+		</div>
+		<div  class="dropdown-menu">
+			<div class="pullDown">
+				<div class="dropdown-title" (click)="noToggle()">Search Agent</div>
+				<div class="searc-bar" (click)="noToggle()">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Search..">
+						<div class="input-group-append">
+							<button class="btn btn-info"><i class="fas fa-search"></i></button>
+						</div>
+					</div>
+				</div>
+				<div class="dropdown-options">
+					<a href="javascript:void(0)" class="dropdown-item active">Naveen
+						<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+					</a>
+					<a href="javascript:void(0)" class="dropdown-item">Manikandan</a>
+					<a href="javascript:void(0)" class="dropdown-item">Rashid</a>
+					<a href="javascript:void(0)" class="dropdown-item active">Naveen
+						<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+					</a>
+					<a href="javascript:void(0)" class="dropdown-item">Manikandan</a>
+					<a href="javascript:void(0)" class="dropdown-item">Rashid</a>
+					<a href="javascript:void(0)" class="dropdown-item active">Naveen
+						<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+					</a>
+					<a href="javascript:void(0)" class="dropdown-item">Manikandan</a>
+					<a href="javascript:void(0)" class="dropdown-item">Rashid</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</td>
+<td>
+<div class="form-group fl">
+<div class="dropdown select-option" >
+<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+<span class="dropdown-label-icon">
+<span class="green-bg-status status-bg"></span>
+Low
+</span> 
+</div> 
+<div class="dropdown-menu">
+<div class="dropdown-title" (click)="noToggle()">Select Priority</div>
+<div class="dropdown-options">
+<div class="pullDown">
+<a href="javascript:void(0)" class="dropdown-item active"><div class="green-bg-status status-bg"></div>Low
+<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+</a>
+<a href="javascript:void(0)" class="dropdown-item"><div class="blue-bg-status status-bg"></div>Medium</a>
+<a href="javascript:void(0)" class="dropdown-item"><div class="yellow-bg-status status-bg"></div>High</a>
+<a href="javascript:void(0)" class="dropdown-item"><div class="red-bg-status status-bg"></div>Urgent</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</td>
+
+<td>
+<div class="form-group fl">
+	<div class="dropdown select-option">
+		<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+			<span class="dropdown-label-icon">Open</span> 
+		</div>
+
+		<div  class="dropdown-menu">
+			<div class="pullDown">
+				<div class="dropdown-title" (click)="noToggle()">Status</div>
+				<div class="dropdown-options">
+					<a href="javascript:void(0)" class="dropdown-item active">Open
+						<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+					</a>
+					<a href="javascript:void(0)" class="dropdown-item">Pending</a>
+					<a href="javascript:void(0)" class="dropdown-item">Resolved</a>
+					<a href="javascript:void(0)" class="dropdown-item">Closed</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</td>
+</tr> -->
+
+
+<!-- <tr>
+<td><input type="checkbox" name="checkbox"></td>
+<td>
+<div class="agent-name">
+	<div class="round-block bg-4 d-flex pointer">J</div> Zeus News
+</div>
+</td>
+<td><a href="javascript:;" class="pointer fl">
+<span class="ticket-title">Bug in ChkDsk causa schermata blu Bug in ChkDsk causa schermata blu
+</span><span class="ticket-id dark-grey-clr">#750989</span></a></td>
+<td>
+	<div class="status-tag-wrap status-wrapper">
+      <span data-test-id="new-tag" class="tag-overdue tag">Overdue</span>
+</div>
+</td>
+<td>
+<div class="form-group fl">
+	<div class="dropdown select-option">
+		<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+			<span class="dropdown-label-icon">Sales: Asia</span> 
+		</div>
+
+		<div  class="dropdown-menu">
+			<div class="pullDown">
+				<div class="dropdown-title" (click)="noToggle()">Search Group</div>
+				<div class="searc-bar" (click)="noToggle()">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Search..">
+						<div class="input-group-append">
+							<button class="btn btn-info"><i class="fas fa-search"></i></button>
+						</div>
+					</div>
+				</div>
+				<div class="dropdown-options">
+					<a href="javascript:void(0)" class="dropdown-item active">Sales
+					<span class="dropdown-active-icon"><i class="fas fa-check"></i></span></a>
+					<a href="javascript:void(0)" class="dropdown-item">Developemnt</a>
+					<a href="javascript:void(0)" class="dropdown-item">Support</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</td>
+
+<td>
+<div class="form-group fl">
+	<div class="dropdown select-option">
+		<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+			<span class="dropdown-label-icon">Manikandan</span> 
+		</div>
+		<div  class="dropdown-menu">
+			<div class="pullDown">
+				<div class="dropdown-title" (click)="noToggle()">Search Agent</div>
+				<div class="searc-bar" (click)="noToggle()">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Search..">
+						<div class="input-group-append">
+							<button class="btn btn-info"><i class="fas fa-search"></i></button>
+						</div>
+					</div>
+				</div>
+				<div class="dropdown-options">
+					<a href="javascript:void(0)" class="dropdown-item active">Naveen
+						<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+					</a>
+					<a href="javascript:void(0)" class="dropdown-item">Manikandan</a>
+					<a href="javascript:void(0)" class="dropdown-item">Rashid</a>
+					<a href="javascript:void(0)" class="dropdown-item active">Naveen
+						<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+					</a>
+					<a href="javascript:void(0)" class="dropdown-item">Manikandan</a>
+					<a href="javascript:void(0)" class="dropdown-item">Rashid</a>
+					<a href="javascript:void(0)" class="dropdown-item active">Naveen
+						<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+					</a>
+					<a href="javascript:void(0)" class="dropdown-item">Manikandan</a>
+					<a href="javascript:void(0)" class="dropdown-item">Rashid</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</td>
+<td>
+<div class="form-group fl">
+<div class="dropdown select-option" >
+<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+<span class="dropdown-label-icon">
+<span class="green-bg-status status-bg"></span>
+Low
+</span> 
+</div> 
+<div class="dropdown-menu">
+<div class="dropdown-title" (click)="noToggle()">Select Priority</div>
+<div class="dropdown-options">
+<div class="pullDown">
+<a href="javascript:void(0)" class="dropdown-item active"><div class="green-bg-status status-bg"></div>Low
+<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+</a>
+<a href="javascript:void(0)" class="dropdown-item"><div class="blue-bg-status status-bg"></div>Medium</a>
+<a href="javascript:void(0)" class="dropdown-item"><div class="yellow-bg-status status-bg"></div>High</a>
+<a href="javascript:void(0)" class="dropdown-item"><div class="red-bg-status status-bg"></div>Urgent</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</td>
+
+<td>
+<div class="form-group fl">
+	<div class="dropdown select-option">
+		<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+			<span class="dropdown-label-icon">Open</span> 
+		</div>
+
+		<div  class="dropdown-menu">
+			<div class="pullDown">
+				<div class="dropdown-title" (click)="noToggle()">Status</div>
+				<div class="dropdown-options">
+					<a href="javascript:void(0)" class="dropdown-item active">Open
+						<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+					</a>
+					<a href="javascript:void(0)" class="dropdown-item">Pending</a>
+					<a href="javascript:void(0)" class="dropdown-item">Resolved</a>
+					<a href="javascript:void(0)" class="dropdown-item">Closed</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</td>
+</tr> -->
+
+<!-- <tr class="closed-ticket">
+	<td><input type="checkbox" name="checkbox"></td>
+<td>
+<div class="agent-name">
+	<div class="round-block bg-4 d-flex pointer">J</div> Zeus News
+</div>
+</td>
+<td><a href="javascript:;" class="pointer fl">
+<span class="ticket-title">Bug in ChkDsk causa schermata blu Bug in ChkDsk causa schermata blu
+</span><span class="ticket-id dark-grey-clr">#750989</span></a></td>
+<td>
+	<div class="status-tag-wrap status-wrapper">
+      <span data-test-id="new-tag" class="tag-overdue tag">Overdue</span>
+</div>
+</td>
+<td>
+<div class="form-group fl">
+	<div class="dropdown select-option">
+		<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+			<span class="dropdown-label-icon">Sales: Asia</span> 
+		</div>
+
+		<div  class="dropdown-menu">
+			<div class="pullDown">
+				<div class="dropdown-title" (click)="noToggle()">Search Group</div>
+				<div class="searc-bar" (click)="noToggle()">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Search..">
+						<div class="input-group-append">
+							<button class="btn btn-info"><i class="fas fa-search"></i></button>
+						</div>
+					</div>
+				</div>
+				<div class="dropdown-options">
+					<a href="javascript:void(0)" class="dropdown-item active">Sales
+					<span class="dropdown-active-icon"><i class="fas fa-check"></i></span></a>
+					<a href="javascript:void(0)" class="dropdown-item">Developemnt</a>
+					<a href="javascript:void(0)" class="dropdown-item">Support</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</td>
+
+<td>
+<div class="form-group fl">
+	<div class="dropdown select-option">
+		<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+			<span class="dropdown-label-icon">Manikandan</span> 
+		</div>
+		<div  class="dropdown-menu">
+			<div class="pullDown">
+				<div class="dropdown-title" (click)="noToggle()">Search Agent</div>
+				<div class="searc-bar" (click)="noToggle()">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Search..">
+						<div class="input-group-append">
+							<button class="btn btn-info"><i class="fas fa-search"></i></button>
+						</div>
+					</div>
+				</div>
+				<div class="dropdown-options">
+					<a href="javascript:void(0)" class="dropdown-item active">Naveen
+						<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+					</a>
+					<a href="javascript:void(0)" class="dropdown-item">Manikandan</a>
+					<a href="javascript:void(0)" class="dropdown-item">Rashid</a>
+					<a href="javascript:void(0)" class="dropdown-item active">Naveen
+						<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+					</a>
+					<a href="javascript:void(0)" class="dropdown-item">Manikandan</a>
+					<a href="javascript:void(0)" class="dropdown-item">Rashid</a>
+					<a href="javascript:void(0)" class="dropdown-item active">Naveen
+						<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+					</a>
+					<a href="javascript:void(0)" class="dropdown-item">Manikandan</a>
+					<a href="javascript:void(0)" class="dropdown-item">Rashid</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</td>
+<td>
+<div class="form-group fl">
+<div class="dropdown select-option" >
+<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+<span class="dropdown-label-icon">
+<span class="red-bg-status status-bg"></span>
+Urgent
+</span> 
+</div> 
+<div class="dropdown-menu">
+<div class="dropdown-title" (click)="noToggle()">Select Priority</div>
+<div class="dropdown-options">
+<div class="pullDown">
+<a href="javascript:void(0)" class="dropdown-item active"><div class="red-bg-status status-bg"></div>Urgent
+<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+</a>
+<a href="javascript:void(0)" class="dropdown-item"><div class="blue-bg-status status-bg"></div>Medium</a>
+<a href="javascript:void(0)" class="dropdown-item"><div class="yellow-bg-status status-bg"></div>High</a>
+<a href="javascript:void(0)" class="dropdown-item"><div class="red-bg-status status-bg"></div>Urgent</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</td>
+
+<td>
+<div class="form-group fl">
+	<div class="dropdown select-option">
+		<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+			<span class="dropdown-label-icon">Closed</span> 
+		</div>
+
+		<div  class="dropdown-menu">
+			<div class="pullDown">
+				<div class="dropdown-title" (click)="noToggle()">Status</div>
+				<div class="dropdown-options">
+					<a href="javascript:void(0)" class="dropdown-item active">Closed
+						<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+					</a>
+					<a href="javascript:void(0)" class="dropdown-item">Pending</a>
+					<a href="javascript:void(0)" class="dropdown-item">Resolved</a>
+					<a href="javascript:void(0)" class="dropdown-item">Closed</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</td>
+</tr> -->
+
+<!-- <tr class="closed-ticket">
+	<td><input type="checkbox" name="checkbox"></td>
+<td>
+<div class="agent-name">
+	<div class="round-block bg-4 d-flex pointer">J</div> Zeus News
+</div>
+</td>
+<td><a href="javascript:;" class="pointer fl">
+<span class="ticket-title">Bug in ChkDsk causa schermata blu Bug in ChkDsk causa schermata blu
+</span><span class="ticket-id dark-grey-clr">#750989</span></a></td>
+<td>
+	<div class="status-tag-wrap status-wrapper">
+      <span data-test-id="new-tag" class="tag-overdue tag">Overdue</span>
+</div>
+</td>
+<td>
+<div class="form-group fl">
+	<div class="dropdown select-option">
+		<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+			<span class="dropdown-label-icon">Sales: Asia</span> 
+		</div>
+
+		<div  class="dropdown-menu">
+			<div class="pullDown">
+				<div class="dropdown-title" (click)="noToggle()">Search Group</div>
+				<div class="searc-bar" (click)="noToggle()">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Search..">
+						<div class="input-group-append">
+							<button class="btn btn-info"><i class="fas fa-search"></i></button>
+						</div>
+					</div>
+				</div>
+				<div class="dropdown-options">
+					<a href="javascript:void(0)" class="dropdown-item active">Sales
+					<span class="dropdown-active-icon"><i class="fas fa-check"></i></span></a>
+					<a href="javascript:void(0)" class="dropdown-item">Developemnt</a>
+					<a href="javascript:void(0)" class="dropdown-item">Support</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</td>
+
+<td>
+<div class="form-group fl">
+	<div class="dropdown select-option">
+		<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+			<span class="dropdown-label-icon">Manikandan</span> 
+		</div>
+		<div  class="dropdown-menu">
+			<div class="pullDown">
+				<div class="dropdown-title" (click)="noToggle()">Search Agent</div>
+				<div class="searc-bar" (click)="noToggle()">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Search..">
+						<div class="input-group-append">
+							<button class="btn btn-info"><i class="fas fa-search"></i></button>
+						</div>
+					</div>
+				</div>
+				<div class="dropdown-options">
+					<a href="javascript:void(0)" class="dropdown-item active">Naveen
+						<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+					</a>
+					<a href="javascript:void(0)" class="dropdown-item">Manikandan</a>
+					<a href="javascript:void(0)" class="dropdown-item">Rashid</a>
+					<a href="javascript:void(0)" class="dropdown-item active">Naveen
+						<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+					</a>
+					<a href="javascript:void(0)" class="dropdown-item">Manikandan</a>
+					<a href="javascript:void(0)" class="dropdown-item">Rashid</a>
+					<a href="javascript:void(0)" class="dropdown-item active">Naveen
+						<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+					</a>
+					<a href="javascript:void(0)" class="dropdown-item">Manikandan</a>
+					<a href="javascript:void(0)" class="dropdown-item">Rashid</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</td>
+<td>
+<div class="form-group fl">
+<div class="dropdown select-option" >
+<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+<span class="dropdown-label-icon">
+<span class="red-bg-status status-bg"></span>
+Urgent
+</span> 
+</div> 
+<div class="dropdown-menu">
+<div class="dropdown-title" (click)="noToggle()">Select Priority</div>
+<div class="dropdown-options">
+<div class="pullDown">
+<a href="javascript:void(0)" class="dropdown-item active"><div class="red-bg-status status-bg"></div>Urgent
+<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+</a>
+<a href="javascript:void(0)" class="dropdown-item"><div class="blue-bg-status status-bg"></div>Medium</a>
+<a href="javascript:void(0)" class="dropdown-item"><div class="yellow-bg-status status-bg"></div>High</a>
+<a href="javascript:void(0)" class="dropdown-item"><div class="red-bg-status status-bg"></div>Urgent</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</td>
+
+<td>
+<div class="form-group fl">
+	<div class="dropdown select-option">
+		<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+			<span class="dropdown-label-icon">Closed</span> 
+		</div>
+
+		<div  class="dropdown-menu">
+			<div class="pullDown">
+				<div class="dropdown-title" (click)="noToggle()">Status</div>
+				<div class="dropdown-options">
+					<a href="javascript:void(0)" class="dropdown-item active">Closed
+						<span class="dropdown-active-icon"><i class="fas fa-check"></i></span>
+					</a>
+					<a href="javascript:void(0)" class="dropdown-item">Pending</a>
+					<a href="javascript:void(0)" class="dropdown-item">Resolved</a>
+					<a href="javascript:void(0)" class="dropdown-item">Closed</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</td>
+</tr> -->
+
+
+</tbody>
+</table>
+
+</div>
+
+</div>
+</div>
+<!--------------------------------------
+Ticket Table View End
+---------------------------------------->
+
+
+<!-- </form> -->
+<!--------------------------------------
+Open State Ticket End
+------------------------>
+
+<!--------------------------------------
+In Progress State Ticket 
+------------------------>
+
+<!--------------------------------------
+In Progress State Ticket End
+------------------------>
+
+
+<!--------------------------------------
+close State Ticket 
+------------------------>
+<!--------------------------------------
+close State Ticket End
+------------------------>
+
+
+<!-- 
+	Pagging
+ -->
+ <!-- <div class="card-footer text-right">
+	<nav class="d-inline-block">
+		<ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+
+			<li class="page-item">
+				<a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'" href="javascript:void(0)" (click)="paginationData.backtab=='show' ? contactsList({'search_text':queue_search.value,'offset':paginationData.start}) : false"><i class="fas fa-angle-left"></i></a>
+			</li>
+			<li class="page-item" *ngIf="paginationData.backtab =='show'">
+				<a class="page-link" href="javascript:void(0)" (click)="contactsList({'search_text':queue_search.value,'offset':paginationData.back})"><i class="fas fa-angle-double-left"></i></a>
+			</li>
+
+
+			<li [class]="pagination.load ==false ? 'page-item active' :'page-item'" *ngFor="let pagination of paginationData.data;let i=index">
+				<a class="page-link" href="javascript:void(0)" (click)=" pagination.load ==true ? contactsList({'search_text':queue_search.value,'offset':pagination.offset_count}) : false">{{pagination.btn_length}} <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+			</li>
+
+			<li class="page-item" *ngIf="paginationData.nexttab =='show'">
+				<a class="page-link" href="javascript:void(0)" (click)="contactsList({'search_text':queue_search.value,'offset':paginationData.next})"><i class="fas fa-angle-double-right"></i></a>
+			</li>
+
+			<li class="page-item">
+				<a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'" href="javascript:void(0)" (click)="paginationData.nexttab =='show' ? contactsList({'search_text':queue_search.value,'offset':paginationData.end}) : false"><i class="fas fa-angle-right"></i></a>
+			</li>
+		</ul>
+	</nav>
+</div> -->
+ <!-- 
+	Pagging
+ -->
+
+
+ <div *ngIf="showmore_button" class="more-ticket-thread">
+	<button class="more-block" (click)="showmore()">          
+		<div class="more-conversation-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="app-icon" data-identifyElement="1820"><path fill-rule="evenodd" d="M8.987 18.999L0 10.1l1.428-1.415 7.56 7.485V0h2.02v16.176l7.564-7.49L20 10.101 10.002 20 10 19.998 9.998 20l-1.01-1v-.001z" data-identifyElement="1821"></path></svg>
+		</div>
+		<span class="pt-1 pb-1 ml-6 more-conversation-text">
+			<span class="more-count">
+			See More</span> 
+		</span>
+	</button>
+</div>
+<div *ngIf="showmore_filter" class="more-ticket-thread">
+<button class="more-block" (click)="showmoreFilter()">          
+	<div class="more-conversation-icon">
+		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="app-icon" data-identifyElement="1820"><path fill-rule="evenodd" d="M8.987 18.999L0 10.1l1.428-1.415 7.56 7.485V0h2.02v16.176l7.564-7.49L20 10.101 10.002 20 10 19.998 9.998 20l-1.01-1v-.001z" data-identifyElement="1821"></path></svg>
+	</div>
+	<span class="pt-1 pb-1 ml-6 more-conversation-text">
+		<span class="more-count">
+		Show More</span> 
+	</span>
+</button>
+</div>
+</div>
+</div>
+</div>

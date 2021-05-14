@@ -1,0 +1,359 @@
+<div class="section-body">
+	<div class="row">
+		<div class="col-12 col-md-12 col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<h4>WhatsApp instance Settings</h4>
+				</div>
+
+				<div class="card-body">
+					<div id="wizard_vertical" class="wizard vertical">
+						<div class="steps">
+							<ul class="nav nav-tabs">
+								<li class="nav-item" *ngFor="let inst of listinstacne; let i = index">
+									<a class="nav-link active" data-toggle="tab" (click)=route(inst.wp_inst_id,inst.instance_name,inst.qr_url,inst.department_id,inst.dept)>
+										<span class="wizard-icon"><i class="fab fa-whatsapp"></i></span>  {{inst.instance_name}} <b>( {{inst.whatsapp_num}} )</b></a>
+							     </li>
+									   
+											
+												<!-- <li class="nav-item">
+													<a class="nav-link" data-toggle="tab" href="#cdrReports">
+														<span class="wizard-icon"><i class="far fa-chart-bar"></i></span> CDR Reports</a>
+													</li> -->
+							</ul>
+						</div>
+                                            <!-- Tab panes -->
+                                            <div class="tab-content content" *ngIf="hideview==false">
+												<div class="body tab-pane active">
+													
+                                                       <div class="card fullHeightCard keep-connect-chat-content" >
+                                                            <div class="card-body">
+                                                                <div class="keep-connect">
+                                                                    <div class="connect-logo">
+                                                                    <img src="assets/img/logo.png">
+                                                                    <span class="logo-name">Omni WhatsApp Chat Settings</span>
+                                                                    </div>
+                                                                    <h3>Assign your WhastApp Instance to your Department</h3>
+                                                                    <!-- <p>To reduce the data usage,<br>connect your device to Wi-Fi.</p> -->
+                                                                </div>
+                                                            </div>
+                                                      </div>
+												</div>
+
+											</div>
+											<div class="tab-content content" *ngIf="hideview">
+												<div id="{{this.instroute}}" class="body tab-pane active">
+                                                  
+													<div class="card-header">
+                                                        <img src="assets/img/mc-dashboard/whatsapp.webp" alt="avatar" style="float: left;height:20px;width:20px;">
+
+                                                        <!-- <h4><b>{{this.instroutename}}</b></h4> -->
+                                                        <h4><b>Instance Details</b></h4>
+
+                                                        <div class="connect-logo"  *ngIf="realoded==false">
+                                                                                
+                                                            <button type="button" class="btn btn-primary" style="float:right;background-color:red;"  (click)=reloadQR()> <i class="fas fa-redo"></i> Reload</button>
+                                                         
+                                                       </div>
+													
+													</div>
+													
+                                                    
+													<div class="card" >
+                                         <!-- <div class="table-responsive" *ngIf="assign==false && alreadyassign==false"> -->
+                                                                <div class="card-body" *ngIf="assign==false && alreadyassign==false && connected==false">
+                                                                      <div class="keep-connect" >
+                                                                                <div class="connect-logo">
+                                                                            <button type="button" class="btn btn-primary" (click)=scan()> Assign to Department</button>
+                                                                         
+                                                                                </div>
+                                                                                <!-- <div class="connect-logo"  *ngIf="realoded==false">
+                                                                                
+                                                                                     <button type="button" class="btn btn-primary" style="float:right;background-color:red;"  (click)=reloadQR()> <i class="fas fa-redo"></i> Reload</button>
+                                                                                  
+                                                                                </div> -->
+                                                                          <h3>Assign your Instance to Department</h3>
+                                                                          <p>Before you Login into WhatsApp, you have to Logout of all the other devices that you have already logged into. Then  click “Assign” and enter the relevant WhatsApp number and scan the QR code to register</p>
+                                                                          <p> If you reload the Instance, it will be disabled.You need to scan Again. Not recommended without contacting technical support </p>
+                                                                       </div>
+
+
+                                                                   </div>
+
+                                                     </div>
+                                                     <div class="card" *ngIf="connected">
+                                                        <!-- <div class="table-responsive" *ngIf="assign==false && alreadyassign==false"> -->
+                                                                               <div class="card-body">
+                                                                                   <div class="card-header">
+                                                                                       <div class="form-group">
+                                                                                       <h5>
+                                                                            <button type="button" class="btn btn-primary" style="background-color:red;" (click)=disconnectinstant()> DISCONNECT Instance</button>
+                                                                                           
+                                                                                       </h5>
+
+                                                                                       </div>
+                                                                                    </div>
+                                                                                     <div class="keep-connect" *ngIf="alreadyassign" >
+                                                                                            
+                                                                                         <h3>This instance is assigned to the <b>{{this.assigneddept}} </b> Department</h3>
+                                                                                         <p>Go to Messaging->WhatsApp.You can Reply/transfer Chats to your Users</p>
+                                                                                      </div>
+                                                                                      <div class="keep-connect" *ngIf="alreadyassign==false">
+                                                                                           <button type="button"  class="btn btn-primary" style="background-color:violet;" (click)=assigndeptagain()> Assign to department</button>
+                                                                                              
+                                                                                        <h3>This Instance is Not Assigned to any Department</h3>
+                                                                                        <p>Please Logout and Login once to assign the instance to Department.</p>
+                                                                                     </div>
+               
+               
+                                                                                  </div>
+               
+                                                        </div>
+
+
+
+                                                       <div *ngIf="assign==true">
+                                                         <div class="row">
+                                                       
+                                                         
+                                                                <div class="card-header">
+                                                                                            
+                                                                <p>Make sure, You have scanned the QR Successfully and Logged into WhatsApp</p>
+                                                            </div>
+                                                               
+                                                                            <div class="form-group">
+                                                                                <label for="dept_assign">Select Department</label>
+                                                                                <select class="chat-widget form-control" id="dept_assign">
+                                                                                        <option *ngFor="let dept of listdept" value="{{dept.dept_id}}" >{{dept.department_name}}</option>
+                                                                                </select> 
+                                                                            </div>
+                                                           
+                                                     
+                                                              
+                                                          </div>
+                                            
+                                                            <div class="col-md-6">
+                                                                <div class="buttons">
+                                                                   
+                                                                     <input type="submit" class="btn btn-success" value="Update" (click)="assingtodept()">
+                                                                </div>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        
+                                                        
+                                                           
+                                               
+                                                               
+                                                               
+                                                           
+													
+												</div>
+
+											</div>
+
+					 </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade bd-example-modal-md" id="scan_qr">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Enter your Registered WhatsApp number</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span  aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+            <!-- <iframe width="100%" height="100%" frameBorder="0" href="https://whatsapp.mconnectapps.com/83430/qrCode"></iframe> -->
+            <div class="modal-body">
+              <form [formGroup]="getWp" id="scan_qr" class="question-panel fl">
+                  <div class="row">
+                      <div class="col-12">
+                          
+                             
+                                  <div class="form-group">
+                                         <label for="wp_number">PhoneNumer</label>
+                                      <input type="number" id="wp_number" formControlName="wp_number" class="form-control">
+                                      <p>Enter Country code without "+" symbol. Then type your WhatsApp number</p>
+                                  </div>
+                             
+
+                          
+                      </div>
+                  </div>
+  
+                  <div class="col-md-6">
+                      <div class="buttons">
+                         
+                           <input type="submit" class="btn btn-success" value="Scan" (click)="get_wp_number()">
+                      </div>
+                  </div>
+                  
+              </form>
+          </div>
+          
+     </div>
+   </div>
+</div>
+
+<div class="modal fade" id="show_qr" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-md">
+       <div class="modal-content">
+           <div class="modal-header"> 
+            <h5 class="modal-title">After Scanned, please wait for 60 seconds!</h5>
+          </div>
+          <button type="button" class="close" (click)="closeAll()" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+           <div class="col-md-12 col-12">
+
+           <div class="row" style="padding-left:60px" id="dailyfIframes">
+           </div>
+           </div>
+           <button type="button"> <h5 (click)=reloadQR()>If it take too much of time, click here for reload once.
+           </h5></button>
+          
+          <!-- <input type="button"  class="btn btn-secondary" value="submit" (click)=submitscan()> -->
+          <input type="hidden"  style="float: right;background-color:green;" class="btn btn-secondary" id='checkreadinst' value="submit" (click)=submitscan()>
+          <input type="hidden" style="float: left;background-color:red;"  class="btn btn-secondary"  value="Reload" (click)=reloadQR()>
+													
+         
+                <!-- <div class="card-body">
+                  <div class="keep-connect">
+                   <h5 > Make sure, You have scanned the QR Successfully and Logged into WhatsApp</h5>
+                    <h3 >If You are Scanned Successfully Click <b>Submit</b> or click <b>Reload</b></h3>
+                    <input type="button"  style="float: right;background-color:green;" class="btn btn-secondary"  value="submit" (click)=submitscan()>
+                    <input type="button" style="float: left;background-color:red;"  class="btn btn-secondary"  value="Reload" (click)=reloadQR()>
+
+                  </div>
+                </div> -->
+              
+       
+      </div>
+      
+    </div>
+ </div>
+
+ <div class="modal fade bd-example-modal-lg" id="disconnect" aria-modal="true" >
+    <div class="modal-dialog modal-lg">
+
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Follow this to logout your Instance</h5>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+            </div>
+            <p  style="padding-left: 150px; font-size:22px;">Disconnecting Instance will delete your data</p>
+
+            <div class="modal-body" style="text-align: center;">
+
+                <div class="row">
+      <div class="col-sm-6">
+        <h5 class="modal-title" id="myLargeModalLabel">ANDROID</h5>
+
+                  <div class="card-body" >
+                  
+
+  <img src="assets/img/wpandroid.jpg" alt="android">
+
+                  </div>
+     </div>
+     <div class="col-sm-6">
+        <h5 class="modal-title" id="myLargeModalLabel">IPHONE</h5>
+
+        <div class="card-body" >
+        
+            <img src="assets/img/wpiphone.jpg" alt="iphone">
+
+
+
+        </div>
+</div>
+        </div>
+    </div>
+    <h5  style="padding-left: 140px; font-size:22px;">You need to Reload instance once after Logging out.</h5>
+</div>
+
+</div>
+</div>
+
+<div class="modal fade bd-example-modal-md" id="scan_qr_again">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Enter Correct WhatsApp number previously scanned</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+            <!-- <iframe width="100%" height="100%" frameBorder="0" href="https://whatsapp.mconnectapps.com/83430/qrCode"></iframe> -->
+            <div class="modal-body">
+              <form id="scan_qr_again" class="question-panel fl">
+                  <div class="row">
+                      <div class="col-12">
+                                  <div class="form-group">
+                                         <label for="wp_number">PhoneNumer</label>
+                                      <input type="number" id="miss_wp_number"  class="form-control">
+                                      <p>Enter Country code without "+" symbol. Then type your WhatsApp number</p>
+                                  </div>
+                      </div>
+                  </div>
+  
+                  <div class="col-md-6">
+                      <div class="buttons">
+                         
+                           <input type="submit" class="btn btn-success" value="Update" (click)="get_miss_wp_number()">
+                      </div>
+                  </div>
+                  
+              </form>
+          </div>
+          
+     </div>
+   </div>
+</div>
+<div class="modal fade bd-example-modal-md" id="assginagain">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Select Department</h5>
+              
+            </div>
+            
+            <!-- <iframe width="100%" height="100%" frameBorder="0" href="https://whatsapp.mconnectapps.com/83430/qrCode"></iframe> -->
+            <div class="modal-body">
+            
+                  <div class="row">
+                    <div class="form-group">
+                             
+                                        <select class="chat-widget form-control" id="dept_assign_again">
+                                                <option *ngFor="let dept of listdept" value="{{dept.dept_id}}" >{{dept.department_name}}</option>
+                                        </select> 
+                                   
+                     </div>
+                 
+                  </div>
+  
+                  <div class="col-md-6">
+                      <div class="buttons">
+                           <input type="submit" class="btn btn-success" value="Update" (click)="assigndeptduplicate()">
+                      </div>
+                  </div>
+            
+          </div>
+          
+     </div>
+   </div>
+</div>
+

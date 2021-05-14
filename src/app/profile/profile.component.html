@@ -1,0 +1,335 @@
+<div class="section-body">
+
+    <div class="row mt-sm-4">
+        <div class="col-12 col-md-12 col-lg-6">
+
+            <div class="card">
+                <div class="card-header">
+                    <h4>Personal Details</h4>
+                </div>
+                <div class="card-body" >
+                    <div class="py-4" *ngIf="this.usersL!= null">
+                        <p class="clearfix">
+                            <span class="float-left">
+                                Agent Name
+                            </span>
+                            <span class="float-right text-muted">
+                                {{usersL.agent_name}}</span>
+                        </p>
+                        <p class="clearfix">
+                            <span class="float-left">
+                                User Type
+                            </span>
+                            <span class="float-right text-muted">
+                               {{user_type}}</span>
+                        </p>
+
+                        <p class="clearfix">
+                            <span class="float-left">
+                                Phone Number
+                            </span>
+                            <span class="float-right text-muted">
+                                <a >{{usersL.phone_number}}</a>
+                            </span>
+                        </p>
+
+
+                        <p class="clearfix">
+                            <span class="float-left">
+                                Email Id
+                            </span>
+                            <span class="float-right text-muted">
+                                <a href="mailto:{{usersL.email_id}}">{{usersL.email_id}}</a>
+                            </span>
+                        </p>
+                        <p class="clearfix">
+                            <span class="float-left">
+                                Contact
+                            </span>
+                            <span class="float-right text-muted">
+                                {{has_contact}}
+                            </span>
+                        </p>
+                        <p class="clearfix">
+                            <span class="float-left">
+                                SMS
+                            </span>
+                            <span class="float-right text-muted">
+                                {{has_sms}}
+                            </span>
+                        </p>
+                        <!-- <p class="clearfix">
+                            <span class="float-left">
+                                Call Queue
+                            </span>
+                            <span class="float-right text-muted">
+                                Yes
+                            </span>
+                        </p> -->
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-12 col-md-12 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Update Personal Details</h4>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="editAgent" (ngSubmit)="editAgentData()">
+
+  
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="user_name">User Name</label>
+                    <input type="text" id="user_name" class="form-control" formControlName="user_name" >
+                </div>
+            </div>
+           
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="agent_name">Name</label>
+                    <input type="text" id="agent_name" class="form-control" formControlName="agent_name">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="sip_login">Ext / Auth</label>
+                    <input type="text" id="sip_login" class="form-control" formControlName="sip_login" #sip_login >
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <button type="button" style="margin-top: 30px;" class="btn btn-primary" title="Retrive Sip Details From 3CX" (click)="retriveFrom3cx(sip_login.value)" *ngIf="this.hardware_id !=''"><i class="fas fa-download" style="padding: 0px;"></i></button> 
+                </div>
+            </div>
+            <div class="col-md-6" *ngIf="show_admin_sett">
+                <div class="form-group">
+                    <label for="sip_username">Sip Username</label>
+                     <span toggle="#sip_username" class="fa fa-fw fa-eye field-icon " (click)="toggleClasss()"></span>
+                    <input type="password" id="sip_username" class="form-control" formControlName="sip_username">
+                </div>
+            </div>
+            <div class="col-md-6" *ngIf="show_admin_sett">
+                <div class="form-group">
+                    <label for="sip_password">Sip Password</label>
+                    <span toggle="#sip_password" class="fa fa-fw fa-eye field-icon"  (click)="toggleClasss()"></span>
+                    <input type="password" id="sip_password" class="form-control" formControlName="sip_password" >
+                </div>
+            </div>
+  
+
+        
+             <div class="col-md-6">
+                <div class="form-group">
+                    <label for="email_id">Email Id</label>
+                    <input type="text" id="email_id" class="form-control" formControlName="email_id">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="phone_number">Phone No</label>
+                    <input type="text" id="phone_number" class="form-control" formControlName="phone_number">
+                    
+                </div>
+            </div>
+<!-- 
+            <div class="col-md-6" *ngIf="show_admin_sett">
+                <div class="form-group">
+                    <label for="timezone">Default TimeZone</label>
+                    <select name="timezone"  id="timezone" class="form-control" >
+                        <option value='0'> Select TimeZone </option>
+                        <option *ngFor="let time of queue_list" value="{{time.id}}" id="{{time.id}}">{{time.name}}</option>
+                        </select>
+                </div>
+            </div>   -->
+            <div class="col-md-6"> 
+                <div class="form-panel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="contact_owner">Profile Image (100px * 100px)</label>
+                                <input type="file" class="form-control" name="profile_image" id="profile_image" size="150">
+                            </div>
+                            <img src="{{this.profilePic}}" width="100px">
+                        </div>
+
+                    </div>
+                </div>
+           </div> 
+            
+         <!-- <div class="col-md-6" *ngIf="show_admin_sett">
+            <div class="form-panel">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="contact_owner">Main Logo (250px * 68px)</label>
+                            <input type="file" class="form-control" name="logo_image" id="logo_image" size="150">
+                        </div>
+                        <img src="{{this.logoPic}}" width="250px">
+                    </div>
+
+                </div>
+            </div>
+     </div>  -->
+
+     <!-- <div class="col-md-6" *ngIf="show_admin_sett">
+        <div class="form-panel">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="contact_owner">Small Logo (65px * 65px)</label>
+                        <input type="file" class="form-control" name="small_logo_image" id="small_logo_image" size="150">
+                    </div>
+                    <img src="{{this.small_logo_image}}" width="100px">
+                </div>
+
+            </div>
+        </div>
+ </div>  -->
+        </div>
+
+
+
+        <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary update_agent" value="Update" [disabled]="!editAgent.valid" style="margin-right: 15px;">
+                <input type="button" class="btn btn-primary update_agent" value="Update Billing Address" (click)="edit_billing_address()">
+
+            </div>
+        </div>  </div>
+
+        <input type="hidden" id="refresh_page" (click)="reload()">
+
+        <input type="hidden" id="refresh_profile" (click)="myProfile()">
+
+                   </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+<div class="modal fade bd-example-modal-md" id="edit_billing_address">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myLargeModalLabel">Update Billing Address</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="eadd1">Address 1 *</label>
+                                <input type="text" id="eadd1" class="form-control"  >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="eadd2">Address 2</label>
+                                <input type="text" id="eadd2" class="form-control"  >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="ecity">City *</label>
+                                <input type="text" id="ecity" class="form-control"  >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="estate">State *</label>
+                                <input type="text" id="estate" class="form-control"  >
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="ecountry">Country *</label>
+                                <input type="text" id="ecountry" class="form-control"  >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="ezip_code">Zip Code *</label>
+                                <input type="text" id="ezip_code" class="form-control"  >
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="ephone">Phone *</label>
+                                <input type="text" id="ephone" class="form-control"  >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="eemail">Email *</label>
+                                <input type="text" id="eemail" class="form-control"  >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="toll_free">Toll Free *</label>
+                                <input type="text" id="toll_free" class="form-control"  >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="reg_no">Reg No *</label>
+                                <input type="text" id="reg_no" class="form-control"  >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="account_no">Account No *</label>
+                                <input type="text" id="account_no" class="form-control"  >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="bank">Bank *</label>
+                                <input type="text" id="bank" class="form-control"  >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="branch">Branch *</label>
+                                <input type="text" id="branch" class="form-control"  >
+                            </div>
+                        </div>
+                     
+                    </div><br>  <br>
+                 
+
+                </div>
+
+                <div class="modal-footer">
+                    <div class="buttons">
+                        <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                        <input type="button" (click)="editShippingAddressMain()" class="btn btn-primary update_agent" value="Update">
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

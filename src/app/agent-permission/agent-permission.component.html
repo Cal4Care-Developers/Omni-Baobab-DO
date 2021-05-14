@@ -1,0 +1,152 @@
+
+<div class="section-body">
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Agent Permissions</h4>
+                    <!-- <div class="addBtn">
+                        <button type="button" class="btn btn-primary" (click)="addadmin()">+ Add Admin</button>
+                    </div> -->
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                     <table class="table table-bordered table-striped table-md">
+                         
+                        <tr>
+                            <th>S.no</th>
+                            <th>Agent Name</th>
+                            <th>Contacts</th>
+                            <th>Web Chat</th>
+                            <th>SMS</th>
+                            <th>Whatsapp</th>
+                            <th>Facebook</th>
+                            <th>WeChat</th>
+                            <th>Telegram</th>
+                            <th>Chatbot</th>
+                            <th>Internal Ticket</th>
+                            <th>External Ticket</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+
+                        <tbody>
+                            <tr *ngFor="let queue of admins;let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{queue.agent_name}}</td>
+                                <td><div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox"    checked="{{queue.has_contact == 1 ? 'checked' : ''}}" (click)="actCamp('has_contact',queue.id)"> 
+                                        <div class="state p-success">
+                                            <label for="has_status"></label>
+                                        </div>
+                                    </div>
+                                </div></td>
+                                <td><div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox"  checked="{{queue.has_chat == 1 ? 'checked' : ''}}" (click)="actCamp('has_chat',queue.id)"> 
+                                        <div class="state p-success">
+                                            <label for="has_status"></label>
+                                        </div>
+                                    </div>
+                                </div></td>
+                                <td><div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox"   checked="{{queue.has_sms == 1 ? 'checked' : ''}}" (click)="actCamp('has_sms',queue.id)"> 
+                                        <div class="state p-success">
+                                            <label for="has_status"></label>
+                                        </div>
+                                    </div>
+                                </div></td>
+                                <td><div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox"    checked="{{queue.has_whatsapp == 1 ? 'checked' : ''}}" (click)="actCamp('has_whatsapp',queue.id)"> 
+                                        <div class="state p-success">
+                                            <label for="has_status"></label>
+                                        </div>
+                                    </div>
+                                </div></td>
+                                <td><div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox"   checked="{{queue.has_fb == 1 ? 'checked' : ''}}" (click)="actCamp('has_fb',queue.id)"> 
+                                        <div class="state p-success">
+                                            <label for="has_status"></label>
+                                        </div>
+                                    </div>
+                                </div></td>
+                                <td><div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox"   checked="{{queue.has_wechat == 1 ? 'checked' : ''}}" (click)="actCamp('has_wechat',queue.id)"> 
+                                        <div class="state p-success">
+                                            <label for="has_status"></label>
+                                        </div>
+                                    </div>
+                                </div></td>
+                                <td><div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox"   checked="{{queue.has_telegram == 1 ? 'checked' : ''}}" (click)="actCamp('has_telegram',queue.id)"> 
+                                        <div class="state p-success">
+                                            <label for="has_status"></label>
+                                        </div>
+                                    </div>
+                                </div></td>
+                                
+                                <td><div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox"   checked="{{queue.has_chatbot == 1 ? 'checked' : ''}}" (click)="actCamp('has_chatbot',queue.id)"> 
+                                        <div class="state p-success">
+                                            <label for="has_status"></label>
+                                        </div>
+                                    </div>
+                                </div></td>
+                                <td><div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox"   checked="{{queue.has_internal_ticket == 1 ? 'checked' : ''}}" (click)="actCamp('has_internal_ticket',queue.id)"> 
+                                        <div class="state p-success">
+                                            <label for="has_status"></label>
+                                        </div>
+                                    </div>
+                                </div></td>
+                                <td><div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox"   checked="{{queue.has_external_ticket == 1 ? 'checked' : ''}}" (click)="actCamp('has_external_ticket',queue.id)"> 
+                                        <div class="state p-success">
+                                            <label for="has_status"></label>
+                                        </div>
+                                    </div>
+                                </div></td>
+
+                                <td><div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox"   checked="{{queue.admin_status == 1 ? 'checked' : ''}}" (click)="actCamp('admin_status',queue.id)"> 
+                                        <div class="state p-success">
+                                            <label for="has_status"></label>
+                                        </div>
+                                    </div>
+                                </div></td>
+                                <td><button type="button" class="btn btn-primary" (click)="editAdmindata(queue.id)">Delete</button></td>
+                            </tr>
+
+                            <tr *ngIf="recordNotFound == true">
+                             <td colspan="12">Data not found</td>
+                         </tr>
+                     </tbody>
+                     
+                 </table>
+             </div>
+         </div>
+         
+     </div>
+ </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+

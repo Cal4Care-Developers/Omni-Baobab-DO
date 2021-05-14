@@ -1,0 +1,1713 @@
+
+<div class="section-body app-settings-page">
+	<div class="row">
+		<div class="col-12 col-lg-12"> 
+			<div class="card">
+				<div class="card-header">
+					<h4>Chat Widget</h4> 
+				</div> 
+				<div class="card-body p-30">
+					<div class="row">
+						<div class="col-12 col-lg-10">
+							<select class="chat-widget form-control"  (change)="get_timezones($event.target.value)">
+								<option  *ngFor="let item of chatWigets" value="{{item.id}}">{{item.widget_name}}</option> 
+							</select> 
+						</div>
+						<div class="col-12 col-lg-2">
+							<span class="user-icon" style="cursor: pointer;"><i class="far fa-trash-alt" (click)="deletewidget(this.currWidgetId)"></i></span>
+							<button type="button" class="btn btn-success" data-toggle="modal" data-target="#createNewWidget">+ Add Widget</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12 col-lg-6">
+			<div class="card">
+				<div class="card-header">
+					<h4>Widget Appearance</h4>
+				</div>
+				<div class="card-body p-30">
+					<div class="row">
+						<div class="col-12 col-lg-12">
+							<div class="form-group">
+								<label>Widget Name</label>
+								<input type="text" class="form-control" value="{{this.currWidgetName}}" id="widget_edit_name">
+							</div>
+							
+						</div>
+						
+					</div>
+					<div class="row">
+						<div class="col-12 col-lg-12">
+							<div class="form-group">
+								<label>Widget Color</label>
+								<div class="input-group colorpickerinput colorpicker-element">
+									<input disabled="disabled" type="text" class="form-control" id="widgetColor" >
+									<div class="input-group-append">
+										<div class="input-group-text">
+											<i class="fas fa-fill-drip" style="cursor: pointer; font-size: 16px;"></i>
+										</div>
+									</div>
+								</div>
+							</div>	
+						</div>
+						<div class="col-12 col-lg-12">
+							<div class="settings-btn-group fr">
+								<button type="button" class="btn btn-success" (click)="editChatWidget(this.currWidgetId)">Save</button>
+								<button type="button" class="btn btn-info"  (click)="widgetAppearanceSettingsx()"><i class="fa fa-spin fa-cog"></i> Advanced</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+<!-- 
+			<div class="card">
+				<div class="card-header">
+					<h4>Widget Appearance</h4>
+				</div>
+				<div class="card-body p-30">
+					
+				</div>
+			</div> -->
+		</div>
+
+		<div class="col-12 col-lg-6">
+			<div class="card">
+				<div class="card-header">
+					<h4>Widget Code</h4>
+				</div>
+				<div class="card-body p-30">
+				<!-- <div class="code-to-copy">
+					<h6>Click the url to start chat</h6>
+					<div class="widget-copy">
+						<a  target="_blank" href="{{ this.customHtml}}">{{ this.customHtml}}</a>
+
+					</div>
+				</div> -->
+				<div class="code-to-copy">
+					<h6>Implement the following code to start chat</h6>
+					<pre id="copyClipboard" class="widget-copy">
+						&lt;script&gt;
+						function receiveMessage(e)&#123;var t=JSON.parse(e.data),i=t.status_style;"openChat"!=t.operation_type?document.getElementById("ChatFrame").setAttribute("style","position: fixed; right: 0px; bottom: 0px; border: none;height:200px;width:200px;"):document.getElementById("ChatFrame").setAttribute("style",i)&#125;$(document).ready(function()&#123;$("body").append("&lt;iframe src='{{this.customHtml}}' id='ChatFrame' style='position: fixed; right: 0px; bottom: 0px; border: none;height:200px;width:200px;'&gt;&lt;/iframe&gt;")&#125;),window.addEventListener("message",receiveMessage,!1);
+						&lt;/script&gt;
+					</pre>	
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-12 col-lg-6">
+		<div class="card">
+			<div class="card-header">
+				<h4>Direct Chat Link</h4>
+			</div>
+			<div class="card-body p-30">
+				<div class="row">
+					<div class="col-12 col-lg-12">
+						<input type="text" id="copyClipboard"  class="form-control" name="direct_link" value="{{this.customHtml}}">
+					</div>
+					<div class="col-12 col-lg-12">
+						<div class="settings-btn-group fr">
+							<a href="{{this.customHtml}}" class="btn btn-success" target="_blank">Click here to Start Chat</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-12 col-lg-6">
+		<div class="card">
+			<div class="card-header">
+				<h4>On Click Behaviour</h4>
+			</div>
+			<div class="card-body p-30">
+				<div class="row">
+					<div class="col-12 col-lg-12">
+						<select class="form-control" id="behaviour">
+							<option value="popout">Popout</option>
+							<option value="Maximize">Maximize</option>
+						</select>
+					</div>
+					<div class="col-12 col-lg-12">
+						<div class="settings-btn-group fr">
+							<button type="button" class="btn btn-success" (click)="changeChatWidgetBehaves(this.currWidgetId)">Save</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-12 col-lg-6">
+		<div class="card">
+			<div class="card-header">
+				<h4>User & Department Management</h4>
+			</div>
+			<div class="card-body p-30">
+				<div class="row">
+					<div class="col-12">
+						<div class="settings-btn-group fl no-padding">
+							<button  data-toggle="modal" data-target="#userDepartmentManagement" type="button" class="btn btn-info"><i class="fas fa-users"></i> User & Department &nbsp;&nbsp; <i class="fas fa-arrow-right"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-12 col-lg-6">
+		<div class="card">
+			<div class="card-header">
+				<h4>Idle Chat Duration</h4>
+			</div>
+			<div class="card-body p-30">
+				<div class="row">
+					<div class="col-12 col-md-8">
+						<div class="form-group">
+							<div class="col-md-12 col-12">
+								<select class="form-control" id="widget_activity_time">
+									<option value="2">2 Minutes</option>
+									<option value="5">5 Minutes</option>
+									<option value="8">8 Minutes</option>
+									<option value="10">10 Minutes</option>
+									<option value="12">12 Minutes</option>
+									<option value="15">15 Minutes</option>
+									<option value="20">20 Minutes</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-md-4">
+						<div class="settings-btn-group  fr">
+							<button   type="button" class="btn btn-success" (click)="changeChatLogsTime(this.currWidgetId)"><i class="fas fa-clock"></i> Save</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="col-12 col-lg-12">
+		<div class="card">
+			<div class="card-header">
+				<h4>Widget Settings</h4>
+			</div>
+
+			<div class="card-body p-30">
+				<div class="row">
+					<div class="col-md-6 col-12">
+						<div class="form-group">
+							<label>Offline Email</label>
+							<input type="text" class="form-control" id="offline_email" placeholder="enter email">
+						</div>
+						
+					</div>
+					<div class="col-md-2 col-12">
+						<div class="form-group">
+							<label for="chat_aviator">Show Aviator</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<div class="pretty p-switch p-fill">
+								<input type="checkbox" id="chat_aviator" name="chat_aviator">
+								<div class="state p-success">
+									<label for="chat_aviator"></label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 col-12">
+						<div class="form-group">
+							<label for="chat_agent_name">Show Agent Name</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<div class="pretty p-switch p-fill">
+								<input type="checkbox" id="chat_agent_name" name="chat_agent_name">
+								<div class="state p-success">
+									<label for="chat_agent_name"></label>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-md-2 col-12">
+						<div class="form-group">
+							<label for="has_department">Show Departments</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<div class="pretty p-switch p-fill">
+								<input type="checkbox" id="has_department" name="has_department">
+								<div class="state p-success">
+									<label for="has_department"></label>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6 col-12">
+						<div class="card inner-card">
+							<div class="card-header">
+								<h4>Timezone Settings 1</h4>
+							</div>
+							<div class="card-body p-30">
+								<div class="row">
+									<div class="col-12">
+										<div class="form-group">
+											<label for="office_in_time">Timezone</label>
+											<select class="form-control time-zone" id="main_timeZone" name="main_timeZone">
+												<option value="custom" *ngFor="let item of time_list" value="{{item.id}}">{{item.name}}</option>
+											</select>
+										</div>
+									</div>
+
+									<div class="col-md-12">
+										<div class="settings-btn-group fr">
+											<a class="btn btn-warning"  data-toggle="modal" data-target="#advancedScedule" target="_blank" href="javascript:;"><i class="fas fa-clock"></i> Manage Timing</a>
+										</div>
+									</div>
+
+
+								<!-- 	<div class="col-md-6">
+										<div class="form-group">
+											<label for="office_in_time">Openning Time</label>
+											<input type="time" id="office_in_time" class="form-control"  >
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="office_out_time">Closing Time</label>
+											<input type="time" id="office_out_time" class="form-control"  >
+										</div>
+									</div> -->
+
+							<!-- <div class="col-md-4 col-12">
+								<div class="settings-btn fr">
+									<button type="button" class="btn btn-info" data-toggle="modal" data-target="#advancedScedule">Edit Timezone</button>
+								</div>
+							</div> -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- <div class="col-md-6 col-12">
+				<div class="card inner-card">
+					<div class="card-header">
+						<h4>Timezone Settings 2</h4>
+					</div>
+					<div class="card-body p-30">
+						<div class="row">
+							<div class=" col-12">
+								<div class="form-group">
+									<label for="office_in_time">Timezone</label>
+									<select class="form-control time-zone" id="schedule_timeZone">
+										<option value="custom" *ngFor="let item of time_list" value="{{item.id}}">{{item.name}}</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="col-md-12">
+										<div class="settings-btn-group fr">
+											<a class="btn btn-info"  data-toggle="modal" data-target="#advancedwidgetScedule" target="_blank" href="javascript:;"><i class="fas fa-clock"></i> Manage Timing</a>
+										</div>
+									</div>
+
+							
+						</div>
+					</div>
+				</div>
+			</div> -->
+
+
+
+
+
+		</div>
+		<div class="col-12">
+			<div class="settings-btn">
+				<button type="button" class="btn btn-success" (click)="updateChatSett(this.currWidgetId)">Save</button>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="col-12 col-lg-12">
+	<div class="card">
+		<div class="card-header">
+			<h4>Consent Form</h4>
+		</div>
+		<div class="card-body p-30">
+			<div class="row">
+				<div class="col-md-9 col-12">
+					<div class="form-group">
+						<label for="display-options">Display option</label>
+						<select id="display_options" class="form-control display-options">
+							<option value="none" *ngFor="let item of consentsForms" value="{{item.id}}">{{item.display_option_value}}</option>
+
+						</select>
+					</div>
+				</div>
+				<div class="col-md-3 col-12">
+					<div class="settings-btn-group" style="margin: 23px 0 0 0;">
+						<span class="user-icon" class="btn btn-info" style="cursor: pointer;"><i class="fa fa-plus no-padding" data-toggle="modal" data-target="#createconsentform" ></i></span>
+						<span class="user-icon" class="btn btn-warning" style="cursor: pointer;"><i class="far fa-edit no-padding" (click)="editaddConsentForn(this.currWidgetId)"  ></i></span>
+						<!-- <span class="user-icon" style="cursor: pointer;"><i class="far fa-trash-alt" (click)="deleteConsentForn(this.currWidgetId)"></i></span> -->
+						<button type="button" class="btn btn-success" data-toggle="modal" data-target="#widgetConsentForm">Edit Content</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="col-12 col-lg-12">
+	<div class="card">
+		<div class="card-header">
+			<h4>Notification Sound</h4>
+		</div>
+		<div class="card-body p-30">
+			<div class="row">
+				<div class="col-md-4 col-12" *ngFor="let item of chatSounds">
+					<div class="form-group">
+						<label for="display-options"><input type="radio" value="{{item.id}}"  name="chat_sound"> Sound {{item.id}}</label>
+
+						<audio controls>
+							<source src="{{item.sound_file_path}}" type="audio/mpeg">
+							</audio>
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="col-12">
+							<div class="btn-group settings-btn-group fr">
+								<!-- <button type="button" class="btn btn-info">Set Default</button> -->
+								<button type="button" class="btn btn-success" (click)="update_chat_sound(this.currWidgetId)"><i class="fa fa-volume-up" aria-hidden="true"></i> Save Sound</button>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+
+
+
+<!---------------------
+User & Department Modal
+------------------>
+<div class="modal fade" id="userDepartmentManagement">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myLargeModalLabel">User & Department Management</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+
+				<div id="accordion" class="accordion">
+					<div class="card mb-0">
+						<div class="card-header show" data-toggle="collapse" href="#collapseOne">
+							<h4>Department</h4>
+						</div>
+						<div id="collapseOne" class="card-body collapse show" data-parent="#accordion" >
+							<div class="row">
+								<div class="col-md-3 col-12" *ngFor="let item of department_list">
+									<div class="form-check form-check-inline">
+										<div class="pretty p-switch p-fill">
+											<input class="departments"  name="departments"  type="checkbox" value="{{item.dept_id}}"  [attr.checked]="depChecked && depChecked.indexOf(item.dept_id) == -1 ? checked : ''" >
+											<div class="state p-success">
+												<label for="development">{{item.department_name}}</label>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+						<div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+							<h4>User Management</h4>
+						</div>
+						<div id="collapseTwo" class="card-body collapse" data-parent="#accordion">
+
+							<div class="row">
+								<div class="col-md-3 col-12" *ngFor="let item of agent_list">
+									<div class="form-check form-check-inline">
+										<div class="pretty p-switch p-fill">
+											<input  class="agent_list" name="agent_list"  type="checkbox" value="{{item.user_id}}" [attr.checked]="ageChecked && ageChecked.indexOf(item.user_id) == -1 ? checked : ''">
+											<div class="state p-success">
+												<label for="user_1">{{item.agent_name}}</label>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="buttons">
+					<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+					<input type="button" class="btn btn-success update_agent" value="Submit" (click)="update_wigdet_usrs(this.currWidgetId)">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!---------------------
+Add New Consent form Modal
+------------------>
+<div class="modal fade" id="createconsentform">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myLargeModalLabel">Create New consent option</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-12 col-md-12">
+						<div class="row">
+							<div class="col-md-12 col-12">
+								<div class="form-group">
+									<label for="option-name">Option Name</label>
+									<input type="text" class="form-control" name="option-name" id="option_name">
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>	
+			</div>
+
+			<div class="modal-footer">
+				<div class="buttons">
+					<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+					<input type="button" class="btn btn-primary update_agent" value="Submit"  (click)="addConsentForn(this.currWidgetId)">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!---------------------
+Add edit Consent form Modal
+------------------>
+<div class="modal fade" id="editconsentformss">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myLargeModalLabel">Edit</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-12 col-md-12">
+						<div class="row">
+							<div class="col-md-12 col-12">
+								<div class="form-group">
+									<label for="edit_option_name">Consent Name</label>
+									<input type="text" class="form-control" name="edit_option_name" id="edit_option_name">
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>	
+			</div>
+
+			<div class="modal-footer">
+				<div class="buttons">
+					<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+					<input type="button" class="btn btn-primary update_agent" value="Submit"  (click)="updateConsentForn(this.currWidgetId)">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="col-12 col-lg-12">
+	<div class="card">
+		<div class="card-header">
+			<h4>Widget Behaviour</h4>
+		</div>
+		<div class="card-body p-30">
+			<div class="row">
+					<!-- <div class="col-12 col-md-12">
+						<div class="card">
+							<div class="card-header">
+								<h4>Notification Settings</h4>
+							</div>
+							<div class="card-body p-30">
+								<div class="row">
+									<div class="col-md-6 col-12">
+										<div class="form-check form-check-inline">
+											<div class="pretty p-switch p-fill">
+												<input type="checkbox" id="hide-est-wait-time" name="hide-est-wait-time"  checked="{{this.hide_estimated_wait_time == 1 ? 'checked' : ''}}" (click)="editChatWidgetBehaves(this.currWidgetId,'hide_estimated_wait_time')">
+												<div class="state p-success">
+													<label for="chat_aviator"></label>
+												</div>
+											</div>
+											<label class="toggle-title" for="hide-est-wait-time">Hide estimated wait time</label>
+										</div>
+									</div>
+
+									<div class="col-md-6 col-12">
+										<div class="form-check form-check-inline">
+											<div class="pretty p-switch p-fill">
+												<input type="checkbox" id="disable-agent-notification" name="disable-agent-notification" checked="{{this.disable_agent_typing_notification == 1 ? 'checked' : ''}}" (click)="editChatWidgetBehaves(this.currWidgetId,'disable_agent_typing_notification')">
+												<div class="state p-success">
+													<label for="chat_aviator"></label>
+												</div>
+											</div>
+											<label class="toggle-title" for="disable-agent-notification">Disable agent typing notification</label>
+										</div>
+									</div>
+
+									<div class="col-md-6 col-12">
+										<div class="form-check form-check-inline">
+											<div class="pretty p-switch p-fill">
+												<input type="checkbox" id="disable-sound-notification" name="disable-sound-notification" checked="{{this.disable_sound_notification == 1 ? 'checked' : ''}}" (click)="editChatWidgetBehaves(this.currWidgetId,'disable_sound_notification')">
+												<div class="state p-success">
+													<label for="chat_aviator"></label>
+												</div>
+											</div>
+											<label class="toggle-title" for="disable-sound-notification">Disable sound notification</label>
+										</div>
+									</div>
+
+									 <div class="col-md-6 col-12">
+										<div class="form-check form-check-inline">
+											<div class="pretty p-switch p-fill">
+												<input type="checkbox" id="disable-visitor-typing" name="disable-visitor-typing" checked="{{this.disable_visitor_typing_function == 1 ? 'checked' : ''}}" (click)="editChatWidgetBehaves(this.currWidgetId,'disable_visitor_typing_function')">
+												<div class="state p-success">
+													<label for="chat_aviator"></label>
+												</div>
+											</div>
+											<label class="toggle-title" for="disable-visitor-typing">Disable visitor typing function</label>
+										</div>
+									</div> 
+
+									<div class="col-md-6 col-12">
+										<div class="form-check form-check-inline">
+											<div class="pretty p-switch p-fill">
+												<input type="checkbox" id="disable-message-preview" name="disable-message-preview" checked="{{this.disable_message_preview == 1 ? 'checked' : ''}}" (click)="editChatWidgetBehaves(this.currWidgetId,'disable_message_preview')">
+												<div class="state p-success">
+													<label for="chat_aviator"></label>
+												</div>
+											</div>
+											<label class="toggle-title" for="disable-message-preview">Disable message preview</label>
+										</div>
+									</div> 
+
+									<div class="col-md-6 col-12">
+										<div class="form-check form-check-inline">
+											<div class="pretty p-switch p-fill">
+												<input type="checkbox" id="disable-browser-tab-notification" name="disable-browser-tab-notification" checked="{{this.disable_browser_tab_notification == 1 ? 'checked' : ''}}" (click)="editChatWidgetBehaves(this.currWidgetId,'disable_browser_tab_notification')">
+												<div class="state p-success">
+													<label for="chat_aviator"></label>
+												</div>
+											</div>
+											<label class="toggle-title" for="disable-browser-tab-notification">Disable browser tab notification</label>
+										</div>
+									</div>
+
+									<div class="col-md-12 col-12">
+										<div class="form-check form-check-inline">
+											<div class="pretty p-switch p-fill">
+												<input type="checkbox" id="disable-chat-rating" name="disable-chat-rating" checked="{{this.disable_chat_rating == 1 ? 'checked' : ''}}" (click)="editChatWidgetBehaves(this.currWidgetId,'disable_chat_rating')">
+												<div class="state p-success">
+													<label for="chat_aviator"></label>
+												</div>
+											</div>
+											<label class="toggle-title" for="disable-chat-rating">Disable chat rating</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div> -->
+
+					<div class="col-12 col-md-6">
+						<div class="card">
+							<div class="card-header">
+								<h4> Visibility Settings</h4>
+							</div>
+							<div class="card-body p-30">
+								<div class="row">
+									<div class="col-md-12 col-12">
+										<div class="form-check form-check-inline">
+											<div class="pretty p-switch p-fill">
+												<input type="checkbox" id="hide-widget-offline" name="hide-widget-offline" checked="{{this.hide_widget_when_offline == 1 ? 'checked' : ''}}" (click)="editChatWidgetBehaves(this.currWidgetId,'hide_widget_when_offline')">
+												<div class="state p-success">
+													<label for="chat_aviator"></label>
+												</div>
+											</div>
+											<label class="toggle-title" for="hide-widget-offline">Hide widget when offline</label>
+										</div>
+									</div>
+									<div class="col-md-12 col-12">
+										<div class="form-check form-check-inline">
+											<div class="pretty p-switch p-fill">
+												<input type="checkbox" id="hide-widget-onload" name="hide-widget-onload" checked="{{this.hide_widget_on_load == 1 ? 'checked' : ''}}" (click)="editChatWidgetBehaves(this.currWidgetId,'hide_widget_on_load')">
+												<div class="state p-success">
+													<label for="chat_aviator"></label>
+												</div>
+											</div>
+											<label class="toggle-title" for="hide-widget-onload">Hide widget on load</label>
+										</div>
+									</div>
+									<div class="col-md-12 col-12">
+										<div class="form-check form-check-inline">
+											<div class="pretty p-switch p-fill">
+												<input type="checkbox" id="hide-widget-mobile" name="hide-widget-mobile" checked="{{this.hide_widget_on_mobile == 1 ? 'checked' : ''}}" (click)="editChatWidgetBehaves(this.currWidgetId,'hide_widget_on_mobile')">
+												<div class="state p-success">
+													<label for="chat_aviator"></label>
+												</div>
+											</div>
+											<label class="toggle-title" for="hide-widget-mobile">Hide widget on mobile</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-12 col-md-6">
+						<div class="card">
+							<div class="card-header">
+								<h4>Notification Settings</h4>
+							</div>
+							<div class="card-body p-30">
+								<div class="row">
+
+									<div class="col-md-12 col-12">
+										<div class="form-check form-check-inline">
+											<div class="pretty p-switch p-fill">
+												<input type="checkbox" id="disable-sound-notification" name="disable-sound-notification" checked="{{this.disable_sound_notification == 1 ? 'checked' : ''}}" (click)="editChatWidgetBehaves(this.currWidgetId,'disable_sound_notification')">
+												<div class="state p-success">
+													<label for="chat_aviator"></label>
+												</div>
+											</div>
+											<label class="toggle-title" for="disable-sound-notification">Disable sound notification</label>
+										</div>
+									</div>
+
+
+									<div class="col-md-12 col-12">
+										<div class="form-check form-check-inline">
+											<div class="pretty p-switch p-fill">
+												<input type="checkbox" id="disable-browser-tab-notification" name="disable-browser-tab-notification" checked="{{this.disable_browser_tab_notification == 1 ? 'checked' : ''}}" (click)="editChatWidgetBehaves(this.currWidgetId,'disable_browser_tab_notification')">
+												<div class="state p-success">
+													<label for="chat_aviator"></label>
+												</div>
+											</div>
+											<label class="toggle-title" for="disable-browser-tab-notification">Disable browser tab notification</label>
+										</div>
+									</div>
+
+									<div class="col-md-12 col-12">
+										<div class="form-check form-check-inline">
+											<div class="pretty p-switch p-fill">
+												<input type="checkbox" id="disable-chat-rating" name="disable-chat-rating" checked="{{this.disable_chat_rating == 1 ? 'checked' : ''}}" (click)="editChatWidgetBehaves(this.currWidgetId,'disable_chat_rating')">
+												<div class="state p-success">
+													<label for="chat_aviator"></label>
+												</div>
+											</div>
+											<label class="toggle-title" for="disable-chat-rating">Disable chat rating</label>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-12 col-lg-12">
+		<div class="card">
+			<div class="card-header">
+				<h4>Availability Restriction</h4>
+			</div>
+			<div class="card-body p-30">
+				<div class="row">
+
+
+
+					<div class="col-12 col-md-6">
+						<div class="card">
+							<div class="card-header">
+								<h4>Country Restriction</h4>
+								<div class="addBtn">
+									<button class="btn btn-primary" data-toggle="modal" data-target="#availabilityRestriction">Configure</button>
+								</div>
+							</div>
+							<div class="card-body p-30">
+								<div class="row">
+									<div class="col-md-12 col-12">
+										<div class="form-check form-check-inline">
+											<!-- <div class="pretty p-switch p-fill">
+												<input type="checkbox" id="disabled-restiction-1" name="dDisabled-restiction-1">
+												<div class="state p-success">
+													<label for="chat_aviator"></label>
+												</div>
+											</div> -->
+											<label class="toggle-title" for="disabled-restiction-1">Disabled, Configure to Enable</label>
+										</div>
+										<p>By default, the widget will be shown to all visitors. To show or hide the widget for visitors from specific countries, enable this functionality and specify the countries.</p>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<!---------------------
+Widget Appearance Modal
+------------------>
+<div class="modal fade" id="widgetAppearanceSettings">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myLargeModalLabel">Widget Appearance</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="modal-scedule">
+					<div class="row">
+						<div class="col-12 col-xl-6">
+							<div class="card">
+								<div class="card-header">
+									<h4>Widget Appearance</h4>
+								</div>
+								<div class="card-body p-30">
+
+									<div class="col-md-12 col-12">
+										<div class="form-group">
+											<div class="custom-control inline-select-radio custom-radio custom-control-inline">
+												<input type="radio" id="widget-appearance-round" name="widget_appearance_type" value="offline" class="custom-control-input" (click)="chnageWdgetApp('offline')">
+												<label class="custom-control-label widget-appearance-round-click" for="widget-appearance-round">
+													<div class="widget-appearance-round"><i class="fa fa-comments" aria-hidden="true" style="padding: 0;"></i></div>
+												</label>
+											</div>
+
+											<div class="custom-control inline-select-radio custom-radio custom-control-inline">
+												<input type="radio" id="widget-appearance-flat" name="widget_appearance_type" value="online" class="custom-control-input" (click)="chnageWdgetApp('online')">
+												<label class="custom-control-label widget-appearance-flat-click" for="widget-appearance-flat">
+													<div class="widget-flat">
+														Online
+													</div>
+												</label>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+							<div class="card">
+								<div class="card-header">
+									<h4>Widget Position</h4>
+								</div>
+								<div class="card-body p-30">
+									<div class="col-md-12 col-12">
+										<div class="widget-position-list">
+											<div class="form-group">
+												<div class="custom-control inline-position-radio custom-radio custom-control-inline">
+													<input type="radio" id="widget-position-list-1" name="widget_position" value="bottom-left" class="custom-control-input">
+													<label class="custom-control-label chat-widget-position-1" for="widget-position-list-1">
+														<div class="widget-position-list">
+															<img src="assets/images/widget/position-1.jpg">
+														</div>
+													</label>
+												</div>
+
+												<div class="custom-control inline-position-radio custom-radio custom-control-inline">
+													<input type="radio" id="widget-position-list-2" name="widget_position" value="top-left" class="custom-control-input">
+													<label class="custom-control-label chat-widget-position-2" for="widget-position-list-2">
+														<div class="widget-position-list">
+															<img src="assets/images/widget/position-2.jpg">
+														</div>
+													</label>
+												</div>
+
+												<div class="custom-control inline-position-radio custom-radio custom-control-inline">
+													<input type="radio" id="widget-position-list-3" name="widget_position" value="top-right" class="custom-control-input">
+													<label class="custom-control-label chat-widget-position-3" for="widget-position-list-3">
+														<div class="widget-position-list">
+															<img src="assets/images/widget/position-3.jpg">
+														</div>
+													</label>
+												</div>
+												<div class="custom-control inline-position-radio custom-radio custom-control-inline">
+													<input type="radio" id="widget-position-list-4" name="widget_position" value="bottom-right" class="custom-control-input">
+													<label class="custom-control-label chat-widget-position-4" for="widget-position-list-4">
+														<div class="widget-position-list">
+															<img src="assets/images/widget/position-4.jpg">
+														</div>
+													</label>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="card">
+								<div class="card-header">
+									<h4>Attention Grabber</h4>
+								</div>
+								<div class="card-body p-30">
+									<div class="col-md-12 col-12">
+
+										<div class="form-check form-check-inline">
+											<div class="pretty p-switch p-fill">
+												<input type="checkbox" id="attention_grabber" name="attention-grabber" (click)="changeattGrab()">
+												<div class="state p-success">
+													<label for="attention-grabber"></label>
+												</div>
+											</div>
+											<label class="toggle-title" for="attention-grabber" *ngIf="ag_enabled">Enabled</label>
+											<button class="btn btn-success"  data-toggle="modal" data-target="#imageGallery" *ngIf="ag_enabled">Gallery</button>
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+							<div class="card">
+								<div class="card-header">
+									<h4>Mobile Widget</h4>
+								</div>
+								<div class="card-body p-30">
+									<div class="col-md-12 col-12">
+										<div class="form-group">
+											<div class="custom-control inline-select-radio custom-radio custom-control-inline">
+												<input type="radio" id="mobile-widget-appearance-round" name="widget_appearance_m_type" value="offline" class="custom-control-input">
+												<label class="custom-control-label" for="mobile-widget-appearance-round">
+													<div class="widget-appearance-round"><i class="fa fa-comments" aria-hidden="true" style="padding: 0;"></i></div>
+												</label>
+											</div>
+
+											<div class="custom-control inline-select-radio custom-radio custom-control-inline">
+												<input type="radio" id="mobile-widget-appearance-flat" name="widget_appearance_m_type" value="online" class="custom-control-input">
+												<label class="custom-control-label" for="mobile-widget-appearance-flat">
+													<div class="widget-flat mobile-flat-chat">Online</div>
+												</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="col-12 col-xl-6">
+							<div class="card">
+								<div class="card-header">
+									<h4>Desktop widget preview</h4>
+								</div>
+								<div class="card-body chat-widget-window-panel p-0">
+
+									<div class="grabber-img" id="grabber-bottom-right" *ngIf="widget_appearance =='offline'">
+										<img src="{{this.image_url}}">
+									</div>
+
+									<div id="window-round-chat"  *ngIf="widget_appearance =='offline'">
+										<div class="widget-appearance-round" id="bottom-right-round"   [style.background]="this.wid_color">
+											<i aria-hidden="true" class="fa fa-comments" style="padding: 0;"></i>
+										</div>
+									</div>
+
+									<div id="window-flat-chat"  *ngIf="widget_appearance =='online'">
+										<div class="widget-flat" id="bottom-right-flat"  [style.background]="this.wid_color" >Online</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="buttons">
+					<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+					<input type="button" class="btn btn-primary update_agent" value="Submit" (click)="advancedChatwidgetSettings(this.currWidgetId)">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!---------------------
+Image Gallery Modal
+------------------>
+
+<input type="hidden" id="refresh_page" (click)="get_timezones(this.currWidgetId)">
+
+<div class="modal fade" id="imageGallery">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myLargeModalLabel">Attention Grabber Image</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="modal-scedule">
+					<div class="row">
+						<div class="col-12 col-lg-12">
+							<div class="card">
+								<div class="card-body p-30">
+									<div class="attention-grabber-image">
+										<ul>
+											<li *ngFor="let item of default_images">
+												<a href="javascript:;">
+													<div class="demo-checkbox">
+														<div class="pretty p-icon p-smooth">
+															<input type="radio" name="attension_grabber_img" value="{{item.id}}">
+															<div class="state p-warning">
+																<i class="icon material-icons">done</i>
+																<label></label>
+															</div>
+														</div>
+													</div>
+													<label for="attension_grabber_img-1">
+														<img src="{{item.chat_image}}">
+													</label>
+												</a>
+											</li>
+										</ul>
+
+										<ul>
+											<li *ngFor="let item of myImages">
+												<a href="javascript:;">
+													<div class="demo-checkbox">
+														<div class="pretty p-icon p-smooth">
+															<input type="radio" name="attension_grabber_img" value="{{item.id}}">
+															<div class="state p-warning">
+																<i class="icon material-icons">done</i>
+																<label></label>
+															</div>
+														</div>
+													</div>
+													<label for="attension_grabber_img-1">
+														<img src="{{item.chat_image}}">
+													</label>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="upload-image">
+										<h6>Upload Image</h6>
+										<input type="file" name="upload-image" class="btn-success" id="chat_image">
+										<p>Image Size 300 * 150 in px</p>
+									</div>								
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="buttons">
+					<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+					<input type="button" class="btn btn-primary update_agent" value="Submit" (click)="uploadImageChat(this.currWidgetId)">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!---------------------
+Add New Widget Modal
+------------------>
+<div class="modal fade" id="createNewWidget">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myLargeModalLabel">Create New Widget</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-12 col-md-12">
+						<div class="row">
+							<div class="col-md-12 col-12">
+								<div class="form-group">
+									<label for="widget-name">Widget Name</label>
+									<input type="text" class="form-control" name="widget-name" id="widget_name">
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+
+				</div>	
+			</div>
+
+			<div class="modal-footer">
+				<div class="buttons">
+					<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+					<input type="button" class="btn btn-primary update_agent" value="Submit"  (click)="addChatWidget()">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<!---------------------
+Availability Restriction Modal
+------------------>
+<div class="modal fade" id="availabilityRestriction">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myLargeModalLabel">Availability Restriction</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+
+
+					<div class="col-12 col-md-6">
+						<div class="card">
+							<div class="card-header">
+								<h4>Country Restriction</h4>
+								<div class="addBtn">
+									<div class="form-check form-check-inline">
+										<div class="pretty p-switch p-fill">
+											<input type="checkbox" id="country-restriction" name="country-restriction" checked="{{this.country_restriction == 1 ? 'checked' : ''}}">
+											<div class="state p-success">
+												<label for="chat_aviator"></label>
+											</div>
+										</div>
+										<label class="toggle-title" for="country-restriction"></label>
+									</div>
+								</div>
+							</div>
+							<div class="card-body p-30">
+								<div class="row">
+									<div class="col-md-12 col-12">
+										<p>By default, the widget will be shown to all visitors. To show or hide the widget for visitors from specific countries, enable this functionality and specify the countries.</p>
+									</div>
+									<div class="col-md-12 col-12">
+										<div class="form-group">
+											<select class="form-control" id="wid_show_dd">
+												<option value="Show widget only to visitors of the following countries">Show widget only to visitors of the following countries</option>
+												<option value="Hide widget only from visitors of the following countries">Hide widget only from visitors of the following countries</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-12 col-12">
+										
+
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="reports">Select Report</label>
+												<select name="reports" multiple id="country_name" class="form-control has-multiple-select" >
+													<option *ngFor="let code of countryCodes" value="{{code.country_code}}" [attr.selected]="codeChecked && codeChecked.indexOf(code.country_code) == -1 ? selected : ''" >{{code.country_name}}</option>
+												</select>
+											</div>
+										</div>
+
+										
+
+
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div>
+
+			<div class="modal-footer">
+				<div class="buttons">
+					<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+					<input type="button" class="btn btn-primary update_agent" value="Submit" (click)="editcountryRestriction(this.currWidgetId)">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!---------------------
+Widget Consent Modal
+------------------>
+
+<div class="modal fade" id="widgetConsentForm">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myLargeModalLabel">Widget Consent Form</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-6 col-12">
+						<div class="form-group">
+							<label for="display-options">Required Consent form</label>
+							<select id="required-consents-options" class="form-control display-options">
+								<option value="none" *ngFor="let item of consentsForms" value="{{item.id}}">{{item.display_option_value}}</option>
+							</select>
+
+						</div>
+					</div>
+
+					<div class="col-md-6 col-12">
+						<div class="form-group">
+							<label for="privacy-policy-link">Privacy policy link (Optional)</label>
+							<input type="text" class="form-control" id="privacy-policy-link" name="privacy-policy-link">
+						</div>
+					</div>
+
+					<div class="col-md-12 col-12">
+						<div class="form-group">
+							<label for="consent-mesage">Consent Message</label>
+							<textarea id="consent-mesage" class="form-control"></textarea>
+						</div>
+					</div>
+
+					<div class="col-md-6 col-12">
+						<div class="form-group">
+							<label for="privacy-policy-text-2">Privacy policy text (Optional)</label>
+							<input type="text" class="form-control" id="privacy-policy-text" name="privacy-policy-text">
+						</div>
+					</div>
+
+					<div class="col-md-6 col-12">
+						<div class="form-group">
+							<label for="opt-in-button">Opt-In Button</label>
+							<input type="text" class="form-control" placeholder="Enter" id="opt-in-button" name="opt-in-button">
+						</div>
+					</div>
+
+					<div class="col-md-6 col-12">
+						<div class="form-group">
+							<label for="opt-out-button">Opt-Out Button</label>
+							<input type="text" class="form-control" id="opt-out-button" name="opt-out-button">
+						</div>
+					</div>
+
+				</div>
+				
+			</div>
+			<div class="modal-footer">
+				<div class="buttons">
+					<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+					<input type="button" class="btn btn-primary update_agent" value="Submit" (click)="update_consent_form_data(this.currWidgetId)">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!---------------------
+Widget Scheduler Modal
+------------------>
+<div class="modal fade" id="advancedScedule">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myLargeModalLabel">Widget Scheduler</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="modal-scedule">
+					
+
+					<div class="row">
+						<div class="col-12 col-lg-12">
+							<div class="card">
+								<div class="card-header">
+									<h4>Monday</h4>
+								</div>
+								<div class="card-body p-30">
+
+									<div class="row">
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day1_opening_time">Openning Time</label>
+												<input type="time" id="day1_opening_time" class="form-control"  >
+											</div>
+										</div>
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day1_close_time">Closing Time</label>
+												<input type="time" id="day1_close_time" class="form-control"  >
+											</div>
+										</div>
+
+									</div>
+
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-12 col-lg-12">
+							<div class="card">
+								<div class="card-header">
+									<h4>Tuesday</h4>
+								</div>
+								<div class="card-body p-30">
+									<div class="row">
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="office_in_time">Openning Time</label>
+												<input type="time" id="day2_opening_time" class="form-control"  >
+											</div>
+										</div>
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="office_out_time">Closing Time</label>
+												<input type="time" id="day2_close_time" class="form-control"  >
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-12 col-lg-12">
+							<div class="card">
+								<div class="card-header">
+									<h4>Wednesday</h4>
+								</div>
+								<div class="card-body p-30">
+									<div class="row">
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day3_opening_time">Openning Time</label>
+												<input type="time" id="day3_opening_time" class="form-control"  >
+											</div>
+										</div>
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day3_close_time">Closing Time</label>
+												<input type="time" id="day3_close_time" class="form-control"  >
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-12 col-lg-12">
+							<div class="card">
+								<div class="card-header">
+									<h4>Thursday</h4>
+								</div>
+								<div class="card-body p-30">
+									<div class="row">
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day4_opening_time">Openning Time</label>
+												<input type="time" id="day4_opening_time" class="form-control"  >
+											</div>
+										</div>
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day4_close_time">Closing Time</label>
+												<input type="time" id="day4_close_time" class="form-control"  >
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-12 col-lg-12">
+							<div class="card">
+								<div class="card-header">
+									<h4>Friday</h4>
+								</div>
+								<div class="card-body p-30">
+									<div class="row">
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day5_opening_time">Openning Time</label>
+												<input type="time" id="day5_opening_time" class="form-control"  >
+											</div>
+										</div>
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day5_close_time">Closing Time</label>
+												<input type="time" id="day5_close_time" class="form-control"  >
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-12 col-lg-12">
+							<div class="card">
+								<div class="card-header">
+									<h4>Saturday</h4>
+								</div>
+								<div class="card-body p-30">
+									<div class="row">
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day6_opening_time">Openning Time</label>
+												<input type="time" id="day6_opening_time" class="form-control"  >
+											</div>
+										</div>
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day6_close_time">Closing Time</label>
+												<input type="time" id="day6_close_time" class="form-control"  >
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-12 col-lg-12">
+							<div class="card">
+								<div class="card-header">
+									<h4>Sunday</h4>
+								</div>
+								<div class="card-body p-30">
+									<div class="row">
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day7_opening_time">Openning Time</label>
+												<input type="time" id="day7_opening_time" class="form-control"  >
+											</div>
+										</div>
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day7_close_time">Closing Time</label>
+												<input type="time" id="day7_close_time" class="form-control"  >
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="buttons">
+					<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+					<input type="button" class="btn btn-primary update_agent" value="Submit" (click)="addalltimeZome1(this.currWidgetId)">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+<div class="modal fade" id="advancedwidgetScedule">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myLargeModalLabel">Widget Scheduler</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="modal-scedule">
+					
+	
+					<div class="row">
+						<div class="col-12 col-lg-12">
+							<div class="card">
+								<div class="card-header">
+									<h4>Monday</h4>
+								</div>
+								<div class="card-body p-30">
+	
+									<div class="row">
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day1_opening_time_s">Openning Time</label>
+												<input type="time" id="day1_opening_time_s" class="form-control"  >
+											</div>
+										</div>
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day1_close_time_s">Closing Time</label>
+												<input type="time" id="day1_close_time_s" class="form-control"  >
+											</div>
+										</div>
+	
+									</div>
+	
+	
+	
+								</div>
+							</div>
+						</div>
+					</div>
+	
+					<div class="row">
+						<div class="col-12 col-lg-12">
+							<div class="card">
+								<div class="card-header">
+									<h4>Tuesday</h4>
+								</div>
+								<div class="card-body p-30">
+									<div class="row">
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="office_in_time_s">Openning Time</label>
+												<input type="time" id="day2_opening_time_s" class="form-control"  >
+											</div>
+										</div>
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="office_out_time_s">Closing Time</label>
+												<input type="time" id="day2_close_time_s" class="form-control"  >
+											</div>
+										</div>
+	
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+	
+					<div class="row">
+						<div class="col-12 col-lg-12">
+							<div class="card">
+								<div class="card-header">
+									<h4>Wednesday</h4>
+								</div>
+								<div class="card-body p-30">
+									<div class="row">
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day3_opening_time_s">Openning Time</label>
+												<input type="time" id="day3_opening_time_s" class="form-control"  >
+											</div>
+										</div>
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day3_close_time_s">Closing Time</label>
+												<input type="time" id="day3_close_time_s" class="form-control"  >
+											</div>
+										</div>
+	
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+	
+					<div class="row">
+						<div class="col-12 col-lg-12">
+							<div class="card">
+								<div class="card-header">
+									<h4>Thursday</h4>
+								</div>
+								<div class="card-body p-30">
+									<div class="row">
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day4_opening_time_s">Openning Time</label>
+												<input type="time" id="day4_opening_time_s" class="form-control"  >
+											</div>
+										</div>
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day4_close_time_s">Closing Time</label>
+												<input type="time" id="day4_close_time_s" class="form-control"  >
+											</div>
+										</div>
+	
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+	
+					<div class="row">
+						<div class="col-12 col-lg-12">
+							<div class="card">
+								<div class="card-header">
+									<h4>Friday</h4>
+								</div>
+								<div class="card-body p-30">
+									<div class="row">
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day5_opening_time_s">Openning Time</label>
+												<input type="time" id="day5_opening_time_s" class="form-control"  >
+											</div>
+										</div>
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day5_close_time_s">Closing Time</label>
+												<input type="time" id="day5_close_time_s" class="form-control"  >
+											</div>
+										</div>
+	
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+	
+					<div class="row">
+						<div class="col-12 col-lg-12">
+							<div class="card">
+								<div class="card-header">
+									<h4>Saturday</h4>
+								</div>
+								<div class="card-body p-30">
+									<div class="row">
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day6_opening_time_s">Openning Time</label>
+												<input type="time" id="day6_opening_time_s" class="form-control"  >
+											</div>
+										</div>
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day6_close_time_s">Closing Time</label>
+												<input type="time" id="day6_close_time_s" class="form-control"  >
+											</div>
+										</div>
+	
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+	
+					<div class="row">
+						<div class="col-12 col-lg-12">
+							<div class="card">
+								<div class="card-header">
+									<h4>Sunday</h4>
+								</div>
+								<div class="card-body p-30">
+									<div class="row">
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day7_opening_time_s">Openning Time</label>
+												<input type="time" id="day7_opening_time_s" class="form-control"  >
+											</div>
+										</div>
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="day7_close_time_s">Closing Time</label>
+												<input type="time" id="day7_close_time_s" class="form-control"  >
+											</div>
+										</div>
+	
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+	
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="buttons">
+					<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+					<input type="button" class="btn btn-primary update_agent" value="Submit" (click)="addalltimeZome2(this.currWidgetId)">
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>

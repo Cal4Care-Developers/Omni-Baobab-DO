@@ -1,0 +1,49 @@
+
+<div class="section-body">
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Chat Ratings</h4>
+                    <div class="addBtn">
+                        <!-- <button type="button" class="btn btn-primary" (click)="addDepartment()"> Export As CSV</button> -->
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                       <table class="table table-bordered table-striped table-md">
+                         
+                        <tr>
+                            <th>S.no </th>
+                            <th>Customer</th>
+                            <th>Chat Date</th>
+                            <th>Chat Department</th>
+                            <th>Chat Rating</th>
+                            <th>Chat Country</th>
+                        </tr>
+
+                        <tbody>
+                            <tr *ngFor="let queue of chat_panel_list; let i=index">
+                                <td>{{0+i+1}}</td>
+                                <td>{{queue.customer_name}}</td>
+                                <td>{{queue.chat_dt}}</td>
+                                <td>{{queue.department_name}}</td>
+                                <td>{{queue.rating_value}}</td>
+                                    <td>
+                                        {{queue.country}}
+                                    </td>
+                                </tr>
+
+                            <tr *ngIf="recordNotFound == true">
+                             <td colspan="12">Data not found</td>
+                         </tr>
+                     </tbody>
+                     
+                 </table>
+             </div>
+         </div>
+         
+     </div>
+ </div>
+</div>
+</div>

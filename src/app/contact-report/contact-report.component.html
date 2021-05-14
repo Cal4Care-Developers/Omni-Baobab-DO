@@ -1,0 +1,64 @@
+
+<div class="section-body">
+    <div class="row">
+        <div class="col-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Activity Report</h4>
+                  
+                </div>
+                <div class="card-body p-30">
+                <form [formGroup]="getRep" (ngSubmit)="getReports()">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="aget_ids">Select Agent</label>
+                                <select name="Sauces" multiple id="aget_ids" class="form-control has-multiple-select" formControlName="aget_ids">
+                                    <option *ngFor="let user of usersL" value="{{user.user_id}}">{{user.user_name}} - {{user.agent_name}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="phone_num">Select caller</label>
+                                <input type="text" id="phone_num" value="{{s_licence_key}}" placeholder="Type Caller number" (keyup)="getItems($event)" class="form-control" >
+                                <ul *ngIf="isItemAvailable" class="contacts">
+                                    <li *ngFor="let item of items" (click)="searchLK(item.contact_id, item.phone)">
+                                      {{item.phone}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="from_date">From Date</label>
+                                <input type="date" id="from_date" class="form-control" formControlName="from_date">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="to_date">To Date</label>
+                                <input type="date" id="to_date" class="form-control" formControlName="to_date">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary" (click)="getReports()">Generate Report</button>
+                            </div>
+                        </div>
+                        </div>
+                    
+                </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

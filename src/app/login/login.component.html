@@ -1,0 +1,179 @@
+<!--  <div class="loader"></div>-->
+  <div id="app">
+    <section class="section">
+      <div class="container pt-50">
+        <div class="row" *ngIf="loginFormTemp">
+          <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h4>Login</h4>
+              </div>
+              <div class="card-body">
+
+                <div class="login-logo">
+                  <img src="assets/img/logo.png"> 
+                  <span class="logo-name">Omni Bus</span>
+                </div>
+
+				  <p style="width: 100%;margin-top: .25rem;font-size: 80%;color: #dc3545;"></p>
+                <form method="POST" [formGroup]="loginForm" (ngSubmit)="userLogin()">
+                  <div class="form-group">
+                    <label for="company_name">Company Name</label>
+                    <input id="company_name" type="text" class="form-control" formControlName="company_name" autocomplete="off">
+                    <div class="error-message message-small" *ngIf="!loginForm.get('company_name').valid && loginForm.get('company_name').touched">
+                      Please enter your company name
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="username">Username</label>
+                    <input id="username" type="text" class="form-control" formControlName="user_name" autocomplete="off">
+                    <div class="error-message message-small" *ngIf="!loginForm.get('user_name').valid && loginForm.get('user_name').touched">
+                      Please enter your username
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="d-block">
+                      <label for="password" class="control-label" >Password</label>
+                      
+                    </div>
+                    <input id="password" type="password" formControlName="password" class="form-control">
+                    <div class="error-message message-small" *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">
+                      please enter your password
+                    </div>
+                  </div>
+                  <!-- <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember-me">
+                      <label class="custom-control-label" for="remember-me">Remember Me</label>
+                    </div>
+                  </div> -->
+                       
+                  <div class="form-group">
+                       <span class="login-message success-message message-small">{{loginSuccess}}</span>
+                        <span class="login-message error-message message-small">{{loginError}}</span>
+                    <input type="submit" value="Login" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                    
+                  </div>
+                </form>
+                <div class="float-right">
+                  <a href="javascript:void(0)" routerLink="/forgot-pwd" class="text-small">
+                    Forgot Password?
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+
+
+
+        <div class="row" *ngIf="sendotp">
+          <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h4>Send OTP Via</h4>
+              </div>
+              <div class="card-body">
+                <div class="login-logo" style="padding-bottom: 45px;">
+                  <img src="assets/img/logo.png"> 
+                  <span class="logo-name">Omni Bus</span>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-lg-4 ">
+                    <img src="assets/images/sms.svg"> 
+                  </div>
+                  <div class="col-12 col-lg-8 ">
+                   <button type="button" class="btn btn-primary btn-lg btn-block" (click)="loginVia('sms')">SMS</button>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-lg-4 ">
+                    <img src="assets/images/gmail.svg">
+                  </div>
+                  <div class="col-12 col-lg-8 ">
+                   <button  type="button" class="btn btn-primary btn-lg btn-block" (click)="loginVia('email')">Email</button>
+                  </div>
+                </div>
+
+
+
+                <!-- <div class="row">
+                  <div class="col-12 col-lg-4 ">
+                    <img src="assets/images/gmail.svg">
+                  </div>
+                  <div class="col-12 col-lg-8 ">
+                   <button class="btn btn-primary btn-lg btn-block">Email</button>
+                  </div>
+                </div> -->
+                <div class="row">
+         
+                  <div class="col-12 ">
+                   <button type="button" class="btn btn-primary btn-lg btn-block" (click)="backToLogin()">Back to Login</button>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+            
+          </div>
+        </div>
+
+
+
+        <div class="row" *ngIf="sendotpmain">
+          <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h4>OTP</h4>
+              </div>
+              <div class="card-body">
+
+                <div class="login-logo">
+                  <img src="assets/img/logo.png"> 
+                  <span class="logo-name">Omni Bus</span>
+                </div>
+
+				  <p style="width: 100%;margin-top: .25rem;font-size: 80%;color: #dc3545;"></p>
+                  <div class="form-group">
+                    <label for="username">Enter OTP</label>
+                    <input id="otp" type="text" class="form-control" id="otp" autocomplete="off">
+                    
+                  </div>
+                  
+                 
+                  <div class="form-group">
+                       <span class="login-message success-message message-small">{{loginSuccess}}</span>
+                        <span class="login-message error-message message-small">{{loginError}}</span>
+                    <input type="submit" value="Login" class="btn btn-primary btn-lg btn-block" tabindex="4" (click)="sendOTPLogin()">
+                    
+                  </div>
+
+
+                  <div class="float-left">
+                    <a href="javascript:void(0)" routerLink="/forgot-pwd" class="text-small">
+                      resend otp
+                    </a>
+                  </div>
+
+                <div class="float-right">
+                  <a href="javascript:void(0)" routerLink="/forgot-pwd" class="text-small">
+                    Forgot Password?
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+      </div>
+    </section>
+  </div>

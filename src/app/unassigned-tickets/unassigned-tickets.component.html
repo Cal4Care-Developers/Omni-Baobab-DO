@@ -1,0 +1,220 @@
+
+<div class="section-body">
+	<div class="row">
+		<div class="col-12 col-md-12 col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<!-- <div class="animated-checkbox">
+						<input type="checkbox" id="check-all" />
+						<label for="check-all" class="check-box"></label> 
+					</div> -->
+					<h4>Assign Tickets</h4>
+					<div class="addBtn">
+
+						<a href="javascript:void(0)" class="btn btn-primary" routerLink="/ticketing-system-new" >All Tickets</a>
+					</div>
+				</div>
+				
+			</div>
+
+<!--------------------------------------
+Open State Ticket 
+------------------------>
+<!-- <form *ngFor="let item of queue_list"> -->
+<div class="card ticket-status-open ticket-card" *ngFor="let ticket of queue_list">
+	<div class="card-body p-30">
+		<div class="ticket-block">
+			<div class="row">  
+				<div class="col-md-2">
+					<div class="agent-name">
+						<div class="animated-checkbox">
+							<input type="checkbox" id="checkbox-1" />
+							<label for="checkbox-1" class="check-box"></label> 
+						</div>
+					  <div class="round-block green-bg d-flex">{{ticket.first_letter}}</div>
+					</div>
+				</div>
+				<div class="col-md-7" (click)="viewMyTicket(ticket.ticket_no)">
+					<div class="ticket-details-section fl">
+						<!-- <div class="badge-group">
+							<span class="badge badge-success">New</span>
+							<span class="badge badge-info">Sales</span>
+							<span class="badge badge-light">asia</span>
+							<span class="badge badge-light">mani</span>
+						</div> -->
+					<div class="ticket-details fl">
+							<h6><span class="blk-clr">{{ticket.subject}}</span> #{{ticket.ticket_no}}</h6>
+<!--------------------------
+Custom Tooltip
+-------------------------->
+									<div class="custom-tooltip-section">
+											<div class="tooltip-header fl">
+												<div class="agent-name">
+													<div class="round-block green-bg d-flex">{{ticket.first_letter}}</div>
+													<p><strong><span class="blk-clr">{{ticket.ticket_created_by}}</span></strong>&nbsp; <small>Submitted a New Ticket</small></p>
+													<div class="text-muted">
+														<small>{{ticket.ticket_created_at}}</small>
+													</div>
+												</div>
+											</div>
+										<!-- <div class="tooltip-body fl">
+											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+										</div> -->
+												<div class="tooltip-footer fl">
+													<ul>
+														<li><i class="fas fa-reply"></i> Reply</li>
+													</ul>
+												</div>
+									</div>
+<!--------------------------
+Custom Tooltip End
+-------------------------->
+						</div>
+									<!-- <div class="ticket-message-details fl">
+										<strong><i class="far fa-envelope"></i> {{ticket.ticket_assigned_to}} <span class="round-shape-xs"></span></strong>
+										{{ticket.ticket_created_at}}<span class="round-shape-xs"></span> Fist Response Due in 3 Hours ago
+									</div> -->
+									<div class="ticket-message-details fl">
+										<strong><i class="far fa-envelope"></i> {{ticket.ticket_assigned_to}} <span class="round-shape-xs"></span></strong>
+										{{ticket.ticket_created_at}}
+									</div>
+									</div>
+						</div>
+
+				<div class="col-md-3" >
+					<div class="ticket-assign-section">
+									<div class="form-group fl">
+												 <div class="dropdown select-option" >
+																<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+																	<span class="dropdown-label-icon">
+																		<span class="green-bg-status status-bg"></span>
+																     	{{ticket.priority}}
+																    </span> 
+																</div> 
+													<div class="dropdown-menu">
+															<!-- <div class="dropdown-title">Select Priority</div> -->
+
+														<div class="pullDown" *ngFor="let item of priority ;let i = index">
+														 
+															<a href="javascript:void(0)" class="dropdown-item" (click)="changeMyPriority(ticket.ticket_no, item.id)"><div class="green-bg-status status-bg"></div>{{item.priority}}</a>
+															<div class="dropdown-divider"></div>
+															<!-- <a href="javascript:void(0)" class="dropdown-item"><div class="blue-bg-status status-bg"></div>Medium</a>
+															<div class="dropdown-divider"></div>
+															<a href="javascript:void(0)" class="dropdown-item"><div class="yellow-bg-status status-bg"></div>High</a>
+															<div class="dropdown-divider"></div>
+															<a href="javascript:void(0)" class="dropdown-item"><div class="red-bg-status status-bg"></div>Urgent</a> -->
+														</div>
+													</div>
+												</div>
+									  </div>
+
+									  <div class="form-group fl">
+										<div class="dropdown select-option">
+											<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+												<span class="dropdown-label-icon"><i class="fas fa-user-plus"></i>{{ticket.department}}</span> 
+											</div>
+											<div class="dropdown-menu">
+												<div class="pullDown" >
+													<div class="dropdown-title" (click)="noToggle()"> {{ticket.department}}</div>
+													<div class="searc-bar" (click)="noToggle()">
+														<div class="input-group">
+															<input type="text" class="form-control" placeholder="Search Agent">
+															<div class="input-group-append">
+																<button class="btn btn-primary" (click)="contactsList({'search_text':queue_search.value})"><i class="fas fa-search"></i></button>
+															</div>
+														</div>
+													</div>
+													<div>
+														<a href="javascript:void(0)" *ngFor="let item of department ;let i = index" class="dropdown-item" (click)="changeMyDepartment(ticket.ticket_no, item.department_id)">{{item.department_name}}</a>
+														<div class="dropdown-divider"></div>
+														
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+
+
+
+<!--before edit department 
+										 <div class="form-group fl">
+											<div class="dropdown select-option"> -->
+												<!-- <div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+													
+													<select name=""  id="" class="form-control">
+														<span class="dropdown-label-icon"><i class="fas fa-user-plus"></i>
+															<option value='selectedvalue'></option>
+															<option  *ngFor="let name of department">
+																	<a href="javascript:void(0)" class="active dropdown-item">{{name.department_name}}</a>
+															<div class="dropdown-divider"></div>
+
+															</option>
+												    	</span> 
+												    </select>	
+												</div> -->
+												<!-- <div class="dropdown-menu"> -->
+													<!-- <div class="pullDown"> -->
+														<!-- <div class="dropdown-title" (click)="noToggle()">Sales - Manikandan</div>
+														<div class="searc-bar" (click)="noToggle()">
+															<div class="input-group">
+																<input type="text" class="form-control" placeholder="Search Agent">
+																<div class="input-group-append">
+																	<button class="btn btn-primary" (click)="contactsList({'search_text':queue_search.value})"><i class="fas fa-search"></i></button>
+																</div>
+															</div>
+														</div> -->
+													<!-- </div> -->
+												<!-- </div> -->
+											<!-- </div>
+										</div> 
+	before edit department end					-->
+										<div class="form-group fl">
+												<div class="dropdown select-option">
+													<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+														<span class="dropdown-label-icon"><i class="fas fa-ticket-alt"></i>{{ticket.ticket_status}}</span> 
+													
+														<div class="dropdown-menu">
+															 <div class="pullDown">
+															 <!-- <div class="dropdown-title">Select Priority</div>  -->
+																<a href="javascript:void(0)"*ngFor="let item of status ;let i = index" class="dropdown-item" (click)="changeMyStatus(ticket.ticket_no, item.status_id)">{{item.status_desc}}</a>
+																<div class="dropdown-divider"></div>
+															
+															</div>
+														</div>
+													</div>
+												</div>
+										</div>
+
+						</div>
+					</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<!-- </form> -->
+		<!--------------------------------------
+Open State Ticket End
+------------------------>
+
+	<!--------------------------------------
+In Progress State Ticket 
+------------------------>
+
+		<!--------------------------------------
+In Progress State Ticket End
+------------------------>
+
+
+<!--------------------------------------
+close State Ticket 
+------------------------>
+		<!--------------------------------------
+close State Ticket End
+------------------------>
+
+</div>
+</div>
+</div>

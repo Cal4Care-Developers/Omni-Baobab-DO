@@ -1,0 +1,91 @@
+<div class="section-body">
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Agents</h4>
+                    <div class="addBtn" >
+                        <button type="button" class="btn btn-primary" (click)="addAgent()">+ Add Agent</button>
+                        <input type="hidden" value="0" id="agentsList" (click)="agentsList({})">
+                    </div>
+					<a href="https://baobabgroup.mconnectapps.com/api/v1.0/pro_contents/pro_agents.pdf" target="_blank"><i style="font-size:24px;" class="fa fa-exclamation-circle"></i></a>
+
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-md">
+                            <tr>
+                                <td colspan="20" class="search-text-tbl">
+                                    <div class="input-group"><input type="text" class="form-control" (keyup.enter)="agentsList({'search_text':agent_search.value})" #agent_search>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" (click)="agentsList({'search_text':agent_search.value})"><i class="fas fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                           
+
+                            <tr>
+                                <th>S.no</th>
+                                <th>Agent Name</th>
+                                <th>Ext</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+
+                            
+                        <tbody>
+                            <tr *ngFor="let queue of agents_list;let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{queue.agent_name}}</td>
+                                <td>{{queue.sip_login}}</td>
+                                <td><div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox"   checked="{{queue.user_status == 1 ? 'checked' : ''}}" (click)="actCamp('admin_status',queue.user_id)"> 
+                                        <div class="state p-success">
+                                            <label for="has_status"></label>
+                                        </div>
+                                    </div>
+                                </div></td>
+                                    
+                                    <td>
+                                        <span class="user-icon" style="cursor: pointer;"><i class="far fa-edit" (click)="editAgent(queue.user_id)"></i></span>
+                                        <span class="user-icon" style="cursor: pointer;"><i class="far fa-trash-alt" (click)="deletedata(queue.user_id)"></i></span>
+                                    </td>
+                                </tr>
+
+                            <tr *ngIf="recordNotFound == true">
+                                 <td colspan="16">Data not found</td>
+                            </tr>
+                     </tbody>
+                     </table>
+                 </div>
+             </div>
+             <div class="card-footer text-right">
+                <nav class="d-inline-block">
+                    <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+
+                        <li class="page-item">
+                            <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'" href="javascript:void(0)" (click)="paginationData.backtab=='show' ? agentsList({'search_text':agent_search.value,'offset':paginationData.start}) : false"><i class="fas fa-angle-left"></i></a>
+                        </li>
+                        <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                            <a class="page-link" href="javascript:void(0)" (click)="agentsList({'search_text':agent_search.value,'offset':paginationData.back})"><i class="fas fa-angle-double-left"></i></a>
+                        </li>
+                        <li [class]="pagination.load ==false ? 'page-item active' :'page-item'" *ngFor="let pagination of paginationData.data;let i=index">
+                            <a class="page-link" href="javascript:void(0)" (click)=" pagination.load ==true ? agentsList({'search_text':agent_search.value,'offset':pagination.offset_count}) : false">{{pagination.btn_length}} <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                        </li>
+
+                        <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                            <a class="page-link" href="javascript:void(0)" (click)="agentsList({'search_text':agent_search.value,'offset':paginationData.next})"><i class="fas fa-angle-double-right"></i></a>
+                        </li>
+
+                        <li class="page-item">
+                            <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'" href="javascript:void(0)" (click)="paginationData.nexttab =='show' ? agentsList({'search_text':agent_search.value,'offset':paginationData.end}) : false"><i class="fas fa-angle-right"></i></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

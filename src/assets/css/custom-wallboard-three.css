@@ -1,0 +1,14 @@
+.custom-wallboard-three {  }
+.wallboard-item-three { color: #fff; float: left; width: 100%; }
+.wallboard-item-three.normal-box { text-align: center; height: 125px; padding: 30px 0 0 0; }
+.wallboard-item-three.normal-box.has-call-queue { padding: 7px 0 0 0; }
+.custom-wallboard-three .col { margin: 5px; }
+.custom-wallboard-three h6 { text-transform: uppercase; font-weight: 700; }
+.call-queue-list ul li { line-height: 22px; float: left; width: 100%; list-style-type: none; font-weight: 700; text-align: left; }
+.call-queue-list ul { float: left; width: 100%; height: 82px; overflow-y: scroll; }
+.has-call-queue h2 { padding: 20px 0px 0 0; }
+.wallboard-item-three.wall-large-box { height: 264px; }
+.wall-large-box-scroll { border-top: 1px solid rgb(227, 227, 227, 0.35); height: 190px; overflow-y: scroll; }
+.wall-large-box-scroll li { list-style-type: none; text-align: left; font-weight: 700; }
+.wall-large-box-scroll ul { margin: 0; padding: 0 0 0 20px; }
+.wall-3-title { text-transform: uppercase; font-weight: 700; margin: 18px auto 10px auto; width: 175px; border: 1px solid #fff; text-align: center; padding: 4px 0;  }

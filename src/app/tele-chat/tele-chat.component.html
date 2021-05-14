@@ -1,0 +1,221 @@
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+        <div class="card fullHeightCard">
+            <div class="body">
+                 <div id="plist" class="people-list chat-search-list">
+                       <div class="chat-search">
+            
+                                <!-- <div class="sidebar-add-btn">
+                                    <button  type="button" class="btn btn-primary">Compose New</button>
+                                </div> -->
+                                <div class="input-group"> 
+                                    <input type="text" class="form-control"  placeholder="Search..." #chat_search (keyup.enter)="chatPanelList(chat_search.value)">
+                                    <input type="hidden" name="open_chat_detail_id" id="open_chat_detail_id" value="0" #open_chat_detail_id (click)='chatPanelDetail(open_chat_detail_id.value)'>
+                                    <span ></span>
+                                    <div class="input-chat_search-append">
+                                        <button class="btn btn-primary chat_list_search" (click)="chatPanelList(chat_search.value)"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+            
+                         </div>
+                        <div class="m-b-20">
+                            <div id="chat-scroll">
+                                <ul class="chat-list list-unstyled m-b-0 chat_list_data">
+                    
+                                <li class="clearfix" *ngFor="let chat_list of chat_panel_list;let i=index" (click)="chatPanelDetail(chat_list.chat_id)">
+                    
+
+                                  <div class="about">
+                                     <div class="name">
+                                       <img  class="thumbnail-image" src="{{chat_list.profile_picture}}"
+                                       onerror="this.src='assets/images/user.jpg'"
+                                         alt="..." width="50px" height="50px"style="margin-right: 5px;"/>
+                                                                 <b>{{chat_list.displayName}}</b>
+                                      </div>
+                                      <div style="display: flex;"> <div class="bullet"> </div> {{chat_list.chat_dt}}</div>
+                                  </div>
+
+                                
+                                <!-- <div class="about">
+                                  <div class="name">
+                                    <img  class="thumbnail-image" src="{{chat_list.profile_picture}}"
+                                       alt="..." width="50px" height="50px" style="margin-right: 5px;"/>
+                                       <b>{{chat_list.displayName}}</b> 
+                                    </div>
+                                  <div class="text-small text-muted"> <div class="bullet"></div> {{chat_list.chat_dt}}</div>
+
+                                </div> -->
+                                   <!-- <div class="about"> 
+                                          <div class="name"><b>{{chat_list.page_name}}</b> - {{chat_list.first_name}}</div>
+                                        <div class="text-small text-muted"> <div class="bullet"></div> {{chat_list.chat_dt}}</div>
+                                    </div>  -->
+                                </li>
+                    
+                                </ul>
+                    
+                            </div>
+                        </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9" id="chat_details_view">
+                <div class="card fullHeightCard keep-connect-chat-content" *ngIf="chat_panel_detail_type=='chat_screen'">
+                    <div class="card-body">
+                        <div class="keep-connect">
+                            <div class="connect-logo">
+                                <img src="assets/img/logo.png">
+                                <span class="logo-name">Omni Telegram Chat</span>
+                            </div>
+                            <h3>Keep your device connected</h3>
+                            <p>To reduce the data usage,<br>connect your phone to Wi-Fi.</p> 
+                        </div>
+                    </div>
+                </div>
+
+        <div class="card" *ngIf="chat_panel_detail_type=='chat_detail'">
+                    <div class="chat">
+                    <div class="chat-header clearfix">
+                        <img src="{{profile_pic}}" onerror="this.src='assets/images/user.jpg' " width="50px" height="50px" alt="avatar">
+                        <div class="chat-about">
+                                <div class="chat-with">{{this.displayName}}</div> 
+                                <div class="chat-num-messages">Telegram</div> 
+                        </div>
+                        <img src="assets/img/mc-dashboard/telegram.svg" alt="avatar" style="float: right;">
+                    </div>
+                    </div>
+              <div class="chat-box" id="mychatbox">
+                        <div class="card-body chat-content">
+                            <div *ngFor="let chat_details of chat_panel_details;let i=index">
+
+
+                                   <div class="chat-item chat-left" *ngIf="chat_details.displayName == displayName"> 
+                                      <!-- <div class="chat-item chat-left"> -->
+                                      <img src="{{chat_details.profile_picture}}" onerror="this.src='assets/images/user.jpg'" width="60px" height="50px">
+                                          <!-- <div *ngIf="chat_details.chat_message == '' || chat_details.chat_message == null || chat_details.message_attachment != null" class="chat-details">
+                                              <img  src="{{chat_details.message_attachment}}" width="100px" height="100px">
+                                              <div class="chat-time" >{{chat_details.Time}}  </div> 
+                                          </div> -->
+                                        <div class="chat-details">
+                                            <div  class="chat-text">{{chat_details.chat_msg}}<img src="{{chat_details.message_attachment}}"> </div>
+                                            <div class="chat-time">{{chat_details.chat_time}}</div> 
+                                        </div>
+
+
+                                    </div>
+                    
+                    
+                                    <!-- <div class="chat-item chat-right" *ngIf="chat_details.msg_user_type == 'agent' && chat_details.msg_user_id == loginUser"><img src="assets/images/user.jpg" >  -->
+                                    <div class="chat-item chat-right" *ngIf="chat_details.displayName != displayName">
+
+                                      <img src="{{chat_details.profile_picture}}" onerror="this.src='assets/images/user.jpg'" width="70px" height="50px" > 
+                       
+                                             <div class="chat-details">
+
+                                                    <div class="chat-text" >{{chat_details.chat_msg}}<img src="{{chat_details.message_attachment}}"></div>    
+                                                        <div class="chat-time">
+                                                            {{chat_details.chat_time}}
+                                                        </div>
+                                                    </div>
+                
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="card-footer chat-form">
+                            <!-- <form id="chat-form"> -->
+                                <textarea class="form-control" id="chat_msg" placeholder="Type a message" style="height: 50px;" (keydown)="onMessageSend($event,this.recipient_id,this.sender_id)" #chat_message></textarea>
+                                <input type="hidden" name="chat_id" id="chat_detail_id" value="{{chat_detail_key}}" #chat_detail_id>
+                               
+                                <button type="button" class="btn btn-primary" (click)="template()" style="right: 40px;" >
+                                  <i class="fas fa-fill-drip"></i>
+                                </button> <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createNewWidget" style="right: 40px;">
+                                  <i class="fas fa-link"></i>
+                                </button> -->
+                                <button type="button" class="btn btn-primary" (click)="sendChatMessageData(this.recipient_id,this.sender_id)">
+                                <i class="far fa-paper-plane"></i>
+                                </button>
+                        </div>
+                </div>
+         </div>
+
+    </div>
+</div>
+
+
+<!-- UPLOAD MEDIA -->
+<!-- <div class="modal fade" id="createNewWidget">
+<div class="modal-dialog modal-md">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="myLargeModalLabel">Upload Media File (Image, Video, Text and PDF files up to 5 mb)</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body"> 
+      <div class="row">
+        <div class="col-12 col-md-12">
+          <div class="row">
+            <div class="col-md-12 col-12">
+              <div class="form-group">
+                <input type="file" class="form-control" name="whatsapp_media" id="whatsapp_media">
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+
+      </div>	
+    </div>
+
+    <div class="modal-footer">
+      <div class="buttons">
+        <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+        <input type="button" class="btn btn-primary update_agent" value="Submit"  (click)="addWhatsappMedia()">
+        <input type="hidden" id="chat_details_call" (click)="chatPanelDetail(this.chat_detail_id.nativeElement.value)">
+      </div>
+    </div>
+  </div>
+</div>
+</div> -->
+<!--   
+<div class="modal fade bd-example-modal-md" id="assign_ticket">
+<div class="modal-dialog modal-md">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="myLargeModalLabel">Assign Ticket</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="departments">Select Department</label>
+            <select name="departments"  id="departments" class="form-control">
+              <option value='0'> Select Department </option>
+              <option *ngFor="let dept of departments" value="{{dept.dept_id}}">{{dept.department_name}}</option>
+            </select>
+          </div>
+        </div>
+
+
+      </div>
+
+
+
+    </div>
+
+    <div class="modal-footer">
+      <div class="buttons">
+        <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+        <input type="submit" class="btn btn-primary update_agent" value="Assign" (click)="assignTicket(this.phone_num)">
+      </div>
+    </div>
+
+  </div>
+</div>
+</div> -->

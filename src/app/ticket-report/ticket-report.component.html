@@ -1,0 +1,54 @@
+
+<div class="section-body">
+    <div class="row">
+        <div class="col-7 col-md-7 col-lg-7">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Ticket Report</h4>
+                  
+                </div>
+                <div class="card-body p-30">
+                <form [formGroup]="getRep" (ngSubmit)="getReports()">
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="from_date">From Date</label>
+                                <input type="date" id="from_date" class="form-control" formControlName="from_date">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="to_date">To Date</label>
+                                <input type="date" id="to_date" class="form-control" formControlName="to_date">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="aget_ids">Ticket Status</label>
+                                <select name="tic_status" id="tic_status" class="form-control" formControlName="tic_status">
+                                    <option value="all" selected>All</option>
+                                    <option value="1" selected>Open</option>
+                                   <option value="0">closed</option>
+                                </select>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary" (click)="getReports()">Generate Report</button>
+                            </div>
+                        </div>
+                        </div>
+                    
+                </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

@@ -1,0 +1,182 @@
+<div class="section-body">
+    <div class="row">
+
+        <!-- <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+
+            <div class="card mb-30 queue_features">
+                <div class="body">
+                    <div id="mail-nav">
+                        <span id="mc_event_list" (click)="mcEventList()"></span>
+                        <h5 class="b-b p-10 text-strong">Queue (4)</h5>
+                        <ul class="support-lables" id="mail-labels">
+                            <li><a href='javascript:void(0)'>All Queue</a></li>
+
+                            <li *ngFor="let mc_queue of mc_queue_list;let i=index"><a href='javascript:void(0)'>{{mc_queue.queue_name}}
+                                <span class="queue_list"><span class="queue_list_data badge badge-info" *ngIf="mc_queue.chat_feature==1">Chat</span> <span class="queue_list_data badge badge-secondary" *ngIf="mc_queue.email_feature==1">Mail</span>   <span class="queue_list_data badge badge-primary" *ngIf="mc_queue.call_feature==1">Call</span> </span>
+                            </a></li>
+                            <li><a href='javascript:void(0)' onclick='chatPanelView(1, "chat_queue_list")'>Sales <span class="queue_list"><span class="queue_list_data badge badge-info">Chat</span>  <span class="queue_list_data badge badge-primary">Call</span> <span class="queue_list_data badge badge-secondary">Mail</span>  </span></a></li>
+                            <li><a href='javascript:void(0)' onclick='chatPanelView(2, "chat_queue_list")'>Support <span class="queue_list"><span class="queue_list_data badge badge-info">Chat</span>  <span class="queue_list_data badge badge-primary">Call</span> <span class="queue_list_data badge badge-secondary">Mail</span>  </span></a></li>
+                            <li><a href='javascript:void(0)' onclick='chatPanelView(4, "chat_queue_list")'>General Enquiry  <span class="queue_list"><span class="queue_list_data badge badge-info">Chat</span>  <span class="queue_list_data badge badge-primary">Call</span> <span class="queue_list_data badge badge-secondary">Mail</span>  </span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+        </div> -->
+        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-12 ">
+
+
+            <div class="card mc-list-card">
+                <div class="card-header">
+                    <h4 class="d-inline">MC Dashboard</h4>
+                    <div class="card-header-action">
+                       <ul>
+                            <li class="has-tooltip">
+                       <a href="javascript:void(0)" id="mc_chat" (click)="viewMC('chat_view')" *ngIf="this.has_chat == '1'"><img src="assets/img/mc-dashboard/chat.png"><span class="tooltip-modal">Chat</span></a>
+                   </li>
+                        <li class="has-tooltip">
+                       <a href="javascript:void(0)" id="mc_mail" (click)="viewMC('sms_view')" *ngIf="this.has_sms == '1'"><img src="assets/img/mc-dashboard/sms.svg"><span class="tooltip-modal">SMS</span></a> 
+                   </li>
+
+                    <li class="has-tooltip">
+                       <a href="#" id="mc_chat" target="_blank"><img src="assets/img/mc-dashboard/call.png"><span class="tooltip-modal">Call</span></a>
+                   </li>
+
+                   <li class="has-tooltip">
+                       <a href="javascript:void(0)" id="mc_mail" (click)="viewMC('mail_view')" *ngIf="this.has_e_ticket == '1' || this.has_i_ticket == '1' "><img src="assets/img/mc-dashboard/tickets.png"><span class="tooltip-modal">Tickets</span></a> 
+                   </li>
+
+                   
+                   <li class="has-tooltip">
+                       <a href="javascript:void(0)" id="mc_chat" (click)="viewMC('wp_view')" *ngIf="this.has_whatsapp == '1'"><img src="assets/img/mc-dashboard/whatsapp.webp"><span class="tooltip-modal">WhatsApp</span></a>
+                   </li>
+
+                   <!-- <li class="has-tooltip">
+                    <a href="javascript:void(0)" id="mc_chat" (click)="viewMC('wp_view')" *ngIf="this.has_whatsapp == '1'"><img src="assets/img/mc-dashboard/whatsapp.webp"><span class="tooltip-modal">WhatsApp</span></a>
+                </li> -->
+
+ 
+                   <li class="has-tooltip">
+                       <a href="javascript:void(0)" id="mc_chat" (click)="viewMC('fb_view')" *ngIf="this.has_fb == '1'"><img src="assets/img/mc-dashboard/facebook.svg"><span class="tooltip-modal">Facebook</span></a>
+                   </li>
+                   <li class="has-tooltip">
+                       <a href="javascript:void(0)" id="mc_chat"  (click)="viewMC('tele_view')" *ngIf="this.has_tele == '1'"><img src="assets/img/mc-dashboard/telegram.svg"><span class="tooltip-modal">Telegram</span></a>
+                   </li>
+                   <li class="has-tooltip">
+                       <a href="javascript:void(0)" id="mc_chat" (click)="viewMC('line_view')" *ngIf="this.has_line == '1'"><img src="assets/img/mc-dashboard/line.png"><span class="tooltip-modal">LINE</span></a>
+                   </li>
+                    <li class="has-tooltip">
+                       <a href="javascript:void(0)" id="mc_chat" (click)="viewMC('internal_chat')" *ngIf="this.h_int_chat == '1'"><img src="assets/img/mc-dashboard/internal-chat.png"><span class="tooltip-modal">Internal Chat</span></a>
+                   </li>
+                   <li class="has-tooltip">
+                       <a href="{{this.chatbotUrl}}" id="mc_chat" target="_blank" *ngIf="this.has_chatbot == '1'"><img src="assets/img/mc-dashboard/chatbot.png"><span class="tooltip-modal">Chatbot</span></a>
+                   </li>
+                   <a (click)="showdoc('https://baobabgroup.mconnectapps.com/api/v1.0/pro_contents/mc-Dashboard.pdf')"  target="_blank"><i style="font-size: 24px;
+                    float: right;" class="fa fa-exclamation-circle"></i></a>
+                        <!-- <a href="#" class="btn btn-primary">View More</a> -->
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body mc-list">
+                    <ul class="list-unstyled list-unstyled-border">
+                        <li class="media" *ngFor="let mc_event of mc_event_list;let i=index">
+
+                            <!-- <img alt="image" class="mr-3 rounded-circle" width="50" src="assets/img/users/user-5.png"> -->
+                            <div class="media-body">
+
+                             
+                                <!-- <div [class]="mc_event.mc_event_type == 1 ? 'badge badge-pill badge-info mb-1 float-right' : mc_event.mc_event_type == 2 ? 'badge badge-pill badge-secondary mb-1 float-right' : mc_event.mc_event_type == 3 ? 'badge badge-pill badge-primary mb-1 float-right' : mc_event.mc_event_type == 5 ? 'badge badge-pill bg-wp mb-1 float-right' : mc_event.mc_event_type == 6 ? 'badge badge-pill badge-warning mb-1 float-right' : mc_event.mc_event_type == 7 ? 'badge badge-pill bg-fb mb-1 float-right': mc_event.mc_event_type == 8 ? 'badge badge-pill badge-secondary mb-1 float-right': mc_event.mc_event_type == 9 ? 'badge badge-pill badge-success mb-1 float-right': mc_event.mc_event_type == 10 ? 'badge badge-pill badge-info mb-1 float-right': ''"></div> -->
+                          <div class=" mb-1 float-right"   *ngIf="mc_event.mc_event_type == 1">
+                              <img src="assets/img/mc-dashboard/chat.png" alt="Chat">
+                          </div>
+
+                          <div class=" mb-1 float-right"   *ngIf="mc_event.mc_event_type == 11">
+                            <img  src="assets/img/mc-dashboard/tickets.png" alt="">
+                        </div>
+                        
+                       <div class=" mb-1 float-right"   *ngIf="mc_event.mc_event_type == 3">
+                            <img src="assets/img/mc-dashboard/call.png" alt="Call">
+                        </div>
+                        <!-- <div class=" mb-1 float-right"   *ngIf="mc_event.mc_event_type == 4">
+                            <img style="display: flex; height:40px; width: auto;"
+                            src="assets/img/mc-dashboard/dialer.svg" alt="">
+                        </div> -->
+                        <div class="mb-1 float-right"   *ngIf="mc_event.mc_event_type == 5">
+                            <img src="assets/img/mc-dashboard/whatsapp.webp" alt="WhatsApp">
+                        </div>
+                        
+                        <div class=" mb-1 float-right"   *ngIf="mc_event.mc_event_type == 6">
+                            <img src="assets/img/mc-dashboard/sms.svg" alt="SMS">
+                        </div>
+                        
+                        <div class=" mb-1 float-right"   *ngIf="mc_event.mc_event_type == 7">
+                            <img src="assets/img/mc-dashboard/facebook.svg" alt="Facebook">
+                        </div>
+
+                        <div class=" mb-1 float-right"   *ngIf="mc_event.mc_event_type == 8">
+                            <img src="assets/img/mc-dashboard/internal-chat.png" alt="Internal Chat">
+                        </div>
+
+                        <div class=" mb-1 float-right"   *ngIf="mc_event.mc_event_type == 9">
+                            <img src="assets/img/mc-dashboard/line.png" alt="Line App">
+                        </div>
+
+                        <div class=" mb-1 float-right"   *ngIf="mc_event.mc_event_type == 10">
+                            <img src="assets/img/mc-dashboard/telegram.svg" alt="Telegram">
+                        </div>
+                        
+                                <!-- <div class="badge badge-pill badge-secondary mb-1 float-right" *ngIf="mc_event.mc_event_type == 2">Chat</div>
+                                <div class="badge badge-pill badge-primary mb-1 float-right" *ngIf="mc_event.mc_event_type == 3">Call</div> -->
+                                <h6 class="media-title"><a href="javascript:void(0)" (click)="ViewEventDetails(mc_event.mc_event_type,mc_event.mc_event_key,mc_event.wp_inst_id)">{{mc_event.mc_event_data}} <span *ngIf="mc_event.mc_event_type == 7">({{mc_event.page_name}})</span></a></h6>
+                                <div class="text-small text-muted">
+                                    <!-- <span class="badge badge-info">Chat</span> -->
+                                    <div class="bullet"></div> {{mc_event.created_dt}}</div>
+                            </div>
+                        </li>
+
+                       
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div id="message_panel_block">
+
+                <app-chat *ngIf="chatPageView==true"></app-chat>
+                <app-email *ngIf="mailPageView==true"></app-email>
+                <app-sms *ngIf="smsPageView==true"></app-sms>
+
+            </div>
+        </div>
+        <audio id="beepaud" src="https://omni.mconnectapps.com/webchat/images/beep.mp3" preload="auto" ></audio>
+
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-md" id="document_model">
+  <div class="modal-dialog modal-md"  style="max-width: 1200px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="color:crimson" >Help Manual</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+                <!-- <iframe [src]="this.doc_link | safe"  width="100%" style="height: 575px;" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+                <!-- style="margin-bottom: -6px;" width="100%" height="325"  -->
+              <embed [src]="this.doc_link | safe"  width="100%" style="height: 575px;" />
+      </div>     
+      <div class="modal-footer" >
+          <div class="buttons">
+              <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="close">
+          </div>
+      </div>
+
+    </div>
+  </div>
+</div>  

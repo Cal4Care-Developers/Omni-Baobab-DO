@@ -1,0 +1,114 @@
+
+<div class="section-body">
+	<div class="row">
+		<div class="col-7 col-md-7 col-lg-7">
+			<div class="card" *ngIf="this.singleSMS">
+				<div class="card-header">
+					<h4>Compose New Whatsapp Message</h4>
+				</div>
+				<div class="addBtn btn-group">
+					<button type="button" class="btn btn-primary" (click)="smsTab('bulk')">Bulk Whatsapp Message</button>
+				</div>
+				<div class="card-body p-30">
+					<form [formGroup]="compSMS" (ngSubmit)="sendSMS()">
+
+						<div class="row">
+
+
+							<div class="col-md-12">
+								<div class="row">
+								<div class="col-md-3">
+									<div class="form-group">
+										<label for="country_code">Country Code</label>
+										<input type="text" id="country_code" class="form-control" formControlName="country_code" style="width: 100%;display: inline-block;">
+									</div>
+								</div>
+								<div class="col-md-9">
+									<div class="form-group">
+										<label for="mobile_num">Mobile Number</label>
+										<!-- <input type="" value="+65" class="form-control" name="country_code" id="country_code" style="width: 10%;display: inline-block; margin-right: 10px"> -->
+										<input type="text" id="mobile_num" class="form-control" formControlName="mobile_num" style="width: 100%;display: inline-block;">
+									</div>
+								</div>
+							</div>
+							</div>
+
+
+							<div class="col-md-12">
+								<div class="form-group">
+									<label for="message">Upload file</label>
+									<input type="file" name="wp_media_file" id="wp_media_file">
+								</div>
+							</div>
+
+
+							<div class="col-md-12">
+								<div class="form-group">
+									<label for="message">Enter Message</label>
+									<textarea id="message" class="form-control" formControlName="message" (keyup)="wordCount()"></textarea>
+									<div >Total Characters <span id="wordCount">0</span> (160 character is consider as one sms)</div>
+								</div>
+							</div>
+						</div>
+					<input type="hidden" id="refresh_page" name="refresh_page" (click)="goToMain()">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<button type="submit" class="btn btn-primary" [disabled]="!compSMS.valid"><i class="fas fa-paper-plane"></i> Send</button>
+								</div>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+			<div class="card" *ngIf="this.bulkSMS">
+				<div class="card-header">
+					<h4>Compose New Group SMS</h4>
+				</div>
+				<div class="addBtn btn-group">
+					<button type="button" class="btn btn-primary" (click)="smsTab('single')">Single Whatsapp Message</button>
+				</div>
+				<div class="card-body p-30">
+					<form [formGroup]="compGroupSMS" (ngSubmit)="sendGroupSMS()">
+
+						<div class="row">
+							<div class="col-md-12" >
+								<div class="form-group">
+									<label for="group">Sender Group</label>
+									<select name="group"  id="group" class="form-control"  formControlName="group">
+										<option *ngFor="let time of groups_list" value="{{time.group_id}}" >{{time.group_name}}</option>
+									</select>
+								</div>
+							</div>
+						
+							<div class="col-md-12">
+								<div class="form-group">
+									<label for="message">Upload file</label>
+									<input type="file" name="wp_media_file_b" id="wp_media_file_b">
+								</div>
+							</div>
+							
+							<div class="col-md-12">
+								<div class="form-group">
+									<label for="message">Enter Message</label>
+									<textarea id="message" class="form-control" formControlName="message" (keyup)="wordCount()"></textarea>
+									<div >Total Characters <span id="wordCount">0</span> (160 character is consider as one sms)</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<button type="submit" class="btn btn-primary" [disabled]="!compGroupSMS.valid"><i class="fas fa-paper-plane"></i> Send</button>
+								</div>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,931 @@
+<input type="hidden" id="call_history_id" value="0">
+<input type="hidden" id="call_customer_key" value="0">
+<input type="hidden" id="call_incoming_number" value="">
+<input type="hidden" id="incoming_call_trigger" (click)="incoming_call_trigger()">
+<input type="hidden" id="outgoing_call_end_trigger" (click)="outgoingCallEnd()">
+<input type="hidden" id="incoming_call_end_trigger" (click)="incomingCallEnd()">
+<input type="hidden" autocomplete="off" id="html5vid">
+<input type="hidden" autocomplete="off" id="transferto">
+<input type="hidden" autocomplete="off" id="jsepjsep">
+<input type="hidden" autocomplete="off" id="incResutl">
+<input type="hidden" id="endCallByJs" (click)="outgoingCallEnd()">
+<input type="hidden" id="endCallByJsREASON" (click)="outgoingCallEndREASON()">
+<input type="hidden" id="endIncCallSection" (click)="endIncCallSection()">
+<input type="hidden" id="newCallNMumberCamp">
+<input type="hidden" id="show_error" (click)="showerror()">
+<input type="hidden" autocomplete="off" id="sip_urld">
+<input type="hidden" autocomplete="off" id="outcall_number">
+<input type="hidden" id="reconnect_socket"  (click)="initSocket()">
+<input type="hidden" id="reconnect_janus"  (click)="reconnect_janus()">
+<input type="hidden" id="dataforACK">
+<!-- <div> 
+    <audio *ngIf="this.ring_step == 0" id='incommingCalltone' src=''></audio>
+    <audio *ngIf="this.ring_step == 1" id='incommingCalltone' src='assets/images/Low.mp3'></audio>
+    <audio *ngIf="this.ring_step == 2" id='incommingCalltone' src='assets/images/Medium.mp3' ></audio>
+    <audio *ngIf="this.ring_step == 3" id='incommingCalltone' src='assets/images/High.mp3'></audio>
+    <audio *ngIf="this.ring_step == 6 || (this.ring_step != 0 && this.ring_step != 1 &&this.ring_step != 2 &&this.ring_step != 3)" id='incommingCalltone' src='assets/images/incomingcall.mp3' ></audio>
+</div> -->
+
+<!-- <audio id='incommingCalltone' src='assets/images/incomingcall.mp3'></audio> -->
+<audio id='incommingCalltone' src='{{this.ring_tone}}'></audio>
+<audio id='ringingTone' src='assets/images/ringbacktone.mp3'></audio>
+<div id="accept_calls" style="display: none;"></div>
+
+<input type="hidden" id="user_number">
+<input type="hidden" id="queulogin" (click)="q_logout_from_mob()">
+
+<input type="hidden" id="autoanswer" value="0">
+
+<div class="page-header">
+    <!-- <h1>
+        <button class="btn btn-default" autocomplete="off" id="start">Start</button>
+    </h1> -->
+</div>
+<div class="container" id="details"  style="display: none;">
+    <div class="row">
+        <div class="col-md-12">
+            
+        </div>
+    </div>
+</div>
+<div>
+<input class="form-control" type="hidden" value="sip:cal4caredemo.3cx.sg:5060"  autocomplete="off" id="server" onkeypress="return checkEnter(this, event);" />
+<input class="form-control" type="hidden" value="sip:103@cal4caredemo.3cx.sg" autocomplete="off" id="username" onkeypress="return checkEnter(this, event);" />
+<input class="form-control" type="hidden" value="KWEK8baMFB"  autocomplete="off" id="authuser" onkeypress="return checkEnter(this, event);" />
+<input class="form-control" type="hidden" value="qx2C0VIysR"  autocomplete="off" id="password" onkeypress="return checkEnter(this, event);" />
+<input class="form-control" type="hidden"  autocomplete="off" id="displayname" onkeypress="return checkEnter(this, event);" />
+<input type="hidden" autocomplete="off" id="register">
+<input type="hidden" autocomplete="off" id="decline_from_mrvoip" (click)="incomingCallEnd()">
+
+
+<!-- <audio id="incommingCalltone" >
+    <source src="assets/images/incomingcall.mp3" type="audio/mpeg">
+</audio>
+<audio id="ringingTone" >
+    <source src="assets/images/ringbacktone.mp3" type="audio/mpeg">
+</audio> -->
+<!-- 
+<audio id='incommingCalltone' src='assets/images/incomingcall.mp3' autoplay="true "muted></audio>
+<audio id='ringingTone' src='assets/images/ringbacktone.mp3' autoplay="true" muted></audio> -->
+<div class="container" style="display: none;">
+    <div class="row"  >
+        <div class="col-md-12">
+            <div class="page-header">
+                <h1>
+                    <button class="btn btn-default" autocomplete="off" id="start">Start</button>
+                </h1>
+            </div>
+            <div class="container" id="details">
+                <div class="row">
+                    <div class="col-md-12">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="container hide" id="sipcall">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- <div class="col-md-6 container hide" id="login">
+                            <div class="input-group margin-bottom-sm">
+                                <span class="input-group-addon"><i class="fa fa-cloud-upload fa-fw"></i></span>
+                                <input class="form-control" type="text" value="sip:cal4caredemo.3cx.sg:5060" placeholder="SIP Registrar (e.g., sip:host:port)" autocomplete="off" id="server" onkeypress="return checkEnter(this, event);" />
+                            </div>
+                            <div class="input-group margin-bottom-sm">
+                                <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                                <input class="form-control" type="text" value="sip:103@cal4caredemo.3cx.sg" placeholder="SIP Identity (e.g., sip:goofy@example.com)" autocomplete="off" id="username" onkeypress="return checkEnter(this, event);" />
+                            </div>
+                            <div class="input-group margin-bottom-sm">
+                                <span class="input-group-addon"><i class="fa fa-user-plus fa-fw"></i></span>
+                                <input class="form-control" type="text" value="KWEK8baMFB" placeholder="Username (e.g., goofy, overrides the one in the SIP identity if provided)" autocomplete="off" id="authuser" onkeypress="return checkEnter(this, event);" />
+                            </div>
+                            <div class="input-group margin-bottom-sm">
+                                <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                                <input class="form-control" type="password" value="qx2C0VIysR" placeholder="Secret (e.g., mysupersecretpassword)" autocomplete="off" id="password" onkeypress="return checkEnter(this, event);" />
+                            </div>
+                            <div class="input-group margin-bottom-sm">
+                                <span class="input-group-addon"><i class="fa fa-quote-right fa-fw"></i></span>
+                                <input class="form-control" type="text" placeholder="Display name (e.g., Alice Smith)" autocomplete="off" id="displayname" onkeypress="return checkEnter(this, event);" />
+                            </div>
+                            <div class="btn-group btn-group-sm" style="width: 100%">
+                                <button class="btn btn-primary" autocomplete="off" id="register" style="width: 30%">Register</button>
+                                <div class="btn-group btn-group-sm" style="width: 70%">
+                                    <button autocomplete="off" id="registerset" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width: 100%">
+                                        Registration approach<span class="caret"></span>
+                                    </button>
+                                    <ul id="registerlist" class="dropdown-menu" role="menu">
+                                        <li><a href='#' id='secret'>Register using plain secret</a></li>
+                                        <li><a href='#' id='ha1secret'>Register using HA1 secret</a></li>
+                                        <li><a href='#' id='guest'>Register as a guest (no secret)</a></li>
+                                    </ul>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="col-md-6 container hide" id="phone" >
+                            <div class="input-group margin-bottom-sm">
+                                <span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>
+                                <input class="form-control" type="hidden" placeholder="SIP URI to call (e.g., sip:1000@example.com)" autocomplete="off" id="peer" onkeypress="return checkEnter(this, event);" />
+                            </div>
+                        </div>
+                    </div>
+                
+                <div id="videos" class="hide">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">You</h3>
+                            </div>
+                            <div class="panel-body" id="videoleft"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Remote UA</h3>
+                            </div>
+                            <div class="panel-body" id="videoright"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <div class="footer">
+    </div>
+</div>
+
+</div>
+
+<div class="dialpad-container" id="dialpad-wrapper" *ngIf="dialPadContainer==true">
+
+  
+
+
+    <div class="dialpad-wrapper">
+        <div class="dialpad-close-icon"  *ngIf="!isDisabled">
+            <i class="fa fa-times dialpad-close" aria-hidden="true" (click)="dialPadClose()"></i>
+        </div>
+
+        <div class="dialpad-header">
+            <div class="dialpad-header-left">
+                <div class="dialpad-maximize-icon dialpad-max-min-icon">
+                    <a href="javascript:;" class="" (click)="openFullscreen()">
+                     <i class="fas fa-expand"></i>
+                 </a>
+             </div>
+
+             <div class="dialpad-minmize-icon dialpad-max-min-icon">
+                <a href="javascript:;" class="" (click)="closefullscreen()">
+                    <i class="fas fa-compress"></i> 
+                </a>
+            </div>
+
+            <div class="dialpad-header-logo">
+                <img src="assets/images/logo-white-favicon.png" height="18">
+            </div>
+        </div>
+        <div class="dialpad-header-right">
+            <!-- <div class="status-indication-bar off-hook-status"></div> -->
+            <div [class]="this.dial_status == 'ESTABLISHED' ? 'status-indication-bar ready-hook-status' : this.dial_status == 'REGISTERED' ? 'status-indication-bar on-hook-status' : 'status-indication-bar off-hook-status'"></div>
+
+            <!--   <div class="queue-login-status QueueLogIn"> -->
+                <div  [class]="this.redyForCall == 'On Hook' ? 'queue-login-status QueueLogIn' : 'queue-login-status QueueLogOut'" (click)="q_logout(this.queLogStatus)" title="Queue Details" style="cursor: pointer;">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="call-status-small">
+                    <p>{{this.redyForCall}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="dialpad-body dialpad_layout" id="dialpad_layout">
+<!-- <div class="dialpad-active-state">
+   <div [class]="this.dial_status == 'ESTABLISHED' ? 'hook-header off' :'hook-header on'" ></div>
+</div> -->
+<div *ngIf="dialPadActionview=='number_dailer'">
+    <div class="search-field"><input id="dialpad_number" class="form-control" type="text" name="searchfield" placeholder="Enter the number..." ></div>
+    <div class="dial-panel">
+        <div class="row">
+            <div class="digit" id="one" (click)="keyPad(1)" (keypress)="keyPad(1)">1</div>
+            <div class="digit" id="two" (click)="keyPad(2)">2 <div class="sub">ABC</div></div>
+            <div class="digit" id="three" (click)="keyPad(3)">3 <div class="sub">DEF</div></div>
+        </div>
+        <div class="row">
+            <div class="digit" id="four" (click)="keyPad(4)">4 <div class="sub">GHI</div></div>
+            <div class="digit" id="five" (click)="keyPad(5)">5 <div class="sub">JKL</div></div>
+            <div class="digit" id="six" (click)="keyPad(6)">6 <div class="sub">MNO</div></div>
+        </div>
+        <div class="row">
+            <div class="digit" id="seven" (click)="keyPad(7)">7 <div class="sub">PQRS</div></div>
+            <div class="digit" id="eight" (click)="keyPad(8)">8 <div class="sub">TUV</div></div>
+            <div class="digit" id="nine" (click)="keyPad(9)">9 <div class="sub">WXYZ</div></div>
+        </div>
+
+        <div class="row">
+            <div class="digit" id="star" (click)="keyPad('*')">*
+            </div>
+            <div class="digit" id="zero" (click)="keyPad(0)">0
+            </div>
+            <div class="digit" id="hash" (click)="keyPad('#')">#
+            </div>
+        </div>
+
+        <div class="row" id="call-action-btn-group">
+            <div class="digit has-img" (click)="dialPadview('user_list')"><img src="assets/images/dialpad-search-icon.png" height="28">
+            </div>
+            <div [class]="this.dial_status == 'ESTABLISHED' ? 'dig off list_details call-green-btn' :'dig on list_details call-green-btn'" id="call" (click)="dialCall()"><span class="call-btn-icon"><i class="fa rotate-full fa-phone" aria-hidden="true"></i></span>
+            </div>
+            <div class="digit has-img" id="" (click)="dialPadbackSpace()"><img src="assets/images/dialpad-clear-icon.png" height="20">
+            </div>
+        </div>
+
+        <div class="botrow">
+           <div class="dig list_details" (click)="dialPadview('user_list')">
+              <i class="fa fa-user-circle" aria-hidden="true"></i>
+              <span class="btn-icon-name">Contacts</span>
+          </div>
+          <div class="dig list_details" (click)="dialPadview('recent_list')"><i class="fa fa-th" aria-hidden="true"></i>
+            <span class="btn-icon-name">Keypad</span>
+        </div>
+
+        <div class="dig list_details" (click)="dialPadview('recent_list')">
+            <i style="font-size: 22px;" class="fas fa-clock"></i>
+            <span class="btn-icon-name">Recents</span>
+        </div>
+        <!--  <div class="dig queue_login" id="queue_green" onclick="q_login()"><b>Q</b></div> -->
+    </div>
+</div>
+</div>
+
+
+<div *ngIf="dialPadActionview=='number_dailer_transfer'">
+    <div class="search-field"><input id="dialpad_number" class="form-control" type="text" name="searchfield" placeholder="Enter the number..." ></div>
+    <div class="dial-panel">
+        <div class="row">
+            <div class="digit" id="one" (click)="keyPad(1)" (keypress)="keyPad(1)">1</div>
+            <div class="digit" id="two" (click)="keyPad(2)">2 <div class="sub">ABC</div></div>
+            <div class="digit" id="three" (click)="keyPad(3)">3 <div class="sub">DEF</div></div>
+        </div>
+        <div class="row">
+            <div class="digit" id="four" (click)="keyPad(4)">4 <div class="sub">GHI</div></div>
+            <div class="digit" id="five" (click)="keyPad(5)">5 <div class="sub">JKL</div></div>
+            <div class="digit" id="six" (click)="keyPad(6)">6 <div class="sub">MNO</div></div>
+        </div>
+        <div class="row">
+            <div class="digit" id="seven" (click)="keyPad(7)">7 <div class="sub">PQRS</div></div>
+            <div class="digit" id="eight" (click)="keyPad(8)">8 <div class="sub">TUV</div></div>
+            <div class="digit" id="nine" (click)="keyPad(9)">9 <div class="sub">WXYZ</div></div>
+        </div>
+        <div class="row">
+            <div class="digit" id="star" (click)="keyPad('*')">*
+            </div>
+            <div class="digit" id="zero" (click)="keyPad(0)">0
+            </div>
+            <div class="digit" id="hash" (click)="keyPad('#')">#
+            </div>
+        </div>
+
+        <div class="row" id="call-action-btn-group">
+            <div class="digit has-img" (click)="dialPadview('user_list')"><img src="assets/images/dialpad-search-icon.png" height="28">
+            </div>
+            <div [class]="this.dial_status == 'ESTABLISHED' ? 'dig off list_details call-green-btn' :'dig on list_details call-green-btn'" id="call" (click)="dialCall()"><span class="call-btn-icon"><i class="fa rotate-full fa-phone" aria-hidden="true"></i></span>
+            </div>
+            <div class="digit has-img" id="" (click)="dialPadbackSpace()"><img src="assets/images/dialpad-clear-icon.png" height="20">
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div *ngIf="dialPadActionview!='number_dailer'">
+    <div class="contact-panel" *ngIf="dialPadActionview =='recent_list'">
+        <!-- <div class="search-field"><input class="form-control" type="text" name="searchfield" placeholder="Search Recent Calls" id="recent_call_search" (keyup)="recentCallSearch($event)"></div> -->
+        <div class="tab-content">
+            <div id="recentCalls">
+                <div class="contact-list-item" *ngFor="let recent_call of dialpadRecentCalls;" phone-attr="phone" >
+        <!-- <h5  *ngIf="this.show_caller_id == '1'">{{recent_call.call_data}}</h5>
+        <h5  *ngIf="this.show_caller_id == '0' && recent_call.call_type == 'incoming'">Call from xxxxx </h5>
+        <h5  *ngIf="this.show_caller_id == '0' && recent_call.call_type == 'outgoing'">Call to xxxxx </h5> -->
+                    <div *ngIf="this.show_caller_id == '1'">       
+                        <h5 *ngIf="this.show_caller_id == '1' && recent_call.type == 'MissedCall'">
+                            <div *ngIf="recent_call.from_no == this.extension && recent_call.to_no != this.extension ">
+                                <span class="callType" ><img src="assets/images/missed-call.svg"></span>
+                                Outgoing Call To {{recent_call.to_no}}
+                            </div>
+                            <div *ngIf="recent_call.to_no == this.extension && recent_call.from_no != this.extension">
+                            <span class="callType" ><img src="assets/images/missed-call.svg"></span>
+                                Missed Call From {{recent_call.from_no}}
+                            </div>
+                        </h5>
+                        <h5  *ngIf="this.show_caller_id == '1' && recent_call.type == 'AnswerdCall'">
+                            <div *ngIf="recent_call.from_no == this.extension && recent_call.to_no != this.extension">
+                                <span class="callType" ><img src="assets/images/outgoing-call.svg"></span>
+                                Outgoing Call To {{recent_call.to_no}}
+                            </div>
+                            <div *ngIf="recent_call.to_no == this.extension && recent_call.from_no != this.extension ">
+                                <span class="callType" ><img src="assets/images/incoming-call.svg"></span>
+                                Incoming Call From {{recent_call.from_no}}
+                            </div>
+                        </h5>
+                    </div>
+                        <div *ngIf="this.show_caller_id == '0'">       
+                                <h5 *ngIf="recent_call.type == 'MissedCall'">
+                                <div *ngIf="recent_call.from_no == this.extension && recent_call.to_no != this.extension ">
+                                    <span class="callType" ><img src="assets/images/missed-call.svg"></span>
+                                    Outgoing Call To XXXX
+                                    </div>
+                                    <div *ngIf="recent_call.to_no == this.extension && recent_call.from_no != this.extension">
+                                    <span class="callType" ><img src="assets/images/missed-call.svg"></span>
+                                    Missed Call From XXXX
+                                    </div>
+                            </h5>
+                            <h5  *ngIf="recent_call.type == 'AnswerdCall'">
+                                <div *ngIf="recent_call.from_no == this.extension && recent_call.to_no != this.extension">
+                                    <span class="callType" ><img src="assets/images/outgoing-call.svg"></span>
+                                    Outgoing Call To XXXX
+                                    </div>
+                                    <div *ngIf="recent_call.to_no == this.extension && recent_call.from_no != this.extension ">
+                                    <span class="callType" ><img src="assets/images/incoming-call.svg"></span>
+                                    Incoming Call From XXXX
+                                    </div>
+                            </h5>
+                        </div>
+                      <div class="call-time"> {{recent_call.dt_time}}</div>
+
+              </div>
+            </div>
+            </div>
+            <div class="botrow">
+               <div class="dig list_details" (click)="dialPadview('user_list')">
+                  <i class="fa fa-user-circle" aria-hidden="true"></i>
+                  <span class="btn-icon-name">Contacts</span>
+              </div>
+
+              <div class="dig list_details" (click)="dialPadview('number_dailer')"><i class="fa fa-th" aria-hidden="true"></i>
+               <span class="btn-icon-name">Keypad</span>
+           </div>
+
+           <div class="dig list_details" (click)="dialPadview('recent_list')">
+            <i style="font-size: 22px;" class="fas fa-clock"></i>
+            <span class="btn-icon-name">Recent</span>
+        </div>
+        <!--   <div class="dig list_details queue_login" onclick="q_login()"><b>Q</b></div> -->
+
+    </div>
+</div>
+<div class="contact-panel" *ngIf="dialPadActionview =='user_list'">
+    <div class="search-field"><input class="form-control" type="text" name="searchfield" placeholder="Search User Calls" id="user_list_search" (keyup)="userListSearch(this)"></div>
+    <div class="tab-content-data">
+        <div id="userList" class="tab-pane in active">
+
+            <div class="contact-list-item" *ngFor="let user_list of dialpadUserList;" (click)="dialPadDetailView('user_detail_view',user_list.user_id)">
+                <div class="contact-number-details"><span class="user-img"><img src="assets/images/user.jpg"></span><h5>{{user_list.user_name}}</h5></div>
+            </div>
+
+        </div>
+    </div>
+    <div class="botrow">
+        <div class="dig list_details" (click)="dialPadview('user_list')">
+          <i class="fa fa-user-circle" aria-hidden="true"></i>
+          <span class="btn-icon-name">Contacts</span>
+      </div>
+      <div class="dig list_details" (click)="dialPadview('number_dailer')"><i class="fa fa-th" aria-hidden="true"></i>
+        <span class="btn-icon-name">Keypad</span>
+    </div>
+    <!--     <div class="dig list_details queue_login" onclick="q_login()"><b>Q</b></div> -->
+    <div class="dig list_details" (click)="dialPadview('recent_list')">
+        <i style="font-size: 22px;" class="fas fa-clock"></i>
+        <span class="btn-icon-name">Recents</span>
+    </div>
+</div>
+</div>
+
+<div class="call-screen-panel" *ngIf="dialPadActionview =='call_history_detail'">
+    <div class="backArrow" data-toggle="tooltip" title="Back" (click)="dialPadview('number_dailer')"><i class="fa fa-arrow-left" aria-hidden="true"></i></div>
+    <div class="active-call">
+        <div class="caller-img"><img src="assets/images/user.jpg"></div>
+        <h4 ><b>Call Details</b></h4>
+        <h5 *ngIf="this.show_caller_id != '0'">{{callDetailView.call_data}}</h5>
+        <h5 *ngIf="this.show_caller_id == '0'">Call to xxxxxxx</h5>
+        <div class="call-duration">{{callDetailView.call_start_dt}}</div>
+    </div>
+    <div class="botrow">
+        <div class="dig" (click)="dialPadview('number_dailer')"><i class="fa fa-th" aria-hidden="true"></i>
+           <span class="btn-icon-name">Keypad</span>
+       </div>
+       <input type="hidden" id="newCallNMumber" value="{{callDetailView.phone}}">
+       <div id="call" class="dig" (click)="webMakeCall2(caller_if)"><i class="fa fa-phone" aria-hidden="true"></i></div>
+   </div>
+</div>
+
+<div class="call-screen-panel" *ngIf="dialPadActionview =='user_detail_view'">
+    <div class="backArrow" data-toggle="tooltip" title="Back" (click)="dialPadview('user_list')"><i class="fa fa-arrow-left" aria-hidden="true"></i></div>
+    <div class="active-call">
+        <div class="caller-img"><img src="assets/images/user.jpg"></div>
+        <h4><b>User Details</b></h4>
+        <h5>{{userDetailView.user_name}}</h5>
+        <h6>{{userDetailView.user_name}}</h6>
+    </div>
+    <div class="botrow">
+        <div class="dig" (click)="dialPadview('number_dailer')"><i class="fa fa-th" aria-hidden="true"></i>
+            <span class="btn-icon-name">Keypad</span>
+        </div>
+        <div id="call" class="dig" (click)="webMakeCall(userDetailView.user_name)"><i class="fa fa-phone" aria-hidden="true"></i></div>
+    </div>
+</div>
+
+<div class="call-screen-panel" *ngIf="dialPadActionview =='outgoing_call_inprogess'">
+    <input type="hidden" (click)="countdownTim()" id="CallToCut">
+    <input type="hidden" (click)="outGongCallstatus()" id="outGongCallstatus">
+    <div class="active-call">
+        <div class="caller-img"><img src="assets/images/user.jpg"></div>
+        <h4><b>Outgoing Call </b></h4>
+        <h5><span class="callee" *ngIf="this.show_caller_id == '1'">{{dialpadOutgoingCalls.call_data}}</span>
+            <span class="callee" *ngIf="this.show_caller_id == '0'">Call to xxxxxxx</span></h5>
+        <div id="call_duration" style="display:none"><span id="call_minutes" class="call_minutes">00</span>:<span id="call_seconds" class="call_seconds">00</span></div>
+        <div class="call-icon outgoing-call">
+            <span class="ringing_phone"><i class="fa fa-phone"></i></span>
+        </div>
+        <div class="call-extra-featurs">
+            <div class="dig">
+                <a class="mute-btn" id="mute_btn" href="javascript:void(0);"><i data-toggle="tooltip" title="Mute" class="fa fa-microphone unmuted-btn" aria-hidden="true" onclick="custommuteCall()"></i><i data-toggle="tooltip" title="Muted" class="fa fa-microphone-slash muted-btn" aria-hidden="true" onclick="custommuteCall()"></i>
+                     <span class="call-action-label">Mute</span>
+                </a>
+            </div>
+            <div class="dig">
+                <a class="hold_btn"  href="javascript:void(0);">
+                    <i data-toggle="tooltip" id="hold_btn" title="Hold" class="fa fa-pause" aria-hidden="true" onclick="holdCall()"></i>
+                    <i data-toggle="tooltip" id="resume_btn" title="Resume" class="fa fa-pause " aria-hidden="true" onclick="resumeCall()" style="display:none"></i>
+                    <span class="call-action-label">Hold</span>
+                </a>
+            </div>
+            <!-- <div class="dig small-icon">
+                <a class="rotate" href="javascript:void(0);" (click)="callConference()">
+                    <i data-toggle="tooltip" title="Call Canference" class="fas fa-users" aria-hidden="true"></i>
+                     <span class="call-action-label">Conference</span>
+                </a>
+            </div> -->
+            <div class="dig">
+                <a class="rotate" href="javascript:void(0);" (click)="Callforword('transfer')">
+                    <i data-toggle="tooltip" title="Call Forward" class="fas fa-random" aria-hidden="true"></i>
+                     <span class="call-action-label">Transfer / Forward</span>
+                </a>
+            </div>
+            <div class="dig"><a class="rotate" href="javascript:void(0);" (click)="transferCallToSurvay()"><i data-toggle="tooltip" title="Calls Transfer" class="fa fa-reply-all" aria-hidden="true"></i>
+                 <span class="call-action-label">Survey</span></a>
+            </div>
+            <!-- <div class="dig">
+                <a class="rotate" href="javascript:void(0);" (click)="Callforword('dtmf')">
+                    <i data-toggle="tooltip" title="Call Forward" class="fas fa-random" aria-hidden="true"></i>
+                     <span class="call-action-label">Transfer / Forward</span>
+                </a>
+            </div> -->
+        </div>
+    </div>
+
+    <div class="botrow">
+        <div class="dig" (click)="Callforword('dtmf')"><i class="fa fa-th" aria-hidden="true"></i>
+            <span class="btn-icon-name">Keypad</span>
+        </div>
+        <div id="call" class="dig oncall" (click)="outgoingCallEnd()"><i class="fa fa-phone" aria-hidden="true"></i></div>
+    </div>
+</div>
+<div class="call-screen-panel" *ngIf="dialPadActionview =='call_incoming'">
+    <div class="active-call">
+        <div class="caller-img"><img src="assets/images/user.jpg"></div>
+        <h4><b>Incoming Call</b></h4>
+        <!-- <span class="callee" *ngIf="this.show_caller_id == '0'">Call to xxxxxxx</span></h5> -->
+
+        <h5 *ngIf="this.show_caller_id == '1'">{{dialpadIncomingCalls.call_data}}</h5>
+        <h5 *ngIf="this.show_caller_id == '0'">Call from xxxxxxx</h5>
+        <div class="call-icon incoming-call">
+            <span class="ringing_phone"><i class="fa fa-phone"></i></span>
+        </div>
+    </div>
+    <div class="botrow">
+        <!-- <div id="accept_calls">
+
+        </div> -->
+        <div id="call" class="dig" (click)="incomingCallAccept(dialpadIncomingCalls.phone)" ><i class="fa fa-phone" aria-hidden="true"></i></div>
+        <div id="call" class="dig oncall" (click)="incomingCallDecline()"><i class="fa fa-phone" aria-hidden="true"></i></div>
+    </div>
+</div>
+<div class="call-screen-panel" *ngIf="dialPadActionview =='incoming_call_inprogess'">
+    <div class="active-call">
+        <div class="caller-img"><img src="assets/images/user.jpg"></div>
+        <h4><b>Incoming Call</b></h4>
+        <h5 *ngIf="this.show_caller_id == '1'">{{dialpadIncomingCalls.call_data}}</h5>
+        <h5 *ngIf="this.show_caller_id == '0'">Call from xxxxxxx</h5>
+        
+        <div id="call_duration"><span id="call_minutes" class="call_minutes">00</span>:<span id="call_seconds" class="call_seconds">00</span></div>
+        <div class="call-extra-featurs">
+            <div class="dig"><a class="mute-btn" id="mute_btn" href="javascript:void(0);"><i data-toggle="tooltip" title="Mute" class="fa fa-microphone unmuted-btn" aria-hidden="true" onclick="custommuteCall()"></i><i data-toggle="tooltip" title="Muted" class="fa fa-microphone-slash muted-btn" aria-hidden="true" onclick="custommuteCall()"></i> <span class="call-action-label">Mute</span></a></div>
+            <div class="dig">
+                <a class="hold_btn"  href="javascript:void(0);">
+                    <i data-toggle="tooltip" id="hold_btn" title="Hold" class="fa fa-pause" aria-hidden="true" onclick="holdCall()"></i>
+                    <i data-toggle="tooltip" id="resume_btn" title="Resume" class="fa fa-pause " aria-hidden="true" onclick="resumeCall()" style="display:none"></i>
+                    <span class="call-action-label">Hold</span>
+                </a>
+            </div>
+            <!-- <div class="dig small-icon">
+                <a class="rotate" href="javascript:void(0);" (click)="callConference()">
+                    <i data-toggle="tooltip" title="Call Canference" class="fas fa-users" aria-hidden="true"></i>
+                     <span class="call-action-label">Conference</span>
+                </a>
+            </div> -->
+
+                        <!-- <div class="dig list_details">
+                            <a class="hold_btn"  href="javascript:void(0);">
+                            <i class="fas fa-random" (click)="dialPadview('number_dailer_transfer')"></i>
+                            </a>
+                        </div> -->
+                        <!-- <div class="dig" (click)="dialPadview('number_dailer')"><i class="fas fa-random" aria-hidden="true"></i>
+                        </div> -->
+                        <div class="dig ">
+                            <a class="rotate" href="javascript:void(0);" (click)="Callforword('transfer')" >
+                                <i data-toggle="tooltip" title="Call Forward" class="fas fa-random" aria-hidden="true"></i>  <span class="call-action-label">Transfer / Forward</span>
+                            </a>
+                        </div>
+
+
+                        <div class="dig"><a class="rotate" href="javascript:void(0);" (click)="transferCallToSurvay()"><i data-toggle="tooltip" title="Calls Transfer" class="fa fa-reply-all" aria-hidden="true"></i></a>
+                             <span class="call-action-label">Survey</span>
+                        </div>
+
+                        <!-- <div class="dig ">
+                            <a class="rotate" href="javascript:void(0);" (click)="Callforword('dtmf')" >
+                                <i data-toggle="tooltip" title="Call Forward" class="fas fa-random" aria-hidden="true"></i>  <span class="call-action-label">Transfer / Forward</span>
+                            </a>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="botrow">
+                    <div class="dig" (click)="Callforword('dtmf')"><i class="fa fa-th" aria-hidden="true"></i>
+                        <span class="btn-icon-name">Keypad</span>
+                    </div>
+                    <div id="call" class="dig oncall" (click)="incomingCallEnd()"><i class="fa fa-phone" aria-hidden="true"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+
+<div class="circle-plus view-dialpad" (click)='dialPadOpen()' *ngIf="dialPadCirclePlus==true">
+    <a href="javascript:void(0);">
+     <!--  <div class="pulse_bg"><img src="assets/images/plus-icon.svg"></div> -->
+     <div class="pulse_bg"><i class="fa fa-phone" aria-hidden="true"></i></div>
+     <div class="pulse1"></div>
+     <div class="pulse2"></div>
+ </a>
+</div>
+
+<div class="webrtc_dailpad" style="visibility: hidden;width: 0px; height: 0px;position: fixed;left: 0;">
+    <input type="hidden" value='0' id='make_call_number'>
+    <!-- <input type="hidden" value='0' id='makecallHanupBtn'> -->
+    <div id='makecallHanupBtn'></div>
+    <div id="incomingCallAlert" style="display: none;">
+    </div>
+    <div id="incomingCall" style="display: none;">
+        <button id="incomingCallAnswerBtn" type="button"></button>
+        <button id="incomingCallHangupBtn" type="button" onclick="outgoingCallEnd()"></button>
+    </div>
+    <div id="remoteDisplay"></div>
+    <div class="fp-localDisplay">
+        <div id="localDisplay"></div>
+    </div>
+</div>
+<div class="circle-plus dialpad-refresh" *ngIf="dialPadRefresh==true">
+    <a href="javascript:void(0);">
+        <div class="pulse_bg"><img src="assets/images/refresh-icon.svg" style='width:40px;height:40px;'></div>
+        <div class="pulse1"></div>
+        <div class="pulse2"></div>
+    </a>
+</div>
+<input type='hidden' id='sip_local_time' value=''>
+<input type='hidden' id='sip_load_count' value='3'>
+<input type='hidden' id='incoming_call_request_data' value='1'>
+
+
+
+<!--------------------------------------
+Call Forward
+--------------------------------------->
+
+
+
+  <div class="forwardDialpadPanel hide-fwd-dialpad"  style="display: none;">
+                   <div class="dialpad-close-icon" id="close-call-fwd-modal">
+                    <i aria-hidden="true" class="fa fa-times"></i>
+                   </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="dialpad-wrapper">
+                            <div class="forwordDialPad">
+                                <div class="dialpad-header">
+                 <label for="makeCallForwordNumber" *ngIf="dtmf == false">Transfer / Forward</label>
+                 <label for="makeCallForwordNumber" *ngIf="dtmf">DTMF</label>
+                            </div>
+                              <!--   <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="makeCallForwordNumber">Call Number</label>
+                                        <input type="text" id="makeCallForwordNumber" name="makeCallForwordNumber" placeholder="Enter the number..." readonly="true">
+                                    </div>  
+                                </div> -->
+
+                                <div class="search-field">
+                                    <input class="form-control" id="makeCallForwordNumber" placeholder="Enter the number..."  type="text">
+                                </div>
+
+
+                                <div class="dial-panel" >
+                                    <div class="row noMargin">
+                                        <div class="digit" id="one" (click)="keyPad(1)" (keypress)="keyPad(1)">1</div>
+                                        <div class="digit" id="two" (click)="keyPad(2)">2 <div class="sub">ABC</div></div>
+                                        <div class="digit" id="three" (click)="keyPad(3)">3 <div class="sub">DEF</div></div>
+                                    </div>
+                                    <div class="row noMargin">
+                                        <div class="digit" id="four" (click)="keyPad(4)">4 <div class="sub">GHI</div></div>
+                                        <div class="digit" id="five" (click)="keyPad(5)">5 <div class="sub">JKL</div></div>
+                                        <div class="digit" id="six" (click)="keyPad(6)">6 <div class="sub">MNO</div></div>
+                                    </div>
+                                    <div class="row noMargin">
+                                        <div class="digit" id="seven" (click)="keyPad(7)">7 <div class="sub">PQRS</div></div>
+                                        <div class="digit" id="eight" (click)="keyPad(8)">8 <div class="sub">TUV</div></div>
+                                        <div class="digit" id="nine" (click)="keyPad(9)">9 <div class="sub">WXYZ</div></div>
+                                    </div>
+                                    
+                                    <div class="row noMargin">
+                                        <div class="digit" id="star" (click)="keyPad('*')">*
+                                        </div>
+                                        <div class="digit" id="zero" (click)="keyPad(0)">0
+                                        </div>
+                                        <div class="digit" id="hash" (click)="keyPad('#')">#
+                                        </div>
+                                    </div>
+                                
+                                     <div class="row noMargin" id="call-action-btn-group">
+                                        <div class="digit has-img">
+                                            </div>
+                                            <div *ngIf="dtmf == false" [class]="this.dial_status == 'ESTABLISHED' ? 'dig off list_details call-green-btn' :'dig on list_details call-green-btn'" id="call" (click)="makecallTransfer()"><span class="call-btn-icon"><img  src="assets/images/call-forward.png" height="32"></span>
+                                            </div>
+                                            <div class="digit has-img" id="" (click)="dialPadbackSpace()"><img src="assets/images/dialpad-clear-icon.png" height="20">
+                                            </div>
+                                        </div>
+
+
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+<!--------------------------------------
+Call Forward End
+--------------------------------------->
+<!--------------------------------------
+Call Conference
+--------------------------------------->
+
+
+
+<!-- <div class="forwardDialpadPanel cnferenumCalldiv hide-fwd-dialpad"  style="display: none;">
+    <div class="dialpad-close-icon" id="close-call-fwd-modal">
+     <i aria-hidden="true" class="fa fa-times"></i>
+    </div>
+
+     <div class="row">
+         <div class="col-12">
+             <div id="dialpad-wrapper">
+             <div class="forwordDialPad">
+                 <div class="dialpad-header">
+                 <label for="makeCallForwordNumber">Call Conference</label>
+             </div>
+              
+
+                 <div class="search-field">
+                     <input class="form-control" id="makeCallConferenceNumber" placeholder="Enter the number..."  type="text">
+                 </div>
+
+
+                 <div class="dial-panel" >
+                     <div class="row noMargin">
+                         <div class="digit" id="one" (click)="keyPad(1)" (keypress)="keyPad(1)">1</div>
+                         <div class="digit" id="two" (click)="keyPad(2)">2 <div class="sub">ABC</div></div>
+                         <div class="digit" id="three" (click)="keyPad(3)">3 <div class="sub">DEF</div></div>
+                     </div>
+                     <div class="row noMargin">
+                         <div class="digit" id="four" (click)="keyPad(4)">4 <div class="sub">GHI</div></div>
+                         <div class="digit" id="five" (click)="keyPad(5)">5 <div class="sub">JKL</div></div>
+                         <div class="digit" id="six" (click)="keyPad(6)">6 <div class="sub">MNO</div></div>
+                     </div>
+                     <div class="row noMargin">
+                         <div class="digit" id="seven" (click)="keyPad(7)">7 <div class="sub">PQRS</div></div>
+                         <div class="digit" id="eight" (click)="keyPad(8)">8 <div class="sub">TUV</div></div>
+                         <div class="digit" id="nine" (click)="keyPad(9)">9 <div class="sub">WXYZ</div></div>
+                     </div>
+                     
+                     <div class="row noMargin">
+                         <div class="digit" id="star" (click)="keyPad('')">
+                         </div>
+                         <div class="digit" id="zero" (click)="keyPad(0)">0
+                         </div>
+                         <div class="digit" id="hash" (click)="keyPad('#')">#
+                         </div>
+                     </div>
+                 
+                      <div class="row noMargin" id="call-action-btn-group">
+                         <div class="digit has-img">
+                             </div>
+                             <div [class]="this.dial_status == 'ESTABLISHED' ? 'dig off list_details call-green-btn' :'dig on list_details call-green-btn'" id="call" (click)="makecallConference()"><span class="call-btn-icon"><img  src="assets/images/call-forward.png" height="32"></span>
+                             </div>
+                             <div class="digit has-img" id="" (click)="dialPadbackSpace()"><img src="assets/images/dialpad-clear-icon.png" height="20">
+                             </div>
+                         </div>
+
+
+                 </div>
+             </div>
+             </div>
+         </div>
+     </div>
+ </div> -->
+
+<!--------------------------------------
+Call Conference End
+--------------------------------------->
+
+<div class="modal fade bd-example-modal-md" id="Qlogform">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Queue Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="form-group">
+								<!-- <label for="department">Question</label>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> -->
+                                </div>	
+                            </div>
+                            <div class="col-md-12"> 
+                             <div class="form-group">
+                                <label for="department">Aux code</label>
+                                <select name="que"  id="que" class="form-control">
+                                   <option value='0'> Select Aux Code </option>
+                                   <option *ngFor="let auxcode of auxcodesM" value="{{auxcode.auxcode_name}}">{{auxcode.auxcode_name}}</option>
+                               </select>
+                           </div>	
+                       </div>
+                   </div>
+                   <div class="row has-row-space">
+                    <div class="col-md-12">
+                    <div class="addAgent">
+                    <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-md">
+                    
+                    <tr >
+                    <th style="width: 20px;">
+                    <div class="pretty p-default">
+                        <input type="checkbox" id="getallmyqueue" (click)="checkallQueues()">
+                    <div class="state p-primary">
+                    <label></label>
+                    </div>
+                    </div>   
+                    </th>
+                    <th>Queue Number</th>
+                    <th>Queue Name</th>
+                    </tr>
+                    
+                    <tbody>
+                    <tr *ngFor="let item of allmyQues">
+                    <td style="width: 20px;">
+                    <div class="pretty p-default">
+                    <input value="{{item.queue_number}}" (click)="checksingleQueue()" type="checkbox" class="getallmyqueues">
+                    <div class="state p-primary">
+                    <label></label>
+                    </div>
+                    </div>   
+                    </td>
+                    <td>{{item.queue_number}}</td>
+                    <td>{{item.queue_name}}</td>
+                    </tr>
+                   
+                  
+                    
+                    </tbody>
+                    
+                    </table>
+                    </div>
+                    </div>
+                    
+                    </div> 
+                    </div>
+               </div>
+              
+               <div class="modal-footer">
+                <div class="buttons">
+                    <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                    <input type="submit" class="btn btn-primary update_agent" (click)="updateQ()" value="Logout">
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+
+
+
+
+
+<!-- <div class="modal dialpadModal fade bd-example-modal-md" id="makeCallForword">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+               
+                <div class="modal-body">
+
+                   <div class="dialpad-close-icon">
+                    <i aria-hidden="true" class="fa fa-times" data-dismiss="modal" aria-label="Close"></i>
+                   </div>
+
+					<div class="row">
+                        <div class="col-12">
+                            <div class="modal-dialpad-container" id="dialpad-wrapper">
+                            <div class="forwordDialPad" style=" display: table; margin: auto;">
+                                <label for="makeCallForwordNumber" style="margin-left:80px; color #fff;">Call Transfer / Forward</label>
+                              <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="makeCallForwordNumber">Call Number</label>
+                                        <input type="text" id="makeCallForwordNumber" name="makeCallForwordNumber" placeholder="Enter the number..." readonly="true">
+                                    </div>	
+                                </div> -->
+  <!-- 
+                                <div class="search-field">
+
+                                    <input class="form-control" id="makeCallForwordNumber" placeholder="Enter the number..." readonly="true" type="text">
+                                </div>
+
+
+                                <div class="dial-panel" >
+                                    <div class="row noMargin">
+                                        <div class="digit" id="one" (click)="keyPad(1)" (keypress)="keyPad(1)">1</div>
+                                        <div class="digit" id="two" (click)="keyPad(2)">2 <div class="sub">ABC</div></div>
+                                        <div class="digit" id="three" (click)="keyPad(3)">3 <div class="sub">DEF</div></div>
+                                    </div>
+                                    <div class="row noMargin">
+                                        <div class="digit" id="four" (click)="keyPad(4)">4 <div class="sub">GHI</div></div>
+                                        <div class="digit" id="five" (click)="keyPad(5)">5 <div class="sub">JKL</div></div>
+                                        <div class="digit" id="six" (click)="keyPad(6)">6 <div class="sub">MNO</div></div>
+                                    </div>
+                                    <div class="row noMargin">
+                                        <div class="digit" id="seven" (click)="keyPad(7)">7 <div class="sub">PQRS</div></div>
+                                        <div class="digit" id="eight" (click)="keyPad(8)">8 <div class="sub">TUV</div></div>
+                                        <div class="digit" id="nine" (click)="keyPad(9)">9 <div class="sub">WXYZ</div></div>
+                                    </div>
+                                    
+                                    <div class="row noMargin">
+                                        <div class="digit" id="star" (click)="keyPad('*')">*
+                                        </div>
+                                        <div class="digit" id="zero" (click)="keyPad(0)">0
+                                        </div>
+                                        <div class="digit" id="hash" (click)="keyPad('#')">#
+                                        </div>
+                                    </div>
+                                
+                                     <div class="row noMargin" id="call-action-btn-group">
+                                
+                                        <div class="digit has-img">
+                                            </div>
+                                            <div [class]="this.dial_status == 'ESTABLISHED' ? 'dig off list_details call-green-btn' :'dig on list_details call-green-btn'" id="call" (click)="makecallTransfer()"><span class="call-btn-icon"><i class="fa rotate-full fa-phone" aria-hidden="true"></i></span>
+                                            </div>
+                                            <div class="digit has-img" id="" (click)="dialPadbackSpace()"><img src="assets/images/dialpad-clear-icon.png" height="20">
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+					</div>
+                </div>
+
+		</div>
+    </div>
+</div> 
+
+
+-->
+
+
+
+

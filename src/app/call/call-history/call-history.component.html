@@ -1,0 +1,125 @@
+<div class="section-body">
+    <div class="row">
+        <div class="col-7 col-md-7 col-lg-7">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Wrap Up code Report</h4>
+                  
+                </div>
+                <div class="card-body p-30">
+                <form [formGroup]="getRep" (ngSubmit)="getReports()">
+                    <div class="row">
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="auxcode_name">Select Wrap Up code</label>
+                                <select name="auxcode_name"  id="auxcode_name" class="form-control " formControlName="auxcode_name">
+                                    <option value="" selected>All</option>
+                                    <option *ngFor="let auxcode of auxcodes" value="{{auxcode.auxcode_name}}">{{auxcode.auxcode_name}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="from_date">From Date</label>
+                                <input type="date" id="from_date" class="form-control" formControlName="from_date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="to_date">To Date</label>
+                                <input type="date" id="to_date" class="form-control" formControlName="to_date">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary" (click)="getReports()">Generate Report</button>
+                            </div>
+                        </div>
+                        </div>
+                    
+                </form>
+                </div>
+            </div>
+            
+        </div>
+    </div> 
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Call History</h4>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-md">
+                            <tr>
+                                <td colspan="12" class="search-text-tbl">
+                                    <div class="input-group"><input type="text" class="form-control" (keyup.enter)="callHistoryList({'search_text':call_history_search.value})" #call_history_search>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" (click)="callHistoryList({'search_text':call_history_search.value})"><i class="fas fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>S.no</th>
+                                <th>Phone number</th>
+                                <th>Call Type</th>
+                                <th>Wrap Up code</th>
+                                <th>Call time</th>
+                            </tr>
+                            <tr *ngFor="let history of call_history_list;let i=index" >
+                                <td>{{offset_count+i+1}}</td>
+                                <td>{{history.phone}}</td>
+                                <td><span class="callType"> <img src="assets/images/incoming-call.svg" *ngIf="history.call_type == 'incoming'"><img src="assets/images/outgoing-call.svg" *ngIf="history.call_type == 'outgoing'"></span>{{history.call_type}}</td>
+                                <td>{{history.auxcode_name}}</td>
+                                <td>
+                                    {{history.call_start_dt}}
+                                </td>
+                            </tr>
+                            <tr *ngIf="recordNotFound == true">
+                               <td colspan="12">Data not found</td>
+                            </tr>
+                      
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer text-right" *ngIf="recordNotFound == false">
+                        <nav class="d-inline-block">
+                        <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+
+                                <li class="page-item">
+                                    <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'" href="javascript:void(0)" (click)="paginationData.backtab=='show' ? callHistoryList({'search_text':call_history_search.value,'offset':paginationData.start}) : false"><i class="fas fa-angle-left"></i></a>
+                                </li>
+                                <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                                    <a class="page-link" href="javascript:void(0)" (click)="callHistoryList({'search_text':call_history_search.value,'offset':paginationData.back})"><i class="fas fa-angle-double-left"></i></a>
+                                </li>
+
+
+                                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'" *ngFor="let pagination of paginationData.data;let i=index">
+                                    <a class="page-link" href="javascript:void(0)" (click)=" pagination.load ==true ? callHistoryList({'search_text':call_history_search.value,'offset':pagination.offset_count}) : false">{{pagination.btn_length}} <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                                </li>
+
+                                <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                                    <a class="page-link" href="javascript:void(0)" (click)="callHistoryList({'search_text':call_history_search.value,'offset':paginationData.next})"><i class="fas fa-angle-double-right"></i></a>
+                                </li>
+
+                                <li class="page-item">
+                                    <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'" href="javascript:void(0)" (click)="paginationData.nexttab =='show' ? callHistoryList({'search_text':call_history_search.value,'offset':paginationData.end}) : false"><i class="fas fa-angle-right"></i></a>
+                                </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

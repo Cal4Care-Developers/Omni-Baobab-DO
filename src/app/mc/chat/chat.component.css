@@ -1,0 +1,24 @@
+.chat-closed{
+    text-align: center;
+    color: #F44336;
+    font-size: 18px;
+    background: #f9f9f9;
+}
+.close-text{
+    text-align: center;
+    padding: 10px 0px 0px;
+    color: #F44336;
+}
+.end-chat-pannel{
+    float: right;
+display: flex;
+justify-content: space-between;
+align-items: center;
+width: 85px;
+}
+
+.end-cross-icon{
+    cursor: pointer;
+border: 1px solid;
+padding: 0px 5px;
+}

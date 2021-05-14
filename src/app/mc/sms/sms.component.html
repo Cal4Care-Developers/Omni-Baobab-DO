@@ -1,0 +1,247 @@
+                 
+                 <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                        <div class="card fullHeightCard">
+                            <div class="body">
+                                <div id="plist" class="people-list chat-search-list">
+                                    <div class="chat-search">
+                                      <div class="sidebar-add-btn">
+                                        <button  type="button" class="btn btn-primary"  routerLink="/compose-sms">Compose New</button>
+                                      </div>
+                                   <div class="input-group">
+                                       <input type="text" class="form-control"  placeholder="Search..." #chat_search (keyup.enter)="chatPanelList(chat_search.value)">
+                                     <input type="hidden" name="open_chat_detail_id" id="open_chat_detail_id" value="0" #open_chat_detail_id (click)='chatPanelDetail(open_chat_detail_id.value)'>
+                                     <span ></span>
+                                       <div class="input-chat_search-append">
+                                           <button class="btn btn-primary chat_list_search" (click)="chatPanelList(chat_search.value)"><i class="fas fa-search"></i></button>
+                                       </div>
+                                   </div>
+
+                                    </div>
+                                    <div class="m-b-20">
+                                        <div id="chat-scroll">
+                                        
+                                         
+                                <ul class="chat-list list-unstyled m-b-0 chat_list_data" >
+                                <div id="infinitescrool"  class="search-results"
+                                infiniteScroll
+                                [infiniteScrollDistance]="2"
+                                [infiniteScrollThrottle]="50"
+                                (scrolled)="onScroll()"
+                                [scrollWindow]="false">
+                                   
+                              
+                                       
+                                               <li class="clearfix" *ngFor="let chat_list of chat_panel_list;let i=index" (click)="chatPanelDetail(chat_list.chat_id)">
+
+                                                    <div class="about" >
+                                                     <!--  (click)="chatPanelView('all')" -->
+                                                        <div class="name">  <img  class="thumbnail-image" src="{{chat_list.profile_picture}}"
+                                       onerror="this.src='assets/images/user.jpg'"
+                                         alt="..." width="50px" height="50px"style="margin-right: 5px;"/>
+                                                          {{chat_list.cus_name}} <span *ngIf="!chat_list.cus_name">{{chat_list.customer_name}}</span>
+                  <i id="id_{{chat_list.chat_id}}" [class]="chat_list.read_status == 1 ? 'fas fa-circle agent_active' : ''" aria-hidden="true" style="font-size: 10px; float: right;"></i>
+                                                        
+                                                        </div>
+                                           <!-- <i [class]="chat_list.read_status == 1 ? 'fas fa-circle agent_active' : ''" aria-hidden="true" style="position: relative;left: 130px;bottom: 22px;"></i> -->
+
+                                                        <div  style="display: flex;" class="text-small text-muted"> <div class="bullet"></div> {{chat_list.chat_dt}}</div>
+                                                    </div>
+                                                </li>
+                                      
+                                              </div>  
+                                  </ul>
+
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9" id="chat_details_view">
+                        <div class="card fullHeightCard keep-connect-chat-content" *ngIf="chat_panel_detail_type=='chat_screen'">
+                            
+                          <a (click)="showdoc('https://youtu.be/kbf8NXA2e3Y')"  target="_blank"><i style="font-size: 24px;
+                            float: right;" class="fa fa-exclamation-circle"></i></a>
+                          <!-- <a href="https://baobabgroup.mconnectapps.com/api/v1.0/pro_contents/pro_sms.pdf"  target="_blank"><i style="font-size: 24px;padding-right: 20px;
+                            padding-top: 20px;float: right;" class="fa fa-exclamation-circle"></i></a> -->
+                          <div class="card-body">
+                                <div class="keep-connect">
+                                    <div class="connect-logo">
+                                        <img src="assets/img/logo.png">
+                                        <span class="logo-name">Omni SMS</span>
+                                    </div>
+                                    <h3>Keep your device connected</h3>
+
+                                    <!-- <p>To reduce the data usage,<br>connect your device to Wi-Fi.</p> -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card" *ngIf="chat_panel_detail_type=='chat_detail'">
+             <div class="chat">
+               <div class="chat-header clearfix">
+                 <img src="assets/images/user.jpg" alt="avatar">
+                 <div class="chat-about">
+                   <div class="chat-with"><b>{{cus_name}}</b><span *ngIf="this.cus_name == '' || this.cus_name == null || this.cus_name == undefined">{{customer_number}}</span> </div>
+                   <div class="chat-num-messages">
+                    <span *ngIf="this.cus_name != '' && this.cus_name != null && this.cus_name != undefined">
+                           {{customer_number}}
+                    </span>
+                     <span *ngIf="this.cus_name == '' || this.cus_name == null || this.cus_name == undefined">SMS</span></div>
+                   <button type="button" class="btn btn-primary" (click)="genTicket(customer_name)">Generate Ticket</button>
+                 </div>
+                 <img src="assets/img/mc-dashboard/sms.svg" alt="avatar" style="float: right;">
+               </div>
+             </div>
+             <div class="chat-box" id="mychatbox">
+               <div class="card-body chat-content" id="infscrollUp"  infiniteScroll
+               [infiniteScrollDistance]="2"
+               [infiniteScrollThrottle]="50"
+               (scrolledUp)="onUp()"
+               [scrollWindow]="false" >
+
+                 <div *ngFor="let chat_details of chat_panel_details;let i=index">
+                   <div class="chat-item chat-left" *ngIf="chat_details.msg_user_type == 'customer' || (chat_details.msg_user_type == 'agent' && chat_details.msg_user_id != loginUser)"><img src="assets/images/user.jpg"  >
+                   <div class="chat-details">
+                     <div class="chat-text"  style="white-space: pre-line;">{{chat_details.chat_msg}}</div>
+                     <div class="chat-time">{{chat_details.chat_dt}}  {{chat_details.chat_time}}</div>
+                   </div>
+                 </div>
+
+
+                 <div class="chat-item chat-right" *ngIf="chat_details.msg_user_type == 'agent' && chat_details.msg_user_id == loginUser"><img [src]="chat_details.profile_image != null ? chat_details.profile_image : myImgUrl" > 
+                   <div class="chat-details">
+                     <div class="chat-text {{chat_details.msg_status}}"  style="white-space: pre-line;" >{{chat_details.chat_msg}}</div><div class="chat-time">{{chat_details.chat_dt}}  {{chat_details.chat_time}} <i style="color: red;" class="fas fa-exclamation-triangle" *ngIf="chat_details.msg_status == '0'"></i></div></div>
+                     
+                    </div>
+
+               </div>
+
+
+                 </div> 
+                 <div class="card-footer chat-form">
+                   <!-- <form id="chat-form"> -->
+                     <textarea class="form-control" id="chat_msg" placeholder="Type a message" style="height: 50px;" (keydown)="onMessageSend($event)" (keyup)="wordCount()" #chat_message></textarea>
+                     <div style="margin-left:10px">Total Characters <span id="wordCount">0</span> (160 character is consider as one sms)</div>
+                     <button type="button" class="btn btn-primary" data-toggle="modal" (click)="template()" style="right: 40px;">
+                      <i class="fas fa-fill-drip"></i>
+                    </button>
+                     <input type="hidden" name="chat_id" id="chat_detail_id" value="{{chat_detail_key}}" #chat_detail_id>
+                       <button type="button" class="btn btn-primary" (click)="sendChatMessageData()">
+                       <i class="far fa-paper-plane"></i>
+                     </button>
+    
+                 </div>
+               </div>
+             </div>
+
+                    </div>
+                </div>
+
+
+
+                <div class="modal fade bd-example-modal-md" id="assign_ticket">
+                  <div class="modal-dialog modal-md">
+                      <div class="modal-content">
+                              <div class="modal-header">
+                                  <h5 class="modal-title" id="myLargeModalLabel">Assign Ticket</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                  </button>
+                              </div>
+                              <div class="modal-body">
+                                  <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="departments">Select Department</label>
+                              <select name="departments"  id="departments" class="form-control">
+                                <option value='0'> Select Department </option>
+                                <option *ngFor="let dept of departments" value="{{dept.dept_id}}">{{dept.department_name}}</option>
+                              </select>
+                            </div>
+                          </div>
+                
+                                     
+                                  </div>
+                
+                                
+                
+                              </div>
+                
+                              <div class="modal-footer">
+                                  <div class="buttons">
+                                      <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                                      <input type="submit" class="btn btn-primary update_agent" value="Assign" (click)="assignTicket(this.phone_num)">
+                                  </div>
+                              </div>
+                
+                      </div>
+                  </div>
+                </div>
+
+                <div class="modal fade" id="createNewWidget">
+                  <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="myLargeModalLabel">Upload Media File (Image, Video, Text and PDF files up to 5 mb)</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body"> 
+                        <div class="row">
+                          <div class="col-12 col-md-12">
+                            <div class="row">
+                              <div class="col-md-12 col-12">
+                                
+                                  <div class="form-group">
+                                      <label for="reports">Select Template</label>
+                                      <select name="reports"  id="edit_reports" class="form-control" >
+                                          <option *ngFor="let report of list_report" value="{{report.id}}" >{{report.report_name}}</option>
+                                      </select>
+                                  </div>
+                               
+                              </div>
+                
+                 
+                            </div>
+                          </div>
+                
+                        </div>	
+                      </div>
+                
+                      <div class="modal-footer">
+                        <div class="buttons">
+                          <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                          <input type="button" class="btn btn-primary update_agent" value="Submit"  (click)="addWhatsappMedia()">
+                          <input type="hidden" id="chat_details_call" (click)="chatPanelDetail(this.chat_detail_id.nativeElement.value)">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="modal fade bd-example-modal-md" id="video_play">
+                  <div class="modal-dialog modal-md"  style="max-width: 1200px;">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" style="color:crimson" id="myLargeModalLabel" >mConnect SMS Solutions</h5>
+                        <button type="button" class="close" (click)="stop()" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                                <iframe class='myvideo' [src]="this.doc_link | safe"  width="100%" style="height: 575px;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <!-- style="margin-bottom: -6px;" width="100%" height="325"  -->
+                              <!-- <embed [src]="this.video_link | safe"  width="100%" style="height: 575px;" /> -->
+                      </div>     
+                      <div class="modal-footer" >
+                          <div class="buttons">
+                              <input type="button" (click)="stop()" data-dismiss="modal" class="btn btn-outline-secondary" value="close">
+                          </div>
+                      </div>
+                
+                    </div>
+                  </div>
+                </div>  

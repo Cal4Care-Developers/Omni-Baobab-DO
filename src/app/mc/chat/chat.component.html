@@ -1,0 +1,159 @@
+                 
+                 <div class="row"> 
+                     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                         <div class="card fullHeightCard">
+                             <div class="body">
+                                 <div id="plist" class="people-list chat-search-list">
+                                     <div class="chat-search">
+                                        
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"  placeholder="Search..." #chat_search (keyup.enter)="chatPanelList(chat_search.value)">
+                                      <input type="hidden" name="open_chat_detail_id" id="open_chat_detail_id" value="0" #open_chat_detail_id (click)='chatPanelDetail(open_chat_detail_id.value)'>
+                                      <input type="hidden" name="close_chat_detail_id" id="close_chat_detail_id" value="0" #close_chat_detail_id (click)='chatPanelDetail(close_chat_detail_id.value, 2)'>
+                                      
+                                      <input type="hidden" id="chatPanelView" (click)='chatPanelView("all")'>
+                                      <span ></span>
+                                        <div class="input-chat_search-append">
+                                            <button class="btn btn-primary chat_list_search" (click)="chatPanelList(chat_search.value)"><i class="fas fa-search"></i></button>
+                                        </div>
+                                    </div>
+
+                                     </div>
+                                     <div class="m-b-20">
+                                         <div id="chat-scroll">
+                                             <ul class="chat-list list-unstyled m-b-0 chat_list_data">
+
+                                                <li class="clearfix " *ngFor="let chat_list of chat_panel_list;let i=index"   [id]="'chat_'+chat_list.chat_id"  (click)="chatPanelDetail(chat_list.chat_id,chat_list.chat_status )">
+
+                                                     <div class="about">
+                                                         <div class="name">{{chat_list.customer_name}} <i *ngIf="chat_list.chat_status=='2'" class="far fa-times-circle" aria-hidden="true" style="color: red;font-size: 15px;"></i></div>
+                                                         <div class="text-small text-muted"> <div class="bullet"></div> {{chat_list.chat_dt}}</div>
+                                                     </div>
+                                                 </li>
+                                                
+                                             </ul>
+
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9" id="chat_details_view">
+                         <div class="card fullHeightCard keep-connect-chat-content" *ngIf="chat_panel_detail_type=='chat_screen'">
+                          <a (click)="showdoc('https://youtu.be/RZMa__ya-e8')"  target="_blank"><i style="font-size: 24px;
+                            float: right;" class="fa fa-exclamation-circle"></i></a>
+                         <!-- <a href="https://baobabgroup.mconnectapps.com/api/v1.0/pro_contents/pro_chat.pdf"  target="_blank"><i style="font-size: 24px;padding-right: 20px;
+                            padding-top: 20px;float: right;" class="fa fa-exclamation-circle"></i></a> -->
+                          <div class="card-body">
+
+                                 <div class="keep-connect">
+                                 
+                                  <!-- <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel"> -->
+
+                                     <div class="connect-logo">
+                                         <img src="assets/img/logo.png">
+                                         <span class="logo-name">Omni Web Chat</span>
+                                     </div>
+                                     <h3>Keep your device connected</h3>
+                                     <!-- <p>To reduce the data usage,<br>connect your device to Wi-Fi.</p> -->
+                                
+                                 </div>
+                             </div>
+                         </div>
+
+                         <div class="card {{this.chat_status_detail_id}}" *ngIf="chat_panel_detail_type=='chat_detail'" [id]="'chat_detail_'+this.chat_status_detail_id">
+              <div class="chat">
+                <div class="chat-header clearfix">
+                  <img src="assets/images/user.jpg" alt="avatar">
+                  <div class="chat-about">
+                    <div class="chat-with">{{customer_name}}</div>
+                    <div class="chat-num-messages">{{this.widget_name}}</div>
+                  </div>
+                  <div class="end-chat-pannel" >
+                    <span class="end-cross-icon" title="End Chat" (click)="deletedata(this.chat_detail_key)"><i class="fa fa-times" aria-hidden="true"></i></span> 
+                    <img src="assets/img/mc-dashboard/chat.png" alt="avatar">
+                  </div>
+                 
+                </div>
+              </div>
+              <div class="chat-box" id="mychatbox">
+                <div class="card-body chat-content">
+                  <div *ngFor="let chat_details of chat_panel_details;let i=index">
+                    <div class="chat-item chat-left" *ngIf="chat_details.msg_user_type == '1' || (chat_details.msg_user_type == '2' && chat_details.msg_user_id != loginUser)"><img src="assets/images/user.jpg" >
+                    <div class="chat-details">
+                      <div class="chat-text" *ngIf="i=='0'">
+                        <br><span>Name : {{chat_details.customer_name}}</span>
+                        <br><span>Email : {{chat_details.customer_email}}</span>
+                        <br><span>Question : {{chat_details.chat_msg}}</span>
+                        <br><span>IP : {{chat_details.created_ip}}</span>
+                        <br><span>Country : {{chat_details.country}}</span>
+                      </div>
+                      <div class="chat-text" *ngIf="i!='0'">
+                        {{chat_details.chat_msg}}
+        
+                      </div>
+                      <div class="chat-time">{{chat_details.chat_time}}</div>
+                      
+                    </div>
+                  </div>
+
+
+                  <div class="chat-item chat-right" *ngIf="chat_details.msg_user_type == '2' && chat_details.msg_user_id == loginUser"><img src="{{chat_details.profile_image}}" >
+                    <div class="chat-details">
+                      <div class="chat-text">{{chat_details.chat_msg}}</div><div class="chat-time">{{chat_details.chat_time}}</div></div>
+                    </div>
+
+                </div>
+
+
+                  </div>
+                  <div class="card-footer chat-form" *ngIf="this.is_chat_closed == false">
+                    <!-- <form id="chat-form"> -->
+                      <textarea class="form-control" id="chat_msg" placeholder="Type a message" style="height: 50px;" (keydown)="onMessageSend($event)" #chat_message></textarea>
+                        <input type="hidden" name="chat_id" id="chat_detail_id" value="{{chat_detail_key}}" #chat_detail_id>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" (click)="template()" style="right: 40px;">
+                          <i class="fas fa-fill-drip"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary" (click)="sendChatMessageData()">
+                        <i class="far fa-paper-plane"></i>
+                      </button>
+
+                      <h4 *ngIf="this.is_chat_closed == true">Chat Closed</h4>
+
+                      <!-- <h3 class="chat-closed"> Chat closed </h3> -->
+     
+                  </div>
+                  <div class="card-footer chat-form" *ngIf="this.is_chat_closed == true">
+                      <h4 class="close-text" *ngIf="this.is_chat_closed == true">Chat Closed</h4></div>
+                </div>
+              </div>
+              <audio id="beepaud" src="https://omni.mconnectapps.com/webchat/images/beep.mp3" preload="auto" ></audio>
+
+                     </div>
+                 </div>
+
+
+                 <div class="modal fade bd-example-modal-md" id="video_play">
+                  <div class="modal-dialog modal-md"  style="max-width: 1200px;">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" style="color:crimson" id="myLargeModalLabel" >mConnect Chat Solutions</h5>
+                        <button type="button" class="close"  (click)="stop()" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                                <iframe class='myvideo' [src]="this.doc_link | safe"  width="100%" style="height: 575px;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <!-- style="margin-bottom: -6px;" width="100%" height="325"  -->
+                              <!-- <embed [src]="this.video_link | safe"  width="100%" style="height: 575px;" /> -->
+                      </div>     
+                      <div class="modal-footer" >
+                          <div class="buttons">
+                              <input type="button" data-dismiss="modal"  (click)="stop()" class="btn btn-outline-secondary" value="close">
+                          </div>
+                      </div>
+                
+                    </div>
+                  </div>
+                </div>  

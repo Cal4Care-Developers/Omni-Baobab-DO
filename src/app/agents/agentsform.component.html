@@ -1,0 +1,707 @@
+<div class="modal fade bd-example-modal-md" id="add_agents_form">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form [formGroup]="addAgent" (ngSubmit)="addAgentData()">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myLargeModalLabel">Add Agent</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="agent_name">Name</label>
+                                <input type="text" id="agent_name" class="form-control" formControlName="agent_name">
+                                <label class="error-message message-small" *ngIf="!addAgent.get('agent_name').valid && addAgent.get('agent_name').touched">Please enter the name</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="agent_emailid">Email Id</label>
+                                <input type="text" id="agent_emailid" class="form-control" formControlName="emailid">
+                                <label class="error-message message-small" *ngIf="!addAgent.get('emailid').valid && addAgent.get('emailid').touched">Please enter the email id</label>
+                            </div>
+                        </div>
+
+
+                         </div>
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="agent_phone_number">Phone number</label>
+                                <input type="text" id="agent_phone_number" class="form-control" formControlName="phone_number">
+                               
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="agent_user_name">User Name</label>
+                                <input type="text" id="agent_user_name" class="form-control" formControlName="user_name">
+                                <label class="error-message message-small" *ngIf="!addAgent.get('user_name').valid && addAgent.get('user_name').touched">Please enter the username</label>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="agent_user_pwd">User password</label>
+                                <input type="text" id="agent_user_pwd" class="form-control" formControlName="user_pwd">
+                                <label class="error-message message-small" *ngIf="!addAgent.get('user_pwd').valid && addAgent.get('user_pwd').touched">Please enter the password</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="agent_user_pwd">Extension *</label>
+                                <input type="text" id="sip_login" class="form-control" formControlName="sip_login">
+                                <label class="error-message message-small" *ngIf="!addAgent.get('sip_login').valid && addAgent.get('sip_login').touched">Please enter the Extension</label>
+
+                            </div>
+                        </div>
+
+
+                     
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="agent_user_pwd">SIP Username</label>
+                                <input type="text" id="sip_username" class="form-control" formControlName="sip_username">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="agent_user_pwd">SIP Password *</label>
+                                <input type="text" id="sip_password" class="form-control" formControlName="sip_password">
+                            </div>
+                        </div>
+
+                        
+                        <div class="row has-row-space">
+
+
+<!-- 
+                            <div class="col-md-6 ">
+                                <div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox" id="admin_permision" formControlName="admin_permision" >
+                                        <div class="state p-success">
+                                            <label for="admin_permision">Has Admin Permision</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  -->
+
+
+
+                            <div class="col-md-6">
+                           
+                                <div class="form-check form-check-inline">
+                                 <div class="pretty p-switch p-fill">
+                                     <input type="checkbox" id="voice_3cx" formControlName="voice_3cx"  >
+                                     <div class="state p-success">
+                                         <label for="voice_3cx">Voice 3CX</label>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="col-md-6">
+                           
+                            <div class="form-check form-check-inline">
+                             <div class="pretty p-switch p-fill">
+                                 <input type="checkbox" id="predective_dialer" formControlName="predective_dialer"  >
+                                 <div class="state p-success">
+                                     <label for="predective_dialer">Predective Dialer</label>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                  
+
+
+
+
+
+
+
+
+
+                            <div class="col-md-6  {{this.h_con}}" >
+                           
+                            <div class="form-check form-check-inline">
+                             <div class="pretty p-switch p-fill">
+                                 <input type="checkbox" id="has_contact" formControlName="has_contact"  >
+                                 <div class="state p-success">
+                                     <label for="has_contact">Contact</label>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>   
+                     <div class="col-md-6  {{this.h_sms}}">
+                         <!-- <div class="form-group">
+                             <label for="has_sms">SMS</label>
+                             <input type="checkbox" id="has_sms" class="form-control" formControlName="has_sms" [checked]="selected == this.has_smss">
+                         </div> -->
+
+                         <div class="form-check form-check-inline">
+                             <div class="pretty p-switch p-fill">
+                                 <input type="checkbox" id="has_sms" formControlName="has_sms"  >
+                                 <div class="state p-success">
+                                     <label for="has_sms">SMS</label>
+                                 </div>
+                             </div>
+                         </div>
+                     </div> 
+                     <div class="col-md-6  {{this.h_chat}}">
+                         <!-- <div class="form-group">
+                             <label for="has_chat">Web Chat</label>
+                             <input type="checkbox" id="has_chat" class="form-control" formControlName="has_chat" [checked]="selected == this.has_chats">
+                         </div> -->
+                         <div class="form-check form-check-inline">
+                             <div class="pretty p-switch p-fill">
+                                 <input type="checkbox" id="has_chat" formControlName="has_chat"  >
+                                 <div class="state p-success">
+                                     <label for="has_chat">Web Chat</label>
+                                 </div>
+                             </div>
+                         </div>
+                     </div> 
+
+                     <div class="col-md-6  {{this.h_wp}}">
+                         <!-- <div class="form-group">
+                             <label for="has_chat">Web Chat</label>
+                             <input type="checkbox" id="has_chat" class="form-control" formControlName="has_chat" [checked]="selected == this.has_chats">
+                         </div> -->
+                         <div class="form-check form-check-inline">
+                             <div class="pretty p-switch p-fill">
+                                 <input type="checkbox" id="has_whatsapp" formControlName="has_whatsapp"  >
+                                 <div class="state p-success">
+                                     <label for="has_whatsapp">Whatsapp</label>
+                                 </div>
+                             </div>
+                         </div>
+                     </div> 
+
+
+                     <div class="col-md-6  {{this.h_cbot}}">
+                        <!-- <div class="form-group">
+                            <label for="has_chat">Web Chat</label>
+                            <input type="checkbox" id="has_chat" class="form-control" formControlName="has_chat" [checked]="selected == this.has_chats">
+                        </div> -->
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox" id="has_chatbot" formControlName="has_chatbot"  >
+                                <div class="state p-success">
+                                    <label for="has_chatbot">Chatbot</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+
+                    <div class="col-md-6  {{this.h_fb}}">
+                        <!-- <div class="form-group">
+                            <label for="has_chat">Web Chat</label>
+                            <input type="checkbox" id="has_chat" class="form-control" formControlName="has_chat" [checked]="selected == this.has_chats">
+                        </div> -->
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox" id="has_fb" formControlName="has_fb"  >
+                                <div class="state p-success">
+                                    <label for="has_fb">FB</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="col-md-6  {{this.has_wechat}}">
+                        <!-- <div class="form-group">
+                            <label for="has_chat">Web Chat</label>
+                            <input type="checkbox" id="has_chat" class="form-control" formControlName="has_chat" [checked]="selected == this.has_chats">
+                        </div> -->
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox" id="has_wechat" formControlName="has_wechat"  >
+                                <div class="state p-success">
+                                    <label for="has_wechat">WeChat</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="col-md-6  {{this.has_telegram}}">
+                        <!-- <div class="form-group">
+                            <label for="has_chat">Web Chat</label>
+                            <input type="checkbox" id="has_chat" class="form-control" formControlName="has_chat" [checked]="selected == this.has_chats">
+                        </div> -->
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox" id="has_telegram" formControlName="has_telegram"  >
+                                <div class="state p-success">
+                                    <label for="has_telegram">Telegram</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="col-md-6  {{this.i_tick}}">
+                        <!-- <div class="form-group">
+                            <label for="has_chat">Web Chat</label>
+                            <input type="checkbox" id="has_chat" class="form-control" formControlName="has_chat" [checked]="selected == this.has_chats">
+                        </div> -->
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox" id="has_internal_ticket" formControlName="has_internal_ticket"  >
+                                <div class="state p-success">
+                                    <label for="has_internal_ticket">Internal Ticket</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="col-md-6 {{this.e_tic}}">
+                        <!-- <div class="form-group">
+                            <label for="has_chat">Web Chat</label>
+                            <input type="checkbox" id="has_chat" class="form-control" formControlName="has_chat" [checked]="selected == this.has_chats">
+                        </div> -->
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox" id="has_external_ticket" formControlName="has_external_ticket"  >
+                                <div class="state p-success">
+                                    <label for="has_external_ticket">External Ticket</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="col-md-6 {{this.wall_1}}">
+                           
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox" id="wallboard_one" formControlName="wallboard_one"  >
+                                <div class="state p-success">
+                                    <label for="wallboard_one">Wallboard 1</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+
+                    <div class="col-md-6 {{this.wall_2}}">
+                       
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox" id="wallboard_two" formControlName="wallboard_two"  >
+                                <div class="state p-success">
+                                    <label for="wallboard_two">Wallboard 2</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="col-md-6 {{this.wall_3}}">
+                       
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox" id="wallboard_three" formControlName="wallboard_three"  >
+                                <div class="state p-success">
+                                    <label for="wallboard_three">Wallboard 3</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="col-md-6 {{this.wall_4}}">
+                       
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox" id="wallboard_four" formControlName="wallboard_four"  >
+                                <div class="state p-success">
+                                    <label for="wallboard_four">Wallboard 4</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+
+
+                    <div class="col-md-6 {{this.h_2fa}}">
+                        <div class="form-check form-check-inline">
+                            <div class="pretty p-switch p-fill">
+                                <input type="checkbox" id="two_factor" formControlName="two_factor" >
+                                <div class="state p-success">
+                                    <label for="two_factor">2FA</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+
+                    
+                    <div class="col-md-6">
+                         <!-- <div class="form-group">
+                             <label for="admin_status">Status</label>
+                             <input type="checkbox" id="admin_status" class="form-control" formControlName="admin_status" [checked]="selected == this.admin_statuss">
+                         </div> -->
+                         <div class="form-check form-check-inline">
+                             <div class="pretty p-switch p-fill">
+                                 <input type="checkbox" id="status" formControlName="status"  >
+                                 <div class="state p-success">
+                                     <label for="status">status</label>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>              
+
+
+                 </div> 
+                        
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <div class="buttons">
+                        <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                        <input type="submit" class="btn btn-primary add_agent" value="Add Agent" [disabled]="!addAgent.valid">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<div class="edit_agent_data">
+    <input type="hidden" value="0" id="edit_agents_key" #edit_agent_id>
+    <input type="hidden" value="0" id="edit_agents_button" (click)="editAgentForm(edit_agent_id)">
+   
+</div>
+<div class="modal fade bd-example-modal-md" id="edit_agents_form">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form [formGroup]="editAgent" (ngSubmit)="editAgentData()">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myLargeModalLabel">Update Agent Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="user_name">User Name</label>
+                                <input type="text" id="user_name" class="form-control" formControlName="user_name" >
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="user_name">User password</label>
+                                <input type="text" value="{{this.a_pass}}" class="form-control"  readonly>
+                            </div>
+                        </div>
+                       
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="agent_name">Name</label>
+                                <input type="text" id="agent_name" class="form-control" formControlName="agent_name">
+                            </div>
+                        </div>
+                 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="sip_login">Ext</label>
+                                <input type="text" id="sip_login" class="form-control" formControlName="sip_login" >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="sip_username">Sip Username</label>
+                                <input type="text" id="sip_username" class="form-control" formControlName="sip_username" >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="sip_password">Sip Password</label>
+                                <input type="text" id="sip_password" class="form-control" formControlName="sip_password" >
+                            </div>
+                        </div>
+              
+
+                    
+                         <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="email_id">Email Id</label>
+                                <input type="text" id="email_id" class="form-control" formControlName="email_id">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="phone_number">Phone No</label>
+                                <input type="text" id="phone_number" class="form-control" formControlName="phone_number">
+                                
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="row has-row-space">
+
+                        <div class="col-md-6">
+                              
+                            <div class="form-check form-check-inline">
+                             <div class="pretty p-switch p-fill">
+                                 <input type="checkbox" id="voice_3cx" formControlName="voice_3cx"  [checked]="selected == this.voice_3cx">
+                                 <div class="state p-success">
+                                     <label for="voice_3cx">Voice 3CX</label>
+                                 </div>
+                             </div>
+                         </div>
+                     </div> 
+                     <div class="col-md-6">
+                              
+                        <div class="form-check form-check-inline">
+                         <div class="pretty p-switch p-fill">
+                             <input type="checkbox" id="predective_dialer" formControlName="predective_dialer"  [checked]="selected == this.predective_dialer">
+                             <div class="state p-success">
+                                 <label for="predective_dialer">Predective Dialer</label>
+                             </div>
+                         </div>
+                     </div>
+                 </div> 
+                 <div class="col-md-6">
+                              
+                    <div class="form-check form-check-inline">
+                     <div class="pretty p-switch p-fill">
+                         <input type="checkbox" id="lead" formControlName="lead"  [checked]="selected == this.lead">
+                         <div class="state p-success">
+                             <label for="lead">Lead</label>
+                         </div>
+                     </div>
+                 </div>
+             </div> 
+
+
+                        <div class="col-md-6">
+                              
+                               <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="has_contact" formControlName="has_contact"  [checked]="selected == this.has_contacts">
+                                    <div class="state p-success">
+                                        <label for="has_contact">Contact</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>   
+                        <div class="col-md-6">
+                           
+
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="has_sms" formControlName="has_sms"  [checked]="selected == this.has_smss">
+                                    <div class="state p-success">
+                                        <label for="has_sms">SMS</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <!-- <div class="form-group">
+                                <label for="has_chat">Web Chat</label>
+                                <input type="checkbox" id="has_chat" class="form-control" formControlName="has_chat" [checked]="selected == this.has_chats">
+                            </div> -->
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="has_chat" formControlName="has_chat"  [checked]="selected == this.has_chats">
+                                    <div class="state p-success">
+                                        <label for="has_chat">Web Chat</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+
+                        <div class="col-md-6">
+                            <!-- <div class="form-group">
+                                <label for="has_chat">Web Chat</label>
+                                <input type="checkbox" id="has_chat" class="form-control" formControlName="has_chat" [checked]="selected == this.has_chats">
+                            </div> -->
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="has_whatsapp" formControlName="has_whatsapp"  [checked]="selected == this.has_whatsapps">
+                                    <div class="state p-success">
+                                        <label for="has_whatsapp">Whatsapp</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- <div class="form-group">
+                                <label for="has_chat">Web Chat</label>
+                                <input type="checkbox" id="has_chat" class="form-control" formControlName="has_chat" [checked]="selected == this.has_chats">
+                            </div> -->
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="has_chatbot" formControlName="has_chatbot"  [checked]="selected == this.has_chatbots">
+                                    <div class="state p-success">
+                                        <label for="has_chatbot">Chatbot</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <!-- <div class="form-group">
+                                <label for="has_chat">Web Chat</label>
+                                <input type="checkbox" id="has_chat" class="form-control" formControlName="has_chat" [checked]="selected == this.has_chats">
+                            </div> -->
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="has_fb" formControlName="has_fb"  >
+                                    <div class="state p-success">
+                                        <label for="has_fb">FB</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <!-- <div class="form-group">
+                                <label for="has_chat">Web Chat</label>
+                                <input type="checkbox" id="has_chat" class="form-control" formControlName="has_chat" [checked]="selected == this.has_chats">
+                            </div> -->
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="has_wechat" formControlName="has_wechat">
+                                    <div class="state p-success">
+                                        <label for="has_wechat">WeChat</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <!-- <div class="form-group">
+                                <label for="has_chat">Web Chat</label>
+                                <input type="checkbox" id="has_chat" class="form-control" formControlName="has_chat" [checked]="selected == this.has_chats">
+                            </div> -->
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="has_telegram" formControlName="has_telegram"  >
+                                    <div class="state p-success">
+                                        <label for="has_telegram">Telegram</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <!-- <div class="form-group">
+                                <label for="has_chat">Web Chat</label>
+                                <input type="checkbox" id="has_chat" class="form-control" formControlName="has_chat" [checked]="selected == this.has_chats">
+                            </div> -->
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="has_internal_ticket" formControlName="has_internal_ticket"  >
+                                    <div class="state p-success">
+                                        <label for="has_internal_ticket">Internal Ticket</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="col-md-6">
+                           
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="has_external_ticket" formControlName="has_external_ticket"  >
+                                    <div class="state p-success">
+                                        <label for="has_external_ticket">External Ticket</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+
+
+
+
+                        <div class="col-md-6">
+                           
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="wallboard_one" formControlName="wallboard_one"  >
+                                    <div class="state p-success">
+                                        <label for="wallboard_one">Wallboard 1</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+
+                        <div class="col-md-6">
+                           
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="wallboard_two" formControlName="wallboard_two"  >
+                                    <div class="state p-success">
+                                        <label for="wallboard_two">Wallboard 2</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                           
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="wallboard_three" formControlName="wallboard_three"  >
+                                    <div class="state p-success">
+                                        <label for="wallboard_three">Wallboard 3</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                           
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="wallboard_four" formControlName="wallboard_four"  >
+                                    <div class="state p-success">
+                                        <label for="wallboard_four">Wallboard 4</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+
+                        <div class="col-md-6">
+                           
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="two_factor" formControlName="two_factor"  >
+                                    <div class="state p-success">
+                                        <label for="two_factor">2FA</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+
+
+                        <div class="col-md-6">
+                            <!-- <div class="form-group">
+                                <label for="admin_status">Status</label>
+                                <input type="checkbox" id="admin_status" class="form-control" formControlName="admin_status" [checked]="selected == this.admin_statuss">
+                            </div> -->
+                            <div class="form-check form-check-inline">
+                                <div class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="admin_status" formControlName="admin_status"  [checked]="selected == this.admin_statuss">
+                                    <div class="state p-success">
+                                        <label for="admin_status">status</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                      
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <div class="buttons">
+                        <input type="hidden" formControlName="user_id">
+                        <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                        <input type="submit" class="btn btn-primary update_agent" value="Update Agent" [disabled]="!editAgent.valid">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+

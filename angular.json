@@ -1,0 +1,178 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "omni-channel": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/omni-channel",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/firebase-messaging-sw.js",
+              "src/manifest.json"
+            ],
+            "styles": [
+              "src/assets/css/app.min.css",
+              "src/assets/bundles/izitoast/css/iziToast.min.css",
+              "src/assets/css/style.css",
+              "src/assets/css/bootstrap-colorpicker.min.css",
+              "src/assets/css/select2-4.0.3.min.css",
+              "src/assets/css/pretty-checkbox.min.css",
+              "src/assets/css/components.css",
+              "src/assets/css/dialpad-custom.css",
+              "src/assets/css/jquery.fancybox-3.5.7.min.css",
+              "src/assets/css/datatables.min.css",
+              "src/assets/css/custom-wallboard-two.css",
+              "src/assets/css/custom-wallboard-three.css",
+              "src/assets/css/custom-wallboard-four.css",
+              "src/assets/css/wallboard.css",
+              "src/assets/css/custom-wallboard.css",
+              "src/styles.css"
+            ],
+            "scripts": [
+              "src/assets/js/app.min.js",
+              "src/assets/bundles/jquery-ui/jquery-ui.min.js",
+              "src/assets/bundles/izitoast/js/iziToast.min.js",
+              "src/assets/js/page/advance-table.js",
+              "src/assets/js/bootstrap-colorpicker.min.js",
+              "src/assets/js/select2-4.0.3.full.js",
+              "src/assets/js/jquery.fancybox-3.5.7.min.js",
+              "src/assets/js/scripts.js",
+              "src/assets/js/script.js",
+              "src/assets/js/datatables.min.js",
+              "src/assets/js/jquery.canvasjs.min.js",
+              "src/assets/js/custom-canvas-line-chart.js",
+              "src/assets/js/jquery-ui-1.12.1.js",
+              "src/assets/custom/js/mrvoip.js",
+              "src/assets/custom/js/phone.js",
+              "src/assets/adapter.min.js",
+              "src/assets/custom/js/block-ui.js",
+              "src/assets/custom/js/boatbox.js",
+              "src/assets/custom/js/mconnect-webrtc.js",
+              
+              "src/assets/js/gauge-loader.js",
+              "src/assets/custom/js/dialpad.js",
+              "src/assets/js/ckeditor-19.1.1.js",
+              "src/assets/js/x-frame.js",
+              "src/assets/js/x-frame-bypass.js",
+              "src/assets/js/custom.js",
+              "src/assets/custom/js/volume.js",
+              "src/assets/spin.min.js",
+               "src/assets/bootbox.min.js",
+               "src/assets/toastr.min.js"
+
+
+              
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "host": "0.0.0.0",
+            "browserTarget": "omni-channel:build",
+            "disableHostCheck": true
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "omni-channel:build:production",
+              "disableHostCheck": true
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "omni-channel:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.css"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "tsconfig.app.json",
+              "tsconfig.spec.json",
+              "e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "omni-channel:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "omni-channel:serve:production"
+            }
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "omni-channel",
+  "cli": {
+    "analytics": "56b5e7af-7201-4b9a-be22-cb022a77b90b"
+  }
+}

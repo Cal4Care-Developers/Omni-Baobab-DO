@@ -1,0 +1,179 @@
+<nav class="navbar navbar-expand-lg main-navbar">
+  <div class="form-inline mr-auto">
+    <ul class="navbar-nav mr-3">
+      <li><a href="javascript:void(0)" data-toggle="sidebar" class="nav-link nav-link-lg
+        collapse-btn"> <i class="fas fa-bars feather"></i></a></li>
+        <li><a href="javascript:void(0)" class="nav-link nav-link-lg fullscreen-btn">
+          <!-- <i data-feather="maximize"></i> -->
+          <i class="fas fa-compress feather"></i>
+        </a></li>
+
+      </ul>
+    </div>
+    <ul class="navbar-nav navbar-right">
+      <li class="allow-calls">
+ <!--            <div class="pretty p-switch p-fill">
+                <input type="checkbox" id="incoming_call_request" onclick="changeIncomingCall(this)" checked />
+                <div class="state p-success">
+                    <label>Incoming Call</label>
+                </div>
+              </div> -->
+            </li>
+
+            <li class="dropdown"><a href="javascript:void(0)" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="{{this.profile_image}}" class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
+              <div class="dropdown-menu dropdown-menu-right pullDown">
+                <div class="dropdown-title">Hello {{ user_name }}</div>
+                <a href="javascript:void(0)" routerLink="/profile" class="dropdown-item has-icon"> <i class="far
+                 fa-user"></i> Profile
+               </a>
+
+
+               <div class="dropdown-divider"></div>
+               <a href="javascript:;" class="dropdown-item has-icon" data-toggle="modal" data-target="#aboutApp"> <i class="fas fa-laptop-code"></i>
+                About
+              </a>
+
+
+              <div class="dropdown-divider"></div>
+              <a routerLink="/logout" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
+                Logout
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <!-- menu Content -->
+
+      <div class="main-sidebar sidebar-style-2">
+        <aside id="sidebar-wrapper">
+          <div class="sidebar-brand">
+        <!-- <a href="javascript:void(0)" routerLink="/mc"> <img alt="image" src="{{this.logo_image}}" class="header-logo" /> <span class="logo-name">Omni channels</span>
+        </a> -->
+        <div class="main-sidebar-logo">
+          <a href="javascript:void(0)" routerLink="/mc"> <img alt="image" src="assets/images/omni-channels-logo.jpg" class="header-logo" />
+          </a>
+        </div>
+
+        <div class="mini-sidebar-logo">
+          <a href="javascript:void(0)" routerLink="/mc"> <img alt="image" src="assets/images/favicon.png" class="header-logo" />
+          </a>
+        </div>
+
+      </div>
+      <div class="sidebar-user">
+        <div class="sidebar-user-picture">
+          <img alt="image" src="{{this.profile_image}}">
+        </div>
+        
+        <div class="sidebar-user-details">
+          <div class="user-name">{{ user_name }}</div>
+          <div class="user-role">{{ user_type }} </div>
+        </div>
+      </div>
+      <ul class="sidebar-menu">
+        <li class="menu-header">Main</li>
+        <!-- <li><a class="nav-link" routerLink="/dashboard"><i data-feather="monitor"></i><span>Dashboard</span></a></li> -->
+        <li routerLinkActive="active"><a href="javascript:void(0)" class="nav-link" routerLink="/mc"  (click)="mc()"><i class="fas fa-tv"></i><span>MC-Dashboard</span></a></li>
+
+        <li class="dropdown" *ngIf="show_admin_sett || show_user_sett || show_conatct_sett">
+         <a href="javascript:void(0)" class="nav-link has-dropdown"><i class="fas fa-users"></i><span>Manage</span></a>
+         <ul class="dropdown-menu">
+          <li routerLinkActive="active" *ngIf="show_conatct_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/contacts" (click)="conatct()"><i class="far fa-address-card"></i><span>Contacts</span></a></li>
+          <li routerLinkActive="active" *ngIf="show_admin_sett "><a href="javascript:void(0)" class="nav-link" routerLink="/department" ><i class="fas fa-list-alt"></i><span>Departments</span></a></li>
+          <li routerLinkActive="active" *ngIf="show_admin_sett "><a href="javascript:void(0)" class="nav-link" routerLink="/aux-code" ><i class="fas fa-list-alt"></i><span>Wrap up</span></a></li>
+          <li routerLinkActive="active" *ngIf="show_admin_sett || show_sup_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/agents" (click)="agents()"><i class="fas fa-users"></i><span>Agents</span></a></li>
+        </ul>
+      </li>
+
+      <li class="dropdown" *ngIf="show_admin_sett || show_user_sett">
+       <a href="javascript:void(0)" class="nav-link has-dropdown"><i class="far fa-comment-alt"></i><span>Message</span></a>
+       <ul class="dropdown-menu">
+         <li routerLinkActive="active" *ngIf="show_sms_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/sms"  ><i class="far fa-comment-alt"></i><span>SMS</span></a></li>
+         <li routerLinkActive="active" *ngIf="show_sms_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/chat"  ><i class="fas fa-comment-dots"></i><span>Chat</span></a></li>
+         <li routerLinkActive="active" *ngIf="show_sms_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/wp-chat" ><i class="fab fa-whatsapp"></i><span>Whatsapp</span></a></li>
+       </ul>
+     </li>
+
+
+
+     <li class="dropdown" *ngIf="show_admin_sett || show_user_sett">
+      <a href="javascript:void(0)" class="nav-link has-dropdown"><i class="fas fa-envelope-open-text"></i><span>Email</span></a>
+      <ul class="dropdown-menu">
+        <li routerLinkActive="active" *ngIf="show_admin_sett || show_user_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/ticketing-system" ><i class="fas fa-ticket-alt"></i><span>Email Ticketing</span></a></li>
+        <li routerLinkActive="active" *ngIf="show_admin_sett || show_user_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/ticketing-system" ><i class="fas fa-ticket-alt"></i><span>Internal Ticketing</span></a></li>
+
+      </ul>
+    </li>
+
+
+    <li class="dropdown"  *ngIf="show_admin_sett">
+     <a href="javascript:void(0)" class="nav-link has-dropdown"><i class="fas fa-file-alt"></i><span>Reports</span></a>
+     <ul class="dropdown-menu">
+       <li routerLinkActive="active" *ngIf="show_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/contact-report" (click)="conatctRep()"><i class="fas fa-file-alt"></i><span>Activity Report</span></a></li>
+       <li routerLinkActive="active" *ngIf="show_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/call-history" ><i class="fas fa-file-alt"></i><span>Wrap Up Report</span></a></li>
+     </ul>
+   </li>
+
+
+
+   <li class="dropdown" >
+    <a href="javascript:void(0)" class="nav-link has-dropdown"><i class="fas fa-cog"></i><span>Settings</span></a>
+    <ul class="dropdown-menu">
+      <li routerLinkActive="active" *ngIf="show_sup_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/admin-settings" (click)="adminSettings()"><i class="fas fa-cog"></i><span>Admin Settings</span></a></li>
+      <li routerLinkActive="active" *ngIf="show_admin_sett || show_sup_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/pbc-settings" (click)="pbcSettings()"><i class="fas fa-cog"></i><span>PBX Settings</span></a></li>
+      <li routerLinkActive="active" ><a href="javascript:void(0)" class="nav-link" routerLink="/app-settings" ><i class="fas fa-cog"></i><span>App Settings</span></a></li>
+    </ul>
+  </li>
+
+
+  <li routerLinkActive="active" *ngIf="show_sup_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/queue" (click)="queue()"><i class="fas fa-layer-group" ></i><span>Queue</span></a></li>
+
+
+  <li routerLinkActive="active" *ngIf="show_sup_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/call-history" (click)="callHistory()"><i class="fas fa-phone-volume"></i><span>Call History</span></a></li>
+
+
+
+
+  <li routerLinkActive="active"><a href="javascript:void(0)" class="nav-link" routerLink="/logout" (click)="logout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a></li>
+
+</ul>
+</aside>
+</div><!-- menu Content -->
+
+
+
+
+
+
+
+<div class="modal fade bd-example-modal-md" id="aboutApp">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="myLargeModalLabel">Version Detail</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="about-app">
+              <img src="assets/images/omni-channels-logo.jpg">
+            </div>
+             <div class="version-details">
+                <h5>Version 1.0</h5>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="buttons">
+          <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

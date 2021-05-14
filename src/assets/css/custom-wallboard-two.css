@@ -1,0 +1,9 @@
+.custom-wallboard-two {  }
+.wallboard-panel-2-item { display: flex; align-items: center; flex-direction: column; justify-content: center; height: 92px; padding: 0 7px; text-align: center; margin: 3px; }
+.wallboard-panel-2-item h5, .wallboard-panel-2-item h3, .wallboard-panel-2-item h6 { margin: 0; color: #353c48 }
+.wallboard-panel-2-item h6 { padding: 4px 0 0 0; }
+.custom-wallboard-2-bg-1 { background-color: #c9ee82; }
+.custom-wallboard-2-bg-2 { background-color: #eedd82 }
+.custom-wallboard-2-bg-3 { background-color: #fecc93; }
+.custom-wallboard-2-bg-4 { background-color: #82eedd; }
+.custom-wallboard-2-bg-5 { background-color: #dd82ee; }

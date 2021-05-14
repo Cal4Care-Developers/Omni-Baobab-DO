@@ -1,0 +1,170 @@
+<div class="section-body" id="createNewTicket">
+		<div class="row">
+			<div class="col-12 col-md-12 col-lg-12">
+				<div class="card">
+					<div class="card-header">
+						<h4>Create New Ticket</h4>
+					</div>
+					<div class="card-body p-0">
+						<div class="form-panel">
+							<div class="row">
+								<div class="col-md-5 col-12">
+									<div class="form-group">
+										<label for="department">Department</label>
+										<div class="ticket-assign-section">
+											<div class="form-group fl">
+												<div class="dropdown select-option">
+													<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+														<span class="dropdown-label-icon"><span class="green-bg-status status-bg"></span>Select Dept.
+													</span>
+												</div>
+												<div class="dropdown-menu">
+													<div class="pullDown">
+														<a href="javascript:void(0)" class="active dropdown-item"><div class="yellow-bg-status status-bg"></div>Sales</a>
+														<div class="dropdown-divider"></div>
+														<a href="javascript:void(0)" class="dropdown-item"><div class="yellow-bg-status status-bg"></div>Development</a>
+														<div class="dropdown-divider"></div>
+														<a href="javascript:void(0)" class="dropdown-item"><div class="yellow-bg-status status-bg"></div>UI / UX Development</a>
+														<div class="dropdown-divider"></div>
+														<a href="javascript:void(0)" class="dropdown-item"><div class="yellow-bg-status status-bg"></div>Development</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-5 col-12">
+								<div class="form-group">
+									<label for="department">Assign to</label>
+									<div class="ticket-assign-section">
+										<div class="form-group fl">
+											<div class="dropdown select-option">
+												<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+													<span class="dropdown-label-icon"><span class="blue-bg-status status-bg"></span>Select Agent
+												</span>
+											</div>
+											<div class="dropdown-menu">
+												<div class="pullDown">
+													<a href="javascript:void(0)" class="active dropdown-item"><div class="yellow-bg-status status-bg"></div>JN</a>
+													<div class="dropdown-divider"></div>
+													<a href="javascript:void(0)" class="dropdown-item"><div class="yellow-bg-status status-bg"></div>Padmanaban</a>
+													<div class="dropdown-divider"></div>
+													<a href="javascript:void(0)" class="dropdown-item"><div class="yellow-bg-status status-bg"></div>RT</a>
+													<div class="dropdown-divider"></div>
+													<a href="javascript:void(0)" class="dropdown-item"><div class="yellow-bg-status status-bg"></div>MR</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-5 col-12">
+							<div class="form-group">
+								<label for="department">Select Status</label>
+								<div class="ticket-assign-section">
+									<div class="form-group fl">
+										<div class="dropdown select-option">
+											<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+												<span class="dropdown-label-icon"><i class="fas fa-ticket-alt"></i>Status</span> 
+											</div>
+											<div class="dropdown-menu">
+												<div class="pullDown">
+													<a href="javascript:void(0)" class="active dropdown-item">Open</a>
+													<div class="dropdown-divider"></div>
+													<a href="javascript:void(0)" class="dropdown-item">Pending</a>
+													<div class="dropdown-divider"></div>
+													<a href="javascript:void(0)" class="dropdown-item">Resolved</a>
+													<div class="dropdown-divider"></div>
+													<a href="javascript:void(0)" class="dropdown-item">Closed</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-5 col-12">
+							<div class="form-group">
+								<label for="department">Priority</label>
+								<div class="ticket-assign-section">
+									<div class="form-group fl">
+										<div class="dropdown select-option">
+											<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
+												<span class="dropdown-label-icon"><span class="yellow-bg-status status-bg"></span>Select Priority
+											</span>
+										</div>
+										<div class="dropdown-menu">
+											<div class="pullDown">
+												<a href="javascript:void(0)" class="active dropdown-item"><div class="green-bg-status status-bg"></div>Low</a>
+												<div class="dropdown-divider"></div>
+												<a href="javascript:void(0)" class="dropdown-item"><div class="blue-bg-status status-bg"></div>Medium</a>
+												<div class="dropdown-divider"></div>
+												<a href="javascript:void(0)" class="dropdown-item"><div class="yellow-bg-status status-bg"></div>High</a>
+												<div class="dropdown-divider"></div>
+												<a href="javascript:void(0)" class="dropdown-item"><div class="red-bg-status status-bg"></div>Urgent</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-5 col-12">
+						<div class="form-group">
+							<label for="subject">Subject</label>
+							<input type="text" id="subject" class="form-control" formControlName="subject">
+						</div>
+					</div>
+					
+					<div class="col-md-5 col-12">
+						<div class="form-group">
+							<label for="subject">Description</label>
+
+							<editor
+							  initialValue="<p>Initial content of the editor</p>"
+							  apiKey="yap9vgeib9vhg5f81cuvu9hbisk6rdr6pcvcjcltvolqk317"
+							  [init]="{
+								height: 500,
+								menubar: false,
+								image_uploadtab: true,
+								file_picker_types: 'file image media',
+								automatic_uploads: true,
+								plugins: [
+								  'advlist autolink lists link file image charmap print',
+								  'preview anchor searchreplace visualblocks code',
+								  'fullscreen insertdatetime media table paste',
+								  'help wordcount','a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker'
+								],
+								toolbar:
+								  'undo redo | formatselect | bold italic | \ undo redo | link image file| code | \
+								  alignleft aligncenter alignright alignjustify | \
+								  bullist numlist outdent indent | help'
+								  
+							  }"
+							>
+							</editor>	
+						
+						
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 col-12">
+						<div class="buttons">
+							<input type="button" class="btn btn-success" type="submit" value="Create New Ticket">
+							<input type="button" href="javascript:void(0)" routerLink="/ticketing-system-new" class="btn btn-danger" type="submit"  value="Discard">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</div>

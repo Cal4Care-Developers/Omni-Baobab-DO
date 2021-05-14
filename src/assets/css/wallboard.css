@@ -1,0 +1,29 @@
+.wallboard-wrapper { float: left; width: 100%; padding-bottom: 25px; }
+.green-bg-clr, .green-bg-clr .count-circle { background-color: #25D366; }
+.red-bg-clr, .red-bg-clr .count-circle { background-color: #ff7f50; }
+.blue-bg-clr, .blue-bg-clr .count-circle { background-color: #6777ef; }
+.ping-bg-clr, .ping-bg-clr .count-circle { background-color: #f783ac; }
+.yellow-bg-clr, .yellow-bg-clr .count-circle { background-color: #f0cd61; }
+.orange-bg-clr, .orange-bg-clr .count-circle { background-color: #e7e70b; }
+.light-green-bg-clr, .light-green-bg-clr .count-circle { background-color: #3dc7be; }
+.violet-bg-clr, .violet-bg-clr .count-circle { background-color: #bc68bc; }
+.dark-green-bg-clr, .dark-green-bg-clr .count-circle { background-color: #3cb371; }
+
+.walloard-box { position: relative; margin: 50px 5px 15px 0; text-align: center; border-radius: 10px; float: left; width: 24.5%; height: 120px; }
+.wallboard-item-name { color: #fff; left: 0; right: 0; bottom: 5px; position: absolute;  }
+.count-circle { position: absolute; left: 0; right: 0; margin: 0 auto; top: -50px; width: 100px; height: 100px; border: 10px solid #fff; border-radius: 50%; }
+.count-circle { font-size: 24px; color: #fff; line-height: 80px; font-weight: 700; }
+.wallboard-icon { position: absolute; color: #fff; top: 40px; right: 35px; }
+.wallboard-icon img { height: 44px; width: 44px; }
+
+@media screen and (min-width: 1200px) and (max-width: 1300px) {
+	.walloard-box { width: 32%; }
+
+	}
+
+	@media screen and (min-width: 768px) and (max-width: 1199px) {
+		.walloard-box { width: 49%; }
+	}
+	@media screen and (max-width: 767px) {
+		.walloard-box { width: 100%; }
+	}

@@ -1,0 +1,20 @@
+
+.col-md-6.disabled .form-check.form-check-inline {
+    pointer-events: none;
+    filter: blur(1px);
+}
+.hidden-things {
+    display: none;
+}
+
+.col-md-6.disabled .hidden-things {
+    display: block;
+    font-size: 13px;
+    color: #ec8787;
+}
+
+.col-md-6.disableds .hidden-things {
+    display: block;
+    font-size: 13px;
+    color: #ec8787;
+}

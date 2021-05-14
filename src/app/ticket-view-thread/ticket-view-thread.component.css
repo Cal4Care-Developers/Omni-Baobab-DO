@@ -1,0 +1,14 @@
+#upload_prev {
+    border: thin solid #000;
+    width: 65%;
+    padding: 0.5em 1em 1.5em 1em;
+  }
+  
+  #upload_prev span {
+    display: flex;
+    padding: 0 5px;
+    font-size: 12px;
+  }
+  .filenameupload {
+    width: 98%;
+  }

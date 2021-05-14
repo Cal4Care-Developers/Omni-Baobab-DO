@@ -1,0 +1,231 @@
+
+  <footer class="main-footer">
+  	<div class="footer-left">
+		<input type="hidden" name="open_chat_detail_id" id="open_chat_detail_id" value="0" #open_chat_detail_id (click)='chatPanelDetailF(open_chat_detail_id.value)'>
+		<input type="hidden" name="close_chat_detail_id" id="close_chat_detail_id" value="0" #close_chat_detail_id (click)='chatPanelDetailF(close_chat_detail_id.value, 2)'>
+
+		<input type="hidden" id="chatPanelView" (click)='chatPanelView("all")'>
+  		<ul class="footer-left-menu">
+  			<li>
+  				<a href="javascript:;" (click)="showChats('chats')"><span class="footer-icon"><i class="fas fa-comments"></i></span>
+  					Chats
+  				</a>
+  			</li>
+  			<!-- <li>
+  				<a href="javascript:;"><span class="footer-icon"><i class="fas fa-users"></i></span>
+  					Channels
+  				</a>
+  			</li> -->
+  			<li>
+  				<a href="javascript:;" (click)="showChats('contacts')"><span class="footer-icon"><i class="fas fa-user-shield"></i></span>
+  					Contacts
+  				</a>
+  			</li>
+  		</ul>
+
+<!-------------------
+Inner User Chat List
+--------------------->
+<div class="inner-chat-panel" *ngIf="showChatPannels">
+	<div class="inner-chat-panel-header">
+		<div class="inner-chat-aviator">
+			<img  class="thumbnail-image" src="{{this.agent_image}}"
+			onerror="this.src='assets/images/user.jpg'"  alt="..." width="50px" style="margin-right: 5px;"/>
+		</div>
+		<div class="inner-chat-user-deatils">
+			<h5 class="message-small blk-clr">{{this.name }}</h5>
+			<!-- <h6><div class="inner-agent-status away-status"><span></span></div> UI Developer</h6> -->
+			<!-- <h6><div class="inner-agent-status offline-status"><span></span></div> UI Developer</h6> -->
+			<h6><div class="inner-agent-status online-status"><span></span></div>{{this.userType}}</h6>
+		</div>
+		<div class="inner-chat-header-action-btn">
+			<ul>
+				<!-- <li class="inner-chat-actions dropdown">
+					<a href="javascript:;" id="actionDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
+
+					<div class="dropdown-menu animated fadeInUp" aria-labelledby="actionDropdown">
+						<a class="dropdown-item hvr-bounce-to-right toggle-user-status" href="#"><i class="fas fa-user-edit"></i> Change Status</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item hvr-bounce-to-right" href="#"><i class="fas fa-cog"></i> Settings</a>
+					</div>
+				</li> -->
+				<li class="inner-chat-minimize">
+					<a href="javascript:;" (click)="closealldisp()"><i class="far fa-window-minimize"></i></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="inner-chat-search-container">
+		<span class="inner-search-icon"><i class="fas fa-search"></i></span>
+		<input type="text" name="search"  #chat_search (keyup.enter)="chatPanelList(chat_search.value)">
+	</div>
+
+	<div class="inner-chat-change-status none">
+		<div class="close-chat-panel"><a class="close-overlay-panel" href="javascript:;"><i class="fas fa-times"></i></a></div>
+		<ul>
+			<li class="inner-agent-status online-status active" *ngIf="login_status == '1'"><a class="hvr-bounce-to-right" href="javascript:;"><span></span> Available</a></li>
+			<li class="inner-agent-status offline-status" *ngIf="login_status == '0'"><a class="hvr-bounce-to-right" href="javascript:;"><span></span> Offline</a></li>
+		</ul>
+	</div>
+
+	<div class="inner-chat-body internal-users-list">
+		<ul *ngIf="showMyChats">
+			<li *ngFor="let agents of almychat" (click)="chatPanelDetailF(agents.user_id)">
+				<div class="internal-user-thumb">
+					<a href="javascript:;">
+						<img   src="{{agents.profile_image}}" onerror="this.src='assets/images/user.jpg'"  alt="..." />
+
+					</a>
+				</div>
+				<div class="inetral-user-message-details">
+					<a href="javascript:;">
+						<h5 class="message-small blk-clr">{{agents.agent_name}}</h5>
+						<h6 class="xsmall-title"><span class="internal-msg-description">{{agents.chat_msg}}</span></h6>
+					</a>
+				</div>
+				<div class="inner-chat-time-details">
+					{{agents.updated_dt}}
+				</div>
+			</li>
+		
+			
+
+			 
+		</ul>
+		<ul *ngIf="showMyContacts">
+
+			<li *ngFor="let agents of admin_list" (click)="chatPanelDetailF(agents.user_id)">
+				<div class="internal-user-thumb">
+					<a href="javascript:;">
+						<img   src="{{agents.profile_image}}" onerror="this.src='assets/images/user.jpg'"  alt="..." />
+					</a>
+				</div>
+				<div class="inetral-user-message-details">
+					<a href="javascript:;">
+						<h5 class="message-small blk-clr">{{agents.agent_name}} </h5>
+						<h6 class="xsmall-title"><span class="internal-msg-description">Admin</span></h6>
+					</a>
+				</div>
+				<div class="inner-chat-time-details">
+					<!-- 10.25 am -->
+				</div>
+			</li>
+
+			<li *ngFor="let agents of agent_list" (click)="chatPanelDetailF(agents.user_id)">
+				<div class="internal-user-thumb">
+					<a href="javascript:;">
+						<img  src="{{agents.profile_image}}"  onerror="this.src='assets/images/user.jpg'"  alt="..." />
+					</a>
+				</div>
+				<div class="inetral-user-message-details">
+					<a href="javascript:;">
+						<h5 class="message-small blk-clr">{{agents.agent_name}} </h5>
+						<h6 class="xsmall-title"><span class="internal-msg-description">Employee</span></h6>
+					</a>
+				</div>
+				<div class="inner-chat-time-details">
+					<!-- 10.25 am -->
+				</div>
+			</li>
+			
+			
+		</ul>
+	</div>
+
+</div>
+
+<!-------------------
+Inner User Chat End
+--------------------->
+
+
+
+
+<!-------------------
+Inner Chat
+--------------------->
+<div class="inner-chat-panel inner-agent-message-panel" *ngIf="showChatDetails">
+	<div class="inner-chat-panel-header">
+		<div class="inner-chat-aviator">
+			<img   src="{{a_profile_image}}"
+                 onerror="this.src='assets/images/user.jpg'"  alt="avatar" />
+		</div>
+		<div class="inner-chat-user-deatils">
+			<h5 class="message-small blk-clr">{{this.customer_name}}</h5>
+			<!-- <h6><div class="inner-agent-status away-status"><span></span></div> UI Developer</h6> -->
+			<h6 *ngIf="login_status == '0'"><div class="inner-agent-status offline-status" ><span></span></div>{{this.user_type}}</h6>
+			<h6  *ngIf="login_status == '1'"><div class="inner-agent-status online-status"><span></span></div>{{this.user_type}}</h6>
+		</div>
+		<div class="inner-chat-header-action-btn">
+			<ul>
+				
+				<li class="inner-chat-minimize" (click)="closealldisp('innerChat')">
+					<a href="javascript:;"><i class="far fa-window-minimize"></i></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="inner-chat-search-container">
+		<span class="inner-search-icon"><i class="fas fa-search"></i></span>
+		<input type="text" name="search">
+	</div>
+
+
+
+	<div id="inner-chat" class="inner-chat-body internal-chat-transcript-panel">
+		<!-- <div class="agent-msg-date"><span>Yesterday</span></div> -->
+		<div *ngFor="let chat_details of chat_panel_details;let i=index">
+		<!--------------------
+			Receiver Message
+			----------------->
+			<div class="inner-receiver-chat fr"  *ngIf="chat_details.msg_sender_id != loginUser">
+				<div class="chat-detail-thumb">
+					<img src="{{chat_details.profile_image}}"  onerror="this.src='assets/images/user.jpg'"  alt="avatar" /> 
+				</div>
+				<h5 class="message-small blk-clr">{{customer_name}}</h5>
+				<div class="receiver-msg-box">
+					<div>{{chat_details.chat_msg}}</div>
+				</div>
+				<div class="received-msg-time">{{chat_details.chat_time}}</div>
+			</div>
+
+			<div class="inner-sender-chat fr"  *ngIf="chat_details.msg_sender_id == loginUser">
+				<h5 class="message-small">You</h5>
+				<div class="sender-msg-box">
+					<div>{{chat_details.chat_msg}}</div>
+				</div>
+				<div class="sender-msg-time">{{chat_details.chat_time}}</div>
+			</div>
+		</div>
+			
+
+		</div>
+
+		<div class="inner-chat-footer-panel">
+			<!-- <div class="inner-attachment">
+				<a href="javascript:;"><i class="fas fa-paperclip"></i></a>
+			</div> -->
+			<div class="inner-textarea">
+				<textarea class="form-control" class="msg" id="chat_msg" placeholder="Type a message" style="height: 50px;width:210px;" (keydown)="onMessageSend($event)" #chat_message></textarea>
+			</div>
+			<div class="inner-send-btn">
+				<input type="hidden" name="chat_id" id="chat_detail_id" value="{{chat_detail_key}}" #chat_detail_id>
+				<a href="javascript:;"><i class="far fa-paper-plane" (click)="sendChatMessageData()"></i></a>
+			</div>
+
+		</div>
+
+	</div>
+
+<!-------------------
+Inner Chat End
+--------------------->
+
+
+</div>
+<div class="footer-right">
+</div>
+</footer>
+<iframe *ngIf="showvifeo" [src]="url"  allow='geolocation ; microphone ; camera *' id='ChatFrame' style='position: fixed; right: 0px; bottom: 32px; border: none;height:500px;width:350px;Z-index:10;'></iframe>

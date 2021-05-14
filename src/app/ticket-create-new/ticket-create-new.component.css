@@ -1,0 +1,16 @@
+.tox.tox-silver-sink.tox-tinymce-aux {
+    display: none !important;
+}
+.tox.tox-silver-sink.tox-tinymce-aux {
+    display: none !important;
+}
+.tox-notifications-container {
+    display: none !important;
+}
+.tox-notification, .mce-notification.mce-in { display: none !important }
+
+.mce-notification {display: none !important;}
+.dropdown-menu{
+    overflow: scroll;
+    max-height: 450px;
+}

@@ -1,0 +1,629 @@
+
+<div class="section-body app-settings-page">
+	<div class="row">
+		<div class="col-12 col-lg-8">
+			<div class="card">
+				<div class="card-header">
+					<h4>App Settings</h4>
+				</div>
+				<div class="card-body p-30">
+					<div class="settingSidebar">
+						
+						<div class="p-15 border-bottom">
+							<h6 class="font-medium m-b-10">Select Layout</h6>
+							<div class="selectgroup layout-color w-50" >
+								<label class="selectgroup-item">
+									<input type="radio" name="value"   value="1" class="selectgroup-input select-layout" checked="{{this.layoutM == 'light' ? 'checked' : ''}}" (click)="myLayout()">
+									<span class="selectgroup-button">Light</span>
+								</label>
+								<label class="selectgroup-item">
+									<input type="radio" name="value"  value="2" class="selectgroup-input select-layout" checked="{{this.layoutM == 'dark' ? 'checked' : ''}}" (click)="myLayout()">
+									<span class="selectgroup-button">Dark</span>
+								</label>
+							</div>
+						</div>
+
+						<div class="p-15 border-bottom">
+							<h6 class="font-medium m-b-10">Color Theme</h6>
+							<div class="theme-setting-options">
+								<ul class="choose-theme list-unstyled mb-0">
+									<li title="white" [class]="this.themeM == 'white' ? 'active' : ''" (click)="mytheme('white')">
+										<div class="white"></div>
+									</li>
+									<li title="cyan" [class]="this.themeM == 'cyan' ? 'active' : ''" (click)="mytheme('cyan')">
+										<div class="cyan"></div>
+									</li>
+									<li title="purple" [class]="this.themeM == 'purple' ? 'active' : ''" (click)="mytheme('purple')">
+										<div class="purple"></div>
+									</li>
+									<li title="orange" [class]="this.themeM == 'orange' ? 'active' : ''" (click)="mytheme('orange')">
+										<div class="orange"></div>
+									</li>
+									<li title="green" [class]="this.themeM == 'green' ? 'active' : ''" (click)="mytheme('green')">
+										<div class="green"></div>
+									</li>
+									<li title="black" [class]="this.themeM == 'black' ? 'active' : ''" (click)="mytheme('black')">
+										<div class="black"></div>
+									</li>
+									<li title="red" [class]="this.themeM == 'red' ? 'active' : ''" (click)="mytheme('red')">
+										<div class="red"></div>
+									</li>
+								</ul>
+
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<div class="btn-group">
+								<button class="btn btn-secondary btn-restore-theme" type="submit">
+									Reset
+								</button>
+								
+								<button class="btn btn-primary" type="button" (click)="appsettings()">
+									<i class="fa fa-spin fa-cog"></i> Apply Changes
+								</button>
+							</div>
+							
+						</div>
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+	
+		<div class="col-12 col-lg-8" *ngIf="this.showchat">
+			<div class="card">
+				<div class="card-header">
+					<h4>ChatBot Widget</h4>
+				</div>
+				<div class="card-body p-30">
+					<div class="code-to-copy">
+						<h4>Click the url to start chat</h4>
+						<div class="widget-copy">
+							<a  target="_blank" href="{{ this.chatBot}}">{{ this.chatBot}}</a>
+		
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	
+		<div class="col-12 col-lg-8" *ngIf="this.h_webinar && this.user_type == 'Admin'">
+			<div class="card">
+				<div class="card-header">
+					<h4>Webinar</h4>
+				</div>
+				<div class="card-body p-30">
+					<div class="code-to-copy">
+						<h5>Click here to see upcoming webinar's </h5>
+						<div class="widget-copy">
+							<a  target="_blank" href="{{this.webinar_url}}">Your's Upcoming Webinar </a>
+
+						</div>
+					</div>
+
+				</div>
+				<div class="card-body p-30">
+					<div class="code-to-copy">
+						<h6>Sample iframe code for see upcoming webinar's to your site</h6>
+						<div class="widget-copy">
+							<pre>&lt;iframe src="{{this.webinar_url}}" title="Upcoming Webinar's"&gt;
+&lt;/iframe&gt;
+							</pre>
+	
+						</div>
+					</div>
+	
+				</div>
+			</div>
+			
+		</div>
+		
+	
+		
+<div class="col-12 col-lg-8" *ngIf="this.showfb">
+	<div class="card">
+		<div class="card-header">
+			<h4>Facebook Messenger</h4>
+		</div>
+		<div class="card-body p-30">
+			<div class="code-to-copy">
+				<h4>To Start chat</h4>
+				<div class="widget-copy">
+					<div class="row">
+						<div class="col-md-4" >
+							<div class="form-group">
+								<label for="display-options">
+									<input type="radio" value="0" [checked]="democontentFB" name="fbDemoLive" (change)="showfbDemoAccount('default')">  Demo
+								</label>
+							</div>
+						</div>
+						<div class="col-md-4" >
+							<div class="form-group">
+								<label for="display-options">
+									<input type="radio" value="1" [checked]="liveContentFB " name="fbDemoLive" (change)="showfbDemoAccount('live')"> Live
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="widget-inner-content" *ngIf="democontentFB">
+						<h6>You can check Facebook Messenger workflow by clicking on this link</h6>
+						<!-- <a href="" class="btn btn-info" target="_blank">OmniChannel-110235083992272/a> -->
+							<div class="widget-copy">
+								<a href="https://www.facebook.com/OmniChannel-110235083992272/?modal=admin_todo_tour" target="_blank">FB Demo</a>
+							</div>
+					</div>
+					<div class="widget-inner-content"  *ngIf="liveContentFB">
+                          <div *ngIf="this.has_fb_page">
+							  <p>Your Facebook Messenger in LIVE </p>
+							  <h6>Your Facebook Page is</h6>
+							    <div *ngFor="let item of fb_page_name" class="widget-copy">
+								      {{item}}
+								 </div> 
+							 <p>Please, Click here to get detailed documentation for live integration</p>
+
+							 <div class="download-btn-panel">
+								<a href="https://baobabgroup.mconnectapps.com/api/v1.0/Facebook_doc.pdf" target="_blank" class="btn btn-info" download><i class="fas fa-eye"></i> Download</a>
+							</div>
+						  </div>  
+                          <div *ngIf="!this.has_fb_page ">
+									<p>Sorry,we does not integrated your Facebook page for LIVE </p>
+									<p>Please, Click here to get detailed documentation for live integration</p>
+									<div class="download-btn-panel">
+										<a href="https://baobabgroup.mconnectapps.com/api/v1.0/Facebook_doc.pdf" target="_blank" class="btn btn-info" download><i class="fas fa-eye"></i> Download</a>
+									</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+</div>
+
+
+
+<div class="col-12 col-lg-8" *ngIf="this.showwp && this.h_wp_off">
+	<div class="card">
+		<div class="card-header">
+			<h4>WhatsApp</h4>
+		</div>
+		<div class="card-body p-30">
+			<div class="code-to-copy">
+				<h4>To Start chat</h4>
+				<div class="widget-copy">
+					<div class="row">
+						<div class="col-md-4" >
+							<div class="form-group">
+								<label for="display-options">
+									<input type="radio" value="0" [checked]="democontentWP " name="wpDemoLive" (change)="showDemoAccount('default')">  Demo
+								</label>
+							</div>
+						</div>
+						<div class="col-md-4" >
+							<div class="form-group">
+								<label for="display-options">
+									<input type="radio" value="1" [checked]="liveContentWP " name="wpDemoLive" (change)="showDemoAccount('live')"> Live
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="widget-inner-content" *ngIf="democontentWP">
+						<p>Send <b>join pride-curious</b> to <b>+1 415 523 8886</b> from your WhatsApp</p>
+					</div>
+					<div class="widget-inner-content"  *ngIf="liveContentWP">
+						<h6>Click to get detailed document</h6>
+						<div class="download-btn-panel">
+							<a href="https://baobabgroup.mconnectapps.com/api/v1.0/whatsapp_doc.pdf" download class="btn btn-info" target="_blank"><i class="fas fa-eye"></i> Download</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+</div>
+
+<div class="col-12 col-lg-8" *ngIf="this.h_wp_unoff && this.user_type == 'Admin'">
+	<div class="card">
+		<div class="card-header">
+			<h4>WhatsApp Messenger</h4>
+		</div>
+		<div class="card-body p-30">
+			<div class="widget-inner-content">
+				<!-- <p>mConnect WhatsApp solutions provide multiple instances for the convenience of our
+					clients.</p> -->
+				<h6>Click to get detailed document</h6>
+				
+				<div class="download-btn-panel">
+					<a href="https://baobabgroup.mconnectapps.com/api/v1.0/Help_manuals/others/Omni%20WhatsApp%20unoff.pdf" download class="btn btn-info" target="_blank"><i class="fas fa-eye"></i> View</a>
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+</div>
+
+<div class="col-12 col-lg-8" *ngIf="this.uadmin_id =='64' && this.showline">
+	<div class="card">
+		<div class="card-header">
+			<h4>LINE Messenger</h4>
+		</div>
+		<div class="card-body p-30">
+			<div class="code-to-copy">
+				<h4>To Start chat</h4>
+				<div class="widget-copy">
+				
+					<p>Use this ID for Add us as your friend in your LINE Messenger to start chat.</p>
+					<div class="widget-copy">
+						<b>@671qwxdc</b>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+</div>
+<div class="col-12 col-lg-8" *ngIf="this.uadmin_id !='64' && this.showline">
+	<div class="card">
+		<div class="card-header">
+			<h4>LINE Messenger</h4>
+		</div>
+		<div class="card-body p-30">
+			<div class="code-to-copy">
+			 <h4>To Start chat</h4>
+            <div class="widget-copy">
+
+
+				<div class="padding-15">
+						<div class="form-group">
+							<div class="custom-control custom-radio">
+								<input type="radio" id="line-content-1" name="fbRadioContent" class="custom-control-input" checked (click)="hideshowLinedetails('LineDemo')">
+								<label class="custom-control-label" for="line-content-1"><strong>Demo </strong></label>
+							</div>
+							<div class="custom-control custom-radio">
+								<input type="radio" id="line-content-2" name="fbRadioContent" class="custom-control-input"  (click)="hideshowLinedetails('LineLive')">
+								<label class="custom-control-label" for="line-content-2"><strong>Live Integration </strong></label>
+							</div>
+						</div>
+
+
+						<div class="toggle-content-1" *ngIf="linedemoContent">
+							<div class="code-to-copy">
+								<p>Use this ID for Add us as your friend in your LINE Messenger to start chat.</p>
+									<div class="widget-copy">
+										<b>@598iygvi</b>
+									</div>
+							</div>
+						</div>
+						
+						<div class="toggle-content-2"  *ngIf="lineliveContent">
+							<div class="widget-inner-content" >
+								<h6>Click to get detailed document</h6>
+								<div class="download-btn-panel">  
+							        <!-- <a href="https://baobabgroup.mconnectapps.com/api/v1.0/LINE_doc.pdf" download class="btn btn-info" target="_blank"><i class="fas fa-eye"></i> Download</a> -->
+							        <a href="https://baobabgroup.mconnectapps.com/api/v1.0/pro_contents/line.pdf" download class="btn btn-info" target="_blank"><i class="fas fa-eye"></i> Download</a>
+								</div>
+							</div>
+						
+						</div>
+
+					
+				</div>
+					
+					
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+</div>
+
+<div class="col-12 col-lg-8" *ngIf="this.uadmin_id =='64'">
+	<div class="card">
+		<div class="card-header">
+			<h4>Wallet Management</h4>
+		</div>
+		<div class="card-body p-30">
+			<div class="code-to-copy">
+			
+				<div class="widget-copy">
+					<p>Send <b>join cross-zebra</b> to <b>+1 415 523 8886</b> from your WhatsApp</p>
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+</div>
+
+<div class="col-12 col-lg-8" *ngIf="this.uadmin_id =='64'  && this.showtele">
+	<div class="card">
+		<div class="card-header">
+			<h4>Telegram</h4>
+		</div>
+		<div class="card-body p-30">
+			<div class="code-to-copy">
+				<h4>To Start chat</h4>
+				<div class="widget-copy">
+				
+					<p>This is our Telegram account ID.You can message to this ID.</p>
+					<div class="widget-copy">
+						<b>Cal4care Telegram</b>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+</div>
+
+
+<div class="col-12 col-lg-8" *ngIf="this.uadmin_id !='64'  && this.showtele">
+	<div class="card">
+		<div class="card-header">
+			<h4>Telegram</h4>
+		</div>
+		<div class="card-body p-30">
+			<div class="code-to-copy">
+				<h4>To Start chat</h4>
+				<div class="widget-copy">
+				
+					<div class="widget-inner-content" >
+						<h6>Click to get detailed document</h6>
+						<div class="download-btn-panel">
+							<a  class="btn btn-info" target="_blank"><i class="fas fa-eye"></i> Download</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+</div>
+<div class="col-12 col-lg-8"  *ngIf="this.h_voice3cx && this.user_type == 'Admin'" >
+	<div class="card">
+		<div class="card-header">
+			<h4>Dialer Widget Code</h4>
+		</div>
+		<div class="card-body p-30">
+		
+		<div class="code-to-copy">
+			<h6>Implement the following code to start chat</h6>
+			<pre id="copyClipboard" class="widget-copy">&lt;script&gt;
+function receiveMessage(e)&#123;var t=JSON.parse(e.data),i=t.status_style;"openChat"!=t.operation_type?document.getElementById("ChatFrame").setAttribute("style","position: fixed; right: 0px; bottom: 0px; border: none;height:200px;width:200px;"):document.getElementById("ChatFrame").setAttribute("style",i)&#125;$(document).ready(function()&#123;$("body").append("&lt;iframe allow='geolocation ; microphone ; camera *'  src='{{this.dialer_widget}}' id='ChatFrame' style='position: fixed; right: 0px; bottom: 0px; border: none;height:200px;width:200px;'&gt;&lt;/iframe&gt;")&#125;),window.addEventListener("message",receiveMessage,!1);
+&lt;/script&gt;</pre>	
+
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="col-12 col-lg-8"  *ngIf="this.h_sms &&this.user_type == 'Admin'" >
+	<div class="card">
+		<div class="card-header">
+			<h4>SMS Chat Widget Code</h4>
+		</div>
+		<div class="card-body p-30">
+		
+		<div class="code-to-copy">
+			<h6>Implement the following code to start chat</h6>
+			<pre id="copyClipboard" class="widget-copy">&lt;script&gt;
+function receiveMessage(e)&#123;var t=JSON.parse(e.data),i=t.status_style;"openChat1"!=t.operation_type?document.getElementById("ChatFrame").setAttribute("style","position: fixed; right: 0px; bottom: 0px; border: none;height:200px;width:200px;"):document.getElementById("ChatFrame").setAttribute("style",i)&#125;$(document).ready(function()&#123;$("body").append("&lt;iframe allow='geolocation ; microphone ; camera *' src='{{this.sms_widget}}' id='ChatFrame' style='position: fixed; right: 0px; bottom: 0px; border: none;height:200px;width:200px;'&gt;&lt;/iframe&gt;")&#125;),window.addEventListener("message",receiveMessage,!1);
+&lt;/script&gt;</pre>	
+
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="col-12 col-lg-8" *ngIf="this.h_int_chat &&this.user_type == 'Admin'">
+	<div class="card">
+		<div class="card-header">
+			<h4>Internal Chat Widget Code</h4>
+		</div>
+		<div class="card-body p-30">
+		
+		<div class="code-to-copy">
+			<h6>Implement the following code to start chat</h6>
+			<pre id="copyClipboard" class="widget-copy">&lt;script&gt;
+function receiveMessage(e)&#123;var t=JSON.parse(e.data),i=t.status_style;"openChat3"!=t.operation_type?document.getElementById("ChatFrame").setAttribute("style","position: fixed; right: 0px; bottom: 0px; border: none;height:200px;width:200px;"):document.getElementById("ChatFrame").setAttribute("style",i)&#125;$(document).ready(function()&#123;$("body").append("&lt;iframe allow='geolocation ; microphone ; camera *' src='{{this.int_chat_widget}}' id='ChatFrame' style='position: fixed; right: 0px; bottom: 0px; border: none;height:200px;width:200px;'&gt;&lt;/iframe&gt;")&#125;),window.addEventListener("message",receiveMessage,!1);
+&lt;/script&gt;</pre>	
+
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="col-12 col-lg-8"  *ngIf="(this.h_voice3cx && this.h_int_chat && this.h_sms) && this.user_type == 'Admin'" >
+	<div class="card">
+		<div class="card-header">
+			<h4>Get Nested Iframe</h4>
+		</div>
+		<div class="card-body p-30">
+		 <div class="code-to-copy">
+			<h6>Use below iframe for getting nested iframe</h6>
+			<pre id="copyClipboard" class="widget-copy">&lt;script&gt;
+function receiveMessage(e)&#123;var t=JSON.parse(e.data),i=t.status_style;"openChat"!=t.operation_type?document.getElementById("ChatFrame").setAttribute("style","position: fixed; right: 0px; bottom: 0px; border: none;height:55px;width:80px;"):document.getElementById("ChatFrame").setAttribute("style",i)&#125;$(document).ready(function()&#123;$("body").append("&lt;iframe allow='geolocation ; microphone ; camera *' src='{{this.allwidgets}}' id='ChatFrame' style='position: fixed; right: 0px; bottom: 0px; border: none;height:55px;width:80px;'&gt;&lt;/iframe&gt;")&#125;),window.addEventListener("message",receiveMessage,!1);
+&lt;/script&gt;</pre>	
+		</div>
+	</div>
+</div>
+</div>
+
+
+<div class="col-12 col-lg-8" *ngIf="this.user_type=='Admin'">
+	<div class="card">
+		<div class="card-header">
+			<h4>Lead Management</h4>
+		</div>
+		<div class="card-body p-30">
+			<div class="code-to-copy">
+				<h4>Use the below api to post the data</h4>
+				<div class="widget-copy">
+					<a>https://baobabgroup.mconnectapps.com/api/v1.0/index.php</a>
+				</div>
+			</div>
+			<div class="code-to-copy">
+				<h4>Post the value like the following</h4>
+				<pre id="copyClipboard" class="widget-copy">
+
+					&#123;
+					"operation": "lead",
+					"moduleType": "lead",
+					"api_type": "web",
+					"element_data":
+					&#123;
+					"action": "add_lead",
+					"lead_token": "Rashid_12345",
+					"name": "vaitheesh",
+					"email": "ve@cal4care.com",
+					"phone": "1234567",
+					"city": "erode",
+					"country": "india",
+					"message": "test"
+					&#125;
+					&#125;
+
+				</pre>	
+
+
+
+			</div>
+
+
+		</div>
+
+
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!--------------------------
+	Help Manual
+	---------------------------->
+	
+<!--------------------------
+	Help Manual End
+	---------------------------->
+
+
+
+<div class="col-12 col-lg-8"  *ngIf="this.user_type=='Admin'">
+	<div class="card">
+		<div class="card-header">
+			<h4>SMS Management</h4>
+			<div class="addBtn" *ngIf="hide_admin_sett">
+				<button type="button" class="btn btn-primary" (click)="addDepartment()">+ Add Sender ID</button>
+			</div>
+		</div>
+
+		<div class="card-body p-30">
+			<div class="code-to-copy">
+				<div class="form-group">
+					<div class="card-body p-0">
+						<div class="table-responsive">
+							<table class="table table-bordered table-striped table-md">
+
+								<tr>
+									<th>S.no </th>
+									<th>Sender ID</th>
+									<th>Action</th>
+								</tr>
+
+								<tbody>
+									<tr *ngFor="let queue of senders_list; let i=index">
+										<td>{{0+i+1}}</td>
+										<td>{{queue.senderID}}</td>
+
+										<td>
+											<span *ngIf="hide_admin_sett" class="user-icon" style="cursor: pointer;"><i class="far fa-trash-alt" (click)="deletedata(queue.id)"></i></span>
+										</td>
+									</tr>
+
+									<tr *ngIf="recordNotFound == true">
+										<td colspan="12">Data not found</td>
+									</tr>
+								</tbody>
+
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade bd-example-modal-md" id="add_deptform">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myLargeModalLabel">Add Sender ID</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label for="department_name">Sender ID</label>
+							<input type="text" id="senderid" class="form-control"  >
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<div class="buttons">
+					<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+					<input type="button" class="btn btn-primary update_agent" value="Submit" (click)="addSender()">
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>

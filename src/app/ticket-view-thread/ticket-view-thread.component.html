@@ -1,0 +1,786 @@
+<!-----------------------------------------
+You can change the Background color of ticket Thread Using the following Class
+.light-blue-bg - Blue Bg
+.light-green-bg - Grreen Bg
+.light-org-bg - Orange Bg
+------------------------------------------>
+
+<input type="hidden" id="refresh_page" (click)="refresh()">
+
+<div class="section-body ticket-thread-view">
+	<div class="row">
+
+		<div class="col-12">
+			<div class="card">
+				<div class="card-header" [ngStyle]="{'background-color': closed ? '#fd030380' : ''}">
+					<div *ngIf="closed==false"  class="ticket-action-group">
+						<div  class="ticket-assign-btn">
+							<ul>
+								<!-- <li><input type="checkbox"  (click)="slectAll()" id="selectAllQ"  /></li> -->
+								<li><a href="javascript:void(0)" class="gradient-btn" routerLink="/ticketing-system-new"><i class="fa fa-arrow-left" ></i>Back</a></li>
+								<li><a  (click)="toggleClassreplyall(this.ticket_t)" class="gradient-btn"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" class="app-icon"><path d="M6.313 12.929l9.442-9.246c.478-.468.488-1.236.022-1.716s-1.231-.49-1.709-.022L2.499 13.273c-.226.22-.366.529-.366.87s.14.649.366.87l11.569 11.328c.478.468 1.243.458 1.709-.022s.456-1.248-.022-1.716l-9.442-9.246h15.769c2.67 0 4.834 2.174 4.834 4.855v9.508c0 .67.541 1.214 1.209 1.214s1.209-.543 1.209-1.214v-9.508c0-4.022-3.247-7.283-7.252-7.283H6.313z"></path></svg> Reply</a></li>
+								<li><a href="javascript:;" data-toggle="modal" data-target="#userDepartmentManagement" class="gradient-btn"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" class="app-icon"><path d="M7.822 1.6h16.356c2.258 0 4.089 1.808 4.089 4.038v20.19c0 2.23-1.831 4.038-4.089 4.038H7.822c-2.258 0-4.089-1.808-4.089-4.038V5.638c0-2.23 1.831-4.038 4.089-4.038zm0 2.423c-.903 0-1.636.723-1.636 1.615v20.19c0 .892.732 1.615 1.636 1.615h16.356c.903 0 1.636-.723 1.636-1.615V5.638c0-.892-.732-1.615-1.636-1.615H7.822zm2.234 3.634h11.888a1.21 1.21 0 110 2.422H10.056a1.21 1.21 0 110-2.422zm0 6.865h11.888a1.21 1.21 0 110 2.422H10.056a1.21 1.21 0 110-2.422zm0 6.865h11.888a1.21 1.21 0 110 2.422H10.056a1.21 1.21 0 110-2.422z"></path></svg> Add note</a></li>
+								<!-- <li><a href="javascript:;" class="gradient-btn"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" class="app-icon"><path d="M25.154 12.929H9.385c-4.005 0-7.252 3.261-7.252 7.283v9.508c0 .67.541 1.214 1.209 1.214s1.209-.543 1.209-1.214v-9.508c0-2.681 2.164-4.855 4.834-4.855h15.769l-9.442 9.246c-.478.468-.488 1.236-.022 1.716s1.231.49 1.709.022l11.57-11.329a1.218 1.218 0 000-1.738L17.399 1.945c-.478-.468-1.243-.458-1.709.022s-.456 1.248.022 1.716l9.442 9.246z"></path></svg> Forward</a></li> -->
+								<li><a href="javascript:;"(click)="changeMyStatus()" class="gradient-btn"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" class="app-icon"><path d="M24.403 3.003a1.2 1.2 0 01-1.301 2.017c-5.13-3.31-11.989-2.627-16.349 1.734-5.084 5.084-5.084 13.41 0 18.494s13.41 5.084 18.494 0c2.779-2.779 4.118-6.62 3.755-10.487a1.2 1.2 0 112.39-.224c.429 4.571-1.156 9.118-4.447 12.409-6.021 6.021-15.867 6.021-21.889 0s-6.021-15.867 0-21.889C10.221-.108 18.328-.915 24.403 3.004zM10.47 14.64l4.244 4.467 12.73-11.981a1.2 1.2 0 011.645 1.747l-13.6 12.8a1.2 1.2 0 01-1.692-.047L8.73 16.293a1.201 1.201 0 011.74-1.654z"></path></svg> Close</a></li>
+								<!-- <li><a href="javascript:;"  class="gradient-btn"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" class="app-icon"><path d="M5.945 24.349L24.35 5.944c-5.121-4.253-12.795-3.982-17.591.814s-5.067 12.47-.814 17.591zm20.11-16.698L7.65 26.056c5.121 4.253 12.795 3.982 17.591-.814s5.067-12.47.814-17.591zM5.052 26.948c-6.025-6.025-6.025-15.87 0-21.896s15.87-6.025 21.896 0c6.025 6.025 6.025 15.87 0 21.896s-15.87 6.025-21.896 0z"></path></svg> Spam</a></li> -->
+							</ul>
+						</div>
+					</div>
+					<div *ngIf="closed==true"  class="ticket-action-group">
+						<div class="inbox-header" >
+							<h5 style="text-align:center;">Ticket have been closed</h5>
+						</div>
+					</div>
+
+
+					<div class="addBtn">
+						<!-- <a href="javascript:void(0)" class="btn btn-info" (click)="assignbutton()" >Assign Tickets</a> -->
+						<a href="javascript:void(0)" class="btn btn-success" routerLink="/ticket-create-new">Create Ticket</a>
+
+					</div>
+					<a href="https://baobabgroup.mconnectapps.com/api/v1.0/pro_contents/Email-ticket.pdf"  target="_blank"><i class="info-icon fa fa-exclamation-circle"></i></a>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-12 col-sm-12 col-xl-9">
+			<div class="card" >
+				<div class="boxs mail_listing">
+		<!-- 	<div class="inbox-center table-responsive">
+				<table class="noMargin table table-hover">
+					<thead>
+						<tr *ngIf="closed==false" >
+							<th colspan="1">
+								<div class="inbox-header">
+								</div>
+							</th>
+							<th>
+								<div class="email-btn-group">
+									<button (click)="toggleClass(replies.ticket_message_id,replies.ticket_from)" class="btn btn-secondary"><i class="fas fa-reply"></i> Reply</button>&nbsp;
+									<button (click)="toggleClassreplyall(replies.ticket_message_id,replies.ticket_to)" class="btn btn-secondary"><i class="fas fa-reply"></i> Reply All</button>&nbsp;
+									<button class="btn btn-secondary" (click)="changeMyStatus()"><i class="far fa-check-circle"></i> Close</button>
+								</div>
+							</th>
+							<th>
+								
+							</th>
+
+						</tr>
+						<tr *ngIf="closed==true">
+							<th>
+							<div class="inbox-header">
+								<h5 style="text-align:center;">Ticket have been closed</h5>
+							</div>
+						</th>
+                            
+						</tr>
+					</thead>
+				</table>
+			</div> -->
+
+		
+			<div class="row"> 
+				<div class="composeForm" >
+				<h6 style="text-align: center;"><span class="blk-clr">
+					<b *ngIf="this.ticket_created_by != 'user'">{{this.ticket_created_by}}</b>
+					<b *ngIf="this.ticket_created_by == 'user'">{{this.tick_from}}</b>
+					 CREATED A TICKET</span></h6>
+
+				<h6>
+					 <span class="blk-clr">
+						<p style="font-size:20px;"> Ticket Subject : {{this.tick_subject}}</p>
+					    <p style="position: relative;text-align: -webkit-right;top:-41px;"> <strong><b>Ticket ID : </b>#{{this.ticket_t}}</strong></p>
+				     </span>
+				
+				</h6>
+				
+				</div>
+				<div class="col-lg-12" *ngFor="let replies of ticket_replies;let i=index">
+					
+					<div class="composeForm" >
+						
+			<!--------------------------
+			Reply Panel
+			--------------------------->
+			<div class="card margin-15" id="replyPanelall_{{this.ticket_t}}" style="display: none;">
+				<div class="boxs mail_listing">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="composeForm">
+									<h6><span class="blk-clr"></span></h6>
+									<p><strong>#{{this.ticket_t}}</strong></p>
+										<div class="form-group">
+											<div class="form-line">
+												<input type="text" *ngIf="replies.ticket_to == replies.own_mail" id="email_address_{{this.ticket_t}}s" value='{{replies.replied_from}}' class="form-control" placeholder="TO">
+												<input type="text" *ngIf="replies.ticket_to != replies.own_mail" id="email_address_{{this.ticket_t}}s" value='{{replies.ticket_to}}' class="form-control" placeholder="TO">
+											</div>
+										</div>
+										<!-- id="subject_{{replies.ticket_message_id}}s" -->
+											<div class="form-group">
+												<div class="form-line">
+													<input type="text" id="subject_{{this.ticket_t}}s" class="form-control" value='{{this.tick_subject}}' placeholder="Subject">
+												</div>
+											</div>
+
+
+											<!-- Edittor
+											-->
+											<!-- id="message_{{this.ticket_t}}s" -->
+												<div  class="form-group">
+													<label for="subject">Message</label>
+													<!-- <editor 
+									  
+									  id="reply_message_{{this.ticket_t}}s"
+									  initialValue="<p>Initial content of the editor</p>"
+									  apiKey="yap9vgeib9vhg5f81cuvu9hbisk6rdr6pcvcjcltvolqk317"
+									  [init]="{																			
+										theme: modern,
+										paste_data_images: true,
+										height: 500,
+										menubar: false,
+										
+										plugins: [
+										  'advlist autolink lists link file image charmap print',
+										  'preview anchor searchreplace visualblocks code',
+										  'fullscreen insertdatetime media table paste',
+										  'help wordcount','save'
+										],
+										toolbar:
+										  'undo redo | formatselect | bold italic | \ undo redo | link image file| code | \
+										  alignleft aligncenter alignright alignjustify | \
+										  bullist numlist outdent indent | help'
+									 
+									  }"
+									>
+									</editor>																							  -->
+									<editor 
+								    	id="reply_message_{{this.ticket_t}}s"
+									  initialValue="<p>Initial content of the editor</p>"
+									  apiKey="yap9vgeib9vhg5f81cuvu9hbisk6rdr6pcvcjcltvolqk317"
+									  [init]="{																			
+										theme: modern,
+										paste_data_images: true,
+										height: 500,
+										menubar: false,
+										
+										plugins: [
+										  'advlist autolink lists link file image charmap print',
+										  'preview anchor searchreplace visualblocks code',
+										  'fullscreen insertdatetime media table paste',
+										  'help wordcount','save','autolink lists media table'
+										],
+										toolbar:
+										  'undo redo | formatselect | bold italic | \ undo redo | link image file| code | \
+										  alignleft aligncenter alignright alignjustify | \
+										  bullist numlist outdent indent | help'
+									 
+
+										
+									  }"
+									>
+									</editor>
+								</div>
+											
+
+											<!-- <div class="form-group">
+												<textarea class="richTextArea2" id="reply_message_{{this.ticket_t}}s"></textarea>
+											</div> -->
+
+											<div class="compose-editor m-t-20">
+												<!-- <div id="summernote"></div> -->
+												<input type="file" class="default" id="up_files" name="up_files" multiple>
+											</div>
+											<!-- <div id="upload_prev"></div> -->
+								</div>
+							</div>
+									<div class="col-lg-12">
+										<div class="m-l-25 m-b-20">
+											<!-- <button  type="button" (click)="replyMessage(this.ticket_t,replies.replied_from,'s')" class="btn btn-success btn-border-radius waves-effect">From Send</button> -->
+											<button *ngIf="replies.ticket_to == replies.own_mail" type="button" (click)="replyMessage(this.ticket_t,replies.replied_from,'s')" class="btn btn-success btn-border-radius waves-effect">From Send</button>
+											<button *ngIf="replies.ticket_to != replies.own_mail" type="button" (click)="replyMessage(this.ticket_t,replies.ticket_to,'s')" class="btn btn-success btn-border-radius waves-effect">To Send</button>
+											&nbsp;&nbsp;
+
+											<button type="button" class="btn btn-danger btn-border-radius waves-effect" (click)="clickDiscard(this.ticket_t)">Discard</button>
+										</div>
+							         </div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card margin-15" id="replyPanel_{{replies.ticket_message_id}}" style="display: none;">
+							<div class="boxs mail_listing">
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="composeForm">
+											<h6><span class="blk-clr"></span></h6>
+											<p><strong>#{{this.ticket_t}}</strong></p>
+											<div class="form-group">
+												<div class="form-line">
+													<input type="text" id="email_address_{{replies.ticket_message_id}}" value='{{replies.replied_from}}' class="form-control" placeholder="TO">
+												</div>
+											</div>
+								<!-- <div class="form-group">
+									<div class="form-line">
+										<input type="text" id="email_address" class="form-control" placeholder="Bcc">
+									</div>
+								</div> -->
+								<div class="form-group">
+									<div class="form-line">
+										<input type="text" id="subject_{{replies.ticket_message_id}}" class="form-control" value='{{this.tick_subject}}' placeholder="Subject">
+									</div>
+								</div>
+
+								<label for="subject">Message</label>
+
+								<editor id="message_{{replies.ticket_message_id}}" 
+								initialValue="<p>Initial content of the editor</p>"
+								apiKey="yap9vgeib9vhg5f81cuvu9hbisk6rdr6pcvcjcltvolqk317"
+								[init]="{
+								height: 500,
+								menubar: false,
+								image_uploadtab: true,
+								file_picker_types: 'file image media',
+								automatic_uploads: true,
+								plugins: [
+								'advlist autolink lists link file image charmap print',
+								'preview anchor searchreplace visualblocks code',
+								'fullscreen insertdatetime media table paste',
+								'help wordcount'
+								],
+								toolbar:
+								'undo redo | formatselect | bold italic | \ undo redo | link image file| code | \
+								alignleft aligncenter alignright alignjustify | \
+								bullist numlist outdent indent | help'
+
+							}" 
+							>
+						</editor>	
+
+								<!-- <div class="form-group">
+									<textarea placeholder="Message" id="message_{{replies.ticket_message_id}}" class="form-control"></textarea>
+								</div> -->
+
+								<div class="compose-editor m-t-20">
+									<div id="summernote"></div>
+									<input type="file" class="default" id="up_files_{{replies.ticket_message_id}}" name="up_files" multiple>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-12">
+							<div class="m-l-25 m-b-20">
+								
+								<button *ngIf="replies.ticket_to == replies.own_mail" type="button" (click)="replyMessage(replies.ticket_message_id,replies.replied_from,'')" class="btn btn-success btn-border-radius waves-effect">Send</button>
+								<button *ngIf="replies.ticket_to != replies.own_mail" type="button" (click)="replyMessage(replies.ticket_message_id,replies.ticket_to,'')" class="btn btn-success btn-border-radius waves-effect">Send</button><!-- <button type="button" (click)="replyMessage(replies.ticket_message_id,replies.ticket_to,'')" class="btn btn-success btn-border-radius waves-effect">Send</button> -->
+								&nbsp;&nbsp;
+
+								<button type="button" class="btn btn-danger btn-border-radius waves-effect">Discard</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--------------------------
+			Reply Panel End
+			--------------------------->
+
+<!--------
+Message Thread Panel
+---------------->
+<!-- <div class=""   [class]="replies.replied_by == 'Agent' ? 'message-thread-panel light-blue-bg fl' : 'message-thread-panel light-org-bg fl'">
+<div class="message-thread-header">
+<div class="row">  
+	<div class="col-md-2">
+		<div class="agent-name">
+			<div class="round-block blue-bg d-flex">{{replies.first_letter_r}}</div>
+		</div>
+	</div>
+	<div class="col-md-9">
+		<div class="thread-details-section fl">
+
+			<div class="ticket-details fl"  *ngIf="replies.replied_by == 'Agent'">
+				<h6><span class="blk-clr">{{replies.own_mail}}</span>  Reported Via Email {{replies.ticket_created_at}}</h6>
+			</div>
+			<div class="ticket-details fl"  *ngIf="replies.replied_by == 'Customer'">
+				<h6><span class="blk-clr">{{replies.replied_from}}</span>  Reported Via Email {{replies.ticket_created_at}}</h6>
+			</div>
+
+			<div class="ticket-message-details fl">
+				<strong>To: </strong> {{replies.ticket_to}}
+			</div>
+		
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="message-thread-body fl">
+<div class="row">  
+	<div class="col-xl-12">
+		<div [innerHTML]="replies.ticket_message"></div>
+	</div>
+</div>
+</div>
+<div>
+<div class="message-thread-attachment fl"  *ngIf="replies.ticket_media !=''">
+<div class="row">  
+	<div class="col-xl-2" *ngFor="let item of replies.ticket_media">
+		<div class="attached-file-type">
+			<img src="assets/images/csv.png"> 
+			<div class="downlaod-icon">
+				<a href="{{item}}" target="_blank" download><i class="fas fa-download"></i></a>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+</div> -->
+
+
+
+<!-------------------------------------------------
+Customer Message
+---------------------------------------------------->
+<div class='message-thread-panel fl'  *ngIf="replies.replied_by == 'Customer'">
+	<div class="message-thread-header light-blue-bg">
+		<div class="row">  
+			<div class="col-md-11">
+				<div class="thread-details-section fl">
+
+					<div class="ticket-details fl">
+
+						<ul class="ticket-thread-header-details">
+							<li>
+								<div class="agent-name">
+
+									<div class="d-flex"><img src="https://www.gravatar.com/avatar/ca1b4a2ad3f7b90888915896436d4b36?s=80&d=mm"></div>
+								</div>
+							</li>
+							<li>
+								<h6><span class="blk-clr">{{replies.replied_from}}</span> REPORTED VIA EMAIL <small><i>{{replies.ticket_created_at}}</i></small></h6>
+								<div class="ticket-message-details fl"><strong>To: </strong> {{replies.ticket_to}}</div>
+							</li>
+						</ul>
+					</div>
+			<!-- <div class="ticket-details fl"  *ngIf="replies.replied_by == 'Customer'">
+				<h6><span class="blk-clr">{{replies.replied_from}}</span>  Reported Via Email {{replies.ticket_created_at}}</h6>
+			</div> -->
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="message-thread-body fl">
+	<div class="row">  
+		<div class="col-xl-12">
+			<div [innerHTML]="replies.ticket_message"></div>
+		</div>
+	</div>
+</div>
+<div>
+	<div class="message-thread-attachment fl"  *ngIf="replies.ticket_media != null && replies.ticket_media[0] !=''">
+	<div class="row">  
+			<div class="col-xl-2" *ngFor="let item of replies.ticket_media">
+				<div class="attached-file-type">
+				
+					{{this.getFileExtension(item)}}
+					<img *ngIf="this.getFileExtension(item)=='docx'" src="assets/images/icons/docx.svg">
+					<img *ngIf="this.getFileExtension(item)=='pdf'" src="assets/images/icons/pdf.svg">
+					<img *ngIf="this.getFileExtension(item)=='png'" src="assets/images/icons/image.svg">
+					<img *ngIf="this.getFileExtension(item)=='xlsx'" src="assets/images/icons/csv.png">
+					<img *ngIf="this.getFileExtension(item)=='csv'" src="assets/images/icons/csv.png">
+					<img *ngIf="this.getFileExtension(item)==''||(this.getFileExtension(item)!='docx' && this.getFileExtension(item)!='pdf' && this.getFileExtension(item)!='png' && this.getFileExtension(item)!='xlsx' && this.getFileExtension(item)!='csv')" src="assets/images/icons/file.png">
+					<!-- <img src="assets/images/icons/file.png"> -->
+					<div class="downlaod-icon">
+						<a href="{{item}}" target="_blank" download><i class="fas fa-download"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<!-------------------------------------------------
+Customer Message End
+---------------------------------------------------->
+
+<!-- <div class="more-ticket-thread">
+		<button class="more-block" type="submit">          
+			<div class="more-conversation-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="app-icon" data-identifyElement="1820"><path fill-rule="evenodd" d="M8.987 18.999L0 10.1l1.428-1.415 7.56 7.485V0h2.02v16.176l7.564-7.49L20 10.101 10.002 20 10 19.998 9.998 20l-1.01-1v-.001z" data-identifyElement="1821"></path></svg>
+			</div>
+			<span class="pt-1 pb-1 ml-6 more-conversation-text">
+				<span class="more-count">
+				Show More</span> 
+			</span>
+		</button>
+</div> -->
+
+<!-------------------------------------------------
+Internal Notes
+---------------------------------------------------->
+<div *ngIf="replies.ticket_notes !=null" class='message-thread-panel light-org-bg fl'>
+	<div class="message-thread-header">
+		<div class="row">  
+			<div class="col-md-11">
+				<div class="thread-details-section fl">
+
+					<div class="ticket-details fl">
+
+						<ul class="ticket-thread-header-details">
+							<li>
+								<div class="agent-name">
+									<div class="round-block light-green-bg d-flex">{{replies.first_letter_r}}</div>
+								</div>
+							</li>
+							<li><h6><span class="blk-clr">{{replies.own_mail}}</span> added a private note </h6>
+								<div class="ticket-message-details fl"><strong>To: </strong> {{replies.ticket_to}}</div>
+							</li>
+						</ul>
+					</div>
+		<!-- <div class="ticket-details fl"  *ngIf="replies.replied_by == 'Customer'">
+				<h6><span class="blk-clr">{{replies.replied_from}}</span>  Reported Via Email {{replies.ticket_created_at}}</h6>
+			</div> -->
+		</div>
+	</div>
+</div>
+</div> 
+
+<div class="message-thread-body fl">
+	<div class="row">  
+		<div class="col-xl-12">
+			<!-- <input type="text" value="{{replies.ticket_notes}}" class="form-control" > -->
+
+			<div [innerHTML]="replies.ticket_notes"></div>
+			</div>
+		</div>
+	</div>
+	<!-- <div>
+		<div class="message-thread-attachment fl"  *ngIf="replies.ticket_media !=''">
+			<div class="row">  
+				<div class="col-xl-2" *ngFor="let item of replies.ticket_media">
+					<div class="attached-file-type">
+						<img src="assets/images/csv.png">
+						<div class="downlaod-icon">
+							<a href="{{item}}" target="_blank" download><i class="fas fa-download"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+</div>
+<!-------------------------------------------------
+Internal Notes End
+---------------------------------------------------->
+
+<!-------------------------------------------------
+Agent Message
+---------------------------------------------------->
+<div class='message-thread-panel agent-reply-panel fl'  *ngIf="replies.replied_by == 'Agent'">
+	<div class="message-thread-header light-green-bg">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-11">
+				<div class="thread-details-section fl">
+					<div class="ticket-details fr" >
+						<ul class="ticket-thread-header-details">
+							<li><h6>
+								    <span *ngIf="replies.user_name == ''&& replies.rep_name ==null " class="blk-clr">{{replies.own_mail}}</span> 
+								    <span *ngIf="replies.rep_name !=null" class="blk-clr">{{replies.rep_name}}</span>
+								    <span *ngIf="replies.rep_name ==null" class="blk-clr">{{replies.user_name}}</span>
+								 Reported Via Email <small><i>{{replies.ticket_created_at}}</i></small></h6>
+								<div class="ticket-message-details fr"><strong>To: </strong> {{replies.ticket_to}}</div>
+							</li>
+							<li>
+								<div class="agent-name">
+									<div class="d-flex">
+										<img  *ngIf="replies.rep_name != null" src="{{replies.rep_img}}" onerror="this.src='assets/images/user.jpg'"  alt="avatar" />
+										<img  *ngIf="replies.rep_name == null" src="{{replies.own_img}}" onerror="this.src='assets/images/user.jpg'"  alt="avatar" />
+																			
+									</div>
+
+									<!-- <div class="d-flex">										
+										<img src="https://www.gravatar.com/avatar/277d28aeb98c4088b42201fd0a9ad5a3?s=80&d=mm">
+									</div> -->
+								</div>
+							</li>
+						</ul>
+					</div>
+			<!-- <div class="ticket-details fl"  *ngIf="replies.replied_by == 'Agent'">
+				<h6><span class="blk-clr">{{replies.replied_from}}</span>  Reported Via Email {{replies.ticket_created_at}}</h6>
+			</div>  -->
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="message-thread-body fl">
+	<div class="row">  
+		<div class="col-xl-12">
+			<div [innerHTML]="replies.ticket_message"></div>
+			<!-- <div [innerHTML]="htmlstr"></div> -->
+			<!-- <div [innerHTML]="merge()"></div> -->
+		</div>
+	</div>
+</div>
+<div>
+	<div class="message-thread-attachment fl"  *ngIf="replies.ticket_media != null && replies.ticket_media[0] !=''">
+		<div class="row">  
+			<div class="col-xl-2" *ngFor="let item of replies.ticket_media">
+				<div class="attached-file-type">
+					<!-- <img src="assets/images/csv.png"> -->
+					{{this.getFileExtension(item)}}
+					<img *ngIf="this.getFileExtension(item)=='docx'" src="assets/images/icons/docx.svg">
+					<img *ngIf="this.getFileExtension(item)=='pdf'" src="assets/images/icons/pdf.svg">
+					<img *ngIf="this.getFileExtension(item)=='png'" src="assets/images/icons/image.svg">
+					<img *ngIf="this.getFileExtension(item)=='xlsx'" src="assets/images/icons/csv.png">
+					<img *ngIf="this.getFileExtension(item)=='csv'" src="assets/images/icons/csv.png">
+					<img *ngIf="this.getFileExtension(item)==''||(this.getFileExtension(item)!='docx' && this.getFileExtension(item)!='pdf' && this.getFileExtension(item)!='png' && this.getFileExtension(item)!='xlsx' && this.getFileExtension(item)!='csv')" src="assets/images/icons/file.png">
+					<div class="downlaod-icon">
+						<a href="{{item}}" target="_blank" download><i class="fas fa-download"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<!-------------------------------------------------
+Agent Message End
+---------------------------------------------------->
+
+
+		<!--------------------------
+			Reply Panel
+			--------------------------->
+			<!-- <div class="row">
+				<div class="col-12">
+					<div class="card">
+
+						<div class="message-thread-header post-reply blue-bg">
+							<div class="row">
+								<div class="col-md-12"><h5>Post Reply</h5></div>
+							</div>
+						</div>
+
+						<div class="boxs mail_listing">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="composeForm">
+										<h6><span class="blk-clr"></span></h6>
+										<p><strong>#{{this.ticket_t}}</strong></p>
+										<div class="form-group">
+											<div class="form-line">
+												<input type="text" *ngIf="replies.ticket_to == replies.own_mail" id="email_address_{{replies.ticket_message_id}}s" value='{{replies.replied_from}}' class="form-control" placeholder="TO">
+												<input type="text" *ngIf="replies.ticket_to != replies.own_mail" id="email_address_{{replies.ticket_message_id}}s" value='{{replies.ticket_to}}' class="form-control" placeholder="TO">
+											</div>
+										</div>
+										 <div class="form-group">
+												<div class="form-line">
+													<input type="text" id="email_address" class="form-control" placeholder="Bcc">
+												</div>
+											</div> 
+											<div class="form-group">
+												<div class="form-line">
+													<input type="text" id="subject_{{replies.ticket_message_id}}s" class="form-control" value='{{this.tick_subject}}' placeholder="Subject">
+												</div>
+											</div>
+
+
+												<div  class="form-group">
+													<label for="subject">Message</label>
+
+														<editor  id="message_{{replies.ticket_message_id}}s"
+														initialValue="<p>Initial content of the editor</p>"
+														apiKey="yap9vgeib9vhg5f81cuvu9hbisk6rdr6pcvcjcltvolqk317"
+														[init]="{
+														
+														height: 500,
+														menubar: true,
+														skin: lightgray,
+														image_uploadtab: true,
+														file_picker_types: 'file image media',
+														automatic_uploads: true,
+														
+														plugins: [
+
+														'advlist autolink lists link file image charmap print',
+														'preview anchor searchreplace visualblocks code',
+														'fullscreen insertdatetime media table paste',
+														'help wordcount'
+														],
+														toolbar:
+														'undo redo | formatselect | bold italic | \ undo redo | link image file| code | \
+														alignleft aligncenter alignright alignjustify | \
+														bullist numlist outdent indent | help'
+														
+													}" 
+													>
+												</editor>	
+												
+												
+											</div>
+											
+
+										 <div class="form-group">
+												<textarea placeholder="Message" id="message_{{replies.ticket_message_id}}s" class="form-control"></textarea>
+											</div> 
+
+											<div class="compose-editor m-t-20">
+												<div id="summernote"></div>
+												<input type="file" class="default" id="up_files_{{replies.ticket_message_id}}s" name="up_files" multiple>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-12">
+										<div class="m-l-25 m-b-20">
+											<button *ngIf="replies.ticket_to == replies.own_mail" type="button" (click)="replyMessage(replies.ticket_message_id,replies.replied_from,'s')" class="btn btn-success btn-border-radius waves-effect"> <i class="fas fa-paper-plane"></i> Send</button>
+											<button *ngIf="replies.ticket_to != replies.own_mail" type="button" (click)="replyMessage(replies.ticket_message_id,replies.ticket_to,'s')" class="btn btn-success btn-border-radius waves-effect"> <i class="fas fa-paper-plane"></i> Send</button>
+											&nbsp;&nbsp;
+
+											<button type="button" class="btn btn-danger btn-border-radius waves-effect"> <i class="fas fa-trash-alt"></i> Discard</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> -->
+<!--------------------------
+			Reply Panel End
+			--------------------------->
+
+
+		</div>
+	</div>
+</div>
+
+<div *ngIf="showmore_button==true" class="more-ticket-thread">
+	<button class="more-block" (click)="showmore()">          
+		<div class="more-conversation-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="app-icon" data-identifyElement="1820"><path fill-rule="evenodd" d="M8.987 18.999L0 10.1l1.428-1.415 7.56 7.485V0h2.02v16.176l7.564-7.49L20 10.101 10.002 20 10 19.998 9.998 20l-1.01-1v-.001z" data-identifyElement="1821"></path></svg>
+		</div>
+		<span class="pt-1 pb-1 ml-6 more-conversation-text">
+			<span class="more-count">
+			Show More</span> 
+		</span>
+	</button>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="col-xs-12 col-sm-12 col-xl-3">
+	<div class="card fixedTop" id="fixedTop">
+		<div class="body padding-15">
+			<div id="mail-nav">
+				<p class="mail-title"><b>PROPERTIES</b></p>
+				<ul class="ticket-reply-action-group">
+					<li>
+						<div class="green-bg-status status-bg"></div><strong class="text-uppercase text-small">First Response Due</strong>
+						<!-- <p style="text-align:center;"><b>{{this.first_res_time}}</b></p> -->
+						<p style="text-align:left;">{{first_res_time}}</p>
+					</li>
+					<li>
+						<div class="red-bg-status status-bg"></div><strong class="text-uppercase text-small">Resolution Due</strong>
+						<!-- <p style="text-align:center;"><b>{{this.closed_time}}</b></p> -->
+						<p style="text-align:left;">{{closed_time}}</p>
+					</li>
+					<li>
+						<div class="form-group">
+							<label>Status - <b>{{this.ticket_status}}</b></label>
+							<select name="options" id="ticket_status" class="form-control">
+								<option  value="">Change Status</option>
+								<option *ngFor="let item of status ;let i = index" value="{{item.status_id}}">{{item.status_desc}}</option>				
+							</select>
+						</div>
+					</li>
+					<li>
+						<div class="form-group">
+							<label>Department - <b>{{this.department}}</b></label>
+							<select (change)="get_agents_by_department()"  id="dept_status" class="form-control">
+								<option  value="">Change Department</option>
+								<option *ngFor="let item of dept_list ;let i = index"   value="{{item.department_id}}">{{item.department_name}}</option>
+							</select>
+						</div>
+					</li>
+					<li>
+						<div class="form-group">
+							<label>Agent - <b>{{this.ticket_agent}}</b></label>
+							<select id="agent_options" class="form-control">
+								<option value="" *ngIf="this.agent_options != null">Assign to Agent</option>
+								<option class="error-message message-small" *ngIf="this.agent_options == null">Please Select the Department</option>
+
+								<option *ngFor="let item of agent_options ;let i = index" value="{{item.user_id}}">{{item.agent_name}}</option>
+								
+							</select>
+						</div>
+					</li>
+
+
+				</ul>
+				<input type="button" class="btn btn-success btn-compose text-uppercase" type="submit" value="Update" (click)="UpdateTicketStatus()">
+				<!-- <a href="javascript:;" class="btn btn-dark-grey btn-compose text-uppercase" >Update</a> -->
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade bd-example-modal-xl" id="userDepartmentManagement">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<div class="modal-body">
+
+				<div id="accordion" class="accordion">
+					<div class="card mb-0">
+						<div class="card-header show" data-toggle="collapse" href="#collapseOne">
+							<h4>Click to Add Private Notes</h4>
+						</div>
+						<div id="collapseOne" class="card-body collapse show" data-parent="#accordion" >
+							<!-- <textarea id=privateNote> </textarea>
+										<input type="text"> -->
+											<div class="modal-body">
+												<label>Here is the Private note for <b>TicketID #{{this.ticket_t}}</b> </label>
+												<textarea class="form-control" id=privateNote> </textarea>
+											</div> 
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="buttons">
+					<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+					<input type="button" class="btn btn-success update_agent" value="Submit" (click)="AddNote()">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade bd-example-modal-md" id="document_model">
+	<div class="modal-dialog modal-md"  style="max-width: 1200px;">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" style="color:crimson" >Help Manual</h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+				  <!-- <iframe [src]="this.doc_link | safe"  width="100%" style="height: 575px;" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+				  <!-- style="margin-bottom: -6px;" width="100%" height="325"  -->
+				<embed [src]="this.doc_link | safe"  width="100%" style="height: 575px;" />
+		</div>     
+		<div class="modal-footer" >
+			<div class="buttons">
+				<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="close">
+			</div>
+		</div>
+  
+	  </div>
+	</div>
+  </div>
+</div>
+</div>

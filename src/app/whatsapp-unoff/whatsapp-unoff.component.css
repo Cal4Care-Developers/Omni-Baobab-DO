@@ -1,0 +1,25 @@
+i.agent_active.fa-circle.fas {
+    color: rgb(158, 255, 2);
+}
+i.agent_inactive.fa-circle.fas {
+    color: #da0303;
+}
+#chat-message{
+    /* white-space: nowrap;*/
+    overflow: hidden;
+    width: 200px;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* number of lines to show */
+    -webkit-box-orient: vertical;
+ }
+
+ .search-results {
+    height: 650px;
+    overflow-x: hidden;
+    flex: none;
+  }
+  /* .card.fullHeightCard {
+    height: calc(100vh - 150px);
+    overflow-y: hidden;
+} */

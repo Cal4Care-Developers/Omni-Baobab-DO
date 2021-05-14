@@ -1,0 +1,20 @@
+.settingSidebar{
+    position: relative;
+    right: 0;
+    display: inline-block;
+    width: 100%;
+    background: transparent;
+    box-shadow: none;
+    margin-bottom: 50px;
+}
+.widget-copy {
+    border: 1px solid #dee2e6;
+    padding: 10px;
+    margin: 10px 10px 25px;
+    font-size: 18px;
+}
+.code-to-copy{
+    width: 100%;
+    margin-bottom: 35px;
+    display: block;
+}
