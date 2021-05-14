@@ -115,6 +115,7 @@
           },
           "configurations": {
             "production": {
+            "host": "0.0.0.0",
               "browserTarget": "omni-channel:build:production",
               "disableHostCheck": true
             }
