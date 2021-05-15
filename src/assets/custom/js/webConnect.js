@@ -91,15 +91,15 @@ if(window.location.protocol === 'http:')
 	//server = "http://" + window.location.hostname + ":8088/janus";
 	// server = "http://webrtcserver.mconnectapps.com:8088/janus";
 
-	// server = [
-	// 	"wss://"+webrtcserver+":8189",
-	// 	"https://"+webrtcserver+":8089/janus"
-	// ];
-
 	server = [
-		"wss://webrtcserver.mconnectapps.com:8189",
-		"https://webrtcserver.mconnectapps.com:8089/janus"
+		"wss://"+webrtcserver+":8189",
+		"https://"+webrtcserver+":8089/janus"
 	];
+
+	// server = [
+	// 	"wss://webrtcserver.mconnectapps.com:8189",
+	// 	"https://webrtcserver.mconnectapps.com:8089/janus"
+	// ];
 
 else
 	//server = "https://" + window.location.hostname + ":8089/janus";
@@ -108,14 +108,14 @@ else
 	// 		"wss://" + window.location.hostname + ":8189",
 	// 		"https://" + window.location.hostname + ":8089/janus"
 	// 	];
-	// server = [
-	// 	"wss://"+webrtcserver+":8189",
-	// 	"https://"+webrtcserver+":8089/janus"
-	// ];
 	server = [
-		"wss://webrtcserver.mconnectapps.com:8189",
-		"https://webrtcserver.mconnectapps.com:8089/janus"
+		"wss://"+webrtcserver+":8189",
+		"https://"+webrtcserver+":8089/janus"
 	];
+	// server = [
+	// 	"wss://webrtcserver.mconnectapps.com:8189",
+	// 	"https://webrtcserver.mconnectapps.com:8089/janus"
+	// ];
 
 
 var janus = null;

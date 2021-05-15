@@ -87,6 +87,8 @@ export class AgentSettingaComponent implements OnInit {
   doc_link;
   h_dialer_auto_answer;
   total_agent_count;
+  agent_count_t;
+  total_agent_count_t;
 // this
   constructor(private serverService: ServerService,private sanitizer: DomSanitizer) { 
 
@@ -241,7 +243,7 @@ $("#update_user_pwd").keydown(function (e) {
       this.pbc_details();
       // this.listReports();
       this.getReports();
-      this.agentsList({}); 
+      // this.agentsList({}); 
 
       this.has_video= localStorage.getItem('has_video_dialer');
        this.admin_id =localStorage.getItem('admin_id');
@@ -267,8 +269,8 @@ $("#update_user_pwd").keydown(function (e) {
       // $.validator.addMethod("nowhitespace", function(value, element) {
       //   return this.optional(element) || /^S+$/i.test(value);
       // }, "No white space please");  
-      this.getcalltariffs();
-      this.call_recording();
+      // this.getcalltariffs();
+      // this.call_recording();
 
   }
 
@@ -404,15 +406,14 @@ var output= str.split(',')
 
 
 
-var mydata = this.agent_count - this.agents_list.length;
+// var mydata = this.agent_count - this.agents_list.length;
 
 // alert(mydata);
 // alert(output.length);
 // alert(this.agents_list.length);
 
 // if(output.length >= this.agent_count || this.agent_count <= this.agents_list.length){
-if(output.length > this.agent_count || this.agent_count < this.total_agent_count){
-
+if(output.length > this.agent_count_t || this.agent_count_t > this.total_agent_count){
   // if(mydata == 0 && mydata >1 ){
   iziToast.warning({
     message: "Sorry.. You have a limits for "+this.agent_count+" users only",
@@ -549,6 +550,7 @@ pbc_details(){
   this.serverService.sendServer(api_req).subscribe((response:any) => {
     if(response.result.status==true){
       this.agent_count = response.result.data[0].agent_counts;
+      this.agent_count_t = response.result.data[0].agent_counts;
       this.agentsList({});
     } 
   }, 
@@ -591,6 +593,7 @@ api_req.element_data = agents_req;
         this.agents_list=response.result.data.list_data;
           this.offset_count = list_data.offset;
           this.total_agent_count = response.result.data.list_info.available_users;
+          this.total_agent_count_t = response.result.data.list_info.available_users;
           this.paginationData = this.serverService.pagination({'offset':response.result.data.list_info.offset, 'total':response.result.data.list_info.total, 'page_limit' :this.pageLimit });
           this.recordNotFound = this.agents_list.length == 0 ? true : false;
 
@@ -693,7 +696,7 @@ api_req.element_data = agents_req;
           this.h_2fa = 'disabled';
         }
 
-        if( this.agent_count <= this.total_agent_count){
+        if( this.agent_count_t >= this.total_agent_count_t){
           
             this.hideAddButt = false;
           } else {

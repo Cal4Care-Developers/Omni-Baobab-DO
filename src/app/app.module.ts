@@ -119,8 +119,8 @@ import { environment } from '../environments/environment';
 // import { SmsTariffComponent } from './sms-tariff/sms-tariff.component';
 // import { PaymentResultsComponent } from './payment-results/payment-results.component';
 // import { CheckOutComponent } from './check-out/check-out.component';
-import { AddToCartComponent } from './add-to-cart/add-to-cart.component';
-import { AdminPlansComponent } from './admin-plans/admin-plans.component';
+// import { AddToCartComponent } from './add-to-cart/add-to-cart.component';
+// import { AdminPlansComponent } from './admin-plans/admin-plans.component';
 // import { WpPayComponent } from './wp-pay/wp-pay.component';
 import {DatePipe} from '@angular/common';
 import { WhatsappUnoffComponent } from './whatsapp-unoff/whatsapp-unoff.component';
@@ -147,7 +147,7 @@ import { BulkEmailComponent } from './bulk-email/bulk-email.component';
 // import { CustomWallboardFiveComponent } from './custom-wallboard-five/custom-wallboard-five.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CdTimerComponent } from 'angular-cd-timer';
-import { AgentGroupsComponent } from './agent-groups/agent-groups.component';
+// import { AgentGroupsComponent } from './agent-groups/agent-groups.component';
 // import { CampaignContactPopupComponent } from './campaign-contact-popup/campaign-contact-popup.component';
 import { BulkMailListComponent } from './bulk-mail-list/bulk-mail-list.component';
 // import { CustomWallboardSixComponent } from './custom-wallboard-six/custom-wallboard-six.component';
@@ -439,12 +439,12 @@ const appRoutes: Routes = [
     // {
     //     path :'check-out', component:CheckOutComponent
     // },
-    {
-        path :'add-to-cart', component:AddToCartComponent
-    },
-    {
-        path :'omni-plans', component:AdminPlansComponent
-    }, 
+    // {
+    //     path :'add-to-cart', component:AddToCartComponent
+    // },
+    // {
+    //     path :'omni-plans', component:AdminPlansComponent
+    // }, 
     // {
     //     path :'wp-pay', component:WpPayComponent
     // },
@@ -489,9 +489,9 @@ const appRoutes: Routes = [
     // {
     //     path :'custom-wall-5', component:CustomWallboardFiveComponent
     // },
-    {
-        path :'agent-group', component:AgentGroupsComponent
-    },
+    // {
+    //     path :'agent-group', component:AgentGroupsComponent
+    // },
     // {
     //     path :'campaign-contact-details', component:CampaignContactPopupComponent
     // },
@@ -613,8 +613,8 @@ const appRoutes: Routes = [
     // SmsTariffComponent,
     // PaymentResultsComponent,
     // CheckOutComponent,
-    AddToCartComponent,
-    AdminPlansComponent,
+    // AddToCartComponent,
+    // AdminPlansComponent,
     // WpPayComponent,
     WhatsappUnoffComponent,
     WpintsettingsComponent,
@@ -634,7 +634,7 @@ const appRoutes: Routes = [
     // CallTariffsReportComponent,
     // BillingGroupComponent,
     // CustomWallboardFiveComponent,
-    AgentGroupsComponent,
+    // AgentGroupsComponent,
     // CampaignContactPopupComponent,
     BulkMailListComponent,
     // CustomWallboardSixComponent,

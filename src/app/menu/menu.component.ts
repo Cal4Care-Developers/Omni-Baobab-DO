@@ -504,14 +504,23 @@ if(this.small_logo_image == null || this.small_logo_image == 'null' || this.smal
                   localStorage.setItem('predective_dialer_behave', response.result.data.predective_dialer_behave);
                   localStorage.setItem('show_caller_id', response.result.data.show_caller_id);
                   localStorage.setItem('has_voice', response.result.data.voice_3cx);
+                  localStorage.setItem('server_FQDN', response.result.webrtcServer.server_fqdn);
+                  localStorage.setItem('server_ID', response.result.webrtcServer.server_id);
 
 
-                  this.loadScript('../assets/custom/js/webConnect.js');    
-                  let api_reqs:any = '{"type": "HookRegister"}';
-                  this.serverService.show.next(api_reqs); 
+               
                 
-
-                  
+                  if(localStorage.getItem('server_FQDN') && localStorage.getItem('server_FQDN') != 'undefined'){
+                    // this.loadScript('../assets/custom/js/mconnect-webrtc.js');
+                    this.loadScript('../assets/custom/js/webConnect.js');    
+                    let api_reqs:any = '{"type": "HookRegister"}';
+                    this.serverService.show.next(api_reqs); 
+                  }else{
+                    iziToast.warning({
+                      message:"You Need to choose WebRTC for dialer",
+                      position:"topRight"
+                    });
+                  }
 
                     if( response.result.data.fax_user_id == null)
                     {

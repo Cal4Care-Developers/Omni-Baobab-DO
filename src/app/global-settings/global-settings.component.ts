@@ -147,7 +147,7 @@ export class GlobalSettingsComponent implements OnInit {
      }
     
      this.dept_settings();
-    //  this.listwebrtc();
+     this.listwebrtc();
      
    }
 
