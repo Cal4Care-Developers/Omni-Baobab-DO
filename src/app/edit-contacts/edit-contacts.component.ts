@@ -274,7 +274,7 @@ toggleClass(){
 
     let access_token: any=localStorage.getItem('access_token');
   
-    let api_req:any = '{"operation":"ticket", "moduleType":"ticket", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"get_dept_settings","user_id":"'+this.uadmin_id+'"}}';
+    let api_req:any = '{"operation":"ticket", "moduleType":"ticket", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"get_dept_settings","user_id":"'+this.admin_id+'"}}';
   
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.status==true){
@@ -294,7 +294,7 @@ toggleClass(){
 
     let access_token: any=localStorage.getItem('access_token');
   
-    let api_req:any = '{"operation":"getAuxcode", "moduleType":"contact", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"get_aux_code","admin_id":"'+this.uadmin_id+'"}}';
+    let api_req:any = '{"operation":"getAuxcode", "moduleType":"contact", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"get_aux_code","admin_id":"'+this.admin_id+'"}}';
   
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.status==true){

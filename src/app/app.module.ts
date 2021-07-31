@@ -96,7 +96,7 @@ import { GaugeChartModule } from 'angular-gauge-chart'
 import { GoogleChartsModule } from 'angular-google-charts';
 import { UserIdleModule } from 'angular-user-idle';
 // import { TestComponent } from './test/test.component';
-// import { ReportComponent } from './report/report.component';
+import { ReportComponent } from './report/report.component';
 // import { SocialLoginModule, AuthServiceConfig, FacebookLoginProvider } from 'angularx-social-login';
 import { InternalChatComponent } from './mc/internal-chat/internal-chat.component';
 import { ComposeWpComponent } from './compose-wp/compose-wp.component';
@@ -147,7 +147,7 @@ import { BulkEmailComponent } from './bulk-email/bulk-email.component';
 // import { CustomWallboardFiveComponent } from './custom-wallboard-five/custom-wallboard-five.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CdTimerComponent } from 'angular-cd-timer';
-// import { AgentGroupsComponent } from './agent-groups/agent-groups.component';
+import { AgentGroupsComponent } from './agent-groups/agent-groups.component';
 // import { CampaignContactPopupComponent } from './campaign-contact-popup/campaign-contact-popup.component';
 import { BulkMailListComponent } from './bulk-mail-list/bulk-mail-list.component';
 import { TicketSignatureComponent } from './ticket-signature/ticket-signature.component';
@@ -435,9 +435,10 @@ const appRoutes: Routes = [
     // },
     // {
     //     path :'sms-report', component:SmsReportComponent
-    // },{
-    //     path :'report-admin', component:ReportComponent
     // },
+    {
+        path :'report-admin', component:ReportComponent
+    },
     // {
     //     path :'broad-report', component:BroadcastReportComponent
     // },
@@ -500,9 +501,9 @@ const appRoutes: Routes = [
     // {
     //     path :'custom-wall-5', component:CustomWallboardFiveComponent
     // },
-    // {
-    //     path :'agent-group', component:AgentGroupsComponent
-    // },
+    {
+        path :'agent-group', component:AgentGroupsComponent
+    },
     // {
     //     path :'campaign-contact-details', component:CampaignContactPopupComponent
     // },
@@ -614,7 +615,7 @@ const appRoutes: Routes = [
     // FaxComponent,
     // NewOutboundFaxComponent,
     // TestComponent,
-    // ReportComponent,
+    ReportComponent,
     InternalChatComponent,
     ComposeWpComponent,
     // InvalidCampaignContactComponent,
@@ -654,7 +655,7 @@ const appRoutes: Routes = [
     // CallTariffsReportComponent,
     // BillingGroupComponent,
     // CustomWallboardFiveComponent,
-    // AgentGroupsComponent,
+    AgentGroupsComponent,
     // CampaignContactPopupComponent,
     BulkMailListComponent,
     TicketSignatureComponent,

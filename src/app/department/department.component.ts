@@ -105,7 +105,7 @@ inactiveCustomers:${JSON.stringify(this.ShowInactiveCustomers, null, ' ')}`;
     });
     this.dept_settings();
     this.user_lists();
-    this.getwraupcat();
+    // this.getwraupcat();
     this.initSocket();
   }
   initSocket(){

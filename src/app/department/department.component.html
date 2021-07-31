@@ -10,7 +10,7 @@
                     <div class="addBtn">
                         <button type="button" class="btn btn-primary" (click)="addDepartment()">+ Add
                             Department</button>
-                        <button type="button" class="btn btn-primary"  (click)="RetrieveDept()">+ Retrieve From 3CX</button>
+                        <!-- <button type="button" class="btn btn-primary"  (click)="RetrieveDept()">+ Retrieve From 3CX</button> -->
                     </div>
                     <a (click)="showdoc('https://ticketing.mconnectapps.com/api/v1.0/pro_contents/pro_department.pdf')"  target="_blank"><i style="font-size: 24px;
                         float: right;" class="fa fa-question-circle"></i></a>
@@ -25,7 +25,7 @@
                                 <th># </th>
                                 <!-- <th>Dept ID</th> -->
                                 <th>Dept/Queue Name</th>
-                                <th>Dept Alias</th>
+                                <!-- <th>Dept Alias</th> -->
                                 <!-- <th>Calls</th> -->
                                 <!-- <th>Email</th>
                                 <th>Chat</th>
@@ -40,7 +40,7 @@
                                     <td>{{0+i+1}}</td>
                                     <!-- <td>{{queue.dept_id}}</td> -->
                                     <td>{{queue.department_name}}</td>
-                                    <td>{{queue.alias_name}}</td>
+                                    <!-- <td>{{queue.alias_name}}</td> -->
                                     <!-- <td>
                                         <button type="button" class="btn btn-primary" (click)="editDepartmentSettings(queue.dept_id)">Edit</button>
                                     </td> -->
