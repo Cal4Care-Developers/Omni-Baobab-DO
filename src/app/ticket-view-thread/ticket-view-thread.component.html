@@ -7,7 +7,7 @@ You can change the Background color of ticket Thread Using the following Class
 
 <input type="hidden" id="refresh_page" (click)="refresh()">
 
-<div class="section-body ticket-thread-view">
+<div  style="font-family: Verdana , sans-serif;" class="section-body ticket-thread-view">
 	<div class="row">
 
 		<div class="col-12">
@@ -17,28 +17,75 @@ You can change the Background color of ticket Thread Using the following Class
 						<div  class="ticket-assign-btn">
 							<ul>
 								<!-- <li><input type="checkbox"  (click)="slectAll()" id="selectAllQ"  /></li> -->
-								<li><a href="javascript:void(0)" class="gradient-btn" routerLink="/ticketing-system-new"><i class="fa fa-arrow-left" ></i>Back</a></li>
-								<li><a  (click)="toggleClassreplyall(this.ticket_t)" class="gradient-btn"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" class="app-icon"><path d="M6.313 12.929l9.442-9.246c.478-.468.488-1.236.022-1.716s-1.231-.49-1.709-.022L2.499 13.273c-.226.22-.366.529-.366.87s.14.649.366.87l11.569 11.328c.478.468 1.243.458 1.709-.022s.456-1.248-.022-1.716l-9.442-9.246h15.769c2.67 0 4.834 2.174 4.834 4.855v9.508c0 .67.541 1.214 1.209 1.214s1.209-.543 1.209-1.214v-9.508c0-4.022-3.247-7.283-7.252-7.283H6.313z"></path></svg> Reply</a></li>
-								<li><a href="javascript:;" data-toggle="modal" data-target="#userDepartmentManagement" class="gradient-btn"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" class="app-icon"><path d="M7.822 1.6h16.356c2.258 0 4.089 1.808 4.089 4.038v20.19c0 2.23-1.831 4.038-4.089 4.038H7.822c-2.258 0-4.089-1.808-4.089-4.038V5.638c0-2.23 1.831-4.038 4.089-4.038zm0 2.423c-.903 0-1.636.723-1.636 1.615v20.19c0 .892.732 1.615 1.636 1.615h16.356c.903 0 1.636-.723 1.636-1.615V5.638c0-.892-.732-1.615-1.636-1.615H7.822zm2.234 3.634h11.888a1.21 1.21 0 110 2.422H10.056a1.21 1.21 0 110-2.422zm0 6.865h11.888a1.21 1.21 0 110 2.422H10.056a1.21 1.21 0 110-2.422zm0 6.865h11.888a1.21 1.21 0 110 2.422H10.056a1.21 1.21 0 110-2.422z"></path></svg> Add note</a></li>
+								<li><a href="javascript:void(0)" class="gradient-btn"
+										(click)="backtoPage()">
+										<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+											viewBox="0 0 32 32" class="app-icon">
+											<path
+												d="M6.313 12.929l9.442-9.246c.478-.468.488-1.236.022-1.716s-1.231-.49-1.709-.022L2.499 13.273c-.226.22-.366.529-.366.87s.14.649.366.87l11.569 11.328c.478.468 1.243.458 1.709-.022s.456-1.248-.022-1.716l-9.442-9.246h15.769c2.67 0 4.834 2.174 4.834 4.855v9.508c0 .67.541 1.214 1.209 1.214s1.209-.543 1.209-1.214v-9.508c0-4.022-3.247-7.283-7.252-7.283H6.313z">
+											</path>
+										</svg>
+										Back</a></li>
+								<li><a href="javascript:;" data-toggle="modal" data-target="#userDepartmentManagement"
+										class="gradient-btn"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+											height="32" viewBox="0 0 32 32" class="app-icon">
+											<path
+												d="M7.822 1.6h16.356c2.258 0 4.089 1.808 4.089 4.038v20.19c0 2.23-1.831 4.038-4.089 4.038H7.822c-2.258 0-4.089-1.808-4.089-4.038V5.638c0-2.23 1.831-4.038 4.089-4.038zm0 2.423c-.903 0-1.636.723-1.636 1.615v20.19c0 .892.732 1.615 1.636 1.615h16.356c.903 0 1.636-.723 1.636-1.615V5.638c0-.892-.732-1.615-1.636-1.615H7.822zm2.234 3.634h11.888a1.21 1.21 0 110 2.422H10.056a1.21 1.21 0 110-2.422zm0 6.865h11.888a1.21 1.21 0 110 2.422H10.056a1.21 1.21 0 110-2.422zm0 6.865h11.888a1.21 1.21 0 110 2.422H10.056a1.21 1.21 0 110-2.422z">
+											</path>
+										</svg> Add note</a></li>
 								<!-- <li><a href="javascript:;" class="gradient-btn"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" class="app-icon"><path d="M25.154 12.929H9.385c-4.005 0-7.252 3.261-7.252 7.283v9.508c0 .67.541 1.214 1.209 1.214s1.209-.543 1.209-1.214v-9.508c0-2.681 2.164-4.855 4.834-4.855h15.769l-9.442 9.246c-.478.468-.488 1.236-.022 1.716s1.231.49 1.709.022l11.57-11.329a1.218 1.218 0 000-1.738L17.399 1.945c-.478-.468-1.243-.458-1.709.022s-.456 1.248.022 1.716l9.442 9.246z"></path></svg> Forward</a></li> -->
-								<li><a href="javascript:;"(click)="changeMyStatus()" class="gradient-btn"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" class="app-icon"><path d="M24.403 3.003a1.2 1.2 0 01-1.301 2.017c-5.13-3.31-11.989-2.627-16.349 1.734-5.084 5.084-5.084 13.41 0 18.494s13.41 5.084 18.494 0c2.779-2.779 4.118-6.62 3.755-10.487a1.2 1.2 0 112.39-.224c.429 4.571-1.156 9.118-4.447 12.409-6.021 6.021-15.867 6.021-21.889 0s-6.021-15.867 0-21.889C10.221-.108 18.328-.915 24.403 3.004zM10.47 14.64l4.244 4.467 12.73-11.981a1.2 1.2 0 011.645 1.747l-13.6 12.8a1.2 1.2 0 01-1.692-.047L8.73 16.293a1.201 1.201 0 011.74-1.654z"></path></svg> Close</a></li>
+								<li><a (click)="toggleClassreplyall(this.ticket_t)" class="gradient-btn"><svg
+											style="transform: rotate(180deg);" xmlns="http://www.w3.org/2000/svg"
+											width="32" height="32" viewBox="0 0 32 32" class="app-icon">
+											<path
+												d="M6.313 12.929l9.442-9.246c.478-.468.488-1.236.022-1.716s-1.231-.49-1.709-.022L2.499 13.273c-.226.22-.366.529-.366.87s.14.649.366.87l11.569 11.328c.478.468 1.243.458 1.709-.022s.456-1.248-.022-1.716l-9.442-9.246h15.769c2.67 0 4.834 2.174 4.834 4.855v9.508c0 .67.541 1.214 1.209 1.214s1.209-.543 1.209-1.214v-9.508c0-4.022-3.247-7.283-7.252-7.283H6.313z">
+											</path>
+										</svg> Reply</a></li>
+								<li><a href="javascript:;" (click)="changeMyStatus()" class="gradient-btn"><svg
+											xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+											viewBox="0 0 32 32" class="app-icon">
+											<path
+												d="M24.403 3.003a1.2 1.2 0 01-1.301 2.017c-5.13-3.31-11.989-2.627-16.349 1.734-5.084 5.084-5.084 13.41 0 18.494s13.41 5.084 18.494 0c2.779-2.779 4.118-6.62 3.755-10.487a1.2 1.2 0 112.39-.224c.429 4.571-1.156 9.118-4.447 12.409-6.021 6.021-15.867 6.021-21.889 0s-6.021-15.867 0-21.889C10.221-.108 18.328-.915 24.403 3.004zM10.47 14.64l4.244 4.467 12.73-11.981a1.2 1.2 0 011.645 1.747l-13.6 12.8a1.2 1.2 0 01-1.692-.047L8.73 16.293a1.201 1.201 0 011.74-1.654z">
+											</path>
+										</svg> Close</a></li>
+
+										<li *ngIf="markspamshow"><a href="javascript:;" (click)="changetoSpam()" class="gradient-btn" style="position: absolute;right: 20px;">
+											<i class="\fas fa-ban"></i> Mark as Spam</a></li>
+
+										<li *ngIf="unmarkspamshow && this.user_type == 'Admin'"><a href="javascript:;" (click)="changetoUnspam()" class="gradient-btn" style="position: absolute;right: 20px;">
+											<i class="fas fa-ban"></i> Mark as Not Spam</a></li>
+
+										<li *ngIf="(this.ticket_agent == '' || this.ticket_agent == 'null') && this.user_type =='Employee'" ><a (click)="PickUpTicket(this.ticket_t)"  
+											class="gradient-btn"><svg xmlns="http://www.w3.org/2000/svg" width="32"
+												height="32" viewBox="0 0 32 32" class="app-icon">
+												<path
+													d="M7.822 1.6h16.356c2.258 0 4.089 1.808 4.089 4.038v20.19c0 2.23-1.831 4.038-4.089 4.038H7.822c-2.258 0-4.089-1.808-4.089-4.038V5.638c0-2.23 1.831-4.038 4.089-4.038zm0 2.423c-.903 0-1.636.723-1.636 1.615v20.19c0 .892.732 1.615 1.636 1.615h16.356c.903 0 1.636-.723 1.636-1.615V5.638c0-.892-.732-1.615-1.636-1.615H7.822zm2.234 3.634h11.888a1.21 1.21 0 110 2.422H10.056a1.21 1.21 0 110-2.422zm0 6.865h11.888a1.21 1.21 0 110 2.422H10.056a1.21 1.21 0 110-2.422zm0 6.865h11.888a1.21 1.21 0 110 2.422H10.056a1.21 1.21 0 110-2.422z">
+												</path>
+											</svg> Pick Up for Myself</a></li>
+											<div *ngIf="Reopen_closed==true" style="color: white; float: right; text-align: right;">
+												<!-- <a href="javascript:void(0)" class="btn btn-success" routerLink="/ticket-create-new">Create
+													Ticket</a> -->
+												<a  class="btn btn-danger" style="width: 40px;font-size: 15px;"
+													 title="This Ticket has been Reopened"><i class="fas fa-ban"></i> </a>
+											
+											</div>
+											<!-- <li class="gradient-btn" *ngIf="Reopen_closed==true">Reopened Ticket</li> -->
 								<!-- <li><a href="javascript:;"  class="gradient-btn"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" class="app-icon"><path d="M5.945 24.349L24.35 5.944c-5.121-4.253-12.795-3.982-17.591.814s-5.067 12.47-.814 17.591zm20.11-16.698L7.65 26.056c5.121 4.253 12.795 3.982 17.591-.814s5.067-12.47.814-17.591zM5.052 26.948c-6.025-6.025-6.025-15.87 0-21.896s15.87-6.025 21.896 0c6.025 6.025 6.025 15.87 0 21.896s-15.87 6.025-21.896 0z"></path></svg> Spam</a></li> -->
 							</ul>
-						</div>
+						</div>						
 					</div>
 					<div *ngIf="closed==true"  class="ticket-action-group">
 						<div class="inbox-header" >
-							<h5 style="text-align:center;">Ticket have been closed</h5>
+							<h5 style="text-align:center;">Ticket have been closed   <span  style="font-size: 14px;font-weight: 900;color: black;">{{closed_by}}</span> <span style="font-size: 14px;font-weight: 900;color: black;">  {{closed_time}} </span></h5>
 						</div>
 					</div>
 
 
-					<div class="addBtn">
-						<!-- <a href="javascript:void(0)" class="btn btn-info" (click)="assignbutton()" >Assign Tickets</a> -->
+					<!-- <div class="addBtn">
 						<a href="javascript:void(0)" class="btn btn-success" routerLink="/ticket-create-new">Create Ticket</a>
 
-					</div>
-					<a href="https://baobabgroup.mconnectapps.com/api/v1.0/pro_contents/Email-ticket.pdf"  target="_blank"><i class="info-icon fa fa-exclamation-circle"></i></a>
+					</div> -->
+					<!-- <a href="https://ticketing.mconnectapps.com/api/v1.0/pro_contents/Email-ticket.pdf"  target="_blank"><i class="info-icon fa fa-exclamation-circle"></i></a> -->
 				</div>
 			</div>
 		</div>
@@ -80,20 +127,57 @@ You can change the Background color of ticket Thread Using the following Class
 
 		
 			<div class="row"> 
-				<div class="composeForm" >
-				<h6 style="text-align: center;"><span class="blk-clr">
-					<b *ngIf="this.ticket_created_by != 'user'">{{this.ticket_created_by}}</b>
-					<b *ngIf="this.ticket_created_by == 'user'">{{this.tick_from}}</b>
-					 CREATED A TICKET</span></h6>
+				<div class="ticket-header composeForm">
+					<div class="message-thread-panel no-margin-bottom light-blue-bg fl">
+						<div  class="message-thread-header">
+							<div class="row">
+								<div  class="col-md-9">
+								<div  class="thread-details-section fl">
 
-				<h6>
-					 <span class="blk-clr">
-						<p style="font-size:20px;"> Ticket Subject : {{this.tick_subject}}</p>
-					    <p style="position: relative;text-align: -webkit-right;top:-41px;"> <strong><b>Ticket ID : </b>#{{this.ticket_t}}</strong></p>
-				     </span>
-				
-				</h6>
-				
+
+									<div style="padding: 5px 25px;" class="ticket-message-details fl"><strong style="min-width: 72px; float: left;">Subject</strong> 
+										<span style="text-align: center;">
+											<span class="blk-clr"><b>: &nbsp;&nbsp; {{this.tick_subject}}</b></span>
+										</span>
+									</div>
+
+
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div style="padding: 3px 7px;" class="ticket-message-details fl"><strong style="min-width: 72px; float: left;">Status</strong> 
+									<span style="text-align: center;">
+										<span style="color: #3d77a7; font-weight: 700;"><b>: &nbsp;&nbsp; {{this.ticket_status}}</b></span>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div  class="message-thread-body fl">
+						<div class="row">
+							<div class="col-lg-9">
+								<div  class="ticket-message-details fl"><strong style="min-width: 72px; float: left;">From</strong> 
+									<span style="text-align: center;">
+										<span class="blk-clr"><b *ngIf="this.ticket_created_by != 'user'">: &nbsp;&nbsp; {{this.ticket_created_by}}</b></span>
+										<span *ngIf="this.ticket_created_by == 'user'">: &nbsp;&nbsp; {{this.tick_from}}</span>
+									</span>
+								
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div style="padding: 5px 25px;" class="ticket-message-details fl"><strong style="min-width: 72px; float: left;">Ticket ID</strong> 
+									<span style="text-align: center;">
+										<span style="color: #3d77a7; font-weight: 700;"><b>: &nbsp;&nbsp; #{{this.ticket_t}}</b></span>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					</div>
+					<!-- <h6 style="text-align: center;"><span class="blk-clr">
+			<b *ngIf="this.ticket_created_by != 'user'">{{this.ticket_created_by}}</b>
+			<b *ngIf="this.ticket_created_by == 'user'">{{this.tick_from}}</b>
+			 CREATED A TICKET</span></h6> -->
 				</div>
 				<div class="col-lg-12" *ngFor="let replies of ticket_replies;let i=index">
 					
@@ -108,20 +192,91 @@ You can change the Background color of ticket Thread Using the following Class
 						<div class="col-lg-12">
 							<div class="composeForm">
 									<h6><span class="blk-clr"></span></h6>
-									<p><strong>#{{this.ticket_t}}</strong></p>
-										<div class="form-group">
+									<p><strong>{{this.tick_subject}}</strong></p>
+										<!-- <div class="form-group">
+											<label><b>To</b></label>
 											<div class="form-line">
 												<input type="text" *ngIf="replies.ticket_to == replies.own_mail" id="email_address_{{this.ticket_t}}s" value='{{replies.replied_from}}' class="form-control" placeholder="TO">
 												<input type="text" *ngIf="replies.ticket_to != replies.own_mail" id="email_address_{{this.ticket_t}}s" value='{{replies.ticket_to}}' class="form-control" placeholder="TO">
 											</div>
+										</div> -->
+										<div class="form-group">
+											<label><b>To</b></label>
+											<div class="form-line">
+												<mat-form-field class="email-chip-list">
+													<mat-chip-list #chipListTO aria-label="EmailAddress selection">
+													  <mat-chip *ngFor="let EmailAddress of EmailToAddress;let i=index" [selectable]="selectable"
+															   [removable]="removable"  (removed)="removeTo(EmailAddress)">
+														{{EmailAddress.email_to}}
+														<mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+													  </mat-chip>
+													 
+
+													  <input class="form-control"													 
+													  placeholder="Add Receiver Email"
+															 [matChipInputFor]="chipListTO"
+															 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+															 [matChipInputAddOnBlur]="addOnBlur"
+															 (matChipInputTokenEnd)="addTo($event)">
+													</mat-chip-list>
+												  </mat-form-field>
+
+											</div>
 										</div>
+										<!-- <div class="form-group">
+											<label><b>CC</b></label>
+											<div class="form-line">
+												<input  type="text" id="mail_cc_{{this.ticket_t}}s" class="form-control" value="{{replies.mail_cc != 'null' ? replies.mail_cc : ''}}">
+											</div>
+										</div> -->
+										<!-- id="subject_{{replies.ticket_message_id}}s" -->
+										<div class="form-group">
+											<label><b>Collabrators (Optional)</b></label>
+											<div class="form-line">
+												<mat-form-field class="email-chip-list">
+													<mat-chip-list #chipList aria-label="Collobrator selection">
+													  <mat-chip *ngFor="let collobrator of collobrators" [selectable]="selectable"
+															   [removable]="removable" (removed)="remove(collobrator)">
+														{{collobrator.email_name}}
+														<mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+													  </mat-chip>
+													  <input class="form-control" placeholder="Add Collabrators "
+															 [matChipInputFor]="chipList"															 
+															 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+															 [matChipInputAddOnBlur]="addOnBlur"
+															 (matChipInputTokenEnd)="add($event)">
+													</mat-chip-list>
+												  </mat-form-field>
+											</div>
+										</div>
+										<!-- <div class="form-group">
+											<label><b>BCC </b></label>
+											<div class="form-line">
+												<mat-form-field class="email-chip-list">
+													<mat-chip-list #chipListBcc aria-label="Collobrator selection">
+													  <mat-chip *ngFor="let collobrator of collobrators" [selectable]="selectable"
+															   [removable]="removable" (removed)="remove(collobrator)">
+														{{collobrator.email_bcc}}
+														<mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+													  </mat-chip>
+													  <input class="form-control" placeholder="Add Collabrators "
+															 [matChipInputFor]="chipListBcc"															 
+															 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+															 [matChipInputAddOnBlur]="addOnBlur"
+															 (matChipInputTokenEnd)="add($event)">
+													</mat-chip-list>
+												  </mat-form-field>
+											</div>
+										</div> -->
+
 										<!-- id="subject_{{replies.ticket_message_id}}s" -->
 											<div class="form-group">
 												<div class="form-line">
-													<input type="text" id="subject_{{this.ticket_t}}s" class="form-control" value='{{this.tick_subject}}' placeholder="Subject">
+													<label><b>Subject</b></label>
+													<input disabled type="text" id="subject_{{this.ticket_t}}s" class="form-control" value='{{this.tick_subject}}' placeholder="Subject">
 												</div>
 											</div>
-
+											
 
 											<!-- Edittor
 											-->
@@ -155,7 +310,7 @@ You can change the Background color of ticket Thread Using the following Class
 									</editor>																							  -->
 									<editor 
 								    	id="reply_message_{{this.ticket_t}}s"
-									  initialValue="<p>Initial content of the editor</p>"
+									 
 									  apiKey="yap9vgeib9vhg5f81cuvu9hbisk6rdr6pcvcjcltvolqk317"
 									  [init]="{																			
 										theme: modern,
@@ -170,9 +325,12 @@ You can change the Background color of ticket Thread Using the following Class
 										  'help wordcount','save','autolink lists media table'
 										],
 										toolbar:
-										  'undo redo | formatselect | bold italic | \ undo redo | link image file| code | \
+										  'undo redo| fullscreen | formatselect | fontselect |fontsizeselect| bold italic | \ undo redo | link image file| code | \
 										  alignleft aligncenter alignright alignjustify | \
-										  bullist numlist outdent indent | help'
+										  bullist numlist outdent indent | help',
+
+										  content_style: 'body {font-size: 10pt;font-family: Verdana;}'
+										 
 									 
 
 										
@@ -190,14 +348,21 @@ You can change the Background color of ticket Thread Using the following Class
 												<!-- <div id="summernote"></div> -->
 												<input type="file" class="default" id="up_files" name="up_files" multiple>
 											</div>
+											<div style="margin-bottom: 20px;" class="compose-editor m-t-20">										
+                            					<label>Choose Signature</label> <a style="cursor: pointer;" (click)="getsignpopup()"> <i title="View Signature" class="fas fa-eye"></i> </a>
+												<select name="options" id="singature_id"  (change)="getsignpopup()" class="form-control">
+													<!-- <option *ngIf="item.is_default=='1'" value="{{item.sig_id}}">{{item.sig_title}}</option> -->
+													<option  *ngFor="let item of singnatures ;let i = index" value="{{item.sig_id}}"   selected="{{item.is_default == 1 ? 'selected' : ''}}">{{item.sig_title}}</option>				
+												</select>
+											</div>
 											<!-- <div id="upload_prev"></div> -->
 								</div>
 							</div>
 									<div class="col-lg-12">
 										<div class="m-l-25 m-b-20">
 											<!-- <button  type="button" (click)="replyMessage(this.ticket_t,replies.replied_from,'s')" class="btn btn-success btn-border-radius waves-effect">From Send</button> -->
-											<button *ngIf="replies.ticket_to == replies.own_mail" type="button" (click)="replyMessage(this.ticket_t,replies.replied_from,'s')" class="btn btn-success btn-border-radius waves-effect">From Send</button>
-											<button *ngIf="replies.ticket_to != replies.own_mail" type="button" (click)="replyMessage(this.ticket_t,replies.ticket_to,'s')" class="btn btn-success btn-border-radius waves-effect">To Send</button>
+											<button *ngIf="replies.ticket_to == replies.own_mail" type="button" (click)="replyMessage(this.ticket_t,replies.replied_from,'s')" class="btn btn-success btn-border-radius waves-effect">Send</button>
+											<button *ngIf="replies.ticket_to != replies.own_mail" type="button" (click)="replyMessage(this.ticket_t,replies.ticket_to,'s')" class="btn btn-success btn-border-radius waves-effect">send</button>
 											&nbsp;&nbsp;
 
 											<button type="button" class="btn btn-danger btn-border-radius waves-effect" (click)="clickDiscard(this.ticket_t)">Discard</button>
@@ -233,7 +398,6 @@ You can change the Background color of ticket Thread Using the following Class
 								<label for="subject">Message</label>
 
 								<editor id="message_{{replies.ticket_message_id}}" 
-								initialValue="<p>Initial content of the editor</p>"
 								apiKey="yap9vgeib9vhg5f81cuvu9hbisk6rdr6pcvcjcltvolqk317"
 								[init]="{
 								height: 500,
@@ -352,13 +516,19 @@ Customer Message
 						<ul class="ticket-thread-header-details">
 							<li>
 								<div class="agent-name">
-
-									<div class="d-flex"><img src="https://www.gravatar.com/avatar/ca1b4a2ad3f7b90888915896436d4b36?s=80&d=mm"></div>
+									<div class="d-flex">
+									<div  class="round-block bg-1 d-flex pointer">{{replies.first_letter_r}}</div>
+										<!-- <img src="https://www.gravatar.com/avatar/ca1b4a2ad3f7b90888915896436d4b36?s=80&d=mm"> -->
+									</div>
 								</div>
 							</li>
 							<li>
 								<h6><span class="blk-clr">{{replies.replied_from}}</span> REPORTED VIA EMAIL <small><i>{{replies.ticket_created_at}}</i></small></h6>
-								<div class="ticket-message-details fl"><strong>To: </strong> {{replies.ticket_to}}</div>
+								<div class="ticket-message-details fl"><strong>To: </strong>
+									{{replies.ticket_to}} 
+									<!-- {{replies.ticket_from}} -->
+								</div><br>
+								<div *ngIf="replies.mail_cc !='null' && replies.mail_cc !='' " class="ticket-message-details fl"><strong>Cc: </strong> {{replies.mail_cc}}</div>
 							</li>
 						</ul>
 					</div>
@@ -373,14 +543,14 @@ Customer Message
 <div class="message-thread-body fl">
 	<div class="row">  
 		<div class="col-xl-12">
-			<div [innerHTML]="replies.ticket_message"></div>
+			<div [innerHTML]="replies.ticket_message" style="font-family:Verdana"></div>
 		</div>
 	</div>
 </div>
 <div>
 	<div class="message-thread-attachment fl"  *ngIf="replies.ticket_media != null && replies.ticket_media[0] !=''">
 	<div class="row">  
-			<div class="col-xl-2" *ngFor="let item of replies.ticket_media">
+			<div class="col-xl-3" *ngFor="let item of replies.ticket_media">
 				<div class="attached-file-type">
 				
 					{{this.getFileExtension(item)}}
@@ -419,8 +589,10 @@ Customer Message End
 <!-------------------------------------------------
 Internal Notes
 ---------------------------------------------------->
-<div *ngIf="replies.ticket_notes !=null" class='message-thread-panel light-org-bg fl'>
-	<div class="message-thread-header">
+<div *ngIf="replies.ticket_notes !=null">
+	<div *ngFor="let item of replies.ticket_notes.reverse()">
+		<div class='message-thread-panel light-org-bg fl'>
+		<div class="message-thread-header">
 		<div class="row">  
 			<div class="col-md-11">
 				<div class="thread-details-section fl">
@@ -429,12 +601,12 @@ Internal Notes
 
 						<ul class="ticket-thread-header-details">
 							<li>
-								<div class="agent-name">
+								<!-- <div class="agent-name">
 									<div class="round-block light-green-bg d-flex">{{replies.first_letter_r}}</div>
-								</div>
+								</div> -->
 							</li>
-							<li><h6><span class="blk-clr">{{replies.own_mail}}</span> added a private note </h6>
-								<div class="ticket-message-details fl"><strong>To: </strong> {{replies.ticket_to}}</div>
+							<li><h6><span class="blk-clr">{{item.created_name}}</span> added a private note </h6>
+								<!-- <div class="ticket-message-details fl"><strong>To: </strong> {{replies.ticket_to}}</div> -->
 							</li>
 						</ul>
 					</div>
@@ -451,7 +623,7 @@ Internal Notes
 		<div class="col-xl-12">
 			<!-- <input type="text" value="{{replies.ticket_notes}}" class="form-control" > -->
 
-			<div [innerHTML]="replies.ticket_notes"></div>
+			<div [innerHTML]="item.ticket_notes"></div>
 			</div>
 		</div>
 	</div>
@@ -469,6 +641,8 @@ Internal Notes
 			</div>
 		</div>
 	</div> -->
+</div>
+</div>
 </div>
 <!-------------------------------------------------
 Internal Notes End
@@ -490,7 +664,14 @@ Agent Message
 								    <span *ngIf="replies.rep_name !=null" class="blk-clr">{{replies.rep_name}}</span>
 								    <span *ngIf="replies.rep_name ==null" class="blk-clr">{{replies.user_name}}</span>
 								 Reported Via Email <small><i>{{replies.ticket_created_at}}</i></small></h6>
-								<div class="ticket-message-details fr"><strong>To: </strong> {{replies.ticket_to}}</div>
+								<div class="ticket-message-details fr"><strong>To: </strong> 
+									<!-- {{replies.ticket_to}} -->
+									{{replies.ticket_from}}
+									<br>
+								<div *ngIf="replies.mail_cc !='null' && replies.mail_cc !='' " ><strong>Cc: </strong> {{replies.mail_cc}}</div>
+
+								</div>
+
 							</li>
 							<li>
 								<div class="agent-name">
@@ -527,7 +708,7 @@ Agent Message
 <div>
 	<div class="message-thread-attachment fl"  *ngIf="replies.ticket_media != null && replies.ticket_media[0] !=''">
 		<div class="row">  
-			<div class="col-xl-2" *ngFor="let item of replies.ticket_media">
+			<div class="col-xl-3" *ngFor="let item of replies.ticket_media">
 				<div class="attached-file-type">
 					<!-- <img src="assets/images/csv.png"> -->
 					{{this.getFileExtension(item)}}
@@ -691,16 +872,16 @@ Agent Message End
 					<li>
 						<div class="form-group">
 							<label>Status - <b>{{this.ticket_status}}</b></label>
-							<select name="options" id="ticket_status" class="form-control">
+							<select  [(ngModel)]="ticket_status_sel" name="options" id="ticket_status" class="form-control">
 								<option  value="">Change Status</option>
-								<option *ngFor="let item of status ;let i = index" value="{{item.status_id}}">{{item.status_desc}}</option>				
+								<option *ngFor="let item of status;let i = index" value="{{item.status_id}}">{{item.status_desc}}</option>				
 							</select>
 						</div>
 					</li>
 					<li>
 						<div class="form-group">
 							<label>Department - <b>{{this.department}}</b></label>
-							<select (change)="get_agents_by_department()"  id="dept_status" class="form-control">
+							<select (change)="get_agents_by_department()" [(ngModel)]="selectedDepart" id="dept_status" class="form-control">
 								<option  value="">Change Department</option>
 								<option *ngFor="let item of dept_list ;let i = index"   value="{{item.department_id}}">{{item.department_name}}</option>
 							</select>
@@ -709,8 +890,14 @@ Agent Message End
 					<li>
 						<div class="form-group">
 							<label>Agent - <b>{{this.ticket_agent}}</b></label>
-							<select id="agent_options" class="form-control">
-								<option value="" *ngIf="this.agent_options != null">Assign to Agent</option>
+							<!-- <select  [(ngModel)]="selectedAgentID" *ngIf="this.user_type=='Employee'" disabled id="agent_options" class="form-control">
+								<option value="" *ngIf="this.agent_options != null">Change Agent</option>
+								<option class="error-message message-small" *ngIf="this.agent_options == null">Please Select the Department</option>
+
+								<option *ngFor="let item of agent_options ;let i = index" value="{{item.user_id}}">{{item.agent_name}}</option>
+							</select> -->
+							<select  [(ngModel)]="selectedAgentID" id="agent_options" class="form-control">
+								<option value="" *ngIf="this.agent_options != null">Change Agent</option>
 								<option class="error-message message-small" *ngIf="this.agent_options == null">Please Select the Department</option>
 
 								<option *ngFor="let item of agent_options ;let i = index" value="{{item.user_id}}">{{item.agent_name}}</option>
@@ -783,4 +970,47 @@ Agent Message End
 	</div>
   </div>
 </div>
+</div>
+<div  style="font-family: Verdana , sans-serif;" class="modal fade bd-example-modal-xl" id="showpop_signature">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<div class="modal-body">
+
+				<div id="accordion" class="accordion">
+					<div class="card mb-0">
+						<div class="card-header show" data-toggle="collapse" href="#collapseOne">
+							<h4>View Signature Details</h4>
+						</div>
+						<div id="collapseOne" class="card-body collapse show" data-parent="#accordion" >
+											<div class="modal-body">
+														<div  class="col-md-12">
+															<div  class="thread-details-section fl">
+																<div style="padding: 5px 25px;" class="ticket-message-details fl">
+																	<span style="text-align: center;">
+													                  <h5 class="modal-title mb-0" >{{this.signature_title}}</h5>
+																	</span>
+																</div>
+															</div>
+														</div>
+														<div  class="col-md-12">
+															<div  class="thread-details-section fl">						
+																<div style="padding: 5px 25px;" class="ticket-message-details fl">
+																	<div [innerHTML]="this.signature_content"></div>
+																</div>						
+															</div>
+														</div>
+											</div> 
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="buttons">
+					<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="close">
+					<!-- <input type="button" class="btn btn-success update_agent" value="Submit" (click)="AddNote()"> -->
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

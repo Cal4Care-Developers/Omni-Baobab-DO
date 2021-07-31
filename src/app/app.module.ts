@@ -32,7 +32,7 @@ import { AdminSettingsComponent } from './admin-settings/admin-settings.componen
 import { SmsComponent } from './mc/sms/sms.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { AddContactsComponent } from './add-contacts/add-contacts.component';
-// import { EditContactsComponent } from './edit-contacts/edit-contacts.component';
+import { EditContactsComponent } from './edit-contacts/edit-contacts.component';
 // import { TabsComponent } from './tabs/tabs.component';
 import { ActivityComponent } from './activity/activity.component';
 import { CsvContactUploadComponent } from './csv-contact-upload/csv-contact-upload.component';
@@ -150,6 +150,17 @@ import { CdTimerComponent } from 'angular-cd-timer';
 // import { AgentGroupsComponent } from './agent-groups/agent-groups.component';
 // import { CampaignContactPopupComponent } from './campaign-contact-popup/campaign-contact-popup.component';
 import { BulkMailListComponent } from './bulk-mail-list/bulk-mail-list.component';
+import { TicketSignatureComponent } from './ticket-signature/ticket-signature.component';
+import { TicketTemplateComponent } from './ticket-template/ticket-template.component';
+import { SmsServicesComponent } from './sms-services/sms-services.component';
+// import { SmsTicketingComponent } from './sms-ticketing/sms-ticketing.component';
+import { EmailSettingsComponent } from './email-settings/email-settings.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { SpamListComponent } from './spam-list/spam-list.component';
 // import { CustomWallboardSixComponent } from './custom-wallboard-six/custom-wallboard-six.component';
 // import { NetwrixReportComponent } from './netwrix-report/netwrix-report.component';
 
@@ -208,9 +219,9 @@ const appRoutes: Routes = [
     {
         path :'contacts', component:ContactsComponent
     },
-    // {
-    //     path :'edit-contacts', component:EditContactsComponent
-    // },
+    {
+        path :'edit-contacts', component:EditContactsComponent
+    },
     {
         path :'add-contacts', component:AddContactsComponent
     },
@@ -497,12 +508,21 @@ const appRoutes: Routes = [
     // },
     {
         path :'bulk-mail-list', component:BulkMailListComponent
-    }
+    },
     // {
     //     path :'cust_six__wall', component:CustomWallboardSixComponent
     // },{
     //     path :'netwrix-report', component:NetwrixReportComponent
     // }
+    {
+        path :'ticket-sign', component:TicketSignatureComponent
+    },{
+        path :'ticket-template', component:TicketTemplateComponent
+    },{
+        path :'spam-list', component:SpamListComponent
+    },{
+        path :'email-settings',component:EmailSettingsComponent
+    }
 ];
 
     
@@ -533,7 +553,7 @@ const appRoutes: Routes = [
     SmsComponent,
     ContactsComponent,
     AddContactsComponent,
-    // EditContactsComponent,
+    EditContactsComponent,
     ActivityComponent,
     // TabsComponent,
     CsvContactUploadComponent,
@@ -637,6 +657,11 @@ const appRoutes: Routes = [
     // AgentGroupsComponent,
     // CampaignContactPopupComponent,
     BulkMailListComponent,
+    TicketSignatureComponent,
+    TicketTemplateComponent,
+    SmsServicesComponent,
+    EmailSettingsComponent,
+    SpamListComponent,
     // CustomWallboardSixComponent,
     // NetwrixReportComponent
     
@@ -652,7 +677,10 @@ const appRoutes: Routes = [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireMessagingModule,
     // RichTextEditorAllModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    NoopAnimationsModule,
+    MatChipsModule,
+    MatInputModule, MatIconModule,DragDropModule
   ],
   providers: [DatePipe,
 //     {

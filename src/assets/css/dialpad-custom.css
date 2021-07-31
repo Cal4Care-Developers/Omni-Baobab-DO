@@ -116,11 +116,12 @@ div#call.dig { padding: 5px;  }
 ..contact-list-item:nth-of-type(odd) { background-color: #f2f2f2 }
 .contact-list-item:last-child { border-bottom: 0; }
 /*.dial-panel  .botrow { padding: 35px 0 0 0; }*/
-.botrow,  .botrow  { padding: 3px 0; height: 65px; background-color: #242426; float: left; right: 25px; width: 320px; position: fixed; bottom: 0; }
+.botrow { padding: 3px 0; height: 65px; background-color: #242426; float: left;  width: 320px; position: fixed; bottom: 0; }
 .dig { width: 50%; }
-.dig.list_details{
+.dig.list_details, .call-extra-featurs.three-col .dig {
   width: 33.3%;
 }
+.dig.list_details, .call-extra-featurs.three-col .dig { padding: 5px 22px 0 22px; }
 .dial-panel .dig { width: 25%; }
 .dial-panel .dig.list_details{
   width: 33.3%;
@@ -138,7 +139,7 @@ div#call.dig { padding: 5px;  }
 .call-screen-panel { float: left; width: 100%; position: relative; }
 
 .active-call { border-radius: 15px 15px 0 0; background-color: #000; float: left; width: 100%; padding: 6px 0 0 0; }
-.active-call img { margin-bottom: 7px; width: 70px; height: 70px; border-radius: 50%; }
+.active-call img { margin-bottom: 10px; width: 50px; height: 50px; border-radius: 50%; }
 .call-options, .call-options ul { float: left; width: 100%; }
 .call-options ul { margin: 0; padding: 0; }
 .call-options { margin: 35px 0 0 0; }
@@ -302,8 +303,8 @@ span.no_record {
 .pulse_bg {
   position:relative;
   top: 0; left: 12px; bottom: 0; right: 0;
-  width: 65px;
-  height: 65px;
+  width: 40px;
+  height: 40px;
   background-color: #fff;
   margin: auto; 
   z-index: 1;
@@ -320,10 +321,10 @@ span.no_record {
 
 .pulse1 {
   position:absolute;
-  width: 90px;
-  height: 90px;
+  width: 50px;
+  height: 50px;
   margin: auto; 
-  top: 0; left: 0; bottom: 0; right: 25px;
+  top: 0; left: 7px; bottom: 0; right: 25px;
   z-index: 1;
   opacity: 0;
   border: 3px solid rgba(255,255,255,.1);
@@ -344,10 +345,10 @@ span.no_record {
 
 .pulse2 {
   position: absolute;
-  width: 90px;
-  height: 90px;
+  width: 50px;
+  height: 50px;
   margin: auto; 
-  top: 0; left: 0; bottom: 0; right: 25px;
+  top: 0; left: 9px; bottom: 0; right: 25px;
   z-index: 2;
   opacity: 0;
   border: 1px solid rgba(255,255,255,0);
@@ -559,7 +560,7 @@ span.no_record {
 
 
 /* Ringing Phone */
-.call-icon { padding: 0 0 5px 0; float: left; width: 100%; }
+.call-icon { padding: 0 0 25px 0; float: left; width: 100%; }
 .ringing_phone {
  display: inline-block;
  color: #fff;
@@ -695,10 +696,13 @@ padding : 15px;
 .queue-login-status .fas { font-size: 18px }
 .QueueLogIn .fas  { color: #059cd4; }
 .pulse_bg i {
-  font-size: 28px;
+  font-size: 20px;
   -webkit-animation: phone-ring-animation 2s infinite;
   -webkit-animation-iteration-count:infinite;
-  padding: 16px;
+  padding: 10px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
 }
 .pulse_bg { color: #fff; }
 .theme-white .pulse_bg { color: #fff; }

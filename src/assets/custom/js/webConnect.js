@@ -87,6 +87,7 @@
 
 var server = null;
 var webrtcserver = localStorage.getItem('server_FQDN');
+console.log(webrtcserver);
 if(window.location.protocol === 'http:')
 	//server = "http://" + window.location.hostname + ":8088/janus";
 	// server = "http://webrtcserver.mconnectapps.com:8088/janus";
@@ -302,15 +303,15 @@ $(document).ready(function() {
 												$('#password').parent().addClass('hide').hide();
 												$('#register').parent().addClass('hide').hide();
 												//$('#registerset').parent().addClass('hide').hide();
-												$('#username').parent().parent().append(
-													'<button id="addhelper" class="btn btn-xs btn-info pull-right" title="Add a new line" style="display: none">' +
-														'<i class="fa fa-plus"></i>' +
-													'</button>'
-												);
-												$('#addhelper').click(addHelper);
-												$('#phone').removeClass('hide').show();
-												$('#call').unbind('click').click(doCall);
-												$('#peer').focus();
+											//	$('#username').parent().parent().append(
+											//		'<button id="addhelper" class="btn btn-xs btn-info pull-right" title="Add a new line" style="display: none">' +
+											//			'<i class="fa fa-plus"></i>' +
+											//		'</button>'
+											//	);
+											//	$('#addhelper').click(addHelper);
+											//	$('#phone').removeClass('hide').show();
+											//	$('#call').unbind('click').click(doCall);
+											//	$('#peer').focus();
 											}
 										}
 										 else if(event === 'calling') {
@@ -647,10 +648,16 @@ $(document).ready(function() {
 											//alert(result["reason"]);
 											// Janus.log("Call hung up (" + result["code"] + " " + result["reason"] + ")!");
 											sipcall.hangup();
-											console.log((result["reason"]));
-											if(result["reason"] === "Request Terminated" || result["reason"] === "Not Found" || result["reason"] === "Temporarily Unavailable"|| result["reason"] === "Server Internal Error" ){
+										    console.log((result["reason"]));
+											$('#endCallByJsREASON').val(result["reason"]);
+
+											if(result["reason"] === "Request Terminated" || result["reason"] === "Not Found" || result["reason"] === "Server Internal Error" ){
 												$('#endCallByJs').trigger( "click" );
 											} else if(result["reason"] === "Busy Here"){
+												$('#endCallByJs').trigger( "click" );
+											} else if( result["reason"] === "Temporarily Unavailable"){
+										 	    $('#endCallByJsREASON').val('Sorry,No capture device found');
+												$('#endCallByJsREASON').trigger( "click" );
 												$('#endCallByJs').trigger( "click" );
 											} else if(result["reason"] ==="to BYE"){
 
@@ -658,7 +665,7 @@ $(document).ready(function() {
 												$('#incoming_call_end_trigger').click();
 
 											} else {
-
+												$('#endCallByJsREASON').trigger( "click" );
 												//bootbox.alert(result["code"] + " " + result["reason"]);
 											}
 
@@ -1432,12 +1439,13 @@ function doHangup(ev) {
 // works exactly as the default one: you can add more than one "helper", and
 // obviously the more you have, the more concurrent calls you can have.
 function addHelper(helperCreated) {
+	console.log(helperCreated);
 	helpersCount++;
 	var helperId = helpersCount;
 	helpers[helperId] = { id: helperId };
 	// Add another row with a new "phone"
-	$('.footer').before(
-		'<div class="container" id="sipcall' + helperId + '">' +
+	$('#addhelper').before(
+		'<div class="container demoClass" id="sipcall' + helperId + '">' +
 		'	<div class="row">' +
 		'		<div class="col-md-12">' +
 		'			<div class="col-md-6 container">' +
@@ -1448,9 +1456,8 @@ function addHelper(helperCreated) {
 		'			<div class="col-md-6 container" id="phone' + helperId + '">' +
 		'				<div class="input-group margin-bottom-sm">' +
 		'					<span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>' +
-		'					<input disabled class="form-control" type="text" autocomplete="off" id="peer' + helperId + '" onkeypress="return checkEnter(this, event, ' + helperId + ');"></input>' +
 		'				</div>' +
-		'				<button disabled class="btn btn-success margin-bottom-sm" autocomplete="off" id="call' + helperId + '">Call</button> <input autocomplete="off" id="dovideo' + helperId + '" type="checkbox">Use Video</input>' +
+		'				<button disabled class="btn btn-success margin-bottom-sm" autocomplete="off" id="callm' + helperId + '">Call</button> <input autocomplete="off" id="dovideo' + helperId + '" type="checkbox">Use Video</input>' +
 		'			</div>' +
 		'		</div>' +
 		'	<div/>' +
@@ -2425,6 +2432,10 @@ function makecallTransfer(username){
 	var msg = { request: "transfer", uri: address };
 	// console.log(msg);
 	sipcall.send({ message: msg });	
+	// $('#traendCallByJs').trigger( "click" );
+	$('#endCallByJs').trigger( "click" );
+
+
 }
 
 
@@ -2479,4 +2490,79 @@ function hookStatus(status){
 
 function sendDtmf(num){
 	sipcall.dtmf({dtmf: { tones: num }});
+}
+function doCallATT(ev) {
+	// Call someone (from the main session or one of the helpers)
+	//var button = ev ? ev.currentTarget.id : "call";
+	var helperId = 1;
+	if(helperId === "")
+		helperId = null;
+	else
+		helperId = parseInt(helperId);
+
+	var handle = helperId ? helpers[helperId].sipcall : sipcall;
+	var prefix = helperId ? ("[Helper #" + helperId + "]") : "";
+	var suffix = helperId ? (""+helperId) : "";
+	$('#peer' + suffix).attr('disabled', true);
+	$('#call' + suffix).attr('disabled', true).unbind('click');
+	$('#dovideo' + suffix).attr('disabled', true);
+	//var username = $('#peer' + suffix).val();
+
+
+    var sip_urld = $('#sip_urld').val();
+	var username = $('#peer_att').val();
+	username = "sip:"+username+"@"+sip_urld;
+	 console.log(username);
+	 $('#peer1').val(username);
+
+
+
+	console.log(username);
+	if(username === "") {
+		bootbox.alert('Please insert a valid SIP address (e.g., sip:pluto@example.com)');
+		$('#peer' + suffix).removeAttr('disabled');
+		$('#dovideo' + suffix).removeAttr('disabled');
+		$('#call' + suffix).removeAttr('disabled').click(function() { doCallATT(helperId); });
+		return;
+	}
+	if(username.indexOf("sip:") != 0 || username.indexOf("@") < 0) {
+		bootbox.alert('Please insert a valid SIP address (e.g., sip:pluto@example.com)');
+		$('#peer' + suffix).removeAttr('disabled').val("");
+		$('#dovideo' + suffix).removeAttr('disabled').val("");
+		$('#call' + suffix).removeAttr('disabled').click(function() { doCallATT(helperId); });
+		return;
+	}
+	// Call this URI
+	doVideo = $('#dovideo' + suffix).is(':checked');
+	Janus.log(prefix + "This is a SIP " + (doVideo ? "video" : "audio") + " call (dovideo=" + doVideo + ")");
+	actuallyDoCall(handle, $('#peer' + suffix).val(), doVideo);
+	
+
+	holdCall();
+	
+
+}
+
+function addHelpers(){
+		// $('#demosadas').append(
+		// 	'<button id="addhelper" class="btn btn-xs btn-info pull-right" title="Add a new line" >' +
+		// 		'<i class="fa fa-plus"></i> ede' +
+		// 	'</button>'
+		// );
+		$('#addhelper').click(addHelper);
+		$('#phone').removeClass('hide').show();
+		$('#call').unbind('click').click(doCall);
+		$('#peer').focus();
+}
+
+
+function endHeplCall(){
+	var helperId = 1;
+	helpers[helperId].sipcall.hangup();
+	$('#dovideo' + helperId).removeAttr('disabled').val('');
+	$('#peer' + helperId).removeAttr('disabled').val('');
+	$('#call' + helperId).removeAttr('disabled').html('Call')
+		.removeClass("btn-danger").addClass("btn-success")
+		.unbind('click').click(doCall);
+		resumeCall();
 }

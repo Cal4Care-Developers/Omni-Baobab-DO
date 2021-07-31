@@ -1,0 +1,88 @@
+<div class="modal fade bd-example-modal-md" id="Qlogform">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Queue Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="form-group">
+								<!-- <label for="department">Question</label>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> -->
+                                </div>	
+                            </div>
+                            <div class="col-md-12">
+                             <div class="form-group">
+                                <label for="department">Aux code</label>
+                                <select name="que"  id="que" class="form-control">
+                                   <option value='0'> Select Aux Code </option>
+                                   <option *ngFor="let auxcode of auxcodesM" value="{{auxcode.auxcode_name}}">{{auxcode.auxcode_name}}</option>
+                               </select>
+                           </div>	
+                       </div>
+                   </div>
+                   <div class="row has-row-space">
+                    <div class="col-md-12">
+                    <div class="addAgent">
+                    <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-md">
+                    
+                    <tr >
+                    <th style="width: 20px;">
+                        <div class="pretty p-icon p-smooth">
+                            <input type="checkbox"  (click)="checkallQueues()" id="getallmyqueue" >
+                            <div class="state p-warning">
+                                <i class="icon material-icons"></i>
+                                <label></label>
+                            </div>
+                        </div>
+                    <!-- <div class="pretty p-default">
+                         <input type="checkbox" id="getallmyqueue" (click)="checkallQueues()"> 
+                        <div class="state p-primary">
+                            <label></label>
+                        </div>
+                    </div>    -->
+                    </th>
+                    <th>Queue Number</th>
+                    <th>Queue Name</th>
+                    </tr>
+                    
+                    <tbody>
+                    <tr *ngFor="let item of allmyQues">
+                    <td style="width: 20px;">
+                        <div class="pretty p-default">
+                            <input value="{{item.queue_number}}" (click)="checksingleQueue()" type="checkbox" class="getallmyqueues">
+                            <div class="state p-primary">
+                                <label></label>
+                            </div>
+                        </div>   
+                    </td>
+                    <td>{{item.queue_number}}</td>
+                    <td>{{item.queue_name}}</td>
+                    </tr>
+                   
+                  
+                    
+                    </tbody>
+                    
+                    </table>
+                    </div>
+                    </div>
+                    
+                    </div> 
+                    </div>
+               </div>
+              
+               <div class="modal-footer">
+                <div class="buttons">
+                    <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                    <input type="submit" class="btn btn-primary update_agent" (click)="updateQ()" value="Logout">
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

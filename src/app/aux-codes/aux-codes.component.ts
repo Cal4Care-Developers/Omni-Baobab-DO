@@ -146,6 +146,7 @@ if(agent_req.status == true){  this.dep_status = 1 } else { this.dep_status  = 0
   
         this.serverService.sendServer(api_req).subscribe((response: any) => {
         if (response.result.data == 1) {
+          this.addDept.reset();
                 $('#add_deptform').modal('hide');
                 iziToast.success({
                     message: "AUX Code added successfully",

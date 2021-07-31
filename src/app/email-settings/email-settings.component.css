@@ -1,0 +1,12 @@
+.email-settings .badge { min-width: 100px; }
+.mat-form-field { width: 100%; }
+.mat-form-field-infix { border: 0; }
+.mat-chip { word-break: break-word; }
+.mat-chip-list-wrapper input.mat-input-element, .mat-chip-list-wrapper .mat-standard-chip {
+    background-color: #25D366;
+    color: #fff;
+ }
+ .mat-chip.mat-standard-chip { color: #ffffff; background-color: #3cb371; }
+ .mat-chip.mat-standard-chip .mat-chip-remove { color: #fff; opacity: 1; }
+.mat-form-field-underline { border-top: 0; }
+.form-controls { padding: 0 15px; border: 1px solid #e3e3e3; }

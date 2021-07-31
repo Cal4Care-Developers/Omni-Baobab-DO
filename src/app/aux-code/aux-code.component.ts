@@ -146,6 +146,7 @@ if(agent_req.status == true){  this.dep_status = 1 } else { this.dep_status  = 0
         this.serverService.sendServer(api_req).subscribe((response: any) => {
         if (response.result.data == 1) {
                 $('#add_deptform').modal('hide');
+                this.addDept.reset();
                 iziToast.success({
                     message: "Wrap Up Code added successfully",
                     position: 'topRight'

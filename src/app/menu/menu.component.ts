@@ -4,8 +4,11 @@ import { NgZone } from '@angular/core';
 import { ServerService } from '../services/server.service';
 // import { ActivatedRoute } from '@angular/router';
 import { BnNgIdleService } from 'bn-ng-idle';
-declare var $:any;
-declare var iziToast:any;
+declare var $: any;
+
+declare var io: any;
+
+declare var iziToast: any;
 declare const window: any;
 import Swal from 'sweetalert2'
 // import { IfStmt } from '@angular/compiler';
@@ -87,16 +90,20 @@ wall_5=false;
 wall_6=false;
 wall_8=false;
 h_call_rec; wall_basic; h_que_manage;
-// listinstacne;
-  constructor(public router:Router,private _ngZone: NgZone,private serverService: ServerService,private afMessaging: AngularFireMessaging, private bnIdle:BnNgIdleService) {
-    this.serverService.profile.subscribe( (val:any) => 
-    {
-        // this.dept_settings();
-        this.dialPadOpens();
-        // this.hasContactAccess();
-     }
-    );
-
+  agent_name;
+  stop_interval;
+  has_admin_permission=false;
+  // listinstacne;
+  constructor(public router: Router, private _ngZone: NgZone, private serverService: ServerService, private afMessaging: AngularFireMessaging, private bnIdle: BnNgIdleService) {
+    this.serverService.profile.subscribe((val: any) => {
+      // this.dept_settings();
+      this.dialPadOpens();
+      // this.hasContactAccess();
+        });
+    // this.serverService.sidebar.subscribe((val: any) => {
+    //   this.fullScreenBtn();
+    //     });
+    this.serverService.receiveMessage()
 
     this.serverService.showvedioDialer.subscribe( (val:any) => 
     {
@@ -127,28 +134,55 @@ h_call_rec; wall_basic; h_que_manage;
 
 
   }
+  ifnotrefreshed() {
+    // alert('called')
+    this.reqPermission = false;
+    // this.stop_interval = setInterval(() => {
+    //   this.requestPermission();
+    //   // alert('revices')
+    // }, 30000);
+  }
 
  
   ngOnInit() {
-    if(localStorage.getItem('access_token')) {
+    if (localStorage.getItem('access_token')) {
+
+      this.notificationscall();
+
       this.bnIdle.startWatching(3400).subscribe((isTimedOut: boolean) => {
         if (isTimedOut) {
          this.logout();
           iziToast.warning({
-                          message: "You have LoggedOut for an one hour InActive session",
-                          position: 'topRight'
-                      });
+            message: "You have LoggedOut for an one hour InActive session",
+            position: 'topRight',
+            timeout: 1000000,
+          });
         }
       });
-    this.uadmin_id = localStorage.getItem('userId');
-    this.admin_id = localStorage.getItem('admin_id');
-    this.admin_reports =localStorage.getItem('has_reports');
-    this.predective_dialer_behave = localStorage.getItem('predective_dialer_behave');
-    this.serverService.receiveMessage()
-    this.message = this.serverService.currentMessage;
-    
-    this.reseller_values =localStorage.getItem('reseller');
-    
+      if (localStorage.getItem('N_token') == "undefined" || localStorage.getItem('N_token') == "") {
+        this.reqPermission = true;
+        // setTimeout(() => {
+          this.requestPermission();
+          // this.ifnotrefreshed();
+          // alert('clled')      ;
+        // }, 10000);
+      } else {
+        // alert()
+        this.reqPermission = false;
+
+        // this.stop_interval = setInterval(() => {
+          this.requestPermission();
+        // }, 30000); //1min
+      }
+      this.uadmin_id = localStorage.getItem('userId');
+      this.admin_id = localStorage.getItem('admin_id');
+      this.admin_reports = localStorage.getItem('has_reports');
+      this.predective_dialer_behave = localStorage.getItem('predective_dialer_behave');
+
+      this.message = this.serverService.currentMessage;
+
+      this.reseller_values = localStorage.getItem('reseller');
+
 
     // if( this.reseller_values== '' ||this.reseller_values==null){
                     
@@ -170,7 +204,6 @@ this.reqPermission = true;
 
     this.websocket.onopen = function(event) { 
         console.log('common socket connected');
- 
     }
 
     this.websocket.onmessage = function(event) {
@@ -180,14 +213,20 @@ this.reqPermission = true;
       this.socketData = JSON.parse(event.data);
 console.log(this.socketData);
 
-let admin_id = localStorage.getItem('admin_id');
-      if(this.socketData.message_type == "chat"){
-        if(this.socketData.message_info.admin_id == admin_id){
-          if(this.socketData.message_info.msg_user_type == "1"){
-
-            var uni_id = this.socketData.message_info.chat_id;
-            uni_id = btoa(uni_id); 
-           
+        let admin_id = localStorage.getItem('admin_id');
+        let new_user = localStorage.getItem('userId');
+        if (this.socketData.message_type == "chat") {
+          if (this.socketData.message_status == "new") {
+            if (this.socketData.message_info.admin_id == admin_id) {
+              if (this.socketData.message_info.msg_user_type == "1") {
+                console.log(this.socketData.message_info);
+                var uni_id = this.socketData.message_info.chat_id;
+                uni_id = btoa(uni_id);
+                var dept_users = this.socketData.message_info.department_users;
+                var nameArr = dept_users.split(',');
+                nameArr.push(this.socketData.message_info.admin_id);
+                nameArr.forEach(element => {
+                  if (element == localStorage.getItem('userId')) {
 
             var promise = document.querySelector('audio').play();
 
@@ -238,57 +277,138 @@ let admin_id = localStorage.getItem('admin_id');
               }
           });
           }
-        } 
-      } 
-      if(this.socketData.message_status == "end"){
-        var uni_id = this.socketData.message_info.chat_id;
-        uni_id = btoa(uni_id); 
-        let audioPlayer = <HTMLVideoElement> document.getElementById('beepaud');
-        audioPlayer.play();
-        iziToast.show({
-          theme: 'dark',
-          title: 'Hi',
-          image: 'https://baobabgroup.mconnectapps.com/api/v1.0/logo_image/omni-channels-logo.jpg',
-          imageWidth: 100,
-          message: 'Chat Was Closed By Customer',
-          position: 'topRight', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-          progressBarColor: 'rgb(0, 255, 184)',
-          buttons: [
-              ['<button onclick="openUrl()";>Open Chat</button>', function (instance, toast) {
-                var url = 'https://'+window.location.hostname+'/#/chat?c='+uni_id;
-                 
-                  window.location.replace(url);
-              }, true], // true to focus
-              ['<button>Close</button>', function (instance, toast) {
-                  instance.hide({
-                      transitionOut: 'fadeOutUp',
-                      onClosing: function(instance, toast, closedBy){
-                          console.info('closedBy: ' + closedBy); // The return will be: 'closedBy: buttonName'
-                      }
-                  }, toast, 'buttonName');
-              }]
-          ],
-          onOpening: function(instance, toast){
-              console.info('callback abriu!');
-          },
-          onClosing: function(instance, toast, closedBy){
-              console.info('closedBy: ' + closedBy); // tells if it was closed by 'drag' or 'button'
+                });
+              }
+            }
           }
-      });
-     }
 
 
-      if(this.socketData.message_type == "chat"){
-      
+          if (this.socketData.message_status == "existing") {
+            if (this.socketData.message_info.admin_id == admin_id) {
+              if (this.socketData.message_info.msg_user_type == "1") {
+                console.log(this.socketData.message_info);
+                var uni_id = this.socketData.message_info.chat_id;
+                uni_id = btoa(uni_id);
+                var dept_users = this.socketData.message_info.department_users;
+                var nameArr = dept_users.split(',');
+                nameArr.push(this.socketData.message_info.admin_id);
+                nameArr.forEach(element => {
+                  if (element == localStorage.getItem('userId')) {
 
-        if(this.socketData.message_status == "new"){
+                    var promise = document.querySelector('audio').play();
 
-           $('#mc_event_list').click();
-           $('.chat_list_search').click();
+                    if (promise !== undefined) {
+                      promise.catch(error => {
+                        iziToast.warning({
+                          message: "Please Enable Autoplay Permission To Make Sound Alerts.",
+                          position: 'topRight'
+                        });
+                      }).then(() => {
+                        let audioPlayer = <HTMLVideoElement>document.getElementById('beepaud');
+                        audioPlayer.play();
+
+                      });
+                    }
+
+
+
+
+                    iziToast.show({
+                      theme: 'dark',
+                      title: this.socketData.message_info.customer_name,
+                      image: 'https://ticketing.mconnectapps.com/api/v1.0/logo_image/omni-channels-logo.jpg',
+                      imageWidth: 100,
+                      message:'Existing Message',
+                      position: 'topRight', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                      progressBarColor: 'rgb(0, 255, 184)',
+                      buttons: [
+                        ['<button onclick="openUrl()";>Open Chat</button>', function (instance, toast) {
+                          var url = 'https://' + window.location.hostname + '#/chat?c=' + uni_id;
+
+                          window.location.replace(url);
+                        }, true], // true to focus
+                        ['<button>Close</button>', function (instance, toast) {
+                          instance.hide({
+                            transitionOut: 'fadeOutUp',
+                            onClosing: function (instance, toast, closedBy) {
+                              console.info('closedBy: ' + closedBy); // The return will be: 'closedBy: buttonName'
+                            }
+                          }, toast, 'buttonName');
+                        }]
+                      ],
+                      onOpening: function (instance, toast) {
+                        console.info('callback abriu!');
+                      },
+                      onClosing: function (instance, toast, closedBy) {
+                        console.info('closedBy: ' + closedBy); // tells if it was closed by 'drag' or 'button'
+                      }
+                    });
+                  }
+                });
+              }
+            }
+          }
+
+
         }
-        
+        if (this.socketData.message_status == "end") {
+          if (this.socketData.message_info.admin_id == admin_id) {
+            console.log(this.socketData.message_info);
+            var dept_users = this.socketData.message_info.department_users;
+            var nameArr = dept_users.split(',');
+            nameArr.push(this.socketData.message_info.admin_id);
+            nameArr.forEach(element => {
+              if (element == localStorage.getItem('userId')) {
+                var uni_id = this.socketData.message_info.chat_id;
+                uni_id = btoa(uni_id);
+                let audioPlayer = <HTMLVideoElement>document.getElementById('beepaud');
+                audioPlayer.play();
+                iziToast.show({
+                  theme: 'dark',
+                  title: 'Hi',
+                  image: 'https://ticketing.mconnectapps.com/api/v1.0/logo_image/omni-channels-logo.jpg',
+                  imageWidth: 100,
+                  message: 'Chat Was Closed By Customer',
+                  position: 'topRight', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                  progressBarColor: 'rgb(0, 255, 184)',
+                  buttons: [
+                    ['<button onclick="openUrl()";>Open Chat</button>', function (instance, toast) {
+                      var url = 'https://' + window.location.hostname + '/#/chat?c=' + uni_id;
 
-      }
+                      window.location.replace(url);
+                    }, true], // true to focus
+                    ['<button>Close</button>', function (instance, toast) {
+                      instance.hide({
+                        transitionOut: 'fadeOutUp',
+                        onClosing: function (instance, toast, closedBy) {
+                          console.info('closedBy: ' + closedBy); // The return will be: 'closedBy: buttonName'
+                        }
+                      }, toast, 'buttonName');
+                    }]
+                  ],
+                  onOpening: function (instance, toast) {
+                    console.info('callback abriu!');
+                  },
+                  onClosing: function (instance, toast, closedBy) {
+                    console.info('closedBy: ' + closedBy); // tells if it was closed by 'drag' or 'button'
+                  }
+                });
+              }
+            });
+          }
+        }
+
+
+        if (this.socketData.message_type == "chat") {
+          if (this.socketData.message_info.admin_id == admin_id) {
+            if (this.socketData.message_status == "new") {
+
+              $('#mc_event_list').click();
+              $('.chat_list_search').click();
+            }
+
+          }
+        }
 
     }
 
@@ -347,18 +467,21 @@ if( this.profile_image == null || this.profile_image == 'null' || this.profile_i
 
 this.logo_image = localStorage.getItem('logo_image');  
 
-if(this.logo_image == null || this.logo_image == 'null' || this.logo_image == 'undefined'){
-  this.logo_image  = 'assets/images/omni-channels-logo.jpg';
-} else {
-  this.logo_image = localStorage.getItem('logo_image');
-}
+      if (this.logo_image == null || this.logo_image == 'null' || this.logo_image == 'undefined') {
+        this.logo_image = 'assets/images/omni-channels-logo.jpg';
+      } else {
+        this.logo_image = localStorage.getItem('logo_image');
+      }
+      // alert(this.small_logo_image);
+      this.small_logo_image = localStorage.getItem('small_logo_image');
 
+      if (this.small_logo_image == null || this.small_logo_image == 'null' || this.small_logo_image == 'undefined') {
+        this.small_logo_image = 'assets/images/favicon.png';
+        // alert('asas')
 
-if(this.small_logo_image == null || this.small_logo_image == 'null' || this.small_logo_image == 'undefined'){
-  this.small_logo_image  = 'assets/images/favicon.png';
-} else {
-  this.small_logo_image = localStorage.getItem('small_logo_image');
-}
+      } else {
+        this.small_logo_image = localStorage.getItem('small_logo_image');
+      }
 
 
     this.hasContactAccess();
@@ -478,57 +601,61 @@ if(this.small_logo_image == null || this.small_logo_image == 'null' || this.smal
  
 
 
-                  localStorage.setItem('has_sms', response.result.data.has_sms);
-                  localStorage.setItem('has_chat', response.result.data.has_chat);
-                  localStorage.setItem('has_whatsapp', response.result.data.has_whatsapp);
-                  localStorage.setItem('has_telegram', response.result.data.has_telegram);
-                  localStorage.setItem('has_fb', response.result.data.has_fb);
-                  localStorage.setItem('has_chatbot', response.result.data.has_chatbot);
-                  localStorage.setItem('has_e_ticket', response.result.data.has_external_ticket);
-                  localStorage.setItem('has_i_ticket', response.result.data.has_internal_ticket);
-                  localStorage.setItem('has_reports', response.result.data.reports);
-                  localStorage.setItem('close_all_menu', response.result.data.close_all_menu);
-                  localStorage.setItem('faxuser_id', response.result.data.fax_user_id);
-                  localStorage.setItem('whatsapp_type',response.result.data.whatsapp_type);
-                  localStorage.setItem('has_video_dialer', response.result.data.has_video_call);
-                  localStorage.setItem('h_con', response.result.data.has_contact);
-                  localStorage.setItem('ext_num', response.result.data.sip_login);
-                  localStorage.setItem('reseller', response.result.data.reseller);
-                  localStorage.setItem('admin_permision', response.result.data.admin_permision);
-                  localStorage.setItem('voice_manage', response.result.data.voice_manage);
-                  localStorage.setItem('ring_step', response.result.data.dialer_ring);
-                  localStorage.setItem('dialer_auto_answer', response.result.data.dialer_auto_answer);
-                  localStorage.setItem('timezone_name', response.result.data.timezone_name);
-                  localStorage.setItem('has_external_contact', response.result.data.has_external_contact);
-                  localStorage.setItem('has_int_chat', response.result.data.has_internal_chat);
-                  localStorage.setItem('predective_dialer_behave', response.result.data.predective_dialer_behave);
-                  localStorage.setItem('show_caller_id', response.result.data.show_caller_id);
-                  localStorage.setItem('has_voice', response.result.data.voice_3cx);
-                  localStorage.setItem('server_FQDN', response.result.webrtcServer.server_fqdn);
-                  localStorage.setItem('server_ID', response.result.webrtcServer.server_id);
+      localStorage.setItem('has_sms', response.result.data.has_sms);
+      localStorage.setItem('agent_name', response.result.data.agent_name);
+      localStorage.setItem('has_chat', response.result.data.has_chat);
+      localStorage.setItem('has_whatsapp', response.result.data.has_whatsapp);
+      localStorage.setItem('has_telegram', response.result.data.has_telegram);
+      localStorage.setItem('has_fb', response.result.data.has_fb);
+      localStorage.setItem('has_chatbot', response.result.data.has_chatbot);
+      localStorage.setItem('has_e_ticket', response.result.data.has_external_ticket);
+      localStorage.setItem('has_i_ticket', response.result.data.has_internal_ticket);
+      localStorage.setItem('has_reports', response.result.data.reports);
+      localStorage.setItem('close_all_menu', response.result.data.close_all_menu);
+      localStorage.setItem('faxuser_id', response.result.data.fax_user_id);
+      localStorage.setItem('whatsapp_type', response.result.data.whatsapp_type);
+      localStorage.setItem('has_video_dialer', response.result.data.has_video_call);
+      localStorage.setItem('h_con', response.result.data.has_contact);
+      localStorage.setItem('ext_num', response.result.data.sip_login);
+      localStorage.setItem('reseller', response.result.data.reseller);
+      localStorage.setItem('admin_permision', response.result.data.admin_permision);
+      localStorage.setItem('voice_manage', response.result.data.voice_manage);
+      localStorage.setItem('ring_step', response.result.data.dialer_ring);
+      localStorage.setItem('dialer_auto_answer', response.result.data.dialer_auto_answer);
+      localStorage.setItem('timezone_name', response.result.data.timezone_name);
+      localStorage.setItem('has_external_contact', response.result.data.has_external_contact);
+      localStorage.setItem('has_int_chat', response.result.data.has_internal_chat);
+      localStorage.setItem('predective_dialer_behave', response.result.data.predective_dialer_behave);
+      localStorage.setItem('show_caller_id', response.result.data.show_caller_id);
+      localStorage.setItem('server_FQDN', response.result.webrtcServer.server_fqdn);
+      localStorage.setItem('server_ID', response.result.webrtcServer.server_id);
+      localStorage.setItem('has_predict', response.result.data.predective_dialer);
+      localStorage.setItem('has_voice', response.result.data.voice_3cx);
+
+      this.agent_name = response.result.data.agent_name;
+
+      if (localStorage.getItem('server_FQDN') && localStorage.getItem('server_FQDN') != 'undefined') {
+        // this.loadScript('../assets/custom/js/mconnect-webrtc.js');
+        this.loadScript('../assets/custom/js/webConnect.js');
+        let api_reqs: any = '{"type": "HookRegister"}';
+        this.serverService.show.next(api_reqs);
+      } else {
+        // iziToast.warning({
+        //   message:"You Need to choose WebRTC for dialer",
+        //   position:"topRight"
+        // });
+      }
 
 
-               
-                
-                  if(localStorage.getItem('server_FQDN') && localStorage.getItem('server_FQDN') != 'undefined'){
-                    // this.loadScript('../assets/custom/js/mconnect-webrtc.js');
-                    this.loadScript('../assets/custom/js/webConnect.js');    
-                    let api_reqs:any = '{"type": "HookRegister"}';
-                    this.serverService.show.next(api_reqs); 
-                  }else{
-                    iziToast.warning({
-                      message:"You Need to choose WebRTC for dialer",
-                      position:"topRight"
-                    });
-                  }
-
-                    if( response.result.data.fax_user_id == null)
-                    {
-                            this.fax_user=false;
-                    }
-
-                  // this.e_tic = response.result.data.has_external_ticket;
-                  // this.i_tick = response.result.data.has_internal_ticket;
+      if (response.result.data.fax_user_id == null) {
+        this.fax_user = false;
+      }
+      if (response.result.data.admin_permision == 1|| response.result.data.admin_permision == '1') {
+        this.has_admin_permission = true;
+        // alert()
+      }
+      // this.e_tic = response.result.data.has_external_ticket;
+      // this.i_tick = response.result.data.has_internal_ticket;
 
                  // 
                   // //  this.report_array=this.report_checked.split();
@@ -795,6 +922,7 @@ conatctRep(){
   this.router.navigate(['/contact-report']);
 }
 logout(){
+    clearInterval(this.stop_interval);
   this.router.navigate(['/logout']);
 }
 composeSms(){
@@ -978,5 +1106,76 @@ showVideofialers(){
     script.defer = true;
     body.appendChild(script);
   }
+
+  notificationscall() {
+
+    var socket = io.connect('wss://myscoket.mconnectapps.com:4032');
+    var self = this;
+    socket.on('connect', function () {
+      console.log('connected');
+
+      socket.on('broadcast', function (data) {
+        console.log(data);
+
+        if (data.notification_for == 'SMS') {
+          
+          let nameArr = data.user_id;
+          nameArr.push(localStorage.getItem('admin_id'));
+          console.log(nameArr);
+          nameArr.forEach(element => {
+            if (element == localStorage.getItem('userId')) {
+              console.log(element); 
+              self.serverService.sendNotifications(data);
+              self.serverService.receivePopup(data);
+            }
+
+          });
+
+        } else {
+          if (data.user_id == localStorage.getItem('userId')) {
+
+            self.serverService.sendNotifications(data);
+            self.serverService.receivePopup(data);
+          }
+
+        }
+
+
+      });
+      // socket.on('message', function(data){
+
+      // });
+      socket.on('disconnect', function () {
+        console.log('disconnected');
+      });
+    });
+
+    socket.on("error", (error) => {
+      console.log(error);
+    });
+
+
+  }
+
+
+
+  //   sendNotifications(postData) {
+
+  //     console.log(postData);
+  //     if (Notification.permission !== "granted") {
+  //         Notification.requestPermission();
+  //     }
+  //     else {
+  //         var notification = new Notification('hello', {
+  //             body: "Hey there!",
+  //             image: "../../assets/images/icons/quickView.png",
+  //         });
+  //         notification.onclick = function () {
+  //             window.open("http://google.com");
+  //         };
+  //     }
+
+  // }
+
 
 }

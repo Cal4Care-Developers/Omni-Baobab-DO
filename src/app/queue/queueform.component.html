@@ -1,0 +1,162 @@
+<div class="modal fade bd-example-modal-sm" id="add_queue_form">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <form [formGroup]="addQueue" (ngSubmit)="addQueueData()">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myLargeModalLabel">Add Queue</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+
+                    <div class="form-group">
+                        <label for="queue_name">Queue name</label>
+                        <input type="text" id="queue_name" class="form-control" formControlName="queue_name">
+                        <label class="error-message message-small" *ngIf="!addQueue.get('queue_name').valid && addQueue.get('queue_name').touched">Please enter the queue name</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="queue_number">Queue number</label>
+                        <input type="text" id="queue_number" class="form-control" formControlName="queue_number">
+                        <label class="error-message message-small" *ngIf="!addQueue.get('queue_number').valid && addQueue.get('queue_number').touched">Please enter the queue number</label>
+                    </div>
+
+                    
+                                <div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox" id="queue_status" class="form-control" formControlName="queue_status" >
+                                        <div class="state p-success">
+                                            <label for="queue_status">Status</label>
+                                        </div>
+                                    </div>
+                                </div>
+                           
+                </div>
+
+                <div class="modal-footer">
+                    <div class="buttons">
+                        <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                        <input type="submit" class="btn btn-primary add_queue" value="Add queue" [disabled]="!addQueue.valid">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div class="assign_queue_data">
+    <input type="hidden" value="0" id="assign_queue_key" #assign_queue_id>
+    <input type="hidden" value="0" id="assign_queue_button" (click)="assignQueueForm(assign_queue_id)">
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="assign_queue_form">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Assign Queue</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-sm-12">
+
+
+                        <div class="add-queue-agents">
+                            <div class="table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                #
+                                            </th>
+                                            <th>Agent Name</th>
+                                            <th>Options</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-striped">
+                                        <tr *ngFor="let assign_user of queue_assign_users;let i=index">
+                                            <td>
+                                                <div class="pretty p-default">
+                                                    <input type="checkbox" value="assign_user.user_id" checked="{{assign_user.queue_user_id != null ? 'checked' : ''}}">
+                                                    <input type="hidden" value="assign_user.queue_user_id">
+                                                    <div class="state p-info">
+                                                        <label></label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>{{assign_user.user_name}}</td>
+                                            <td>
+                                                <div class="form-check form-check-inline">
+                                                    <div class="pretty p-switch p-fill">
+                                                        <input type="checkbox" value="1" checked="{{assign_user.chat_feature == 1 ? 'checked' : ''}}">
+                                                        <div class="state p-success">
+                                                            <label for="chat">Chat</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <div class="pretty p-switch p-fill">
+                                                        <input type="checkbox" value="2" checked="{{assign_user.email_feature == 1 ? 'checked' : ''}}">
+                                                        <div class="state p-success">
+                                                            <label for="email">Email</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <div class="pretty p-switch p-fill">
+                                                        <input type="checkbox" value="3" checked="{{assign_user.call_feature == 1 ? 'checked' : ''}}">
+                                                        <div class="state p-success">
+                                                            <label for="WebRTC">Call</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <div class="pretty p-switch p-fill">
+                                                        <input type="checkbox" value="3" checked="{{assign_user.call_feature == 1 ? 'checked' : ''}}">
+                                                        <div class="state p-success">
+                                                            <label for="WebRTC">Whatsapp</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <div class="pretty p-switch p-fill">
+                                                        <input type="checkbox" value="3" checked="{{assign_user.call_feature == 1 ? 'checked' : ''}}">
+                                                        <div class="state p-success">
+                                                            <label for="WebRTC">Sms</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div class="modal-footer">
+                <div class="buttons">
+                    <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

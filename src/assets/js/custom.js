@@ -360,6 +360,11 @@ $(".forwardDialpadPanel").addClass('hide-fwd-dialpad');
   $(".forwardDialpadPanel").removeClass('active');
   });
 
+    $(".dialpad-close-icon#close-call-fwd-modal2").click(function(){
+      
+      $(".forwardDialpadPanel2").addClass('hide-fwd-dialpad');
+      $(".forwardDialpadPanel2").removeClass('active');
+        });
   $('ul.inner-dropdown-menu').hide()
   $(".has-inner-dropdown").click(function(){
     $('ul.inner-dropdown-menu').toggle()

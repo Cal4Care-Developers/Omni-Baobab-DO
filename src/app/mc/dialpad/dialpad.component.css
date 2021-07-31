@@ -32,3 +32,22 @@ i#resume_btn{
     width: 33.3% !important;
     padding: 5px 22px;
   } */
+  /* .dig.oncall {
+    pointer-events: none;
+} */
+
+
+
+.forwardDialpadPanel2  .digit, .forwardDialpadPanel2  .dig { text-align: center; }
+.forwardDialpadPanel2 .modal-dialog { max-width: 320px; }
+.forwardDialpadPanel2 .modal-body  { border-radius: 15px; background-color: #353c48;  padding: 0; }
+.forwardDialpadPanel2 .dial-panel { padding-bottom: 25px;  width: 270px; }
+.forwardDialpadPanel2 .modal-content { background-color: #353c48; border-radius: 15px; }
+
+.forwardDialpadPanel2 .search-field input { border-radius: 0; }
+.forwardDialpadPanel2 .dial-panel { border-radius: 0 0 15px 15px; }
+.forwardDialpadPanel2 .search-field input { padding: 0; }
+.forwardDialpadPanel2 .dialpad-header { color: #fff; text-align: center; }
+.forwardDialpadPanel2 { transition: all 1s; bottom: 30px; position: fixed; width: 270px;     z-index: 9999999999999999;}
+.forwardDialpadPanel2.active { transition: all 1s; right: 380px; }
+.forwardDialpadPanel2.hide-fwd-dialpad { z-index: -999999999; transition: all 1s; right: 50px; }

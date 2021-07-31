@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg main-navbar">
   <div class="form-inline mr-auto">
     <ul class="navbar-nav mr-3">
-      <li><a href="javascript:void(0)" (click)="fullScreenBtn()" data-toggle="sidebar" class="nav-link nav-link-lg
+      <li><a id="menuToggleBtn" href="javascript:void(0)"  (click)="fullScreenBtn()" data-toggle="sidebar" class="nav-link nav-link-lg
         collapse-btn"> <i class="fas fa-bars feather"></i></a></li>
         <li><a href="javascript:void(0)" class="nav-link nav-link-lg fullscreen-btn">
           <!-- <i data-feather="maximize"></i> -->
@@ -83,7 +83,9 @@
         
         <div class="sidebar-user-details">
           <div class="user-name">{{ user_name }}</div>
-          <div class="user-role">{{ user_type }}</div>
+          <div *ngIf="user_type =='Admin'" class="user-role">{{ user_type }}</div>
+          <div *ngIf="user_type !='Admin' && !has_admin_permission" class="user-name"> {{ agent_name }}</div>
+          <div *ngIf="user_type !='Admin' && has_admin_permission" class="user-name"> {{ agent_name }} (ADMIN)</div>
         </div>
       </div>
       <ul (click)="checklogin()" class="sidebar-menu" *ngIf="this.admin_id != '478'">
@@ -103,41 +105,62 @@
            <li routerLinkActive="active" *ngIf="wall_6 && this.close_all_menu != 'close'"><a href="javascript:void(0)" class="nav-link" routerLink="/outbound-wallboard"  ><i class="far fa-address-card"></i><span>Outbound Wallboard</span></a></li>
          </ul>
        </li>
-
-       <li class="dropdown" *ngIf="(show_admin_sett || h_con || voice_3cx || has_pd || lead || show_user_sett ||show_sup_admin_sett) && this.close_all_menu != 'close'">
+       <!-- <li *ngIf="this.user_type=='Admin'">  -->
+       <li class="dropdown" *ngIf="this.user_type=='Admin'">
+        <!-- *ngIf="this.user_type=='Admin' && (show_admin_sett ||show_sup_admin_sett) && this.close_all_menu != 'close'" -->
          <a href="javascript:void(0)" class="nav-link has-dropdown"><i class="fas fa-users"></i><span>Manage</span></a>
          <ul class="dropdown-menu menu-bg-clr-2">
-          <li routerLinkActive="active" *ngIf="h_con"><a href="javascript:void(0)" class="nav-link" routerLink="/contacts" (click)="conatct()"><i class="far fa-address-card"></i><span>Contacts</span></a></li>
-          <li routerLinkActive="active" *ngIf="lead"><a href="javascript:void(0)" class="nav-link" routerLink="/leads"><i class="far fa-address-card"></i><span>Leads</span></a></li>
-          <li routerLinkActive="active" *ngIf="h_sms"><a href="javascript:void(0)" class="nav-link" routerLink="/sms-groups"><i class="far fa-address-card"></i><span>Sms Groups</span></a></li>
-          <li routerLinkActive="active" *ngIf="h_sms && this.admin_id=='128'&&show_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/sms-templates"><i class="far fa-address-card"></i><span>Sms Templates</span></a></li>
-          <li routerLinkActive="active" *ngIf="this.h_message && this.admin_id!='128'&& show_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/message-temp"><i class="far fa-address-card"></i><span>Message Templates</span></a></li>
-          <li routerLinkActive="active" *ngIf="show_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/department" ><i class="fas fa-list-alt"></i><span>Departments</span></a></li>
-          <li routerLinkActive="active" *ngIf="show_admin_sett && voice_3cx"><a href="javascript:void(0)" class="nav-link" routerLink="/aux-code" ><i class="fas fa-list-alt"></i><span>Wrapup Code</span></a></li>
-          <li routerLinkActive="active" *ngIf="show_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/agent-settings" ><i class="fas fa-users"></i><span>Agents</span></a></li>
-
+          <li routerLinkActive="active"  ><a href="javascript:void(0)" class="nav-link" routerLink="/contacts" (click)="conatct()"><i class="far fa-address-card"></i><span>Contacts</span></a></li>
+          <!-- <li routerLinkActive="active" *ngIf="lead"><a href="javascript:void(0)" class="nav-link" routerLink="/leads"><i class="far fa-address-card"></i><span>Leads</span></a></li> -->
+          <!-- <li routerLinkActive="active" *ngIf="h_sms"><a href="javascript:void(0)" class="nav-link" routerLink="/sms-groups"><i class="far fa-address-card"></i><span>Sms Groups</span></a></li> -->
+          <!-- <li routerLinkActive="active" *ngIf="h_sms && this.admin_id=='128'&&show_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/sms-templates"><i class="far fa-address-card"></i><span>Sms Templates</span></a></li> -->
+          <li routerLinkActive="active" *ngIf="this.h_message && (show_admin_sett ||has_admin_permission)"><a href="javascript:void(0)" class="nav-link" routerLink="/message-temp"><i class="far fa-address-card"></i><span>Message Templates</span></a></li>
+          <li routerLinkActive="active" *ngIf="show_admin_sett ||has_admin_permission"><a href="javascript:void(0)" class="nav-link" routerLink="/department" ><i class="fas fa-list-alt"></i><span>Departments</span></a></li>
+          <li routerLinkActive="active" *ngIf="show_admin_sett ||has_admin_permission"><a href="javascript:void(0)" class="nav-link" routerLink="/agent-settings" ><i class="fas fa-users"></i><span>Agents</span></a></li>
         </ul>
       </li>
+    <!-- </li> -->
+      <li *ngIf="this.user_type=='Employee'&& has_admin_permission" class="dropdown" (click)="openMe('Manage_butt')">
+         <!-- *ngIf="this.user_type=='Employee' && has_admin_permission"  (click)="openMe('Manage_butt')" -->
+        <a href="javascript:void(0)" class="nav-link has-dropdown"><i class="fas fa-users"></i><span>Manage</span></a>
+        <ul id="Manage_butt" class="dropdown-menu menu-bg-clr-2">
+         <li routerLinkActive="active"  ><a href="javascript:void(0)" class="nav-link" routerLink="/contacts" (click)="conatct()"><i class="far fa-address-card"></i><span>Contacts</span></a></li>
+         <!-- <li routerLinkActive="active" *ngIf="lead"><a href="javascript:void(0)" class="nav-link" routerLink="/leads"><i class="far fa-address-card"></i><span>Leads</span></a></li> -->
+         <!-- <li routerLinkActive="active" *ngIf="h_sms"><a href="javascript:void(0)" class="nav-link" routerLink="/sms-groups"><i class="far fa-address-card"></i><span>Sms Groups</span></a></li> -->
+         <!-- <li routerLinkActive="active" *ngIf="h_sms && this.admin_id=='128'&&show_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/sms-templates"><i class="far fa-address-card"></i><span>Sms Templates</span></a></li> -->
+         <li routerLinkActive="active" *ngIf="this.h_message"><a href="javascript:void(0)" class="nav-link" routerLink="/message-temp"><i class="far fa-address-card"></i><span>Message Templates</span></a></li>
+         <li routerLinkActive="active" ><a href="javascript:void(0)" class="nav-link" routerLink="/department" ><i class="fas fa-list-alt"></i><span>Departments</span></a></li>
+         <li routerLinkActive="active" ><a href="javascript:void(0)" class="nav-link" routerLink="/agent-settings" ><i class="fas fa-users"></i><span>Agents</span></a></li>
+       </ul>
+     </li>
 
-
-
-
-
-
-      <li class="dropdown {{this.voice}}" *ngIf="this.close_all_menu !='close' && show_admin_sett" >
+      <li class="dropdown {{this.voice}}" *ngIf="this.user_type=='Employee'&& has_admin_permission" (click)="openMe('open_voice')" >
         <a href="javascript:void(0)" class="nav-link has-dropdown"><i class="fas fa-phone"></i><span>Voice-3CX</span></a>
-        <ul class="dropdown-menu menu-bg-clr-3">
-         <li routerLinkActive="active" *ngIf="show_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/aux" ><i class="fas fa-phone"></i><span>Aux Code</span></a></li>
-         <li routerLinkActive="active" *ngIf="show_admin_sett && h_que_manage"><a href="javascript:void(0)" class="nav-link" routerLink="/queue" ><i class="fas fa-layer-group"></i><span>Queue</span></a></li>
-         <li routerLinkActive="active" *ngIf="show_admin_sett && voice_3cx"><a href="javascript:void(0)" class="nav-link" routerLink="/pbc-settings" (click)="pbcSettings()"><i class="fas fa-cog"></i><span>PBX Settings</span></a></li>
-         <li routerLinkActive="active" *ngIf="show_admin_sett && mrvoip && voice_3cx " ><a href="https://omni.mconnectapps.com/mrvoip-connection/"  target="_blank" class="nav-link"  ><i class="fas fa-cog"></i><span>Mr.Voip Connection</span></a></li>
+        <ul id="open_voice" class="dropdown-menu menu-bg-clr-3">
+         <li routerLinkActive="active" ><a href="javascript:void(0)" class="nav-link" routerLink="/aux" ><i class="fas fa-phone"></i><span>Aux Code</span></a></li>
+         <li routerLinkActive="active" *ngIf="voice_3cx"><a href="javascript:void(0)" class="nav-link" routerLink="/aux-code" ><i class="fas fa-list-alt"></i><span>Wrapup Code</span></a></li>
+         <!-- <li routerLinkActive="active" *ngIf="voice_3cx"><a href="javascript:void(0)" class="nav-link" routerLink="/queue" ><i class="fas fa-layer-group"></i><span>Call Queues</span></a></li> -->
+         <li routerLinkActive="active" *ngIf="voice_3cx"><a href="javascript:void(0)" class="nav-link" routerLink="/pbc-settings" (click)="pbcSettings()"><i class="fas fa-cog"></i><span>PBX Settings</span></a></li>
+         <!-- <li routerLinkActive="active" *ngIf="show_admin_sett && mrvoip && voice_3cx " ><a href="https://omni.mconnectapps.com/mrvoip-connection/"  target="_blank" class="nav-link"  ><i class="fas fa-cog"></i><span>Mr.Voip Connection</span></a></li> -->
+
+       </ul>
+     </li>
+
+      <li class="dropdown {{this.voice}}" *ngIf="this.user_type=='Admin'"  >
+        <a href="javascript:void(0)" class="nav-link has-dropdown"><i class="fas fa-phone"></i><span>Voice-3CX</span></a>
+        <ul  class="dropdown-menu menu-bg-clr-3">
+         <li routerLinkActive="active" ><a href="javascript:void(0)" class="nav-link" routerLink="/aux" ><i class="fas fa-phone"></i><span>Aux Code</span></a></li>
+         <li routerLinkActive="active" *ngIf="voice_3cx"><a href="javascript:void(0)" class="nav-link" routerLink="/aux-code" ><i class="fas fa-list-alt"></i><span>Wrapup Code</span></a></li>
+         <li routerLinkActive="active"  *ngIf="voice_3cx" ><a href="javascript:void(0)" class="nav-link" routerLink="/queue" ><i class="fas fa-layer-group"></i><span>Call Queues</span></a></li>
+         <li routerLinkActive="active" *ngIf="voice_3cx"><a href="javascript:void(0)" class="nav-link" routerLink="/pbc-settings" (click)="pbcSettings()"><i class="fas fa-cog"></i><span>PBX Settings</span></a></li>
+         <!-- <li routerLinkActive="active" *ngIf="show_admin_sett && mrvoip && voice_3cx " ><a href="https://omni.mconnectapps.com/mrvoip-connection/"  target="_blank" class="nav-link"  ><i class="fas fa-cog"></i><span>Mr.Voip Connection</span></a></li> -->
 
        </ul>
      </li>
  
-   <li class="dropdown {{this.voice}}" *ngIf="this.close_all_menu !='close' && show_admin_sett && h_call_rec" >
+   <li class="dropdown {{this.voice}}" *ngIf="this.close_all_menu !='close' && show_admin_sett && h_call_rec" (click)="openMe('call_rec')" >
       <a href="javascript:void(0)" class="nav-link has-dropdown"><i class="fas fa-users"></i><span>Call Recording</span></a>
-      <ul class="dropdown-menu menu-bg-clr-2">
+      <ul id="call_rec" class="dropdown-menu menu-bg-clr-2">
        <li routerLinkActive="active"><a href="javascript:void(0)" class="nav-link" routerLink="/agent-group"><i class="far fa-address-card"></i><span>Agent Groups</span></a></li>
 
      </ul>
@@ -186,25 +209,28 @@
     </ul>
   </li>
 
-  <li routerLinkActive="active" *ngIf="this.userID == '64'"><a href="javascript:void(0)" class="nav-link" routerLink="/social-publish" ><i class="fa fa-chevron-circle-right"></i><span>Social Marketing</span></a></li>
+  <!-- <li routerLinkActive="active" *ngIf="this.userID == '64'"><a href="javascript:void(0)" class="nav-link" routerLink="/social-publish" ><i class="fa fa-chevron-circle-right"></i><span>Social Marketing</span></a></li> -->
 
   <li class="dropdown {{this.h_ticket}}"  *ngIf="this.close_all_menu != 'close'" >
     <a href="javascript:void(0)" class="nav-link has-dropdown"><i class="fas fa-envelope-open-text"></i><span>Email</span></a>
     <ul class="dropdown-menu menu-bg-clr-3">
       <li routerLinkActive="active" *ngIf="e_tic"><a href="javascript:void(0)" class="nav-link" routerLink="/ticketing-system-new" ><i class="fas fa-ticket-alt"></i><span>Email Ticketing</span></a></li>
+      <li routerLinkActive="active" *ngIf="e_tic && (show_admin_sett||has_admin_permission)"><a href="javascript:void(0)" class="nav-link" routerLink="/spam-list" ><i class="fas fa-ticket-alt"></i><span>Spam Ticket</span></a></li>
+      <li routerLinkActive="active" *ngIf="e_tic && (show_admin_sett||has_admin_permission)"><a href="javascript:void(0)" class="nav-link" routerLink="/ticket-template" ><i class="fas fa-ticket-alt"></i><span>Ticket Templates</span></a></li>
+      <li routerLinkActive="active" *ngIf="e_tic && (show_admin_sett||has_admin_permission)"><a href="javascript:void(0)" class="nav-link" routerLink="/email-settings" ><i class="fas fa-cog"></i><span>Email Settings</span></a></li>
       <li routerLinkActive="active" *ngIf="i_tick"><a href="javascript:void(0)" class="nav-link" routerLink="/ticketing-system" ><i class="fas fa-ticket-alt"></i><span>Internal Ticketing</span></a></li>
-      <li routerLinkActive="active" *ngIf="this.userID == '201'||this.userID == '64'"><a href="javascript:void(0)" class="nav-link" routerLink="/bulk-mail-list" ><i class="fas fa-ticket-alt"></i><span>Bulk Email</span></a></li>
-      <li routerLinkActive="active" *ngIf="this.userID == '201'||this.userID == '64'"><a href="javascript:void(0)" class="nav-link" routerLink="/email-groups" ><i class="fas fa-ticket-alt"></i><span>Email Groups</span></a></li>
+      <!-- <li routerLinkActive="active" *ngIf="this.userID == '201'||this.userID == '64'"><a href="javascript:void(0)" class="nav-link" routerLink="/bulk-mail-list" ><i class="fas fa-ticket-alt"></i><span>Bulk Email</span></a></li>
+      <li routerLinkActive="active" *ngIf="this.userID == '201'||this.userID == '64'"><a href="javascript:void(0)" class="nav-link" routerLink="/email-groups" ><i class="fas fa-ticket-alt"></i><span>Email Groups</span></a></li> -->
 
     </ul>
   </li>
-  <li class="dropdown"  *ngIf=" (this.admin_id == '64' || this.admin_id == '310' ||  this.admin_id == '201' || this.admin_id =='800') && (show_admin_sett && voice_3cx)" (click)="openMe('Billing')">
+  <!-- <li class="dropdown"  *ngIf=" (this.admin_id == '64' || this.admin_id == '310' ||  this.admin_id == '201' || this.admin_id =='800') && (show_admin_sett && voice_3cx)" (click)="openMe('Billing')">
     <a href="javascript:void(0)" class="nav-link has-dropdown"><i class="fas fa-envelope-open-text"></i><span>Billing</span></a>
     <ul class="dropdown-menu menu-bg-clr-1" id="Billing">
       <li routerLinkActive="active"><a href="javascript:void(0)" class="nav-link" routerLink="/call-tariff"><i class="far fa-address-card"></i><span>Call Tariff</span></a></li>
       <li routerLinkActive="active"><a href="javascript:void(0)" class="nav-link" routerLink="/billing-group" ><i class="fas fa-file-invoice-dollar"></i><span>Billing Group</span></a></li>
     </ul>
-  </li>
+  </li> -->
 
   <!-- <li class="dropdown"  *ngIf="(this.close_all_menu != 'close') && this.h_webinar">
     <a href="javascript:void(0)" class="nav-link has-dropdown"><i class="fas fa-podcast"></i><span>Webinar</span></a>
@@ -223,7 +249,7 @@
     </ul>
   </li>
   <!-- <li routerLinkActive="active" *ngIf="h_fax && this.close_all_menu != 'close' && this.fax_user "><a href="javascript:void(0)" class="nav-link" routerLink="/fax" ><i class="fas fa-fax"></i><span>Fax</span></a></li> -->
-  <li routerLinkActive="active" *ngIf="this.fax_user"><a href="javascript:void(0)" class="nav-link" routerLink="/fax" ><i class="fas fa-fax"></i><span>Fax</span></a></li>
+  <!-- <li routerLinkActive="active" *ngIf="this.fax_user"><a href="javascript:void(0)" class="nav-link" routerLink="/fax" ><i class="fas fa-fax"></i><span>Fax</span></a></li> -->
 
 
 
@@ -256,10 +282,10 @@
 
 
 
-  <li class="dropdown" *ngIf="(show_admin_sett || show_sup_admin_sett || show_user_sett) && this.close_all_menu !='close'">
+  <li class="dropdown" *ngIf="(show_admin_sett ||has_admin_permission || show_sup_admin_sett || show_user_sett) && this.close_all_menu !='close'">
     <a href="javascript:void(0)" class="nav-link has-dropdown"><i class="fas fa-cog"></i><span>Settings</span></a>
     <ul class="dropdown-menu menu-bg-clr-2">
-      <li routerLinkActive="active" *ngIf="(show_sup_admin_sett || show_admin_sett )" ><a href="javascript:void(0)" class="nav-link" routerLink="/marketplace"><i class="fas fa-cog"></i><span>Market Place</span></a></li>
+      <li routerLinkActive="active" *ngIf="(show_sup_admin_sett )" ><a href="javascript:void(0)" class="nav-link" routerLink="/marketplace"><i class="fas fa-cog"></i><span>Market Place</span></a></li>
       <li routerLinkActive="active" *ngIf="(show_sup_admin_sett || reseller_sett )"><a href="javascript:void(0)" class="nav-link" routerLink="/admin-settings" (click)="adminSettings()"><i class="fas fa-cog"></i><span>Admin Settings</span></a></li>
       <li routerLinkActive="active" *ngIf="(show_sup_admin_sett|| reseller_sett)"><a href="javascript:void(0)" class="nav-link" routerLink="/fax-admin" (click)="faxadminSettings()"><i class="fas fa-cog"></i><span>Fax Settings</span></a></li>
       <li routerLinkActive="active" *ngIf="show_sup_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/report" (click)="adminReport()"><i class="fas fa-cog"></i><span>Reports</span></a></li>
@@ -272,18 +298,17 @@
       <li routerLinkActive="active"  *ngIf="show_admin_sett || show_sup_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/global-settings"><i class="fas fa-cog"></i><span>Global Settings</span></a></li>
       <!-- <li routerLinkActive="active" ><a href="javascript:void(0)" class="nav-link" routerLink="/agent-permission"><i class="fas fa-cog"></i><span>Agent Permission</span></a></li> -->
       <li routerLinkActive="active"><a href="javascript:void(0)" class="nav-link" routerLink="/app-settings" ><i class="fas fa-cog"></i><span>App Settings</span></a></li>
-      <li routerLinkActive="active" *ngIf="h_con && show_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/questionnaire"><i class="fas fa-cog"></i><span>Questionnaire</span></a></li>
+      <!-- <li routerLinkActive="active" *ngIf="h_con && show_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/questionnaire"><i class="fas fa-cog"></i><span>Questionnaire</span></a></li> -->
       <!-- <li routerLinkActive="active" *ngIf="show_admin_sett"><a href="javascript:void(0)" class="nav-link"><i class="fas fa-cog"></i><span>Documentation</span></a></li> -->
       <li routerLinkActive="active" *ngIf="show_sup_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/upload-document" ><i class="fas fa-cog"></i><span>Upload Documents</span></a></li>
-      <li routerLinkActive="active" *ngIf="show_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/download-document" ><i class="fas fa-cog"></i><span>Download Documents</span></a></li>
-      <li routerLinkActive="active" *ngIf="h_chat && show_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/chat-widget-settings"  ><i class="fas fa-comment-dots"></i><span>Chat Settings</span></a></li>
-      <li routerLinkActive="active" *ngIf="this.userID == '64'"><a href="javascript:void(0)" class="nav-link" routerLink="/wp-pay"  ><i class="far fa-credit-card"></i><span>Wallet Management</span></a></li>
-      <li routerLinkActive="active"  *ngIf="h_wp_unoff && show_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/wp-settings" ><i class="fab fa-whatsapp"></i><span>Wp Instance Settings</span></a></li>
+      <!-- <li routerLinkActive="active" *ngIf="show_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/download-document" ><i class="fas fa-cog"></i><span>Download Documents</span></a></li> -->
+      <li routerLinkActive="active" *ngIf="h_chat && (show_admin_sett ||has_admin_permission)"><a href="javascript:void(0)" class="nav-link" routerLink="/chat-widget-settings"  ><i class="fas fa-comment-dots"></i><span>Chat Settings</span></a></li>
+      <li routerLinkActive="active"  *ngIf="h_wp_unoff && (show_admin_sett ||has_admin_permission)"><a href="javascript:void(0)" class="nav-link" routerLink="/wp-settings" ><i class="fab fa-whatsapp"></i><span>Wp Instance Settings</span></a></li>
      <!-- <li routerLinkActive="active"  *ngIf="show_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/vid-blog" ><i class="fa fa-question-circle"></i><span>Help</span></a></li> -->
 
     </ul>
   </li>
-  <li routerLinkActive="active" *ngIf="show_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/vid-blog"><i class="fa fa-question-circle"></i><span>Help</span></a></li>
+  <!-- <li routerLinkActive="active" *ngIf="show_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/vid-blog"><i class="fa fa-question-circle"></i><span>Help</span></a></li> -->
 
 
   <!-- <li routerLinkActive="active" *ngIf="show_sup_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/queue" (click)="queue()"><i class="fas fa-layer-group" ></i><span>Queue</span></a></li> -->

@@ -2,41 +2,49 @@
 <input type="hidden" value="" id="PickPriority" >
 <input type="hidden" value="" id="PickStatus">
 <input type="hidden" value="" id="PickAgents">
+<input type="hidden" value="" id="refresh_profile" (click)="NavigateFunc()">
 
 <div class="section-body" id="createNewTicket">
-		<div class="row">
-			<div class="col-12 col-md-12 col-lg-12">
-				<div class="card">
-					<div class="card-header">
-						<h4>Create New Ticket</h4>
-					</div>
-					<div class="card-body p-0">
-						<div class="form-panel">
-							<div class="row">
-								<div class="col-md-5 col-12">
-									<div class="form-group">
-										<label for="department">Department</label>
-										<div class="ticket-assign-section">
-											<div class="form-group fl">
-												<div class="dropdown select-option">
-													<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
-														<span class="dropdown-label-icon"><span class="green-bg-status status-bg"></span>
+	<div class="row">
+		<div class="col-12 col-md-12 col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<h4>Create New Ticket</h4>
+				</div>
+				<div class="card-body p-0">
+					<div class="form-panel">
+						<div class="row">
+							<div class="col-md-5 col-12">
+								<div class="form-group">
+									<label for="department">Department</label>
+									<div class="ticket-assign-section">
+										<div class="form-group fl">
+											<div class="dropdown select-option">
+												<div class="select-option-label" data-toggle="dropdown"
+													class="dropdown-toggle">
+													<span class="dropdown-label-icon"><span
+															class="green-bg-status status-bg"></span>
 														{{this.sel_Dept}}
 													</span>
 												</div>
 												<div class="dropdown-menu">
 													<div class="dropdown-title">Select Department</div>
 
-													   <div class="pullDown" *ngFor="let item of department_options ;let i = index">
+													<div class="pullDown"
+														*ngFor="let item of department_options ;let i = index">
 
-														<a href="javascript:void(0)" class="dropdown-item"  (click)="PickDepartment(item.department_id,item.department_name)">
+														<a href="javascript:void(0)" class="dropdown-item"
+															(click)="PickDepartment(item.department_id,item.department_name)">
 															<!-- <div  [class]="item.priority == 'Low' ? 'green-bg-status status-bg' : item.priority == 'Medium' ? 'blue-bg-status status-bg' :  item.priority == 'High' ? 'yellow-bg-status status-bg' :  item.priority == 'Urgent' ? 'red-bg-status status-bg':'' "></div> -->
-															{{item.department_name}}</a>
-														</div>
+															{{item.department_name}}
+														</a>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
+						
+									<p class="error-colors" *ngIf="this.showdept == true">Please select the Department*</p>
 								</div>
 							</div>
 
@@ -46,102 +54,211 @@
 									<div class="ticket-assign-section">
 										<div class="form-group fl">
 											<div class="dropdown select-option">
-												<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
-													<span class="dropdown-label-icon"><span class="blue-bg-status status-bg"></span>
-													  {{this.sel_agent}}
-												</span>
-											</div>
-											<div class="dropdown-menu">
-												<div class="dropdown-title">Select Agent</div>	
-							<label class="error-message message-small" *ngIf="this.agents_options == null">Please Select the Department</label>
-                                                       
-												   <div class="pullDown" *ngFor="let item of agents_options ;let i = index">
-
-													<a href="javascript:void(0)" class="dropdown-item"  (click)="PickAgents(item.user_id,item.agent_name)">
-														<!-- <div  [class]="item.priority == 'Low' ? 'green-bg-status status-bg' : item.priority == 'Medium' ? 'blue-bg-status status-bg' :  item.priority == 'High' ? 'yellow-bg-status status-bg' :  item.priority == 'Urgent' ? 'red-bg-status status-bg':'' "></div> -->
-														{{item.agent_name}}</a>
-													</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-md-5 col-12">
-							<div class="form-group">
-								<label for="department">Select Status</label>
-								<div class="ticket-assign-section">
-									<div class="form-group fl">
-										<div class="dropdown select-option">
-											<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
-												<span class="dropdown-label-icon"><i class="fas fa-ticket-alt"></i>
-												{{this.sel_status}}
-												</span> 
-											</div>
-											<div class="dropdown-menu">
-												<div class="dropdown-title">Select Stauts</div>
-
-												   <div class="pullDown" *ngFor="let item of status_options ;let i = index">
-
-													<a href="javascript:void(0)" class="dropdown-item"  (click)="PickStatus(item.status_id,item.status_desc)">
-														<!-- <div  [class]="item.priority == 'Low' ? 'green-bg-status status-bg' : item.priority == 'Medium' ? 'blue-bg-status status-bg' :  item.priority == 'High' ? 'yellow-bg-status status-bg' :  item.priority == 'Urgent' ? 'red-bg-status status-bg':'' "></div> -->
-														{{item.status_desc}}</a>
-													</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-md-5 col-12">
-							<div class="form-group">
-								<label for="department">Priority</label>
-								<div class="ticket-assign-section">
-									<div class="form-group fl">
-										<div class="dropdown select-option">
-											<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
-												<span class="dropdown-label-icon">
-													<span [class]="this.sel_priority == 'Low' ? 'green-bg-status status-bg' : this.sel_priority == 'Medium' ? 'blue-bg-status status-bg' :  this.sel_priority == 'High' ? 'yellow-bg-status status-bg' :  this.sel_priority == 'Urgent' ? 'red-bg-status status-bg':''"></span>
-													{{this.sel_priority}}
-												</span> 
-										</div>
-										<div class="dropdown-menu">
-											<div class="dropdown-title">Select Priority</div>
-						
-											<div class="pullDown" *ngFor="let item of priority_options ;let i = index">
-						
-												<a href="javascript:void(0)"  class="dropdown-item"  (click)="PickPriority(item.id,item.priority)"><div  [class]="item.priority == 'Low' ? 'green-bg-status status-bg' : item.priority == 'Medium' ? 'blue-bg-status status-bg' :  item.priority == 'High' ? 'yellow-bg-status status-bg' :  item.priority == 'Urgent' ? 'red-bg-status status-bg':'' "></div>
-													{{item.priority}}</a>
+												<div class="select-option-label" data-toggle="dropdown"
+													class="dropdown-toggle">
+													<span class="dropdown-label-icon"><span
+															class="blue-bg-status status-bg"></span>
+														{{this.sel_agent}}
+													</span>
 												</div>
-									   </div>
+												<div class="dropdown-menu">
+													<div class="dropdown-title">Select Agent</div>
+													<label class="error-message message-small"
+														*ngIf="this.agents_options == null">Please Select the
+														Department</label>
+
+													<div class="pullDown"
+														*ngFor="let item of agents_options ;let i = index">
+
+														<a href="javascript:void(0)" class="dropdown-item"
+															(click)="PickAgents(item.user_id,item.agent_name)">
+															<!-- <div  [class]="item.priority == 'Low' ? 'green-bg-status status-bg' : item.priority == 'Medium' ? 'blue-bg-status status-bg' :  item.priority == 'High' ? 'yellow-bg-status status-bg' :  item.priority == 'Urgent' ? 'red-bg-status status-bg':'' "></div> -->
+															{{item.agent_name}}
+														</a>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
-									
+							
+									<p class="error-colors" *ngIf="this.showassign == true">Please select the Assign to*</p>
 								</div>
 							</div>
-						</div>
-					</div>
-					<div [formGroup]="userEmails" class="col-md-5 col-12">
-						<div class="form-group">
+
+							<div class="col-md-5 col-12">
+								<div class="form-group">
+									<label for="department">Select Status</label>
+									<div class="ticket-assign-section">
+										<div class="form-group fl">
+											<div class="dropdown select-option">
+												<div class="select-option-label" data-toggle="dropdown"
+													class="dropdown-toggle">
+													<span class="dropdown-label-icon"><i class="fas fa-ticket-alt"></i>
+														{{this.sel_status}}
+													</span>
+												</div>
+												<div class="dropdown-menu">
+													<div class="dropdown-title">Select Status</div>
+
+													<div class="pullDown"
+														*ngFor="let item of status_options ;let i = index">
+
+														<a href="javascript:void(0)" class="dropdown-item"
+															(click)="PickStatus(item.status_id,item.status_desc)">
+															<!-- <div  [class]="item.priority == 'Low' ? 'green-bg-status status-bg' : item.priority == 'Medium' ? 'blue-bg-status status-bg' :  item.priority == 'High' ? 'yellow-bg-status status-bg' :  item.priority == 'Urgent' ? 'red-bg-status status-bg':'' "></div> -->
+															{{item.status_desc}}
+														</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+							
+									<p class="error-colors" *ngIf="this.showstatus == true">Please select the Status*</p>
+								</div>
+							</div>
+
+							<div class="col-md-5 col-12">
+								<div class="form-group">
+									<label for="department">Priority</label>
+									<div class="ticket-assign-section">
+										<div class="form-group fl">
+											<div class="dropdown select-option">
+												<div class="select-option-label" data-toggle="dropdown"
+													class="dropdown-toggle">
+													<span class="dropdown-label-icon">
+														<span
+															[class]="this.sel_priority == 'Low' ? 'green-bg-status status-bg' : this.sel_priority == 'Medium' ? 'blue-bg-status status-bg' :  this.sel_priority == 'High' ? 'yellow-bg-status status-bg' :  this.sel_priority == 'Urgent' ? 'red-bg-status status-bg':''"></span>
+														{{this.sel_priority}}
+													</span>
+												</div>
+												<div class="dropdown-menu">
+													<div class="dropdown-title">Select Priority</div>
+
+													<div class="pullDown"
+														*ngFor="let item of priority_options ;let i = index">
+
+														<a href="javascript:void(0)" class="dropdown-item"
+															(click)="PickPriority(item.id,item.priority)">
+															<div
+																[class]="item.priority == 'Low' ? 'green-bg-status status-bg' : item.priority == 'Medium' ? 'blue-bg-status status-bg' :  item.priority == 'High' ? 'yellow-bg-status status-bg' :  item.priority == 'Urgent' ? 'red-bg-status status-bg':'' ">
+															</div>
+															{{item.priority}}
+														</a>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+							
+									<p class="error-colors" *ngIf="this.showpriority == true;">Please select the priority*</p>
+								</div>
+							</div>
+							<div class="col-md-10 col-12">
+								<div class="form-group">
+									<label for="department">Email From</label>
+									<div class="ticket-assign-section">
+										<div class="form-group fl">
+											<div class="dropdown select-option">
+												<div class="select-option-label" data-toggle="dropdown"
+													class="dropdown-toggle">
+													<span class="dropdown-label-icon">
+														{{this.email_from}}
+													</span>
+												</div>
+												<div style="width: 400px;" class="dropdown-menu">
+													<div class="dropdown-title">Select Email </div>
+
+													<div class="pullDown">
+														<a href="javascript:void(0)" class="dropdown-item"
+															(click)="selectFromEmail('newz')">
+															omni@pipe.mconnectapps.com
+														</a>
+													</div>
+													
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+							<div [formGroup]="userEmails" class="col-md-5 col-12">
+								<!-- <div class="form-group">
 							<label for="subject">To Address</label>
 							<input type="email" id="email_to" placeholder="Enter Email Address" class="form-control" formControlName="primaryEmail" >
-							<label class="error-message message-small" *ngIf="!userEmails.get('primaryEmail').valid && userEmails.get('primaryEmail').touched ">Please enter the valid email id</label>
+							
 
-						</div>
-					</div>
-					<div class="col-md-5 col-12">
-						<div class="form-group">
-							<label for="subject">Subject</label>
-							<input type="text" id="subject" class="form-control">
-						</div>
-					</div>
-					
-					<div class="col-md-10 col-12">
-						<div class="form-group">
-							<label for="subject">Description</label>
-							<textarea class="richTextArea"></textarea>
-							<!-- <editor
+						</div> -->
+								<div class="form-group">
+									<label><b>To</b></label>
+									<div class="form-line">
+										<mat-form-field class="email-chip-list">
+											<mat-chip-list #chipListTO aria-label="EmailAddress selection">
+												<mat-chip *ngFor="let EmailAddress of EmailToAddress"
+													[selectable]="selectable" [removable]="removable"
+													(removed)="removeTo(EmailAddress)">
+													{{EmailAddress.email_to}}
+													<mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+												</mat-chip>
+
+
+												<input class="form-control" placeholder="Enter Email Address"
+													[matChipInputFor]="chipListTO"
+													[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+													[matChipInputAddOnBlur]="addOnBlur"
+													(matChipInputTokenEnd)="addTo($event)">
+											</mat-chip-list>
+										</mat-form-field>
+
+									</div>
+																
+  
+
+
+									<p class="error-colors" *ngIf="this.presentEmails == true;">This Email ID already existed</p>
+									<p class="error-colors" *ngIf="this.showtoEmail == true;">Please Enter To email ID*</p>
+								</div>
+							</div>
+							<div class="col-md-5 col-12">
+								<!-- <div class="form-group">
+							<label for="subject">CC (Optional)</label>
+							<input type="email" id="email_cc" class="form-control" placeholder="CC"  >
+						</div> -->
+								<div class="form-group">
+									<label><b>CC (Optional)</b></label>
+									<div class="form-line">
+										<mat-form-field class="email-chip-list">
+											<mat-chip-list #chipList aria-label="Collobrator selection">
+												<mat-chip *ngFor="let collobrator of collobrators"
+													[selectable]="selectable" [removable]="removable"
+													(removed)="remove(collobrator)">
+													{{collobrator.email_name}}
+													<mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+												</mat-chip>
+												<input class="form-control" placeholder="Add Collabrators"
+													[matChipInputFor]="chipList"
+													[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+													[matChipInputAddOnBlur]="addOnBlur"
+													(matChipInputTokenEnd)="add($event)">
+											</mat-chip-list>
+										</mat-form-field>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-5 col-12">
+								<div class="form-group">
+									<label for="subject">Subject</label>
+									<input type="text" id="subject" class="form-control">
+								</div>
+							</div>
+
+							<div class="col-md-10 col-12">
+								<div class="form-group">
+									<label for="subject">Description</label>
+									<textarea class="richTextArea"></textarea>
+									<!-- <editor
 							  initialValue="<p>Initial content of the editor</p>"
 							  apiKey="yap9vgeib9vhg5f81cuvu9hbisk6rdr6pcvcjcltvolqk317"
 							  [init]="{
@@ -164,28 +281,31 @@
 							  }"
 							>
 							</editor>	 -->
-						
-						
+
+
+								</div>
+							</div>
+							<div class="col-md-5 col-12">
+								<div class="form-group">
+									<label for="create_file" title="Media Should be less than 5MB">UpLoad Media</label>
+									<input type="file" title="Media Should be less than 5MB" id="create_file"
+										class="form-control" multiple>
+								</div>
+							</div>
 						</div>
-					</div>
-					<div class="col-md-5 col-12">
-						<div class="form-group">
-							<label for="create_file" title="Media Should be less than 5MB">UpLoad Media</label>
-							<input type="file" title="Media Should be less than 5MB" id="create_file" class="form-control" multiple>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12 col-12">
-						<div class="buttons">
-							<input type="button" class="btn btn-success" type="submit" value="Create New Ticket" (click)="createNewTicket()">
-							<input type="button" href="javascript:void(0)" routerLink="/ticketing-system-new" class="btn btn-danger" type="submit"  value="Discard">
+						<div class="row">
+							<div class="col-md-12 col-12">
+								<div class="buttons">
+									<input type="button" class="btn btn-success" type="submit" value="Create New Ticket"
+										(click)="createNewTicket()">
+									<input type="button" href="javascript:void(0)" routerLink="/ticketing-system-new"
+										class="btn btn-danger" type="submit" value="Discard">
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-</div>
 </div>

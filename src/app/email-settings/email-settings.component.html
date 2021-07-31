@@ -1,0 +1,1273 @@
+<div class="section-body">
+
+    <!-- ============================ ADMIN EMAIL SETTINGS =============================== -->
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Admin Email Settings</h4>
+
+                    <div class="addBtn">
+                        <button type="button" class="btn btn-primary" (click)="addAdminGroup()">+ Add Group</button>
+                    </div>
+
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table email-settings table-bordered table-striped table-md">
+                            <tr>
+                                <th>#</th>
+                                <th>Group Name</th>
+                                <!-- <th>Email</th> -->
+                                <!-- <th>Department</th> -->
+                                <th>New EMail Alert</th>
+                                <th>Reply EMail Alert</th>
+                                <th>Close EMail Alert</th>
+                                <th>Fullthread</th>
+                                <th>Action</th>
+                            </tr>
+
+                            <tbody>
+                                <tr *ngFor="let groups of admin_grp_list;let i = index">
+
+                                    <td>{{i+1}}</td>
+                                    <td>{{groups.group_name}}
+
+                                    </td>
+                                    <td>
+                                        <div class="pretty p-switch p-fill">
+                                            <input type="checkbox" id="grp_new_email_alert_{{i}}"
+                                                checked="{{groups.new_email_alert == 1 ? 'checked' : ''}}"
+                                                (change)="updateGroupSettings(groups.id,i)">
+                                            <div class="state p-success">
+                                                <label for="has_sms"></label>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="pretty p-switch p-fill">
+                                            <input type="checkbox" id="grp_reply_email_alert_{{i}}"
+                                                checked="{{groups.reply_email_alert == 1 ? 'checked' : ''}}"
+                                                (change)="updateGroupSettings(groups.id,i)">
+                                            <div class="state p-success">
+                                                <label for="has_sms"></label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="pretty p-switch p-fill">
+                                            <input type="checkbox" id="grp_close_email_alert_{{i}}"
+                                                checked="{{groups.close_email_alert == 1 ? 'checked' : ''}}"
+                                                (change)="updateGroupSettings(groups.id,i)">
+                                            <div class="state p-success">
+                                                <label for="has_sms"></label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="pretty p-switch p-fill">
+                                            <input type="checkbox" id="grp_send_full_thread_{{i}}"
+                                                checked="{{groups.send_fullthread == 1 ? 'checked' : ''}}"
+                                                (change)="updateGroupSettings(groups.id,i)">
+                                            <div class="state p-success">
+                                                <label for="has_sms"></label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="user-icon" style="cursor: pointer;"><i class="far fa-edit"
+                                                (click)="editGroupSettings(groups.id)"></i></span>
+                                        <span class="user-icon" style="cursor: pointer;"><i class="far fa-trash-alt"
+                                                (click)="deleteGroupSettings(groups.id)"></i></span>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ========================= END ADMIN EMAIL SETTINGS ============================== -->
+
+
+    <!-- ============================ EMAIL SETTINGS =============================== -->
+
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Email Settings</h4>
+
+                    <!-- <div class="addBtn btn-group fr" style="display: inline-block;">
+
+                        <div class="dropdown select-option pt-1 mr-3 fr">
+                            <div class="select-option-label" data-toggle="dropdown"
+                                class="dropdown-toggle filter-btn info badge badge-success">
+                                <div class="dropdown-title">{{select_dept}} <i class="fas fa-chevron-down"></i>
+                                    &nbsp;</div>
+                            </div>
+
+                            <div class="dropdown-menu" style="width: 250px;">
+                                <div class="pullDown" *ngFor="let dept of dept_list">
+                                    <a href="javascript:void(0)" class="dropdown-item"
+                                        (click)="onChangeDept(dept.dept_id,dept.department_name)"
+                                        *ngIf="dept.has_email == 1">
+                                        <div class="green-bg-status status-bg"></div>{{dept.department_name}}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="addBtn" style="width: 15%;">
+                        <button type="button" class="btn btn-primary" (click)="addAgent()">+ Add Agent</button>
+                    </div> -->
+
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table email-settings table-bordered table-striped table-md">
+
+                            <tr>
+                                <td colspan="20" class="search-text-tbl">
+                                    <div class="input-group"><input type="text" class="form-control"
+                                            (keyup.enter)="agentsList({'search_text':agent_search.value})"
+                                            #agent_search>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary"
+                                                (click)="agentsList({'search_text':agent_search.value})"><i
+                                                    class="fas fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>#</th>
+                                <th>Agent Name</th>
+                                <!-- <th>Email</th> -->
+                                <!-- <th>Department</th> -->
+                                <th>New EMail Alert</th>
+                                <th>Reply EMail Alert</th>
+                                <th>Close EMail Alert</th>
+                                <th>Fullthread</th>
+                            </tr>
+
+
+
+                            <tbody>
+                                <!-- <ng-container *ngFor="let agent of agent_list;"> -->
+
+                                <!-- <tr *ngFor="let settings of email_setting_list;let i = index"> -->
+                                <tr *ngFor="let agent of agent_list;let i = index">
+
+                                    <!-- <ng-container > -->
+                                    <td>{{i+1}}</td>
+                                    <td>{{agent.agent_name}}</td>
+                                    <!-- <td>jn@cal4care.com</td> -->
+                                    <!-- <td><span class="badge badge-success">Development</span></td> -->
+                                    <td>
+                                        <div class="pretty p-switch p-fill">
+                                            <input type="checkbox" id="new_email_alert_{{i}}"
+                                                checked="{{agent.new_email_alert == 1 ? 'checked' : ''}}"
+                                                (change)="updateAgentSettings(agent.user_id,i)">
+                                            <div class="state p-success">
+                                                <label for="has_sms"></label>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="pretty p-switch p-fill">
+                                            <input type="checkbox" id="reply_email_alert_{{i}}"
+                                                checked="{{agent.reply_email_alert == 1 ? 'checked' : ''}}"
+                                                (change)="updateAgentSettings(agent.user_id,i)">
+                                            <div class="state p-success">
+                                                <label for="has_sms"></label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="pretty p-switch p-fill">
+                                            <input type="checkbox" id="close_email_alert_{{i}}"
+                                                checked="{{agent.close_email_alert == 1 ? 'checked' : ''}}"
+                                                (change)="updateAgentSettings(agent.user_id,i)">
+                                            <div class="state p-success">
+                                                <label for="has_sms"></label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="pretty p-switch p-fill">
+                                            <input type="checkbox" id="send_full_thread_{{i}}"
+                                                checked="{{agent.send_fullthread == 1 ? 'checked' : ''}}"
+                                                (change)="updateAgentSettings(agent.user_id,i)">
+                                            <div class="state p-success">
+                                                <label for="has_sms"></label>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <!-- </ng-container> -->
+                                    <!-- <ng-container *ngIf="settings.agent_id !== agent.user_id">
+                                            <td>{{i+1}} not equal</td>
+                                            <td>{{agent.agent_name}}</td>
+                                            <td>
+                                                <div class="pretty p-switch p-fill">
+                                                    <input type="checkbox" id="new_email_alert_{{i}}"
+                                                        (change)="updateAgentSettings(agent.user_id,i)">
+                                                    <div class="state p-success">
+                                                        <label for="has_sms"></label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="pretty p-switch p-fill">
+                                                    <input type="checkbox" id="reply_email_alert_{{i}}"
+                                                        (change)="updateAgentSettings(agent.user_id,i)">
+                                                    <div class="state p-success">
+                                                        <label for="has_sms"></label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="pretty p-switch p-fill">
+                                                    <input type="checkbox" id="close_email_alert_{{i}}"
+                                                        (change)="updateAgentSettings(agent.user_id,i)">
+                                                    <div class="state p-success">
+                                                        <label for="has_sms"></label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="pretty p-switch p-fill">
+                                                    <input type="checkbox" id="send_full_thread_{{i}}"
+                                                        (change)="updateAgentSettings(agent.user_id,i)">
+                                                    <div class="state p-success">
+                                                        <label for="has_sms"></label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </ng-container> -->
+
+                                </tr>
+                                <!-- <ng-container *ngIf="email_setting_list == ''">
+                                        <tr *ngFor="let agent of agent_list;let i=index">
+                                            <td>{{i+1}} not</td>
+                                            <td>{{agent.agent_name}}</td>
+                                            <td>
+                                                <div class="pretty p-switch p-fill">
+                                                    <input type="checkbox" id="new_email_alert_{{i}}"
+                                                        (change)="updateAgentSettings(agent.user_id,i)">
+                                                    <div class="state p-success">
+                                                        <label for="has_sms"></label>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="pretty p-switch p-fill">
+                                                    <input type="checkbox" id="reply_email_alert_{{i}}"
+                                                        (change)="updateAgentSettings(agent.user_id,i)">
+                                                    <div class="state p-success">
+                                                        <label for="has_sms"></label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="pretty p-switch p-fill">
+                                                    <input type="checkbox" id="close_email_alert_{{i}}"
+                                                        (change)="updateAgentSettings(agent.user_id,i)">
+                                                    <div class="state p-success">
+                                                        <label for="has_sms"></label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="pretty p-switch p-fill">
+                                                    <input type="checkbox" id="send_full_thread_{{i}}"
+                                                        (change)="updateAgentSettings(agent.user_id,i)">
+                                                    <div class="state p-success">
+                                                        <label for="has_sms"></label>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                    </ng-container> -->
+
+                                <!-- </ng-container> -->
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <nav class="d-inline-block">
+                        <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+
+                            <li class="page-item">
+                                <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                                    href="javascript:void(0)"
+                                    (click)="paginationData.backtab=='show' ? agentsList({'search_text':agent_search.value,'offset':paginationData.start}) : false"><i
+                                        class="fas fa-angle-left"></i></a>
+                            </li>
+                            <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                                <a class="page-link" href="javascript:void(0)"
+                                    (click)="agentsList({'search_text':agent_search.value,'offset':paginationData.back})"><i
+                                        class="fas fa-angle-double-left"></i></a>
+                            </li>
+                            <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                                *ngFor="let pagination of paginationData.data;let i=index">
+                                <a class="page-link" href="javascript:void(0)"
+                                    (click)=" pagination.load ==true ? agentsList({'search_text':agent_search.value,'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                                    <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                            </li>
+
+                            <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                                <a class="page-link" href="javascript:void(0)"
+                                    (click)="agentsList({'search_text':agent_search.value,'offset':paginationData.next})"><i
+                                        class="fas fa-angle-double-right"></i></a>
+                            </li>
+
+                            <li class="page-item">
+                                <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                                    href="javascript:void(0)"
+                                    (click)="paginationData.nexttab =='show' ? agentsList({'search_text':agent_search.value,'offset':paginationData.end}) : false"><i
+                                        class="fas fa-angle-right"></i></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- ============================= END EMAIL SETTINGS ============================== -->
+    <!-- <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Default Email Department</h4>
+                </div>
+                <div class="card-body p-30">
+
+                    <div class="row">
+                        <div class="col-12 col-md-5">
+                            <div class="fl mb-15">
+                                <h6 class="font-medium m-b-10">Select Email</h6>
+                                <div class="form-group">
+                                    <select class="form-control">
+                                        <option value="Developemnt">dev@cal4care.com</option>
+                                        <option value="Sales">sales@cal4care.com</option>
+                                        <option value="Support">support@cal4acre.com</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-1">
+                            <div class="connecting-arrow text-center">
+                                <i class="fas fa-arrows-alt-h"></i>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-5">
+                            <div class="fl mb-15">
+                                <h6 class="font-medium m-b-10">Select Department</h6>
+                                <div class="form-group">
+                                    <select class="form-control">
+                                        <option value="Developemnt">Developemnt</option>
+                                        <option value="Sales">Sales</option>
+                                        <option value="Support">Support</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="fl m-0">
+                        <button class="btn btn-success" type="button">
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Default Email Department</h4>
+                </div>
+                <div class="card-body p-30">
+
+                    <div class="row">
+                        <div class="col-12 col-md-5">
+                            <div class="fl mb-15">
+                                <h6 class="font-medium m-b-10">Select Email</h6>
+                                <div class="form-group">
+                                    <select class="form-control">
+                                        <option value="Developemnt">dev@cal4care.com</option>
+                                        <option value="Sales">sales@cal4care.com</option>
+                                        <option value="Support">support@cal4acre.com</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-1">
+                            <div class="connecting-arrow text-center">
+                                <i class="fas fa-arrows-alt-h"></i>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-5">
+                            <div class="fl mb-15">
+                                <h6 class="font-medium m-b-10">Select Department</h6>
+                                <div class="form-group">
+                                    <select class="form-control">
+                                        <option value="Developemnt">Developemnt</option>
+                                        <option value="Sales">Sales</option>
+                                        <option value="Support">Support</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fl m-0">
+                        <button class="btn btn-info" type="button">
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!--=============================== FORWARDER TABLE LIST ================================== -->
+
+
+
+    <div class="row">
+        <div class="col-12 col-md-12 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Forwarder Listing</h4>
+                    <div class="addBtn">
+                        <button type="button" class="btn btn-primary" (click)="addEmail()">+ Add Email</button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table email-settings table-bordered table-striped table-md">
+                            <tr>
+                                <th>#</th>
+                                <!-- <th>Email</th> -->
+                                <th>Alias Name</th>
+                                <th></th>
+                                <th>Default Email</th>
+                                <th></th>
+                                <th>Department</th>
+                                <th>Sender ID</th>
+                                <th>Action</th>
+                            </tr>
+                            <tbody>
+                                <tr *ngFor="let list of get_all_dept_list;let i=index">
+                                    <td>{{i+1}}</td>
+                                    <!-- <td>{{list.aliseEmail}}</td> -->
+                                    <td>
+                                        {{list.aliseEmail}}
+                                    </td>
+                                    <td>
+                                        <div class="connecting-arrow text-center" style="padding: 0px;">
+                                            <i class="fas fa-arrows-alt-h"></i>
+                                        </div>
+                                    </td>
+                                    <td>{{list.emailAddr}}</td>
+                                    <td>
+                                        <div class="connecting-arrow text-center" style="padding: 0px;">
+                                            <i class="fas fa-arrows-alt-h"></i>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {{list.department_name}}
+                                    </td>
+                                    <td>
+                                        {{list.senderID}}
+                                    </td>
+                                    <td>
+                                        <span class="user-icon" style="cursor: pointer;"><i class="far fa-edit"
+                                                (click)="editEmailSettings(list.emailAddr)"></i></span>
+                                        <span class="user-icon" style="cursor: pointer;"><i class="far fa-trash-alt"
+                                                (click)="deletedata(list.id)"></i></span>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <!--=============================== END FORWARDER TABLE LIST ================================== -->
+
+
+    <!--=============================== SMTP TABLE LIST ================================== -->
+
+    <div class="row">
+        <div class="col-12 col-md-12 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>SMTP Listing</h4>
+                    <div class="addBtn">
+                        <button type="button" class="btn btn-primary" (click)="addSMTP()">+ Add New SMTP</button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table email-settings table-bordered table-striped table-md">
+                            <tr>
+                                <th>#</th>
+                                <!-- <th>Email</th> -->
+                                <th>Host Name</th>
+                                <th>Port Number</th>
+                                <th>SMTP Username</th>
+                                <th>Department</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            <tbody>
+                                <tr *ngFor="let splist of smtp_list;let i=index">
+                                    <td>{{i+1}}</td>
+                                    <!-- <td>{{list.aliseEmail}}</td> -->
+                                    <td>{{splist.hostname}}</td>
+                                    <td>
+                                        {{splist.port}}
+                                    </td>
+                                    <td>
+                                        {{splist.username}}
+                                    </td>
+                                    <td>
+                                        {{splist.department_name}}
+                                    </td>
+                                    <td>
+                                        <div class="pretty p-switch p-fill">
+                                            <input type="checkbox" id="smtp_status_{{i}}"
+                                                checked="{{splist.status == 1 ? 'checked' : ''}}"
+                                                (change)="toggleSmtpStatus(splist.id,i)">
+                                            <div class="state p-success">
+                                                <label for="has_sms"></label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="user-icon" style="cursor: pointer;"><i class="far fa-edit"
+                                                (click)="editsmtpData(splist.id)"></i></span>
+                                        <span class="user-icon" style="cursor: pointer;"><i class="far fa-trash-alt"
+                                                (click)="deletesmtpdata(splist.id)"></i></span>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!--=============================== END SMTP TABLE LIST ================================== -->
+
+
+    <div class="modal fade bd-example-modal-md" id="add_deptform">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <form [formGroup]="forwarder_list" (ngSubmit)="addEmailData()">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myLargeModalLabel">Add Forwarder Email</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <!-- <div class="col-md-6">
+                                <h6>Forwarder Email</h6>
+                            </div> -->
+                            <!-- <div class="col-md-6">
+                                <h6>Department Alias Name</h6>
+                            </div> -->
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="alias_name">Alias Name</label>
+                                    <input type="text" id="alias_name" class="form-control"
+                                        formControlName="alias_name">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="sender_id">Sender ID</label>
+                                    <input type="text" id="sender_id" class="form-control" formControlName="sender_id">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="form-group">
+                                    <label for="add_dept_name">Department</label>
+                                    <select name="add_dept_name" id="add_dept_name" class="form-control">
+                                        <option value='0'> Select Department </option>
+                                        <ng-container *ngFor="let det of email_dept">
+                                            <option value="{{det.dept_id}}">
+                                                <span> {{det.department_name}} </span>
+                                            </option>
+                                        </ng-container>
+                                    </select>
+                                </div>
+
+                            </div>
+                            <!-- <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" id="department_alias_name" class="form-control">
+                                </div>
+                            </div> -->
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="add_default_email">Default Email</label>
+                                    <select name="add_default_email" id="add_default_email" class="form-control">
+                                        <option value='0'> Select email </option>
+                                        <!-- <option *ngFor="let cat of get_all_dept_list" value="{{cat.emailAddr}}">
+                                            {{cat.emailAddr}}</option> -->
+                                        <option *ngFor="let cat of get_admin_ids;let i =index" value="{{cat}}">
+                                            {{cat}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="buttons">
+                            <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel" >
+                            <input type="submit" class="btn btn-primary update_agent" value="Update"
+                                [disabled]="!forwarder_list.valid">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade bd-example-modal-md" id="edit_deptform">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <form  (ngSubmit)="updateEmailData()">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myLargeModalLabel">Edit Forwarder Email</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <!-- <div class="row"> -->
+                        <!-- <div class="col-md-6">
+                                <h6>Forwarder Email</h6>
+                            </div> -->
+                        <!-- <div class="col-md-6">
+                                <h6>Department Alias Name</h6>
+                            </div> -->
+                        <!-- </div> -->
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="edit_alias_name">Alias Name</label>
+                                    <input type="email" id="edit_alias_name" class="form-control" >
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="edit_sender_id">Sender ID</label>
+                                    <!-- <input type="text" id="edit_sender_id" class="form-control"> -->
+                                    <select name="edit_sender_id" id="edit_sender_id" class="form-control">
+                                        <option value=''> Select Sender ID </option>
+                                        <option *ngFor="let send of edit_sender_value" value="{{send}}">
+                                            {{send}}</option>
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="edit_dept_name">Department</label>
+                                    <select name="edit_dept_name" id="edit_dept_name" class="form-control">
+                                        <option value='0'> Select Department </option>
+                                        <option *ngFor="let det of email_dept" value="{{det.dept_id}}">
+                                            {{det.department_name}}</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                            <!-- <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" id="department_alias_name" class="form-control">
+                                </div>
+                            </div> -->
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="edit_default_email">Email</label>
+                                    <select name="edit_default_email" id="edit_default_email" class="form-control" >
+                                        <option value=''> Select Email </option>
+                                        <option *ngFor="let cat of get_all_dept_list" value="{{cat.emailAddr}}">
+                                            {{cat.emailAddr}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="buttons">
+                            <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                            <input type="submit" class="btn btn-primary update_agent" value="Update" [disabled]="">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade bd-example-modal-md" id="add_agentform">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <form (ngSubmit)="addAgentSettings()">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myLargeModalLabel">Add Agent Email Settings</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="add_dept_ids">Department Name</label>
+                                    <select name="add_dept_ids" id="add_dept_ids" class="form-control"
+                                        (change)="onChangeAddDept()">
+                                        <option value='0'> Select Department </option>
+                                        <option *ngFor="let dept of dept_list" value="{{dept.dept_id}}">
+                                            <span> {{dept.department_name}}</span>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="add_agent_name">Agent Name</label>
+                                    <select name="add_agent_name" id="add_agent_name" class="form-control">
+                                        <option value='0'> Select Agent </option>
+                                        <option *ngFor="let agent of add_agent_list;" value="{{agent.user_id}}">
+                                            {{agent.agent_name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row has-row-space">
+                            <div class="col-md-6 ">
+                                <div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox" id="new_email_alert_add">
+                                        <div class="state p-success">
+                                            <label for="new_email_alert_add">New Email Alert</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox" id="reply_email_alert_add">
+                                        <div class="state p-success">
+                                            <label for="reply_email_alert_add">Reply Email Alert</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row has-row-space">
+                            <div class="col-md-6 ">
+                                <div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox" id="close_email_alert_add">
+                                        <div class="state p-success">
+                                            <label for="close_email_alert_add">Close Email Alert</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox" id="fullthread_add">
+                                        <div class="state p-success">
+                                            <label for="fullthread_add">Full thread</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="modal-footer">
+                            <div class="buttons">
+                                <input type="button" data-dismiss="modal" class="btn btn-outline-secondary"
+                                    value="Cancel">
+                                <input type="submit" class="btn btn-primary update_agent" value="Update" [disabled]="">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== ADD GROUP MODAL ==================================================== -->
+    <div class="modal fade bd-example-modal-lg" id="add_admingroup">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form [formGroup]="addGroup" (ngSubmit)="createAdminGroup()">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myLargeModalLabel">Add Group</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="add_group_name">Group Name</label>
+                                    <!-- <select name="add_cat_id" id="add_cat_id" class="form-control">
+                                        <option value='0'> Select Category </option>
+                                        <option *ngFor="let cat of cat_query_list" value="{{cat.id}}">
+                                            {{cat.category_name}}</option>
+                                    </select> -->
+                                    <input type="text" id="add_group_name" class="form-control"
+                                        formControlName="add_group_name">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="department_name">Enter Email ID (By click Enter Add multiple
+                                        Codes)</label>
+                                    <!-- <input type="text" id="department_name" class="form-control"
+                                        formControlName="department_name"> -->
+
+                                    <mat-form-field class="form-controls" appearance="none">
+                                        <mat-chip-list [formControl]="emailFormControl" #addWrapCode>
+                                            <mat-chip *ngFor="let wrapCode of addGroupValue" [selectable]="selectable"
+                                                [removable]="removable" (removed)="remove(wrapCode)" color="primary">
+                                                {{wrapCode.name}}
+                                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                            </mat-chip>
+                                            <input placeholder="" [matChipInputFor]="addWrapCode"
+                                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                [matChipInputAddOnBlur]="addOnBlur"
+                                                (matChipInputTokenEnd)="add($event)">
+                                        </mat-chip-list>
+                                    </mat-form-field>
+                                </div>
+                                <span *ngIf="show_email_errors"
+                                    style="margin: 10px;color: #ff0000d4;font-weight: 600;">{{email_error_msg}} </span>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="buttons">
+                            <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                            <input type="submit" class="btn btn-primary update_agent" value="Update"
+                                [disabled]="!addGroup.valid">
+                            <!-- <input type="submit" class="btn btn-primary update_agent" value="Update"> -->
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== END ADD GROUP MODAL ==================================================== -->
+
+    <!-- ========================================== EDIT GROUP MODAL ==================================================== -->
+
+
+    <div class="modal fade bd-example-modal-md" id="edit_admingroup">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <form [formGroup]="editDept" (ngSubmit)="updatedEditGroup()">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myLargeModalLabel">Update Group</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="edit_grp_ids" value="">
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="edit_group_name">Group Name</label>
+                                    <input type="text" id="edit_group_name" class="form-control"
+                                        formControlName="edit_group_name">
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="department_name">Enter the Email ID <span
+                                            style="color: brown;font-size: 12px;"> (By click <b>Enter </b> Add multiple
+                                            mail id) </span></label>
+
+                                    <mat-form-field class="form-controls" appearance="none">
+                                        <mat-chip-list #editaddWrapCode>
+                                            <mat-chip *ngFor="let wrapCode of editwrapUpCode" [selectable]="selectable"
+                                                [removable]="removable" (removed)="editremove(wrapCode)">
+                                                {{wrapCode.name}}
+                                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                            </mat-chip>
+                                            <input placeholder="" [matChipInputFor]="editaddWrapCode"
+                                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                [matChipInputAddOnBlur]="addOnBlur"
+                                                (matChipInputTokenEnd)="editadd($event)">
+                                        </mat-chip-list>
+                                    </mat-form-field>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="row has-row-space">
+                            <div class="col-md-6 ">
+                                <div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox" id="new_email_alert_group">
+                                        <div class="state p-success">
+                                            <label for="new_email_alert_group">New Email Alert</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox" id="reply_email_alert_group">
+                                        <div class="state p-success">
+                                            <label for="reply_email_alert_group">Reply Email Alert</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row has-row-space">
+                            <div class="col-md-6 ">
+                                <div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox" id="close_email_alert_group">
+                                        <div class="state p-success">
+                                            <label for="close_email_alert_group">Close Email Alert</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox" id="fullthread_group">
+                                        <div class="state p-success">
+                                            <label for="fullthread_group">Full thread</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="buttons">
+                            <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                            <!-- <input type="submit" class="btn btn-primary update_agent" value="Update"
+                                [disabled]="!editDept.valid"> -->
+                            <input type="submit" class="btn btn-primary update_agent" value="Update">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- ========================================== END EDIT GROUP MODAL ==================================================== -->
+
+
+
+    <!-- ================================ ADD SMTP LIST MODAL ==================================== -->
+
+    <div class="modal fade bd-example-modal-md" id="add_smtpform">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <form [formGroup]="addSmtpData" (ngSubmit)="createsmtpList()">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myLargeModalLabel">Add SMTP Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="host_name">Host Name</label>
+                                    <input type="text" id="host_name" class="form-control" formControlName="host_name">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="port_num">Port Number</label>
+                                    <input type="number" id="port_num" class="form-control" formControlName="port_num">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="smtp_username">SMTP Username</label>
+                                    <input type="text" id="smtp_username" class="form-control"
+                                        formControlName="smtp_username">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="smtp_pasword">SMTP Password</label>
+                                    <input type="text" id="smtp_pasword" class="form-control"
+                                        formControlName="smtp_pasword">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row"> 
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="add_smtp_dept">Department</label>
+                                    <select name="add_smtp_dept" id="add_smtp_dept" class="form-control">
+                                        <option value='0'> Select Department </option>
+                                        <ng-container *ngFor="let det of smtp_dept">
+                                            <option value="{{det.dept_id}}">
+                                                <span> {{det.department_name}} </span>
+                                            </option>
+                                        </ng-container>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="buttons">
+                            <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                            <input type="submit" class="btn btn-primary update_agent" value="Update"
+                                [disabled]="!addSmtpData.valid">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <!-- ================================ END ADD SMTP LIST MODAL ==================================== -->
+
+    <!-- ================================ EDIT SMTP LIST MODAL ==================================== -->
+
+    <div class="modal fade bd-example-modal-md" id="edit_smtpform">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <form [formGroup]="editSmtpDatas" (ngSubmit)="updatesmtpList()">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myLargeModalLabel">Edit SMTP Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="edit_host_name">Host Name</label>
+                                    <input type="text" id="edit_host_name" class="form-control"
+                                        formControlName="edit_host_name">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="edit_port_num">Port Number</label>
+                                    <input type="number" id="edit_port_num" class="form-control"
+                                        formControlName="edit_port_num">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="edit_smtp_username">SMTP Username</label>
+                                    <input type="text" id="edit_smtp_username" class="form-control"
+                                        formControlName="edit_smtp_username">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="edit_smtp_pasword">SMTP Password</label>
+                                    <span toggle="#edit_smtp_pasword" class="fa fa-fw fa-eye field-icon " (click)="toggleClasss()"></span>
+
+                                    <input type="password" id="edit_smtp_pasword" class="form-control"
+                                        formControlName="edit_smtp_pasword">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="agent_user_pwd">User password <span style="color: red;">*</span></label>
+                                <span toggle="#agent_user_pwd" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+
+                                <input type="text" id="agent_user_pwd" class="form-control">
+                             </div>
+                        </div> -->
+
+                        <div class="row"> 
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="edit_smtp_dept">Department</label>
+                                    <select name="edit_smtp_dept" id="edit_smtp_dept" class="form-control">
+                                        <option value='0'> Select Department </option>
+                                        <ng-container *ngFor="let det of smtp_dept">
+                                            <option value="{{det.dept_id}}">
+                                                <span> {{det.department_name}} </span>
+                                            </option>
+                                        </ng-container>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="buttons">
+                            <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                            <input type="submit" class="btn btn-primary update_agent" value="Update"
+                                [disabled]="!editSmtpDatas.valid">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>

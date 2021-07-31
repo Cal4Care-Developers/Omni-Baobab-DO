@@ -1,0 +1,299 @@
+<input type="hidden" value="" id="PickDepartment">
+<input type="hidden" value="" id="PickPriority">
+<input type="hidden" value="" id="PickStatus">
+<input type="hidden" value="" id="PickAgents">
+<input type="hidden" id="refresh_profile" (click)="NavigateFunc()">
+<input type="hidden" id="refresh_page" (click)="reload()">
+
+
+<div class="section-body" id="createNewTicket">
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Create New Signature</h4>
+                </div>
+                <div class="card-body p-0">
+                    <div class="form-panel">
+                        <div class="row">
+
+
+
+                            <div class="col-md-5 col-12">
+                                <div class="form-group">
+                                    <label for="subject">Subject</label>
+                                    <input type="text" id="subject" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-12">
+
+                                <div class="pretty p-switch p-fill">
+                                    <label for="has_status">Default Signature</label>
+                                    <input type="checkbox" id="default_check">
+                                    <div class="state p-success" style="font-size: 18px; margin-top: 10px;">
+                                        <label for="has_status"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-10 col-12">
+                                <div class="form-group">
+                                    <label for="subject">Description</label>
+                                    <textarea class="richTextArea" ></textarea>
+                                    <!-- <editor
+							  initialValue="<p>Initial content of the editor</p>"
+							  apiKey="yap9vgeib9vhg5f81cuvu9hbisk6rdr6pcvcjcltvolqk317"
+							  [init]="{
+								height: 500,
+								menubar: false,
+								image_uploadtab: true,
+								file_picker_types: 'file image media',
+								automatic_uploads: true,
+								plugins: [
+								  'advlist autolink lists link file image charmap print',
+								  'preview anchor searchreplace visualblocks code',
+								  'fullscreen insertdatetime media table paste',
+								  'help wordcount','a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker'
+								],
+								toolbar:
+								  'undo redo | formatselect | bold italic | \ undo redo | link image file| code | \
+								  alignleft aligncenter alignright alignjustify | \
+								  bullist numlist outdent indent | help'
+								  
+							  }"
+							>
+							</editor>	 -->
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-12 col-12">
+                                <div class="buttons">
+                                    <input type="button" class="btn btn-success" type="submit" value="Add Signature"
+                                        (click)="createNewTicket()">
+                                    <input type="button" href="javascript:void(0)" routerLink="/ticketing-system-new"
+                                        class="btn btn-danger" value="Back">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section-body">
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Signatures</h4>
+
+                    <!-- <a style="margin-left: 20px;" href="https://ticketing.mconnectapps.com/api/v1.0/pro_contents/pro_wrapup.pdf" target="_blank"><i style="font-size:24px;" class="fa fa-exclamation-circle"></i></a> -->
+
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-md">
+
+                            <tr>
+                                <th>S.no </th>
+                                <th>Title</th>
+                                <th>Signature</th>
+                                <th>Default</th>
+                                <th>Action</th>
+                                <!-- <th>View</th> -->
+                            </tr>
+
+                            <tbody>
+                                <tr *ngFor="let queue of queue_list; let i=index" class="email-sign-image">
+                                    <td>{{0+i+1}}</td>
+                                    <!-- <td>{{queue.id}}</td> -->
+                                    <td>{{queue.sig_title}}</td>
+                                    <td [innerHTML]="queue.sig_content"></td>
+                                    <!-- <td>{{queue.is_default}}</td> -->
+                                    <td>
+                                        <div *ngIf="this.user_type=='2'">
+
+                                            <div class="form-check form-check-inline">
+                                                <div class="pretty p-switch p-fill">
+                                                    <input type="checkbox" id="singature_{{queue.sig_id}}"
+                                                        checked="{{queue.is_default == 1 ? 'checked' : ''}}"
+                                                        (click)="changedefault(queue.sig_id)">
+                                                    <div class="state p-success">
+                                                        <label for="has_status"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="hidden-things">
+                                                This is Default Admin Signatutes
+                                            </div>
+                                        </div>
+                                        <div *ngIf="this.user_type=='3'"
+                                            class="col-md-6  {{queue.user_id == queue.admin_id ?'disabled':''}}">
+
+                                            <div class="form-check form-check-inline">
+                                                <div class="pretty p-switch p-fill">
+                                                    <input type="checkbox" id="singature_{{queue.sig_id}}"
+                                                        checked="{{queue.is_default == 1 ? 'checked' : ''}}"
+                                                        (click)="changedefault(queue.sig_id)">
+                                                    <div class="state p-success">
+                                                        <label for="has_status"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="hidden-things">
+                                                This is Default Admin Signatutes
+                                            </div>
+                                        </div>
+                                        <!-- <div class="form-check form-check-inline">
+                                        <div class="pretty p-switch p-fill">
+                                            <input type="checkbox"  formControlName="has_chat"  >
+                                            <div class="state p-success">
+                                                <label for="has_chat">Web Chat</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="hidden-things">
+                                     Please Upgrade your package
+                                 </div> -->
+
+                                    </td>
+
+                                    <td>
+                                        <span class="user-icon" style="cursor: point\er;"><i class="far fa-edit"
+                                                (click)="editsignpopup(queue.sig_id)"></i></span>
+                                    </td>
+                                    <!-- <td>
+                                <span class="user-icon" style="cursor: pointer;"><i class="far fa-trash-alt" (click)="deletedata(queue.sig_id)"></i></span>
+                                </td> -->
+                                </tr>
+                                <!-- <tr *ngFor="let queue of queue_list_user; let i=index" class="email-sign-image">
+                                <td>{{0+i+1}}</td>
+                                
+                                <td>{{queue.sig_title}}</td>
+                                <td [innerHTML]="queue.sig_content"></td>
+                                <td><div class="form-check form-check-inline">
+                                    <div class="pretty p-switch p-fill">
+                                        <input type="checkbox" id="singature_{{queue.sig_id}}"  checked="{{queue.is_default == 1 ? 'checked' : ''}}" (click)="changedefault(queue.sig_id)"> 
+                                        <div class="state p-success">
+                                            <label for="has_status"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                </td>
+                              
+                            </tr> -->
+
+                                <tr *ngIf="recordNotFound == true">
+                                    <td colspan="12">Data not found</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- ================================ EDIT  SINGNATURE ============================== -->
+
+
+<div class="modal fade bd-example-modal-lg" id="add_deptform">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="section-body" id="createNewTicket">
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="card" style="margin:0px;">
+                            <div class="card-header modal-header">
+                                <h4 class="modal-title" id="myLargeModalLabel">Update Signature</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="form-panel">
+                                    <div class="row">
+            
+            
+            
+                                        <div class="col-md-5 col-12">
+                                            <div class="form-group">
+                                                <label for="subject">Subject</label>
+                                                <input type="text" id="editsubject" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5 col-12">
+            
+                                            <div class="pretty p-switch p-fill">
+                                                <label for="has_status">Default Signature</label>
+                                                <input type="checkbox" id="edit_default_check">
+                                                <div class="state p-success" style="font-size: 18px; margin-top: 10px;">
+                                                    <label for="has_status"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-10 col-12">
+                                            <div class="form-group">
+                                                <label for="subject">Description</label>
+                                                <textarea class="richTextArea"></textarea>
+                                                <!-- <editor
+                                          initialValue="<p>Initial content of the editor</p>"
+                                          apiKey="yap9vgeib9vhg5f81cuvu9hbisk6rdr6pcvcjcltvolqk317"
+                                          [init]="{
+                                            height: 500,
+                                            menubar: false,
+                                            image_uploadtab: true,
+                                            file_picker_types: 'file image media',
+                                            automatic_uploads: true,
+                                            plugins: [
+                                              'advlist autolink lists link file image charmap print',
+                                              'preview anchor searchreplace visualblocks code',
+                                              'fullscreen insertdatetime media table paste',
+                                              'help wordcount','a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker'
+                                            ],
+                                            toolbar:
+                                              'undo redo | formatselect | bold italic | \ undo redo | link image file| code | \
+                                              alignleft aligncenter alignright alignjustify | \
+                                              bullist numlist outdent indent | help'
+                                              
+                                          }"
+                                        >
+                                        </editor>	 -->
+            
+            
+                                            </div>
+                                        </div>
+            
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-12 col-12">
+                                            <div class="buttons">
+                                                <input type="button" class="btn btn-success" type="submit" value="Update Signature" [disabled]="isDisabled"
+                                                    (click)="UpdateSignature()">
+                                                <input type="button" href="javascript:void(0)"  data-dismiss="modal"
+                                                    class="btn btn-danger" value="Cancel">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

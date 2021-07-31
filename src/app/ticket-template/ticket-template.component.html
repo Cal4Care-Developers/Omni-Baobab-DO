@@ -1,0 +1,346 @@
+<div class="section-body">
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Email Template Message</h4>
+                </div>
+                <div class="card-body">
+
+                    <div  class="wizard vertical">
+                        <div class="steps">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#auto_reply" data-toggle="tab"  (click)="dept_settings('created_ticket')">
+                                        New Ticket Auto-reply</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab"  (click)="dept_settings('close_ticket')">
+                                        Ticket Closed</a>
+                                </li>
+                                <!-- <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#ticketAssigned">
+                                        Ticket Assign</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#ticketTransferred">
+                                        Ticket Transfer</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#overdueTicket">
+                                        Overdue Ticket Alert</a>
+                                </li> -->
+                            </ul>
+                        </div>
+                        <!-- Create New Ticket -->
+                       
+                        <div class="tab-content social-marketing content"  *ngFor="let item of filteredvalues" >
+                           
+                              <div  id="auto_reply" class="body tab-pane active">
+                                <div class="card-header">
+                                    <h4><span class="wizard-icon"><img
+                                                src="assets/images/ticket/create-new-ticket.png"></span>
+                                                {{item.response_for == 'created_ticket' ? 'New Ticket Auto Response' : 'Close Ticket Auto Response'}}
+                                    </h4>
+                                    <div class="addBtn">
+                                        <b>Use Template</b>
+                                        <div class="form-check form-check-inline">
+                                            <div class="pretty p-switch p-fill">
+                                                <input type="checkbox"  checked="{{item.status == 1 ? 'checked' : ''}}" id="{{item.response_for}}_status">
+                                                <div class="state p-success">
+                                                    <label for="has_status"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="item.response_content != ''" class="card">
+                                    <div class="row">  
+                                        <div class="card-body" style="font-family: verdana;">
+                                            <div [innerHTML]="item.response_content"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4> Update Response</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <editor 
+									  id="{{item.response_for}}_content"
+									  apiKey="yap9vgeib9vhg5f81cuvu9hbisk6rdr6pcvcjcltvolqk317"
+									  [init]="{		
+                                        																
+										theme: modern,
+										paste_data_images: true,
+										height: 500,
+										menubar: false,
+										
+										plugins: [
+										  'advlist autolink lists link file image charmap print',
+										  'preview anchor searchreplace visualblocks code',
+										  'fullscreen insertdatetime media table paste',
+										  'help wordcount','save','autolink lists media table'
+										],
+										toolbar:
+										  'undo redo| fullscreen | formatselect | fontselect |fontsizeselect| bold italic | \ undo redo | link image file| code | \
+										  alignleft aligncenter alignright alignjustify | \
+										  bullist numlist outdent indent | help',
+
+										  content_style: 'body {font-size: 10pt;font-family: Verdana;}'
+										 
+									 
+
+										
+									  }"                                     
+									>
+									</editor>
+                                        <!-- <textarea class="richTextArea">
+                                            <b>Dear  { Customer Name }</b> <br /><br />
+                                            A request for support has been created and assigned ticket <b>#%{ticket.number}</b> with the following automatic reply
+                                        </textarea> -->
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="buttons">
+                                    <input type="submit" value="Save Template" (click)="UpdateTemp(item.response_for)" class="btn btn-success">
+                                    <input type="submit" href="javascript:void(0)" value="Discard"
+                                        class="btn btn-danger" tabindex="0">
+                                </div>
+
+                            </div>
+                       
+                            <!-- Create New Ticket End -->
+
+                            <!-- Ticket Closed -->
+                            <!-- <div id="ticketClosed" class="body tab-pane">
+                                <div class="card-header">
+                                    <h4><span class="wizard-icon"><img
+                                                src="assets/images/ticket/create-new-ticket.png"></span>Ticket Closed
+                                        Template</h4>
+                                    <div class="addBtn">
+                                        <b>Use Template</b>
+                                        <div class="form-check form-check-inline">
+                                            <div class="pretty p-switch p-fill">
+                                                <input type="checkbox" id="statu_159">
+                                                <div class="state p-success">
+                                                    <label for="has_status"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Body</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <textarea class="richTextArea">Testtt</textarea>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="buttons">
+                                    <input type="submit" value="Save Template" class="btn btn-success">
+                                    <input type="submit" href="javascript:void(0)" value="Discard"
+                                        class="btn btn-danger" tabindex="0">
+                                </div>
+
+                            </div> -->
+                            <!-- Ticket Closed End -->
+
+                            <!-- Ticket Assign -->
+                            <div id="ticketAssigned" class="body tab-pane">
+                                <div class="card-header">
+                                    <h4>
+                                        <span class="wizard-icon"><img
+                                                src="assets/images/ticket/create-new-ticket.png"></span>
+                                        Ticket Assignment Tempalte
+                                    </h4>
+                                    <div class="addBtn">
+                                        <b>Use Template</b>
+                                        <div class="form-check form-check-inline">
+                                            <div class="pretty p-switch p-fill">
+                                                <input type="checkbox" id="statu_159">
+                                                <div class="state p-success">
+                                                    <label for="has_status"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Subject</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <textarea class="richTextArea">
+            <b>Re: %{ticket.subject} [#%{ticket.number}]
+        </textarea>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Body</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <textarea class="richTextArea">Testtt</textarea>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="buttons">
+                                    <input type="submit" value="Save Template" class="btn btn-success">
+                                    <input type="submit" href="javascript:void(0)" value="Discard"
+                                        class="btn btn-danger" tabindex="0">
+                                </div>
+
+                            </div>
+                            <!-- Ticket Assign End -->
+
+                            <!-- Ticket Transferred -->
+                            <div id="ticketTransferred" class="body tab-pane">
+                                <div class="card-header">
+                                    <h4><span class="wizard-icon"><img
+                                                src="assets/images/ticket/create-new-ticket.png"></span>Ticket Transfer
+                                        Template</h4>
+                                    <div class="addBtn">
+                                        <b>Use Template</b>
+                                        <div class="form-check form-check-inline">
+                                            <div class="pretty p-switch p-fill">
+                                                <input type="checkbox" id="statu_159">
+                                                <div class="state p-success">
+                                                    <label for="has_status"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Subject</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <textarea class="richTextArea">
+        <b>Re: %{ticket.subject} [#%{ticket.number}]
+    </textarea>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Body</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <textarea class="richTextArea">Testtt</textarea>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="buttons">
+                                    <input type="submit" value="Save Template" class="btn btn-success">
+                                    <input type="submit" href="javascript:void(0)" value="Discard"
+                                        class="btn btn-danger" tabindex="0">
+                                </div>
+                            </div>
+                            <!-- Ticket Transferred End -->
+
+                            <!-- overdue Ticket -->
+                            <div id="overdueTicket" class="body tab-pane">
+                                <div class="card-header">
+                                    <h4><span class="wizard-icon"><img
+                                                src="assets/images/ticket/create-new-ticket.png"></span>
+                                        Overdue Ticket Template</h4>
+                                    <div class="addBtn">
+                                        <b>Use Template</b>
+                                        <div class="form-check form-check-inline">
+                                            <div class="pretty p-switch p-fill">
+                                                <input type="checkbox" id="statu_159">
+                                                <div class="state p-success">
+                                                    <label for="has_status"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Subject</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <textarea class="richTextArea">
+                <b>Re: %{ticket.subject} [#%{ticket.number}]
+            </textarea>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Body</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <textarea class="richTextArea">Testtt</textarea>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="buttons">
+                                    <input type="submit" value="Save Template" class="btn btn-success">
+                                    <input type="submit" href="javascript:void(0)" value="Discard"
+                                        class="btn btn-danger" tabindex="0">
+                                </div>
+                            </div>
+                            <!-- overdue Ticket End -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="modal fade bd-example-modal-md" id="addNewPost">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myLargeModalLabel">Publish Contant</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="call_repeat">Write Post</label>
+                                <textarea rows="15" class="ck-editor form-control"></textarea>
+                                <div class="img-uplaod-preview">
+                                    <div class="field" align="left">
+                                        <h6>Upload your images</h6>
+                                        <input type="file" id="files" name="files[]" multiple />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <div class="buttons">
+                        <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                        <input type="submit" class="btn btn-success update_agent" value="Send Post">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> -->
