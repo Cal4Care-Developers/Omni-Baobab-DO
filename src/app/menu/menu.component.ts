@@ -316,7 +316,7 @@ console.log(this.socketData);
                     iziToast.show({
                       theme: 'dark',
                       title: this.socketData.message_info.customer_name,
-                      image: 'https://ticketing.mconnectapps.com/api/v1.0/logo_image/omni-channels-logo.jpg',
+                      image: 'https://baobabgroup.mconnectapps.com/api/v1.0/logo_image/omni-channels-logo.jpg',
                       imageWidth: 100,
                       message:'Existing Message',
                       position: 'topRight', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
@@ -366,7 +366,7 @@ console.log(this.socketData);
                 iziToast.show({
                   theme: 'dark',
                   title: 'Hi',
-                  image: 'https://ticketing.mconnectapps.com/api/v1.0/logo_image/omni-channels-logo.jpg',
+                  image: 'https://baobabgroup.mconnectapps.com/api/v1.0/logo_image/omni-channels-logo.jpg',
                   imageWidth: 100,
                   message: 'Chat Was Closed By Customer',
                   position: 'topRight', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter

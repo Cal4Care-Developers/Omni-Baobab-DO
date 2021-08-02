@@ -500,7 +500,67 @@ Message Thread Panel
 </div>
 </div> -->
 
+<!-------------------------------------------------
+Internal Notes
+---------------------------------------------------->
+<div *ngIf="replies.ticket_notes !=null">
+	<div *ngFor="let item of replies.ticket_notes.reverse()">
+		<div class='message-thread-panel light-org-bg fl'>
+		<div class="message-thread-header">
+		<div class="row">  
+			<div class="col-md-11">
+				<div class="thread-details-section fl">
 
+					<div class="ticket-details fl">
+
+						<ul class="ticket-thread-header-details">
+							<li>
+								<!-- <div class="agent-name">
+									<div class="round-block light-green-bg d-flex">{{replies.first_letter_r}}</div>
+								</div> -->
+							</li>
+							<li><h6><span class="blk-clr">{{item.created_name}}</span> added a private note </h6>
+								<!-- <div class="ticket-message-details fl"><strong>To: </strong> {{replies.ticket_to}}</div> -->
+							</li>
+						</ul>
+					</div>
+		<!-- <div class="ticket-details fl"  *ngIf="replies.replied_by == 'Customer'">
+				<h6><span class="blk-clr">{{replies.replied_from}}</span>  Reported Via Email {{replies.ticket_created_at}}</h6>
+			</div> -->
+		</div>
+	</div>
+</div>
+</div> 
+
+<div class="message-thread-body fl">
+	<div class="row">  
+		<div class="col-xl-12">
+			<!-- <input type="text" value="{{replies.ticket_notes}}" class="form-control" > -->
+
+			<div [innerHTML]="item.ticket_notes"></div>
+			</div>
+		</div>
+	</div>
+	<!-- <div>
+		<div class="message-thread-attachment fl"  *ngIf="replies.ticket_media !=''">
+			<div class="row">  
+				<div class="col-xl-2" *ngFor="let item of replies.ticket_media">
+					<div class="attached-file-type">
+						<img src="assets/images/csv.png">
+						<div class="downlaod-icon">
+							<a href="{{item}}" target="_blank" download><i class="fas fa-download"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+</div>
+</div>
+</div>
+<!-------------------------------------------------
+Internal Notes End
+---------------------------------------------------->
 
 <!-------------------------------------------------
 Customer Message
@@ -586,67 +646,7 @@ Customer Message End
 		</button>
 </div> -->
 
-<!-------------------------------------------------
-Internal Notes
----------------------------------------------------->
-<div *ngIf="replies.ticket_notes !=null">
-	<div *ngFor="let item of replies.ticket_notes.reverse()">
-		<div class='message-thread-panel light-org-bg fl'>
-		<div class="message-thread-header">
-		<div class="row">  
-			<div class="col-md-11">
-				<div class="thread-details-section fl">
 
-					<div class="ticket-details fl">
-
-						<ul class="ticket-thread-header-details">
-							<li>
-								<!-- <div class="agent-name">
-									<div class="round-block light-green-bg d-flex">{{replies.first_letter_r}}</div>
-								</div> -->
-							</li>
-							<li><h6><span class="blk-clr">{{item.created_name}}</span> added a private note </h6>
-								<!-- <div class="ticket-message-details fl"><strong>To: </strong> {{replies.ticket_to}}</div> -->
-							</li>
-						</ul>
-					</div>
-		<!-- <div class="ticket-details fl"  *ngIf="replies.replied_by == 'Customer'">
-				<h6><span class="blk-clr">{{replies.replied_from}}</span>  Reported Via Email {{replies.ticket_created_at}}</h6>
-			</div> -->
-		</div>
-	</div>
-</div>
-</div> 
-
-<div class="message-thread-body fl">
-	<div class="row">  
-		<div class="col-xl-12">
-			<!-- <input type="text" value="{{replies.ticket_notes}}" class="form-control" > -->
-
-			<div [innerHTML]="item.ticket_notes"></div>
-			</div>
-		</div>
-	</div>
-	<!-- <div>
-		<div class="message-thread-attachment fl"  *ngIf="replies.ticket_media !=''">
-			<div class="row">  
-				<div class="col-xl-2" *ngFor="let item of replies.ticket_media">
-					<div class="attached-file-type">
-						<img src="assets/images/csv.png">
-						<div class="downlaod-icon">
-							<a href="{{item}}" target="_blank" download><i class="fas fa-download"></i></a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> -->
-</div>
-</div>
-</div>
-<!-------------------------------------------------
-Internal Notes End
----------------------------------------------------->
 
 <!-------------------------------------------------
 Agent Message
