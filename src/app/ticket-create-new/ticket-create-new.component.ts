@@ -410,6 +410,7 @@ var json_arr = JSON.stringify(agent_req);
     this.sel_Dept=value
     $('#PickDepartment').val(data);
     // alert( $('#PickDepartment').val());
+    this.agents_options='';
     this.editDepartmentSettings(data);
   }
 PickAgents(data,value){

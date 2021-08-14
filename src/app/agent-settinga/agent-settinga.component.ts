@@ -89,6 +89,7 @@ export class AgentSettingaComponent implements OnInit {
   total_agent_count;
   agent_count_t;
   total_agent_count_t;
+  able_to_add;
 // this
   constructor(private serverService: ServerService,private sanitizer: DomSanitizer) { 
 
@@ -147,9 +148,8 @@ $("#update_user_pwd").keydown(function (e) {
 });
     this.addAgent = new FormGroup({
       'agent_name' : new FormControl(null,Validators.required),
-      'emailid' : new FormControl(null,[
-       
-        Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
+      'emailid' : new FormControl(null),
+      // [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]
       'phone_number' : new FormControl(null),
       'user_name' : new FormControl(null,Validators.required),
       // 'user_pwd': new FormControl('', [Validators.required, Validators.minLength(3), UsernameValidator.cannotContainSpace]),
@@ -196,9 +196,7 @@ $("#update_user_pwd").keydown(function (e) {
     // $('#edit_billing_address').modal('show');
       this.editAgent = new FormGroup({
       'user_name' : new FormControl(null,Validators.required),
-      'email_id' : new FormControl(null,[
-        
-        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]),
+      'email_id' : new FormControl(null),
       'agent_name' : new FormControl(null,Validators.required),
       'sip_login' : new FormControl(null),
       'sip_username' : new FormControl(null),
@@ -413,14 +411,15 @@ var output= str.split(',')
 // alert(this.agents_list.length);
 
 // if(output.length >= this.agent_count || this.agent_count <= this.agents_list.length){
-if(output.length > this.agent_count_t || this.agent_count_t > this.total_agent_count){
-  // if(mydata == 0 && mydata >1 ){
-  iziToast.warning({
-    message: "Sorry.. You have a limits for "+this.agent_count+" users only",
-    position: 'topRight'
-  });
-  return false;
-}
+// if(output.length > this.agent_count || this.agent_count <= this.total_agent_count){
+
+//   // if(mydata == 0 && mydata >1 ){
+//   iziToast.warning({
+//     message: "Sorry.. You have a limits for "+this.agent_count+" users only",
+//     position: 'topRight'
+//   });
+//   return false;
+// }
  //alert(JSON.stringify(this.dynamicUsers));
 let access_token: any=localStorage.getItem('access_token');
 let api_req:any = '{"operation":"queue", "moduleType":"queue", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"user_add","hardware_id":"'+this.hardware_id+'","users":"'+users+'","all_data":'+JSON.stringify(this.dynamicUsers)+'}}';
@@ -543,9 +542,9 @@ datagetsfailed(){
 
 pbc_details(){
   let access_token: any=localStorage.getItem('access_token');
-  let uadmin_id: any=localStorage.getItem('userId');
+  let admin_id: any=localStorage.getItem('admin_id');
 
-  let api_req:any = '{"operation":"chat", "moduleType": "chat", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"get_pbx_details","user_id":"'+uadmin_id+'"}}';
+  let api_req:any = '{"operation":"chat", "moduleType": "chat", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"get_pbx_details","user_id":"'+admin_id+'"}}';
 
   this.serverService.sendServer(api_req).subscribe((response:any) => {
     if(response.result.status==true){
@@ -593,7 +592,7 @@ api_req.element_data = agents_req;
         this.agents_list=response.result.data.list_data;
           this.offset_count = list_data.offset;
           this.total_agent_count = response.result.data.list_info.available_users;
-          this.total_agent_count_t = response.result.data.list_info.available_users;
+          this.able_to_add = response.result.data.list_info.can_add;
           this.paginationData = this.serverService.pagination({'offset':response.result.data.list_info.offset, 'total':response.result.data.list_info.total, 'page_limit' :this.pageLimit });
           this.recordNotFound = this.agents_list.length == 0 ? true : false;
 
@@ -696,12 +695,12 @@ api_req.element_data = agents_req;
           this.h_2fa = 'disabled';
         }
 
-        if( this.agent_count_t >= this.total_agent_count_t){
-          
-            this.hideAddButt = false;
-          } else {
-            this.hideAddButt = true;
-          }
+        if( this.able_to_add < 1){
+          this.hideAddButt = false;
+        } else {      
+          this.hideAddButt = true;
+        }
+
 
 
 
@@ -1137,13 +1136,13 @@ addAgentData(){
           });
         return false;
      }
-     if(this.addAgent.value.emailid == '' || this.addAgent.value.emailid==null || this.addAgent.value.emailid=='0'){
-      iziToast.warning({
-          message: "Please Enter Email ID",
-          position: 'topRight'
-      });
-      return false;
-    }
+    //  if(this.addAgent.value.emailid == '' || this.addAgent.value.emailid==null || this.addAgent.value.emailid=='0'){
+    //   iziToast.warning({
+    //       message: "Please Enter Email ID",
+    //       position: 'topRight'
+    //   });
+    //   return false;
+    // }
     // alert(this.addAgent.value.emailid);
   //    else{
   //       $("#agent_user_pwd").keydown(function (e) {
@@ -1159,7 +1158,8 @@ addAgentData(){
   //         return e.which !== 32;
   //   });
   // }
-
+var sip_user=$('#sip_username_add').val();
+var sip_pass=$('#sip_password_add').val();
 
       let api_req:any = new Object();
       let add_agent_req:any = new Object();
@@ -1170,8 +1170,8 @@ addAgentData(){
       add_agent_req.user_name=this.addAgent.value.user_name;
       add_agent_req.user_pwd=agent_pass;
       add_agent_req.sip_login=this.addAgent.value.sip_login;
-      add_agent_req.sip_password=this.addAgent.value.sip_password;
-      add_agent_req.sip_username=this.addAgent.value.sip_username;
+      add_agent_req.sip_password=sip_pass;
+      add_agent_req.sip_username=sip_user;
       add_agent_req.voice_3cx=this.addAgent.value.voice_3cx;
       add_agent_req.close_all_menu=this.addAgent.value.close_all_menu;
       add_agent_req.reports=add_reports;
@@ -1229,6 +1229,13 @@ addAgentData(){
 
           this.serverService.sendServer(api_req).subscribe((response: any) => {
               if (response.result.status == true) {
+                if(response.result.data == 0){
+                  iziToast.error({
+                    message: "Sorry Some server error occured.Please contact Admin",
+                    position: 'topRight'
+                });
+                }
+                else{
                   $('#add_agents_form').modal('hide');
                   this.addAgent.reset();
                   iziToast.success({
@@ -1239,6 +1246,7 @@ addAgentData(){
                   $('#agentsList').click();
                   this.addAgent.reset();
                   this.dsk_access = '';
+                }
               } 
               else if(response.result.status == false){
                     iziToast.warning({
@@ -1298,13 +1306,13 @@ addAgentData(){
     
     }
 
-    if(this.editAgent.value.email_id == '' ){
-      iziToast.warning({
-          message: "Please Enter Email ID",
-          position: 'topRight'
-      });
-      return false;
-  }
+  //   if(this.editAgent.value.email_id == '' ){
+  //     iziToast.warning({
+  //         message: "Please Enter Email ID",
+  //         position: 'topRight'
+  //     });
+  //     return false;
+  // }
     if($("#update_user_pwd").val() =='' || $("#update_user_pwd").val() ==undefined )
     {
         iziToast.warning({
@@ -1359,7 +1367,8 @@ if(this.upd_agent_3cx_rep){
 
 // alert(agent_req.ag_group);
 
-
+agent_req.sip_username=$('#sip_username').val();
+agent_req.sip_password=$('#u_sip_password').val();
 
 
           this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1846,7 +1855,11 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
   // alert(this.has_hard_id);
   if(this.has_hard_id == ""){
     // alert("sdjnsdh");
-      $("#addLicence").modal({"backdrop": "static"});
+      // $("#addLicence").modal({"backdrop": "static"});
+      iziToast.error({
+        message: "Your Licence Key is expired!.. Please contact admin",
+        position: 'topRight'
+        });
       this.show_act_wall = true;
   } else {
     this.checkLicenseKey();
@@ -1863,9 +1876,9 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
   let access_token: any=localStorage.getItem('access_token');
   let login_user: any=localStorage.getItem('userId');
 
-  let api_req:any = '{"operation":"agents", "moduleType":"agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"check_hardware","user_id":"'+login_user+'"}}';
-  this.serverService.sendServer(api_req).subscribe((response:any) => {
-    if(response.result.data.value=='1'){
+  // let api_req:any = '{"operation":"agents", "moduleType":"agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"check_hardware","user_id":"'+login_user+'"}}';
+  // this.serverService.sendServer(api_req).subscribe((response:any) => {
+  //   if(response.result.data.value=='1'){
      // this.initsocket();   
       Swal.fire({
         title: 'Please Wait...',
@@ -1884,22 +1897,24 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
           this.websocket.send(socket_message);
     
         }         
-    } else {
+    // }
+     else {
       iziToast.error({
-        message: "Your Licence Key is expired!.. please enter your key or contact admin",
+        message: "Your Licence Key may expired!.. Please contact admin",
         position: 'topRight'
         });
-        $("#addLicence").modal({"backdrop": "static"});
+        // $("#addLicence").modal({"backdrop": "static"});
         this.show_act_wall = true;
     }
-  }, 
-  (error)=>{
-      console.log(error);
-  });
+  // }, 
+  // (error)=>{
+  //     console.log(error);
+  // });
 }
 activateLicenseKey(){
   let access_token: any=localStorage.getItem('access_token');
   let login_user: any=localStorage.getItem('userId');
+  let adminId:any=localStorage.getItem('admin_id');
 
   let l_key: any=$('#licence_key').val();
   if(l_key == ""){
@@ -1909,7 +1924,7 @@ activateLicenseKey(){
       });
       return false;
   }
-  let api_req:any = '{"operation":"agents", "moduleType":"agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"check_license","user_id":"'+login_user+'","license_key":"'+l_key+'"}}';
+  let api_req:any = '{"operation":"agents", "moduleType":"agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"check_license","user_id":"'+adminId+'","license_key":"'+l_key+'"}}';
   this.serverService.sendServer(api_req).subscribe((response:any) => {
     if(response.result.data.value==1){
       localStorage.setItem('hardware_id', response.result.data.hardware_id);

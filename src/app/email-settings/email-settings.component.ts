@@ -52,7 +52,7 @@ export class EmailSettingsComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   addGroupValue = [];
   editwrapUpCode = [];
-
+  round_robin;
   constructor(public serverService: ServerService, private _ngZone: NgZone, private route: ActivatedRoute) {
 
   }
@@ -705,7 +705,19 @@ export class EmailSettingsComponent implements OnInit {
    
         this.get_all_dept_list = response.result.data.alldata;
         this.get_admin_ids = response.result.data.adminEmail;
-
+        this.round_robin = response.result.data.roundrobin;
+        if(this.round_robin =='0'){
+          $('#round_rob_set').prop('checked',false);
+          $(".font-medium3").addClass('ring-all');
+          $(".font-medium2").removeClass('round-rob');
+          // alert('asas')
+        }
+        else{
+          $('#round_rob_set').prop('checked',true);
+          $(".font-medium2").addClass('round-rob');
+          $(".font-medium3").removeClass('ring-all');
+      
+        }
       }
     },
       (error) => {
@@ -1509,5 +1521,56 @@ export class EmailSettingsComponent implements OnInit {
 
 
   }
+  robin_update(ids) {
+    var rob = '0';var text="Would you Need to Assign incoming email to all agents in the department?";
+      if($('#round_rob_set').prop('checked')){ rob = '1'; text="Do you want to change, and be assigned a round-robin system for incoming email to Department agents?"; }
+    // let rob=$('#round_rob_set').val();
 
+// return false;
+    Swal.fire({
+      title: 'Are you sure?',
+      text: text ,
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Update it!'
+    }).then((result) => {
+      if (result.value) {
+        let api_req: any = new Object();
+        let chat_req: any = new Object();
+        chat_req.action = "update_override";
+        chat_req.admin_id = this.admin_id;
+        chat_req.value = rob;
+        api_req.operation = "ticket";
+        api_req.moduleType = "ticket";
+        api_req.api_type = "web";
+        api_req.access_token = localStorage.getItem('access_token');
+        api_req.element_data = chat_req;
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.result.status == true) {
+            this.getalldeptList();
+            iziToast.success({
+              message: "Changed Incomming Email strategy successfully",
+              position: 'topRight'
+            });
+
+          } else {
+            iziToast.error({
+              message: "Deleting SMTP Failed",
+              position: 'topRight'
+            });
+          }
+
+
+        },
+          (error) => {
+            console.log(error);
+          });
+
+      }
+
+    });
+
+  }
 }

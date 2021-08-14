@@ -599,6 +599,59 @@
 
     <!--=============================== END SMTP TABLE LIST ================================== -->
 
+    <!--=============================== Robin LIST ================================== -->
+
+    <div class="row">
+        <div class="col-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Incoming Email Strategy</h4>
+                </div>
+                <div class="card-body p-30">
+
+                    <div class="row">
+                        <div class="col-12 col-md-3">
+                            <div class="fl mb-15">
+                                <h6 class="font-medium3">All Agents in Department</h6>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-1">
+                            <div class="connecting-arrow text-center">
+                                <i class="fas fa-arrows-alt-h"></i>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-1">
+                            <div class="form-check form-check-inline">
+                                <div (change)="robin_update()" class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="round_rob_set">
+                                    <div class="state p-success">
+                                        <label for="round_rob_set"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-1">
+                            <div class="connecting-arrow text-center">
+                                <i class="fas fa-arrows-alt-h"></i>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="fl mb-15">
+                                <h6 class="font-medium2">Round Robin</h6>
+                              
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+      
+    </div>
+    <!--=============================== END Robin LIST ================================== -->
 
     <div class="modal fade bd-example-modal-md" id="add_deptform">
         <div class="modal-dialog modal-md">

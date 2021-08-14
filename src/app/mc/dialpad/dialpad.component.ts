@@ -97,7 +97,7 @@ export class DialpadComponent implements OnInit {
     showWrapUp =false;
     call_type;
     caller_no;
-
+    temp_status;
   	constructor(private serverService: ServerService,private router:Router,private http:HttpClient) {
 
        this.serverService.show.subscribe( (val:any) => 
@@ -488,28 +488,9 @@ dialPadOpen() {
             return false;
         } 
     }
-   this.queueStatus();
-    // let access_token: any=localStorage.getItem('access_token');
-	// let que: any =  $('#que').val();  
-    // let api_req:any = '{"operation":"call", "moduleType":"call", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"queue_login_logout","user_id":"'+this.uadmin_id+'"}}';
-    // this.serverService.sendServer(api_req).subscribe((response:any) => {
-    //   if(response.result.data.status== "1"){
-    //     // this.dialPadContainer = true;
-    //     // this.dialPadCirclePlus = false;
-    //     this.queLogStatus = response.result.data.status;
-    //     this.redyForCall = 'On Hook';
-    //   } else {
-    //     this.queLogStatus = response.result.data.status;
-    //     this.redyForCall = response.result.data.reason;
-    //     // this.dialPadContainer = true;
-    //     // this.dialPadCirclePlus = false;
-    //     $('#onHookIndi').addClass('red')
-    //   }
-    // }, 
-    // (error)=>{
-    //     console.log(error);
-    // });
+    this.queueStatusWhenOpen();
 
+   
     this.addHelp();
 }
 
@@ -987,6 +968,7 @@ this.show_end_helper=false;
         dialpad_req.user_id = localStorage.getItem('userId');
         dialpad_req.action = view_type;
         if (view_type == "call_history_detail") {
+            iziToast.destroy();
             console.log(this.dialpadIncomingCalls);
             $('#animate-dialpad').modal('hide');
             $(".forwardDialpadPanel").addClass('hide-fwd-dialpad');
@@ -1035,6 +1017,7 @@ this.show_end_helper=false;
             dialpad_req.call_note = "";
             $('#outcall_number').val(detail_id);
         }  else if (view_type == "incoming_call_inprogess") {
+            iziToast.destroy();
             this.isDisabled = true;
                
             dialpad_req.call_data = "Call from " + detail_id;
@@ -1974,6 +1957,70 @@ queueStatus(){
       if(response.result.data.status== "1"){
         // this.dialPadContainer = true;
         // this.dialPadCirclePlus = false;
+        this.temp_status='1';
+        this.queLogStatus = response.result.data.status;
+        this.redyForCall = 'On Hook';
+      } else if(response.result.data.status== "0") {
+        this.temp_status='0';
+        this.queLogStatus = response.result.data.status;
+        this.redyForCall = response.result.data.reason;
+        // this.dialPadContainer = true;
+        // this.dialPadCirclePlus = false;
+        $('#onHookIndi').addClass('red')
+      }else{
+        this.queLogStatus = '0';
+        this.redyForCall = 'Off Hook';
+        var socket_message  =  '[{"cust_id":"'+this.has_hard_id+'","data":[{"Name":"reqqueuestatus","extension":"'+this.extension+'"}]}]';
+        this.websocket.send(socket_message);
+      }
+      var socket_message  =  '[{"cust_id":"'+this.has_hard_id+'","data":[{"Name":"reqqueuestatus","extension":"'+this.extension+'"}]}]';
+      this.websocket.send(socket_message);
+    }, 
+    (error)=>{
+        console.log(error);
+    });
+}
+queueStatusWhenOpen(){
+    let access_token: any=localStorage.getItem('access_token');
+	// let que: any =  $('#que').val();  
+ 
+    let api_req:any = '{"operation":"call", "moduleType":"call", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"queue_login_logout","user_id":"'+this.uadmin_id+'"}}';
+    this.serverService.sendServer(api_req).subscribe((response:any) => {
+      if(response.result.data.status== "1"){
+        // this.dialPadContainer = true;
+        // this.dialPadCirclePlus = false;
+        this.temp_status='1';
+        this.queLogStatus = response.result.data.status;
+        this.redyForCall = 'On Hook';
+      } else if(response.result.data.status== "0") {
+        this.temp_status='0';
+        this.queLogStatus = response.result.data.status;
+        this.redyForCall = response.result.data.reason;
+        // this.dialPadContainer = true;
+        // this.dialPadCirclePlus = false;
+        $('#onHookIndi').addClass('red')
+      }else{
+        this.queLogStatus = '0';
+        this.redyForCall = 'Off Hook';
+        var socket_message  =  '[{"cust_id":"'+this.has_hard_id+'","data":[{"Name":"reqqueuestatus","extension":"'+this.extension+'"}]}]';
+        this.websocket.send(socket_message);
+      }
+    //   var socket_message  =  '[{"cust_id":"'+this.has_hard_id+'","data":[{"Name":"reqqueuestatus","extension":"'+this.extension+'"}]}]';
+    //   this.websocket.send(socket_message);
+    }, 
+    (error)=>{
+        console.log(error);
+    });
+}
+
+queueStatus2(){
+    let access_token: any=localStorage.getItem('access_token');
+	// let que: any =  $('#que').val();  
+    let api_req:any = '{"operation":"call", "moduleType":"call", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"queue_login_logout","user_id":"'+this.uadmin_id+'"}}';
+    this.serverService.sendServer(api_req).subscribe((response:any) => {
+      if(response.result.data.status== "1"){
+        // this.dialPadContainer = true;
+        // this.dialPadCirclePlus = false;
         this.queLogStatus = response.result.data.status;
         this.redyForCall = 'On Hook';
       } else if(response.result.data.status== "0") {
@@ -2004,43 +2051,90 @@ MrvoIPQueueStatus(){
     let socketData = $('#MrvoIPQueueStatus').val(); 
     let mData = JSON.parse(socketData);    
     let Status= mData[0].data[0].value;
-    if(Status == 1){
-    let api_req:any = '{"operation":"call", "moduleType":"call", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"in_login_logout","agent_id":"'+this.uadmin_id+'","reason":"-","status":"1"}}';
+    let reason= mData[0].data[0].reason;
+    if(this.temp_status != Status){
+      console.log('Mismathced');
+        let api_req:any = '{"operation":"call", "moduleType":"call", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"in_login_logout","agent_id":"'+this.uadmin_id+'","reason":"'+reason+'","status":"'+Status+'"}}';
   
     this.serverService.sendServer(api_req).subscribe((response:any) => {
 
-        let api_reqs:any = '{"type": "profile"}';
-        this.serverService.profile.next(api_reqs);
+        // let api_reqs:any = '{"type": "profile"}';
+        // this.serverService.profile.next(api_reqs);
        // this.sendOnload('1','',queues);
         if(response.result.status == true){
-            this.queueStatus();
+            this.queueStatus2();
       } 
       
     }, 
     (error)=>{
         console.log(error);
     });
+    }
+    if(Status == 1){
+        this.queLogStatus =1;
+        this.redyForCall = 'On Hook';
+    // let api_req:any = '{"operation":"call", "moduleType":"call", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"in_login_logout","agent_id":"'+this.uadmin_id+'","reason":"-","status":"1"}}';
+  
+    // this.serverService.sendServer(api_req).subscribe((response:any) => {
+
+    //     let api_reqs:any = '{"type": "profile"}';
+    //     this.serverService.profile.next(api_reqs);
+    //    // this.sendOnload('1','',queues);
+    //     if(response.result.status == true){
+    //         this.queueStatus2();
+    //   } 
+      
+    // }, 
+    // (error)=>{
+    //     console.log(error);
+    // });
 }
 if(Status == 0){
-    let api_req:any = '{"operation":"call", "moduleType":"call", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"in_login_logout","agent_id":"'+this.uadmin_id+'","reason":"Logged out from 3CX","status":"0"}}';
+         this.queLogStatus = 0;
+         this.redyForCall = reason;     
+        $('#onHookIndi').addClass('red');
+    // let api_req:any = '{"operation":"call", "moduleType":"call", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"in_login_logout","agent_id":"'+this.uadmin_id+'","reason":"Logged out from 3CX","status":"0"}}';
+  
+    // this.serverService.sendServer(api_req).subscribe((response:any) => {
+    //     let api_reqs:any = '{"type": "profile"}';
+    //     this.serverService.profile.next(api_reqs);
+    //   if(response.result.status == true){
+    //     this.queueStatus2();
+
+    //   } 
+    // }, 
+    // (error)=>{
+    //     console.log(error);
+    // });
+}
+  }
+
+  dialpadeContactsDropdown(){
+    
+    let api_req:any = '{"operation":"call", "moduleType":"call", "api_type": "web","element_data":{"action":"user_list","user_id":"'+this.uadmin_id+'"}}';
   
     this.serverService.sendServer(api_req).subscribe((response:any) => {
-        let api_reqs:any = '{"type": "profile"}';
-        this.serverService.profile.next(api_reqs);
-      if(response.result.status == true){
-        this.queueStatus();
-
-      } 
+        this.dialpadUserList = response.result.data;
     }, 
     (error)=>{
         console.log(error);
     });
-}
   }
-  toggleClass(){
-  $('.settingSidebar').toggleClass('showSettingPanel');
-}
-copynumber(to){
+  addtotransfer(){
+    //   alert();
+      let num =$('#add_to_transfer').val();
+    //   alert(num);
+
+$('#makeCallForwordNumber').val(num);
+  }
+  adransfer(){
+    //   alert();
+      let num =$('#add_tansfer').val();
+    //   alert(num);
+
+$('#peer_att').val(num);
+  }
+  copynumber(to){
     Swal.fire({
         title: 'Confirm for Call',
         text:' Call to '+ to+'',

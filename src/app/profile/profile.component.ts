@@ -89,7 +89,7 @@ export class ProfileComponent implements OnInit {
         // Swal.close();
   
       } 
-      else if(result_message[0].data[0].sipdata=="getagentdet"){
+      else if(result_message[0].data[0].Name=="getagentdet"){
       
         // $('#sip_username_add').val(result_message[0].data[0].sip_username);
         // $('#sip_password_add').val(result_message[0].data[0].sip_password);
