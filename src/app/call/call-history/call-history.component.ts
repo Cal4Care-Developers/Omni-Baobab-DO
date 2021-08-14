@@ -19,6 +19,7 @@ export class CallHistoryComponent implements OnInit {
 	 getRep: FormGroup;
 	 auxcodes;
 	 uadmin_id;
+	 admin_id;
 	 res;
 	 constructor(private serverService: ServerService) { }
 
@@ -30,13 +31,14 @@ export class CallHistoryComponent implements OnInit {
 			'to_date' :new FormControl(null),
 		  });
 		  this.uadmin_id = localStorage.getItem('userId');
+		  this.admin_id = localStorage.getItem('admin_id');
 		  this.getAuxCode();
 
 	  }
 	  getAuxCode(){
 		let access_token: any=localStorage.getItem('access_token');
 	  
-		let api_req:any = '{"operation":"getAuxcode", "moduleType":"contact", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"get_aux_code","admin_id":"'+this.uadmin_id+'"}}';
+		let api_req:any = '{"operation":"getAuxcode", "moduleType":"contact", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"get_aux_code","admin_id":"'+this.admin_id+'"}}';
 	  
 		this.serverService.sendServer(api_req).subscribe((response:any) => {
 		  if(response.result.status==true){

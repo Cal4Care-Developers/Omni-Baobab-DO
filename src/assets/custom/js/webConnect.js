@@ -2558,6 +2558,8 @@ function addHelpers(){
 
 function endHeplCall(){
 	var helperId = 1;
+	var hangup = { request: "hangup"};
+	helpers[helperId].sipcall.send({ message: hangup });
 	helpers[helperId].sipcall.hangup();
 	$('#dovideo' + helperId).removeAttr('disabled').val('');
 	$('#peer' + helperId).removeAttr('disabled').val('');

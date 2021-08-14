@@ -866,8 +866,10 @@ incomingCallDecline() {
 }
 
 incomingCallEndByCustomer() {
-    
+    // alert('ended')
     this.dialPadDetailViewIncomming('call_history_detail', this.call_history_id);
+    // if(this.show_end_helper)
+    // this.endCallTransfer();
 
 }
 
@@ -886,6 +888,11 @@ incomingCallEnd() {
     $('#peer_att').val('');
 
     $('#dialpad_number').val('');
+
+    // alert('ended')
+    this.dialPadDetailViewIncomming('call_history_detail', this.call_history_id);
+    // if(this.show_end_helper)
+    this.endCallTransfer();
 }
 
 
