@@ -14,7 +14,7 @@
 										<div class="row">
 											<div class="col-md-6">
 												<div class="form-group">
-													<label for="contact_owner">Contact Owner </label>
+													<label for="contact_owner">Contact Owner <span style="color: red;"> *</span> </label>
 													<input type="text" id="contact_owner" class="form-control" formControlName="contact_owner" >
 												</div>
 											</div>
@@ -29,7 +29,7 @@
 			
 											<div class="col-md-6">
 												<div class="form-group">
-													<label for="contact_owner">Full Name</label>
+													<label for="contact_owner">Full Name <span style="color: red;"> *</span></label>
 													<div class="input-group">
 														<span class="input-group-addon">
 															<select name="sal" id="sal" class="form-control" >
@@ -66,7 +66,7 @@
 			
 											<div class="col-md-6">
 												<div class="form-group">
-													<label for="email">Email</label>
+													<label for="email">Email <span style="color: red;"> *</span></label>
 													<input type="email" id="email" class="form-control" formControlName="email" >
 													<label class="error-message message-small" *ngIf="!addContact.get('email').valid && addContact.get('email').touched ">Please enter the valid email id</label>
 
@@ -104,7 +104,7 @@
 												<div class="form-group">
 
 												<div class="input-group">
-													<label for="phone"><b>Phone (Primary Number)</b></label>
+													<label for="phone"><b>Phone (Primary Number)</b> <span style="color: red;"> *</span></label>
 													<span class="input-group-addon">
 													  <input type="country" id="country_code" class="form-control" placeholder="country code" formControlName="country_code" >
 													</span>
