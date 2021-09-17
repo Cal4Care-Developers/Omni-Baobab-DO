@@ -1853,11 +1853,11 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
 
   this.has_hard_id = localStorage.getItem('hardware_id');
   // alert(this.has_hard_id);
-  if(this.has_hard_id == ""){
+  if(this.has_hard_id == "" || this.has_hard_id == null){
     // alert("sdjnsdh");
       // $("#addLicence").modal({"backdrop": "static"});
       iziToast.error({
-        message: "Your Licence Key is expired!.. Please contact admin",
+        message: "Your Licence Key May expired!.. Please Contact Admin to Configure the License",
         position: 'topRight'
         });
       this.show_act_wall = true;
