@@ -637,6 +637,7 @@ this.logo_image = localStorage.getItem('logo_image');
       if (localStorage.getItem('server_FQDN') && localStorage.getItem('server_FQDN') != 'undefined') {
         // this.loadScript('../assets/custom/js/mconnect-webrtc.js');
         this.loadScript('../assets/custom/js/webConnect.js');
+       
         let api_reqs: any = '{"type": "HookRegister"}';
         this.serverService.show.next(api_reqs);
       } else {

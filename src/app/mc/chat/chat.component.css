@@ -1,24 +1,89 @@
 .chat-closed{
-    text-align: center;
-    color: #F44336;
-    font-size: 18px;
-    background: #f9f9f9;
+  text-align: center;
+  color: #F44336;
+  font-size: 18px;
+  background: #f9f9f9;
 }
 .close-text{
-    text-align: center;
-    padding: 10px 0px 0px;
-    color: #F44336;
+  text-align: center;
+  padding: 10px 0px 0px;
+  color: #F44336;
 }
 .end-chat-pannel{
-    float: right;
+  float: right;
 display: flex;
-justify-content: space-between;
+justify-content: flex-end;
 align-items: center;
 width: 85px;
 }
 
 .end-cross-icon{
-    cursor: pointer;
-border: 1px solid;
+  cursor: pointer;
+border: 0px;
 padding: 0px 5px;
 }
+
+.bold-name{
+  font-weight: 900;
+  color: black;
+}
+.fr {
+  float: right;
+  width: 100%;
+}
+
+
+
+.tabs {
+  max-width: 538px;
+}
+.tabs-nav li {
+  float: left;
+  width: 50%;
+  padding: 0px 0px;
+}
+.tabs-nav li:first-child a {
+  border-right: 0;
+  border-top-left-radius: 6px;
+}
+.tabs-nav li:last-child a {
+  border-top-right-radius: 6px;
+}
+.tabs-nav a {
+  background: #eaeaed;
+  border: 1px solid #cecfd5;
+  color: #0087cc;
+  display: block;
+  font-weight: 600;
+  padding: 3px 0;
+  text-align: center;
+  text-decoration: none;
+}
+.tabs-nav a:hover {
+  color: #ff7b29;
+}
+.tab-active a {
+  background: #fff !important;
+  border-bottom-color: transparent;
+  color: #2db34a;
+  cursor: default;
+}
+/* .active a {
+  background: #fff !important;
+  border-bottom-color: transparent;
+  color: #2db34a;
+  cursor: default;
+} */
+.tabs-stage {
+  border: 1px solid #cecfd5;
+  border-radius: 0 0 6px 6px;
+  border-top: 0;
+  clear: both;
+  padding: 24px 30px;
+  position: relative;
+  top: -1px;
+}
+.end-chat-pannel {
+  justify-content: flex-end;  
+}
+

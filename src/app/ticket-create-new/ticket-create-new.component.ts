@@ -141,7 +141,8 @@ removeTo(EmailAddress: EmailAddress): void {
   sel_Dept='Select Department';
   sel_status='Select Status';
   sel_agent='Select Agent';
-  email_from="omni@pipe.mconnectapps.com";
+  email_from="Select Email";
+  email_from_list;
   constructor(private serverService: ServerService, private router:Router,private route: ActivatedRoute) { }
   userEmails = new FormGroup({
     primaryEmail: new FormControl('',[
@@ -162,7 +163,7 @@ removeTo(EmailAddress: EmailAddress): void {
 
     this.initTiny();
     // this.initTiny();
-		
+    this.getDeptAliasName();
     this.getAlldetailsOfAgents();
   }
   getAlldetailsOfAgents(){
@@ -196,15 +197,15 @@ removeTo(EmailAddress: EmailAddress): void {
     
     tinymce.init({
       selector : '.richTextArea',
-      plugins : 'advlist autolink lists link  image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste help wordcount autolink lists media table',
-      toolbar : 'undo redo| fullscreen | formatselect | fontselect | fontsizeselect| bold italic | \ undo redo | link image file| code | \
-      alignleft aligncenter alignright alignjustify | \
-      bullist numlist outdent indent | help',
-  
-      content_style: 'body {font-size: 10pt;font-family: Verdana;}',
+      height: 500,
+      plugins: 'advlist textcolor formatpainter  autolink lists link  image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste wordcount autolink lists media table',
+      toolbar: 'undo redo |fullscreen|forecolor backcolor| formatselect | bold italic | \ undo redo | link image file| code | \
+        alignleft aligncenter alignright alignjustify | \
+        bullist numlist outdent indent ',
+      paste_data_images: true,
       images_upload_url : 'upload.php',
       automatic_uploads : false,
-  
+      textcolor_rows: "4",
       images_upload_handler : function(blobInfo, success, failure) {
         var xhr, formData;
   
@@ -271,16 +272,16 @@ var EmailTo = this.getFields(this.EmailToAddress, "email_to");
     // }
 
 
-Swal.fire({
-  title: 'Please Wait',
-  allowEscapeKey: false,
-  allowOutsideClick: false,
-//  background: '#19191a',
-  showConfirmButton: false,
-  onOpen: ()=>{
-      Swal.showLoading();
-  }
-});
+// Swal.fire({
+//   title: 'Please Wait',
+//   allowEscapeKey: false,
+//   allowOutsideClick: false,
+// //  background: '#19191a',
+//   showConfirmButton: false,
+//   onOpen: ()=>{
+//       Swal.showLoading();
+//   }
+// });
 agent_req.action='createExternalTicket';
 agent_req.subject=subject;
 agent_req.description=description;
@@ -352,10 +353,29 @@ var json_arr = JSON.stringify(agent_req);
       this.showtoEmail = false;
     }
     console.log(formData);
-
-
+    if (description=='') {
+      iziToast.warning({
+        message: "Please Enter Email Text",
+        position: 'topRight'
+      });
+      return false;
+    }
+    if (subject=='') {
+      iziToast.warning({
+        message: "Please Enter Email Subject",
+        position: 'topRight'
+      });
+      return false;
+    }
     if (Dept != '' && agent != '' && status != '' && priority != '' && EmailTo != '') {
 
+      if (this.email_from=="Select Email") {
+        iziToast.warning({
+          message: "Please choose from Email to send",
+          position: 'topRight'
+        });
+        return false;
+      }    
       Swal.fire({
         title: 'Please Wait',
         allowEscapeKey: false,
@@ -410,8 +430,10 @@ var json_arr = JSON.stringify(agent_req);
     this.sel_Dept=value
     $('#PickDepartment').val(data);
     // alert( $('#PickDepartment').val());
-    this.agents_options='';
+    // this.agents_options='';
     this.editDepartmentSettings(data);
+    this.sel_agent='Select Agent';
+    // $('#PickAgents').val('');
   }
 PickAgents(data,value){
   this.sel_agent=value
@@ -446,7 +468,8 @@ selectFromEmail(from){
   // if(from=='newz')
   // this.email_from="omni@pipe.mconnectapps.com";
   // else
-  this.email_from="omni@pipe.mconnectapps.com";
+  // this.email_from="isales@cal4care.com";
+  this.email_from = from;
 }
 getFields(input, field) {
   var output = [];
@@ -454,5 +477,22 @@ getFields(input, field) {
       output.push(input[i][field]);
   return output.toString();
 }
+getDeptAliasName(){
+  // {"operation":"ticket","moduleType":"ticket","api_type":"web","access_token":"","element_data":{"action":"getMyAliasEmails","admin_id":"1203"}}
 
+  let access_token: any = localStorage.getItem('access_token');
+  let api_req: any = '{"operation":"ticket", "moduleType": "ticket", "api_type": "web", "access_token":"' + access_token + '", "element_data":{"action":"getMyAliasEmails","admin_id":"' + this.admin_id + '"}}';
+
+  this.serverService.sendServer(api_req).subscribe((response: any) => {
+    if (response.status == true) {
+      // console.log(response);
+      this.email_from_list = response.result.data;
+      console.log(this.email_from_list);
+    }
+  },
+    (error) => {
+      console.log(error);
+    });
+
+}
 }

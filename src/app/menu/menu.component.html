@@ -210,8 +210,9 @@
   </li>
 
   <!-- <li routerLinkActive="active" *ngIf="this.userID == '64'"><a href="javascript:void(0)" class="nav-link" routerLink="/social-publish" ><i class="fa fa-chevron-circle-right"></i><span>Social Marketing</span></a></li> -->
+  <li *ngIf="e_tic && this.close_all_menu != 'close'"><a href="javascript:void(0)" class="nav-link" routerLink="/email-dashboard"><i class="fas fa-ticket-alt"></i><span>Email Ticketing</span></a></li>
 
-  <li class="dropdown {{this.h_ticket}}"  *ngIf="this.close_all_menu != 'close'" >
+  <!-- <li class="dropdown {{this.h_ticket}}"  *ngIf="this.close_all_menu != 'close'" >
     <a href="javascript:void(0)" class="nav-link has-dropdown"><i class="fas fa-envelope-open-text"></i><span>Email</span></a>
     <ul class="dropdown-menu menu-bg-clr-3">
       <li routerLinkActive="active" *ngIf="e_tic"><a href="javascript:void(0)" class="nav-link" routerLink="/ticketing-system-new" ><i class="fas fa-ticket-alt"></i><span>Email Ticketing</span></a></li>
@@ -219,11 +220,11 @@
       <li routerLinkActive="active" *ngIf="e_tic && (show_admin_sett||has_admin_permission)"><a href="javascript:void(0)" class="nav-link" routerLink="/ticket-template" ><i class="fas fa-ticket-alt"></i><span>Ticket Templates</span></a></li>
       <li routerLinkActive="active" *ngIf="e_tic && (show_admin_sett||has_admin_permission)"><a href="javascript:void(0)" class="nav-link" routerLink="/email-settings" ><i class="fas fa-cog"></i><span>Email Settings</span></a></li>
       <li routerLinkActive="active" *ngIf="i_tick"><a href="javascript:void(0)" class="nav-link" routerLink="/ticketing-system" ><i class="fas fa-ticket-alt"></i><span>Internal Ticketing</span></a></li>
-      <!-- <li routerLinkActive="active" *ngIf="this.userID == '201'||this.userID == '64'"><a href="javascript:void(0)" class="nav-link" routerLink="/bulk-mail-list" ><i class="fas fa-ticket-alt"></i><span>Bulk Email</span></a></li>
+       <li routerLinkActive="active" *ngIf="this.userID == '201'||this.userID == '64'"><a href="javascript:void(0)" class="nav-link" routerLink="/bulk-mail-list" ><i class="fas fa-ticket-alt"></i><span>Bulk Email</span></a></li>
       <li routerLinkActive="active" *ngIf="this.userID == '201'||this.userID == '64'"><a href="javascript:void(0)" class="nav-link" routerLink="/email-groups" ><i class="fas fa-ticket-alt"></i><span>Email Groups</span></a></li> -->
 
-    </ul>
-  </li>
+    <!-- </ul> -->
+  <!-- </li>  -->
   <!-- <li class="dropdown"  *ngIf=" (this.admin_id == '64' || this.admin_id == '310' ||  this.admin_id == '201' || this.admin_id =='800') && (show_admin_sett && voice_3cx)" (click)="openMe('Billing')">
     <a href="javascript:void(0)" class="nav-link has-dropdown"><i class="fas fa-envelope-open-text"></i><span>Billing</span></a>
     <ul class="dropdown-menu menu-bg-clr-1" id="Billing">

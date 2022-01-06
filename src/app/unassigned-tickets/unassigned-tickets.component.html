@@ -125,7 +125,7 @@ Custom Tooltip End
 														</div>
 													</div>
 													<div>
-														<a href="javascript:void(0)" *ngFor="let item of department ;let i = index" class="dropdown-item" (click)="changeMyDepartment(ticket.ticket_no, item.department_id)">{{item.department_name}}</a>
+														<a href="javascript:void(0)" *ngFor="let item of department ;let i = index" class="dropdown-item" (click)="changeMyDepartment(ticket.ticket_no, item.department_id,ticket.ticket_status)">{{item.department_name}}</a>
 														<div class="dropdown-divider"></div>
 														
 													</div>

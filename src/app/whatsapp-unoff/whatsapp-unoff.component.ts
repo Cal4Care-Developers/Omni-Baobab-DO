@@ -7,10 +7,12 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { NgZone } from '@angular/core';
 import { SafePropertyRead } from '@angular/compiler';
-
+// import * as abcJS  from '/src/assets/js/recorder.js';
 declare var $:any;
 declare var iziToast:any;
-
+// declare var   handleAction:any;
+declare var  startRecording:any;
+ declare var stopRecording:any;
 @Component({
   selector: 'app-whatsapp-unoff', 
   templateUrl: './whatsapp-unoff.component.html',
@@ -52,6 +54,7 @@ export class WhatsappUnoffComponent implements OnInit {
   chat_ids;
   offset_count_msg = 0;
   doc_link;
+  audiofile;
   constructor(private serverService: ServerService,private _ngZone: NgZone,private route: ActivatedRoute,private router:Router) { 
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.param1 = this.route.snapshot.queryParamMap.get('wp_id');
@@ -83,6 +86,10 @@ export class WhatsappUnoffComponent implements OnInit {
   }
 
   ngOnInit() {
+    setTimeout(() => {
+    this.loadScript('../assets/js/recorder.js');      
+    }, 5000);
+
     this.profile_image=localStorage.getItem('profile_image');
     // this.route.params.subscribe(routeParams => {
     //   this.chatPanelView("all");
@@ -124,6 +131,9 @@ export class WhatsappUnoffComponent implements OnInit {
   // this.dept_agent_list();
   // this.hasContactAccess();
 this.get_temps();
+// handleAction();
+//  startRecording();
+//  stopRecording();
     }
   
  ngAfterViewInit() {
@@ -433,7 +443,7 @@ sendChatMessageData(){
         let chat_req:any = new Object();
         chat_req.action="chat_detail_listOFF";
         chat_req.chat_id=chat_id;
-        chat_req.limit="5";
+        chat_req.limit="20";
 				chat_req.offset= 0;
         chat_req.user_id=this.loginUser;
         api_req.operation="wpchat";
@@ -834,7 +844,7 @@ setTimeout(function() {$('#show_qr').modal('hide');}, 30000);
         $('#transferModel').modal('show');
 
       }
-
+     
 
       revokeransfer(){
         let access_token: any=localStorage.getItem('access_token');
@@ -1202,7 +1212,216 @@ else{
           var el_src = $('.myvideo').attr("src");
                 $('.myvideo').attr("src",el_src);
           }
-      
+ startrec(){
+  startRecording();
+ } 
+ stoprec(){
+  stopRecording();
+ }    
+// action(){
+//   handleAction();
+// }
+public loadScript(url: string) {
+  const body = <HTMLDivElement> document.body;
+  const script = document.createElement('script');
+  script.innerHTML = '';
+  script.src = url;
+  script.async = false;
+  script.defer = true;
+  body.appendChild(script);
+}
+stpbtn(){
+        
+  $('#VoiceModel').modal('show');
+
+}
+addWhatsappVoice(){ 
+  $('#VoiceModel').modal('hide');
+ 
+console.log($('#audio-playback')[0]);
+  let access_token: any=localStorage.getItem('access_token');
+  let user_id: any =  localStorage.getItem('userId'); 
+  let chat_id: any=this.chat_detail_id.nativeElement.value;
+  let data:any=$('#audio-playback').attr("src");
+  console.log(data)
+  fetch(""+data).then(response => response.blob())
+  .then(blob => { 
+    const fd = new FormData();
+   console.log(blob)
+    fd.append('operation', 'wp_instance');
+    fd.append('moduleType', 'wp_instance');
+    fd.append('api_type', 'web');
+    fd.append('action', 'whatsapp_media_upload');
+    fd.append('access_token', access_token);
+    fd.append("whatsapp_media", blob,$('#audio-playback').attr("src"));
+     // alert($('#audio-playback')[0])
+     fd.append('user_id', user_id);
+     fd.append('chat_id', chat_id);
+    // where `.ext` matches file `MIME` type   
+    var responsenew= fetch("https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php", {method:"POST", body:fd})
+//return fetch("https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php", {method:"POST", body:fd})
+  console.log(responsenew)
+  return responsenew
+  
+  })
+  .then((response) => response.json()) 
+ 
+  .then((responsenew) => {
+    console.log(responsenew); 
+    $('#whatsapp_media_url_voice').val(responsenew.url);
+   alert($('#whatsapp_media_url_voice').val())
+   
+    $('#whatsapp_media').val('');
+  $('#hit_image_voice').click();
+  });
+
+ 
+  
+// .then(response => response.responsenew)
+
+
+//   .then(res => console.log(res))
+//  .catch(err => console.log(err))
+ 
+
+  // let audiofile: any=localStorage.getItem('access_token');
+  // let audio: any= $('#audio-playback').val();
+//     var formData = new FormData();
+//     formData.append('operation', 'wp_instance');
+//     formData.append('moduleType', 'wp_instance');
+//     formData.append('api_type', 'web');
+//     formData.append('action', 'whatsapp_media_upload');
+//     formData.append('access_token', access_token);
+//   // formData.append('audiofile', $('#audio')[0].files[0]);
+//    formData.append('whatsapp_media', $('#audio-playback').attr("src"));
+//   // alert($('#audio-playback')[0])
+//    formData.append('user_id', user_id);
+//     formData.append('chat_id', chat_id);
+//    console.log($('#audio-playback').files);
+
+
+//     console.log(formData);
+//     Swal.fire({
+//       title: 'Please Wait',
+//       allowEscapeKey: false,
+//       allowOutsideClick: false,
+//     //  background: '#19191a',
+//       showConfirmButton: false,
+//       onOpen: ()=>{
+//           Swal.showLoading();
+//       }
+//     });
+  
+//  $.ajax({  
+//       // url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",  
+//     url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",   
+//     type : 'POST',
+//     data : formData,
+//     processData: false,  // tell jQuery not to process the data
+//     contentType: false, 
+//  success:function(data){ 
+//       this.parsed_data = JSON.parse(data);
+//       console.log(this.parsed_data );
+//       if(this.parsed_data.status == 'true'){ 
+
+//         //  $('#whatsapp_media_url').val(this.parsed_data.url);
+//         $('#audio-playback').val('');
+//         $('#hit_image').click();
+//         Swal.close();
+
+//         iziToast.success({
+//           message: "Message sent successfully",
+//           position: 'topRight'
+//       });
+//       } else {
+//         Swal.close();
+
+
+//         iziToast.error({
+//           message: "Sorry, Some Error Occured",
+//           position: 'topRight'
+//       });
+//       }
+//       Swal.close();
+
+//     },
+//     error: function () {
+//       iziToast.error({
+//         message: "Sorry, Message not sent. Server takes too much of time for response",
+//         position: 'topRight'
+//     });
+//     Swal.close();
+
+//   }
+;  
+
+}
+
+sendvoiceMediaData(){
+
+  var chat_message=  $('#whatsapp_media_with_text').val();
+  chat_message = chat_message.trim();
+  // alert(chat_message);
+  if(this.isthisgroup==true){
+    var is_group='1';
+        }
+    else
+    {      is_group='0'; }
+ console.log(chat_message);
+     let api_req:any = new Object();
+    let chat_req:any = new Object();
+    
+    chat_req.action="send_chat_message_unoffvoice";
+    chat_req.chat_id=this.chat_detail_id.nativeElement.value;
+    chat_req.user_id=this.loginUser;
+    chat_req.chat_message=chat_message;
+    chat_req.is_group=is_group;
+    chat_req.instance_id=this.param1;
+    api_req.operation="wp_instance";
+    api_req.moduleType="wp_instance";
+    api_req.api_type="web";
+    api_req.access_token=localStorage.getItem('access_token');
+    chat_req.whatsapp_media_url= $('whatsapp_media_url').val();
+    api_req.element_data = chat_req;
+  
+    
+          this.serverService.sendServer(api_req).subscribe((response:any) => {
+
+            if(response.result.status==1){
+
+            var chat_msg= response.result.data;
+
+           var socket_message  =  '{"message_type":"chat","message_status":"existing","message_info" : {"chat_id" : "'+chat_msg.chat_id+'","msg_user_id" : "'+chat_msg.msg_user_id+'","msg_user_type" : "2","msg_type":"text","message" : "'+chat_msg.chat_msg+'","queue_id":"1"}}';
+
+           //this.websocket.send(socket_message);
+
+           console.log(socket_message);
+                   
+               this.chat_panel_details.push(chat_msg);
+              //  this.forworded=
+               this.chatautoScroll();
+               clearTimeout(this.callonce);
+               
+
+              //  this.chatPanelDetail(this.chat_detail_id.nativeElement.value);
+               this.chatPanelDetail(this.chat_detail_key);
+               $('#chat_msg').val('');
+            }
+            else{
+              this.validateQR();
+
+           }
+              
+          }, 
+          
+          (error)=>{
+              console.log(error);
+          });
+
+
+
+}
+
 
 }
   

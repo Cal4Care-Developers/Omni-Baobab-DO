@@ -140,7 +140,6 @@ export class DialpadComponent implements OnInit {
 
   ngOnInit() {
     if(localStorage.getItem('access_token')) {
-    
 	this.dialPadContainer=false;
 	this.dialPadCirclePlus=true;
 	this.dialPadRefresh=false;
@@ -1894,8 +1893,7 @@ makecallConference(){
 shownotification(){
 
 }
-public loadScript(url: string) {
-    console.log('scriptCalled');
+  public loadScript(url: string) {
     const body = <HTMLDivElement> document.body;
     const script = document.createElement('script');
     script.innerHTML = '';

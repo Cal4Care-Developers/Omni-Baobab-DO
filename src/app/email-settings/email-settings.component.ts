@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ServerService } from '../services/server.service';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2'
 import { NgZone } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -52,21 +53,61 @@ export class EmailSettingsComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   addGroupValue = [];
   editwrapUpCode = [];
+  editwrapUpCode2 = [];
+  priority_list =[];
   round_robin;
-  constructor(public serverService: ServerService, private _ngZone: NgZone, private route: ActivatedRoute) {
-
+  filter_list;
+  admin_permission;
+  user_type;
+  has_round_robin=false;
+  limit_count: string = '';
+ 
+  priorityLists;
+  priorityQueue;
+  new_priorityQueue;
+  key_id;
+  constructor(public serverService: ServerService, private _ngZone: NgZone, private router: Router,private route: ActivatedRoute) {
+   
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.loginUser = localStorage.getItem('userId');
     this.admin_id = localStorage.getItem('admin_id');
     this.selected_dept_id = 3;
+    this.admin_permission = localStorage.getItem('admin_permision');
+		this.user_type = localStorage.getItem('user_type');
+
+    if (this.user_type == 'Super Admin') {
+			this.user_type = 1;          
+		}
+		else if (this.user_type == 'Admin' || this.admin_permission =='1') {
+			this.user_type = 2;		
+		}
+		else {
+			this.user_type = 3;
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'You have no access view that page!',
+      });
+      setTimeout(() => {
+        this.router.navigate(['/']);
+      }, 2000);
+      return false;
+		}
+
+   
+
+
     this.deptList();
     this.getalldeptList();
     // this.listEmailDetails(this.selected_dept_id);
     this.agentsList({});
     this.listAdminGroup();
     this.smtpList();
+    this.filterList();
+    this.PriorityFilterList();
+    this.getpriority();
     this.select_dept = "Select Department";
 
 
@@ -82,7 +123,7 @@ export class EmailSettingsComponent implements OnInit {
 
     this.forwarder_list = new FormGroup({
       'alias_name': new FormControl(null, Validators.required),
-      'sender_id': new FormControl(null, Validators.required),
+      'sender_id': new FormControl(null),
     });
     this.edit_forwarder_list = new FormGroup({
       'edit_alias_name': new FormControl(null, Validators.required),
@@ -702,22 +743,46 @@ export class EmailSettingsComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log(response);
       if (response.result.status == true) {
-   
+        // aliseEmail: null
+        // departments: "3"
+        // emailAddr: "nzassaaloycc@pipe.mconnectapps.com"
+        // id: "1";
+
         this.get_all_dept_list = response.result.data.alldata;
         this.get_admin_ids = response.result.data.adminEmail;
         this.round_robin = response.result.data.roundrobin;
-        if(this.round_robin =='0'){
-          $('#round_rob_set').prop('checked',false);
-          $(".font-medium3").addClass('ring-all');
-          $(".font-medium2").removeClass('round-rob');
-          // alert('asas')
+        this.limit_count= response.result.data.ticket_limit;
+        if(response.result.data.profile_picture_permission =='0'){
+          $('#profile_pic_share').prop('checked',true);
         }
         else{
-          $('#round_rob_set').prop('checked',true);
-          $(".font-medium2").addClass('round-rob');
-          $(".font-medium3").removeClass('ring-all');
-      
+          $('#profile_pic_share').prop('checked',false);
+          
         }
+        //Delete ticket perm toggle
+        if(response.result.data.agent_delete_permission =='1'){
+          $('#delete_ticket_prem').prop('checked',true);
+        }
+        else{
+          $('#delete_ticket_prem').prop('checked',false);
+          
+        }
+  if(this.round_robin =='0'){
+    $('#round_rob_set').prop('checked',false);
+    $(".font-medium3").addClass('ring-all');
+    $(".font-medium2").removeClass('round-rob');
+    // alert('asas')
+    this.has_round_robin=false;
+  }
+  else{
+    $('#round_rob_set').prop('checked',true);
+    $(".font-medium2").addClass('round-rob');
+    $(".font-medium3").removeClass('ring-all');
+    this.has_round_robin=true;
+
+
+  }
+
       }
     },
       (error) => {
@@ -728,6 +793,7 @@ export class EmailSettingsComponent implements OnInit {
 
 
   addEmailData() {
+
 
 
 
@@ -742,7 +808,8 @@ export class EmailSettingsComponent implements OnInit {
     chat_req.admin_id = this.admin_id;
     chat_req.email = emails;
     chat_req.aliseEmail = alias;
-    chat_req.senderID = sender_ids;
+    // chat_req.senderID = sender_ids;
+    chat_req.senderID = alias;
     chat_req.departments = depts;
     api_req.operation = "ticket";
     api_req.moduleType = "ticket";
@@ -782,7 +849,8 @@ export class EmailSettingsComponent implements OnInit {
     chat_req.email = emails;
     chat_req.departments = depts;
     chat_req.aliseEmail = alias;
-    chat_req.senderID = sender_ids;
+    // chat_req.senderID = sender_ids;
+    chat_req.senderID = alias;
     api_req.operation = "ticket";
     api_req.moduleType = "ticket";
     api_req.api_type = "web";
@@ -815,11 +883,12 @@ export class EmailSettingsComponent implements OnInit {
   editEmailSettings(emailAdds) {
 
 
+
     let api_req: any = new Object();
     let chat_req: any = new Object();
     chat_req.action = "getEmailDept";
     chat_req.admin_id = this.admin_id;
-    chat_req.email = emailAdds;
+    chat_req.id = emailAdds;
     api_req.operation = "ticket";
     api_req.moduleType = "ticket";
     api_req.api_type = "web";
@@ -855,7 +924,7 @@ export class EmailSettingsComponent implements OnInit {
 
   deletedata(ids) {
 
-
+  
 
     Swal.fire({
       title: 'Are you sure?',
@@ -1521,9 +1590,11 @@ export class EmailSettingsComponent implements OnInit {
 
 
   }
-  robin_update(ids) {
-    var rob = '0';var text="Would you Need to Assign incoming email to all agents in the department?";
-      if($('#round_rob_set').prop('checked')){ rob = '1'; text="Do you want to change, and be assigned a round-robin system for incoming email to Department agents?"; }
+  robin_update() {
+    var rob = '0';
+    var limit='0';
+    var text="Would you Need to Assign incoming email to all agents in the department?";
+      if($('#round_rob_set').prop('checked')){ rob = '1'; limit=this.limit_count; text="Do you want to change, and be assigned a round-robin system for incoming email to Department agents?"; }
     // let rob=$('#round_rob_set').val();
 
 // return false;
@@ -1542,6 +1613,7 @@ export class EmailSettingsComponent implements OnInit {
         chat_req.action = "update_override";
         chat_req.admin_id = this.admin_id;
         chat_req.value = rob;
+        chat_req.ticket_limit = limit;
         api_req.operation = "ticket";
         api_req.moduleType = "ticket";
         api_req.api_type = "web";
@@ -1569,8 +1641,643 @@ export class EmailSettingsComponent implements OnInit {
           });
 
       }
+else{
+  this.getalldeptList();
+}
+    });
+
+  }
+  filterList() {
+
+    // {"operation":"ticket", "moduleType":"ticket", "api_type": "web", "access_token":"", "element_data":{"action":"list_smtp","user_id":""}}
+
+    let api_req: any = new Object();
+    let chat_req: any = new Object();
+    chat_req.action = "list_email_filter";
+    chat_req.user_id = this.admin_id;
+    chat_req.admin_id = this.admin_id;
+    api_req.operation = "ticket";
+    api_req.moduleType = "ticket";
+    api_req.api_type = "web";
+    api_req.access_token = localStorage.getItem('access_token');
+    api_req.element_data = chat_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response.result.status == true) {
+
+        this.filter_list = response.result.data;
+      }
+
+    },
+      (error) => {
+        console.log(error);
+      });
+
+  }
+  createFilter() {
+
+let keyword=$('#Add_keyword').val();
+    // {"operation":"ticket", "moduleType":"ticket", "api_type": "web", "access_token":"", "element_data":{"action":"addSmtpSetting","user_id":"","hostname":"","port":"","username":"","password":""}}
+if(keyword==''){
+  iziToast.warning({
+    message:'Please enter the keyword',
+    position:"topRight"
+  });
+  return false;
+}
+    let api_req: any = new Object();
+    let chat_req: any = new Object();
+    chat_req.action = "add_email_filter";
+    chat_req.admin_id = this.admin_id;
+    chat_req.user_id = this.admin_id;
+    chat_req.keyword = keyword;
+    
+    api_req.operation = "ticket";
+    api_req.moduleType = "ticket";
+    api_req.api_type = "web";
+    api_req.access_token = localStorage.getItem('access_token');
+    api_req.element_data = chat_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response.result.data == 1) {
+
+        $('#createNewFilter').modal('hide');
+        this.filterList();
+        iziToast.success({
+          message: "Filter Keyword Created",
+          position: 'topRight'
+        });
+
+      } 
+      else if (response.result.data == 2) {
+        iziToast.warning({
+            message: "Keyword Already Inserted",
+            position: 'topRight'
+        });
+    }else {
+        iziToast.error({
+          message: "Filter  Creation Failed",
+          position: 'topRight'
+        });
+      }
+
+
+    },
+      (error) => {
+        console.log(error);
+      });
+
+  }
+  EditFilter(ids) {
+
+    // {"operation":"ticket", "moduleType":"ticket", "api_type": "web", "access_token":"", "element_data":{"action":"get_smtp_byid","id":""}}
+    this.get_id_updates = ids;
+    let api_req: any = new Object();
+    let chat_req: any = new Object();
+    chat_req.action = "get_smtp_byid";
+    chat_req.id = ids;
+    api_req.operation = "ticket";
+    api_req.moduleType = "ticket";
+    api_req.api_type = "web";
+    api_req.access_token = localStorage.getItem('access_token');
+    api_req.element_data = chat_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response.result.status == true) {
+
+        $('#edit_smtpform').modal('show');
+
+        this.editSmtpDatas.patchValue({
+          edit_host_name: response.result.data[0].hostname,
+          edit_port_num: response.result.data[0].port,
+          edit_smtp_username: response.result.data[0].username,
+          edit_smtp_pasword: atob(response.result.data[0].password)
+        });
+        $("#edit_smtp_dept").val(response.result.data[0].departments);
+
+      }
+
+    },
+      (error) => {
+        console.log(error);
+      });
+
+  }
+
+
+  updateFilterList() {
+
+    //   {"operation":"ticket", "moduleType":"ticket", "api_type": "web", "access_token":"
+    // ", "element_data":{"action":"updateSmtpSetting","id":"","hostname":"","port":"","username":"","password":""}}
+
+    let api_req: any = new Object();
+    let chat_req: any = new Object();
+    chat_req.action = "updateSmtpSetting";
+    chat_req.id = this.get_id_updates;
+    chat_req.hostname = this.editSmtpDatas.controls['edit_host_name'].value;
+    chat_req.port = this.editSmtpDatas.controls['edit_port_num'].value;
+    chat_req.username = this.editSmtpDatas.controls['edit_smtp_username'].value;
+    chat_req.password = btoa(this.editSmtpDatas.controls['edit_smtp_pasword'].value);
+    chat_req.departments = $("#edit_smtp_dept").val();
+    api_req.operation = "ticket";
+    api_req.moduleType = "ticket";
+    api_req.api_type = "web";
+    api_req.access_token = localStorage.getItem('access_token');
+    api_req.element_data = chat_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response.result.data == 1) {
+
+        $('#edit_smtpform').modal('hide');
+        this.smtpList();
+        iziToast.success({
+          message: "Update SMTP successfully",
+          position: 'topRight'
+        });
+
+      } else {
+        iziToast.error({
+          message: "Update SMTP Failed",
+          position: 'topRight'
+        });
+      }
+
+
+    },
+      (error) => {
+        console.log(error);
+      });
+
+  }
+
+  DeleteFilter(ids) {
+
+    // {"operation":"ticket", "moduleType":"ticket", "api_type": "web", "access_token":"", "element_data":{"action":"delete_smtp","id":""}}
+    Swal.fire({
+      title: 'Would like to Remove this Keyword?',
+      text: "This means that you will receive the email even though it has keyword",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Remove'
+    }).then((result) => {
+      if (result.value) {
+        let api_req: any = new Object();
+        let chat_req: any = new Object();
+        chat_req.action = "delete_email_filter";
+        chat_req.key_id = ids;
+        api_req.operation = "ticket";
+        api_req.moduleType = "ticket";
+        api_req.api_type = "web";
+        api_req.access_token = localStorage.getItem('access_token');
+        api_req.element_data = chat_req;
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.result.status == true) {
+            this.filterList();
+            iziToast.success({
+              message: "Keyword Removed successfully",
+              position: 'topRight'
+            });
+
+          } else {
+            iziToast.error({
+              message: "Deleting Failed",
+              position: 'topRight'
+            });
+          }
+
+
+        },
+          (error) => {
+            console.log(error);
+          });
+
+      }
 
     });
 
   }
+  shareMyTicket(agent_ids,index){
+    let share_tick=1;
+    if ($("#share_my_ticket" + index).prop("checked") == true) {
+      share_tick = 1;
+    } else {
+      share_tick = 0;
+    }
+    let api_req: any = new Object();
+    let chat_req: any = new Object();
+    chat_req.action = "update_share_ticket";
+    chat_req.share_ticket =share_tick;
+    chat_req.user_id = agent_ids;
+    api_req.operation = "ticket";
+    api_req.moduleType = "ticket";
+    api_req.api_type = "web";
+    api_req.access_token = localStorage.getItem('access_token');
+    api_req.element_data = chat_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response.result.data == 1){
+          // this.agentsList({});
+          iziToast.success({
+            message:"Settings updated",
+            position:"topRight"
+          });
+      }
+    },
+      (error) => {
+        console.log(error);
+      });
+  }
+  shareMyPciture(){
+    let share_tick=0;
+    if ($("#profile_pic_share").prop("checked") == true) {
+      share_tick = 0;
+    } else {
+      share_tick = 1;
+    }
+    Swal.fire({
+      title: 'Show Profile Picture',
+      text: "Users' profile picture will be displayed in outgoing emails",
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, update!'
+    }).then((result) => {
+      if (result.value) {
+    let api_req: any = new Object();
+    let chat_req: any = new Object();
+    chat_req.action = "agent_picture_permission";
+    chat_req.value =share_tick;
+    chat_req.user_id = this.admin_id;
+    api_req.operation = "ticket";
+    api_req.moduleType = "ticket";
+    api_req.api_type = "web";
+    api_req.access_token = localStorage.getItem('access_token');
+    api_req.element_data = chat_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response.result.data == 1){
+          // this.agentsList({});
+          iziToast.success({
+            message:"Settings updated",
+            position:"topRight"
+          });
+      }
+    },
+      (error) => {
+        console.log(error);
+      });
+    }
+    else{
+      this.getalldeptList();
+    }
+    });
+ 
+  } 
+
+  add2(event: MatChipInputEvent): void {
+    // console.log(this.addDept.status);
+    const input = event.input;
+    const value = event.value; 
+   
+ 
+      if ((value || '').trim()) {
+        this.priority_list.push({ name: value.trim() });
+      }
+      if (input) {
+        input.value = '';
+      }
+  
+
+  }
+
+
+
+  remove2(code): void {
+    const index = this.priority_list.indexOf(code);
+    if (index >= 0) {
+      this.priority_list.splice(index, 1);
+    }
+  }
+
+
+  editadd2(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+    if ((value || '').trim()) {
+      this.editwrapUpCode2.push({ name: value.trim() });
+    }
+    if (input) {
+      input.value = '';
+    }
+
+
+  }
+
+  editremove2(code): void {
+    const index = this.editwrapUpCode2.indexOf(code);
+    if (index >= 0) {
+      this.editwrapUpCode2.splice(index, 1);
+    }
+  }
+
+  PriorityFilterList() {
+
+    // {"operation":"ticket", "moduleType":"ticket", "api_type": "web", "access_token":"", "element_data":{"action":"list_smtp","user_id":""}}
+
+    let api_req: any = new Object();
+    let chat_req: any = new Object();
+    chat_req.action = "list_priority_filter";
+    chat_req.user_id = this.admin_id;  
+    api_req.operation = "ticket";
+    api_req.moduleType = "ticket";
+    api_req.api_type = "web";
+    api_req.access_token = localStorage.getItem('access_token');
+    api_req.element_data = chat_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response.result.status == true) {
+
+        this.priorityQueue = response.result.data;
+        console.log(this.priorityQueue);
+        this.new_priorityQueue = [];
+
+        this.priorityQueue.forEach(element => {
+          var splitted = element.key_word.split(",");
+          this.new_priorityQueue.push({ priority: element.priority,priority_id: element.priority_id, key_word: splitted, id: element.id });
+
+        });
+      }
+
+    },
+      (error) => {
+        console.log(error);
+      });
+
+  }
+  getpriority() {   
+    let api_req: any = new Object();
+    let chat_req: any = new Object();
+    chat_req.action = "getPriorities";  
+    api_req.operation = "ticket";
+    api_req.moduleType = "ticket";
+    api_req.api_type = "web";
+    api_req.access_token = localStorage.getItem('access_token');
+    api_req.element_data = chat_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response.status == true) {
+        this.priorityLists = response.result.data;
+        console.log(this.priorityLists)
+        
+      }
+
+    },
+      (error) => {
+        console.log(error);
+      });
+
+  }
+  addPriorityFilter(){
+    let access_token: any=localStorage.getItem('access_token');
+    var new_array = [];
+    this.priority_list.forEach(element => {
+      new_array.push(element.name);
+    });
+    
+    var keyword = new_array.join(",");
+    if(keyword==""){
+      iziToast.warning({
+        message:"Type keywords",
+        position:"topRight"
+      })
+      return false;
+    }
+    if($('#add_pri_id').val()==''||$('#add_pri_id').val()==null ||$('#add_pri_id').val()==0)
+    return false;
+
+    this.priority_list = [];
+    Swal.fire({
+			html:
+				'<div style="display: flex;justify-content: center;"><div class="pong-loader"></div></div>',
+		showCloseButton: false,
+			showCancelButton: false,
+			showConfirmButton: false,
+			focusConfirm: false,
+			background: 'transparent',
+		});
+    let api_req: any = new Object();
+    let chat_req: any = new Object();
+    chat_req.action = "add_priority_filter";  
+    chat_req.user_id = this.admin_id;  
+    chat_req.admin_id = this.admin_id;  
+    chat_req.keyword = keyword;  
+    chat_req.priority= $('#add_pri_id').val();
+    chat_req.action = "add_priority_filter";  
+    api_req.operation = "add_priority_filter";
+    api_req.moduleType = "ticket";
+    api_req.api_type = "web";
+    api_req.access_token = localStorage.getItem('access_token');
+    api_req.element_data = chat_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      Swal.close();
+      if (response.status == true) {
+      
+ this.PriorityFilterList();  
+ $('#add_priority').modal('hide');  
+      }
+
+    },
+      (error) => {
+        console.log(error);
+      });
+
+  }
+  statusChange() {
+
+    var status_ids = $('#add_pri_id').val();
+        var present = this.new_priorityQueue.filter(function (item) {
+      return item.priority_id == status_ids;
+    });
+   
+    console.log(present.length);
+    if (present.length >0) {
+    iziToast.warning({
+      message:"Already Exists",
+      position:"topRight"
+    });  
+    $('#add_pri_id').val(0);
+    } 
+  }
+  editprioritySettings(ids){
+ 
+   
+
+      // {"operation":"ticket", "moduleType":"ticket", "api_type": "web", "access_token":"", "element_data":{"action":"edit_email_group","group_id":""}}
+  
+      let api_req: any = new Object();
+      let chat_req: any = new Object();
+      chat_req.action = "edit_priority_filter";
+      chat_req.key_id = ids,
+      api_req.operation = "edit_priority_filter";
+      api_req.moduleType = "ticket";
+      api_req.api_type = "web";
+      api_req.access_token = localStorage.getItem('access_token');
+      api_req.element_data = chat_req;
+      this.serverService.sendServer(api_req).subscribe((response: any) => {
+        if (response.result.status == true) {  
+          $('#edit_priority').modal('show');        
+          var agent_data = response.result.data[0];
+          this.editwrapUpCode2 = [];
+          var edit_splits = agent_data.key_word.split(',');
+          console.log(edit_splits);
+          edit_splits.forEach(element => {
+            this.editwrapUpCode2.push({ name: element });
+          });
+  
+  this.key_id=agent_data.id;
+  
+        }
+  
+  
+      },
+        (error) => {
+          console.log(error);
+        });
+  
+    }
+    updatePriority(){
+   
+
+    
+      
+        // {"operation":"ticket", "moduleType":"ticket", "api_type": "web", "access_token":"", "element_data":{"action":"update_email_group","group_id":"","group_name":"","email":"","new_email_alert":"","reply_email_alert":"","close_email_alert":"","send_fullthread":""}}
+    
+        var new_array = [];
+        this.editwrapUpCode2.forEach(element => {
+          new_array.push(element.name);
+        });
+    
+        var keys = new_array.join(",");    
+    
+        let api_req: any = new Object();
+        let chat_req: any = new Object();
+        chat_req.action = "update_priority_filter";
+        chat_req.key_id = this.key_id;
+        chat_req.key_word = keys;
+        api_req.operation = "update_priority_filter";
+        api_req.moduleType = "ticket";
+        api_req.api_type = "web";
+        api_req.access_token = localStorage.getItem('access_token');
+        api_req.element_data = chat_req;
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          console.log(response);
+          if (response.result.data == 1) {        
+            $('#edit_priority').modal('hide');
+            this.PriorityFilterList();
+            iziToast.success({
+              message: "Keywords Updated successfully",
+              position: 'topRight'
+            });
+    
+          } else {
+            iziToast.error({
+              message: "Failed to Update,Please try again",
+              position: 'topRight'
+            });
+          }
+    
+        },
+          (error) => {
+            console.log(error);
+          });
+    
+    
+         
+    }
+    deletefilterdata(ids) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "Would like to delete the keyword!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+  
+          let api_req: any = new Object();
+          let chat_req: any = new Object();
+          chat_req.action = "delete_priority_filter";
+          chat_req.key_id = ids;
+          api_req.operation = "delete_priority_filter";
+          api_req.moduleType = "ticket";
+          api_req.api_type = "web";
+          api_req.access_token = localStorage.getItem('access_token');
+          api_req.element_data = chat_req;
+          this.serverService.sendServer(api_req).subscribe((response: any) => {
+            if (response.result.status == true) {
+              this.PriorityFilterList();
+              iziToast.success({
+                message: "Keyword Deleted successfully",
+                position: 'topRight'
+              });
+            } else {  
+              iziToast.error({
+                message: "Delete Failed,please try again",
+                position: 'topRight'
+              });
+            }
+          },
+            (error) => {
+              console.log(error);
+            });
+        }
+      });
+  }
+  manageDeletePerm(){
+    let share_tick=0;
+    var text;
+    if ($("#delete_ticket_prem").prop("checked") == true) {
+      share_tick = 1;
+      text="Users can delete their tickets!";
+    
+    } else {
+      share_tick = 0;
+      text="Users will not be allowed to delete their tickets!";
+    }
+    Swal.fire({
+      title: 'Delete Ticket Permission',
+      text: text,
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, update!'
+    }).then((result) => {
+      if (result.value) {
+    let api_req: any = new Object();
+    let chat_req: any = new Object();
+    chat_req.action = "agent_delete_setting";
+    chat_req.value =share_tick;
+    chat_req.admin_id = this.admin_id;
+    api_req.operation = "ticket";
+    api_req.moduleType = "ticket";
+    api_req.api_type = "web";
+    api_req.access_token = localStorage.getItem('access_token');
+    api_req.element_data = chat_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response.result.data == 1){
+          // this.agentsList({});
+          iziToast.success({
+            message:"Settings updated",
+            position:"topRight"
+          });
+      }
+    },
+      (error) => {
+        console.log(error);
+      });
+    }
+    else{
+      this.getalldeptList();
+    }
+    });
+ 
+  } 
 }

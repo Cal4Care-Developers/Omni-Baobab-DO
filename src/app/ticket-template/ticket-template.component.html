@@ -1,7 +1,49 @@
+<div class="card padding-15" >
+	<div class="row">
+	  <div class="col-md-9">
+		<a routerLink="/ticketing-system-new" href="#" class="badge badge-success mr-2">
+		  <span class="icon">
+			<i class="fas fa-ticket-alt"></i>
+		  </span>
+		  &nbsp; My Tickets
+		</a>
+		<a *ngIf="has_robin!=1 || user_type==2" href="#" routerLink="/unassinged-tickets" class="badge badge-warning mr-2">
+		  <span class="icon">
+			<i class="fas fa-ticket-alt"></i>
+		  </span>
+		  &nbsp; Queue Tickets
+		</a>
+
+		<a *ngIf="this.user_type==2" href="#" routerLink="/ticket-template" class="badge badge-primary mr-2 pointer-event-none">
+		  <span class="icon">
+			<i class="fas fa-palette"></i>
+		  </span>
+		  &nbsp; Templates
+		</a>
+
+		<a *ngIf="this.user_type==2" routerLink="/email-settings" class="badge badge-info mr-2">
+		  <span class="icon">
+			<i class="fas fa-cog"></i>
+		  </span>
+		  &nbsp; Settings
+		</a>
+
+		<a *ngIf="user_type==2" href="#" routerLink="/spam-list" class="badge badge-danger mr-2">
+		  <span class="icon">
+			<i class="fas fa-user-times"></i>
+		  </span>
+		  &nbsp; Spam/Deleted
+		</a>
+
+	  </div>	 
+	</div>
+	</div>
 <div class="section-body">
     <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
             <div class="card">
+              
+
                 <div class="card-header">
                     <h4>Email Template Message</h4>
                 </div>
@@ -9,109 +51,153 @@
 
                     <div  class="wizard vertical">
                         <div class="steps">
+                            <!-- <label>Departments</label> -->
                             <ul class="nav nav-tabs">
+                                <li class="nav-item" *ngFor="let list of dept_listing">
+                                    <a class="nav-link removing" data-toggle="tab" id="list_dept_{{list.dept_id}}"
+                                        (click)="getDeptId(list.dept_id)">{{list.department_name}} </a>
+                                </li>
+                            </ul>
+                        </div>
+
+
+                        <div class="steps inner-horizontal-tab" style="width: auto;" *ngIf="show">
+                            <ul class="nav nav-tabs inner-horizontal-tab">
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="#auto_reply" data-toggle="tab"  (click)="dept_settings('created_ticket')">
+                                    <a id="New_ticket" class="nav-link active" href="#auto_reply" data-toggle="tab"
+                                        (click)="dept_settings('created_ticket')">
                                         New Ticket Auto-reply</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab"  (click)="dept_settings('close_ticket')">
+                                    <a id="Agent_template" class="nav-link" data-toggle="tab"  (click)="dept_settings('agent_template')">
+                                        Ticket Assigned Template</a>
+                                </li> 
+                                <li class="nav-item">
+                                    <a id="Close_ticket" class="nav-link" data-toggle="tab"  (click)="dept_settings('close_ticket')">
+                                        Ticket Closed</a>
+                                </li>                              
+                            </ul>
+                        </div>
+
+                        <div class="steps inner-horizontal-tab" style="width: auto;" *ngIf="show2">
+                            <ul class="nav nav-tabs inner-horizontal-tab">
+                                <li class="nav-item">
+                                    <a id="New_ticket2" class="nav-link active" href="#auto_reply" data-toggle="tab"
+                                        (click)="select_create_temp('created_ticket')">
+                                        New Ticket Auto-reply</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a id="Agent_template2" class="nav-link" data-toggle="tab"  (click)="select_create_temp('agent_template')">
+                                        Ticket Assigned Template</a>
+                                </li> 
+                                <li class="nav-item">
+                                    <a id="Close_ticket2" class="nav-link" data-toggle="tab"
+                                        (click)="select_create_temp('close_ticket')">
                                         Ticket Closed</a>
                                 </li>
-                                <!-- <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#ticketAssigned">
-                                        Ticket Assign</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#ticketTransferred">
-                                        Ticket Transfer</a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#overdueTicket">
-                                        Overdue Ticket Alert</a>
-                                </li> -->
+                                
                             </ul>
                         </div>
                         <!-- Create New Ticket -->
-                       
-                        <div class="tab-content social-marketing content"  *ngFor="let item of filteredvalues" >
-                           
-                              <div  id="auto_reply" class="body tab-pane active">
-                                <div class="card-header">
-                                    <h4><span class="wizard-icon"><img
-                                                src="assets/images/ticket/create-new-ticket.png"></span>
-                                                {{item.response_for == 'created_ticket' ? 'New Ticket Auto Response' : 'Close Ticket Auto Response'}}
-                                    </h4>
-                                    <div class="addBtn">
-                                        <b>Use Template</b>
-                                        <div class="form-check form-check-inline">
-                                            <div class="pretty p-switch p-fill">
-                                                <input type="checkbox"  checked="{{item.status == 1 ? 'checked' : ''}}" id="{{item.response_for}}_status">
-                                                <div class="state p-success">
-                                                    <label for="has_status"></label>
+                        <div style="float: right;" class="tab-content social-marketing content" >
+
+                            <div id="auto_reply" class="body tab-pane active">
+
+                                <div *ngFor="let item of filteredvalues">
+                                    <div class="card-header">
+                                        <h4><span class="wizard-icon">
+                                            <img src="assets/images/ticket/create-new-ticket.png"></span>
+                                            {{item.response_for == 'created_ticket' ? 'New Ticket Auto Response' :item.response_for == 'close_ticket' ? 'Close Ticket Auto Response' :'Alert the Assigned Agent'}}
+                                        </h4>
+                                        <div *ngIf="item.response_for != 'close_ticket'" class="addBtn">
+                                            <b>Use Template</b>
+                                            <div class="form-check form-check-inline">
+                                                <div (change)="createTempactive(item.dept_id,item.response_for)" class="pretty p-switch p-fill">
+                                                    <input  id="use_template_{{item.dept_id}}" [checked]="item.status==1"type="checkbox">
+                                                    <div class="state p-success">
+                                                        <label for="has_status"></label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+                                    <br />
                                 </div>
-                                <div *ngIf="item.response_content != ''" class="card">
-                                    <div class="row">  
-                                        <div class="card-body" style="font-family: verdana;">
-                                            <div [innerHTML]="item.response_content"></div>
+                                <textarea id="richTextArea2" ></textarea>
+                                <br />
+                                <div *ngFor="let item of filteredvalues">
+                                    <div *ngIf="show" class="buttons">
+                                        <input type="submit" value="Update Template"
+                                            (click)="UpdateTemp(item.response_for)" class="btn btn-success">
+                                        <!-- <input type="submit" href="javascript:void(0)" value="Discard"
+                                            class="btn btn-danger" tabindex="0"> -->
+                                            <input  type="button" class="btn btn-secondary" value="Clear"
+                                            (click)="ClearText()">
+                                    </div>
+                                    <div  *ngIf="show2" class="buttons">
+                                        <input type="submit" value="Add Template" (click)="AddTemp(item.response_for)"
+                                            class="btn btn-success">
+                                        <!-- <input type="submit" href="javascript:void(0)" value="Discard"
+                                            class="btn btn-danger" tabindex="0"> -->
+                                            <input type="button" class="btn btn-secondary" value="Clear"
+                                            (click)="ClearText()">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- <div class="tab-content social-marketing content" >
+                            <div *ngFor="let item of filteredvalues">
+
+                                <div id="auto_reply" class="body tab-pane active">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4> Create Response</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <editor id="{{item.response_for}}_content_create"
+                                                apiKey="yap9vgeib9vhg5f81cuvu9hbisk6rdr6pcvcjcltvolqk317" [init]="{		
+                                                                                                    
+                                    theme: modern,
+                                    paste_data_images: true,
+                                    height: 500,
+                                    menubar: false,
+                                    
+                                    plugins: [
+                                      'advlist autolink lists link file image charmap print',
+                                      'preview anchor searchreplace visualblocks code',
+                                      'fullscreen insertdatetime media table paste',
+                                      'help wordcount','save','autolink lists media table'
+                                    ],
+                                    toolbar:
+                                      'undo redo| fullscreen | formatselect | fontselect |fontsizeselect| bold italic | \ undo redo | link image file| code | \
+                                      alignleft aligncenter alignright alignjustify | \
+                                      bullist numlist outdent indent | help',
+
+                                      content_style: 'body {font-size: 10pt;font-family: Verdana;}'
+                                     
+                                 
+
+                                    
+                                  }">
+                                            </editor>
+                                    
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h4> Update Response</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <editor 
-									  id="{{item.response_for}}_content"
-									  apiKey="yap9vgeib9vhg5f81cuvu9hbisk6rdr6pcvcjcltvolqk317"
-									  [init]="{		
-                                        																
-										theme: modern,
-										paste_data_images: true,
-										height: 500,
-										menubar: false,
-										
-										plugins: [
-										  'advlist autolink lists link file image charmap print',
-										  'preview anchor searchreplace visualblocks code',
-										  'fullscreen insertdatetime media table paste',
-										  'help wordcount','save','autolink lists media table'
-										],
-										toolbar:
-										  'undo redo| fullscreen | formatselect | fontselect |fontsizeselect| bold italic | \ undo redo | link image file| code | \
-										  alignleft aligncenter alignright alignjustify | \
-										  bullist numlist outdent indent | help',
-
-										  content_style: 'body {font-size: 10pt;font-family: Verdana;}'
-										 
-									 
-
-										
-									  }"                                     
-									>
-									</editor>
-                                        <!-- <textarea class="richTextArea">
-                                            <b>Dear  { Customer Name }</b> <br /><br />
-                                            A request for support has been created and assigned ticket <b>#%{ticket.number}</b> with the following automatic reply
-                                        </textarea> -->
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="buttons">
-                                    <input type="submit" value="Save Template" (click)="UpdateTemp(item.response_for)" class="btn btn-success">
+                                <div  *ngIf="show2" class="buttons">
+                                    <input type="submit" value="Save Template" (click)="AddTemp(item.response_for)"
+                                        class="btn btn-success">
                                     <input type="submit" href="javascript:void(0)" value="Discard"
                                         class="btn btn-danger" tabindex="0">
                                 </div>
 
                             </div>
-                       
-                            <!-- Create New Ticket End -->
+                        </div> -->
+
+                        <!-- Create New Ticket End -->
 
                             <!-- Ticket Closed -->
                             <!-- <div id="ticketClosed" class="body tab-pane">
@@ -147,28 +233,28 @@
                                 </div>
 
                             </div> -->
-                            <!-- Ticket Closed End -->
+                        <!-- Ticket Closed End -->
 
-                            <!-- Ticket Assign -->
-                            <div id="ticketAssigned" class="body tab-pane">
-                                <div class="card-header">
-                                    <h4>
-                                        <span class="wizard-icon"><img
-                                                src="assets/images/ticket/create-new-ticket.png"></span>
-                                        Ticket Assignment Tempalte
-                                    </h4>
-                                    <div class="addBtn">
-                                        <b>Use Template</b>
-                                        <div class="form-check form-check-inline">
-                                            <div class="pretty p-switch p-fill">
-                                                <input type="checkbox" id="statu_159">
-                                                <div class="state p-success">
-                                                    <label for="has_status"></label>
-                                                </div>
+                        <!-- Ticket Assign -->
+                        <!-- <div id="ticketAssigned" class="body tab-pane">
+                            <div class="card-header">
+                                <h4>
+                                    <span class="wizard-icon"><img
+                                            src="assets/images/ticket/create-new-ticket.png"></span>
+                                    Ticket Assignment Tempalte
+                                </h4>
+                                <div class="addBtn">
+                                    <b>Use Template</b>
+                                    <div class="form-check form-check-inline">
+                                        <div class="pretty p-switch p-fill">
+                                            <input type="checkbox" id="statu_159">
+                                            <div class="state p-success">
+                                                <label for="has_status"></label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
                                 <div class="card">
                                     <div class="card-header">
@@ -196,27 +282,27 @@
                                         class="btn btn-danger" tabindex="0">
                                 </div>
 
-                            </div>
-                            <!-- Ticket Assign End -->
+                        </div> -->
+                        <!-- Ticket Assign End -->
 
-                            <!-- Ticket Transferred -->
-                            <div id="ticketTransferred" class="body tab-pane">
-                                <div class="card-header">
-                                    <h4><span class="wizard-icon"><img
-                                                src="assets/images/ticket/create-new-ticket.png"></span>Ticket Transfer
-                                        Template</h4>
-                                    <div class="addBtn">
-                                        <b>Use Template</b>
-                                        <div class="form-check form-check-inline">
-                                            <div class="pretty p-switch p-fill">
-                                                <input type="checkbox" id="statu_159">
-                                                <div class="state p-success">
-                                                    <label for="has_status"></label>
-                                                </div>
+                        <!-- Ticket Transferred -->
+                        <!-- <div id="ticketTransferred" class="body tab-pane">
+                            <div class="card-header">
+                                <h4><span class="wizard-icon"><img
+                                            src="assets/images/ticket/create-new-ticket.png"></span>Ticket Transfer
+                                    Template</h4>
+                                <div class="addBtn">
+                                    <b>Use Template</b>
+                                    <div class="form-check form-check-inline">
+                                        <div class="pretty p-switch p-fill">
+                                            <input type="checkbox" id="statu_159">
+                                            <div class="state p-success">
+                                                <label for="has_status"></label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
                                 <div class="card">
                                     <div class="card-header">
@@ -243,27 +329,27 @@
                                     <input type="submit" href="javascript:void(0)" value="Discard"
                                         class="btn btn-danger" tabindex="0">
                                 </div>
-                            </div>
+                            </div> -->
                             <!-- Ticket Transferred End -->
 
-                            <!-- overdue Ticket -->
-                            <div id="overdueTicket" class="body tab-pane">
-                                <div class="card-header">
-                                    <h4><span class="wizard-icon"><img
-                                                src="assets/images/ticket/create-new-ticket.png"></span>
-                                        Overdue Ticket Template</h4>
-                                    <div class="addBtn">
-                                        <b>Use Template</b>
-                                        <div class="form-check form-check-inline">
-                                            <div class="pretty p-switch p-fill">
-                                                <input type="checkbox" id="statu_159">
-                                                <div class="state p-success">
-                                                    <label for="has_status"></label>
-                                                </div>
+                        <!-- overdue Ticket -->
+                        <!-- <div id="overdueTicket" class="body tab-pane">
+                            <div class="card-header">
+                                <h4><span class="wizard-icon"><img
+                                            src="assets/images/ticket/create-new-ticket.png"></span>
+                                    Overdue Ticket Template</h4>
+                                <div class="addBtn">
+                                    <b>Use Template</b>
+                                    <div class="form-check form-check-inline">
+                                        <div class="pretty p-switch p-fill">
+                                            <input type="checkbox" id="statu_159">
+                                            <div class="state p-success">
+                                                <label for="has_status"></label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
                                 <div class="card">
                                     <div class="card-header">
@@ -290,10 +376,10 @@
                                     <input type="submit" href="javascript:void(0)" value="Discard"
                                         class="btn btn-danger" tabindex="0">
                                 </div>
-                            </div>
+                            </div> -->
                             <!-- overdue Ticket End -->
 
-                        </div>
+                        <!-- </div> -->
                     </div>
                 </div>
             </div>
@@ -301,46 +387,3 @@
     </div>
 </div>
 
-
-<!-- <div class="modal fade bd-example-modal-md" id="addNewPost">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <form>
-                <div class="modal-header">
-                    <h5 class="modal-title" id="myLargeModalLabel">Publish Contant</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="call_repeat">Write Post</label>
-                                <textarea rows="15" class="ck-editor form-control"></textarea>
-                                <div class="img-uplaod-preview">
-                                    <div class="field" align="left">
-                                        <h6>Upload your images</h6>
-                                        <input type="file" id="files" name="files[]" multiple />
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="modal-footer">
-                    <div class="buttons">
-                        <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
-                        <input type="submit" class="btn btn-success update_agent" value="Send Post">
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div> -->

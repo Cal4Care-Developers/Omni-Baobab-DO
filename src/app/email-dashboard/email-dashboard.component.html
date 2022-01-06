@@ -1,0 +1,340 @@
+<div class="section-body">
+    <div class="card mt-2 mb-0">
+      <div class="card-body" >
+        <div class="row">
+          <div class="col-md-9">
+            <div class="dropdown select-option header-select-dropdown mr-3">
+              <div class="select-option-label" data-toggle="dropdown"
+                  class="dropdown filter-btn info badge badge-secondary">
+                  <div class="dropdown-title">{{this.view_name}} <i class="fas fa-chevron-down"></i>
+                      &nbsp;</div>
+              </div>
+  
+  
+              <div class="dropdown-menu">
+                  <div class="pullDown">
+                      <a href="javascript:void(0)" class="dropdown-item"
+                          (click)="changeMylayout('view1')">
+                          <div class="green-bg-status status-bg"></div>Standard View
+                      </a>
+                      <a href="javascript:void(0)" class="dropdown-item" (click)="changeMylayout('view2')">
+                          <div class="green-bg-status status-bg"></div>Card View
+                      </a>
+                  </div>
+              </div>
+          </div>
+            <a routerLink="/ticketing-system-new" href="#" class="badge badge-success mr-2">
+              <span class="icon">
+                <i class="fas fa-ticket-alt"></i>
+              </span>
+              &nbsp; My Tickets
+            </a>
+            <a *ngIf="has_robin!='1' || show_admin_set" href="#" routerLink="/unassinged-tickets" class="badge badge-warning mr-2">
+              <span class="icon">
+                <i class="fas fa-ticket-alt"></i>
+              </span>
+              &nbsp; Queue Tickets
+            </a>
+  
+            <a *ngIf="show_admin_set" href="#" routerLink="/ticket-template" class="badge badge-primary mr-2">
+              <span class="icon">
+                <i class="fas fa-palette"></i>
+              </span>
+              &nbsp; Templates
+            </a>
+  
+            <a *ngIf="show_admin_set" routerLink="/email-settings" class="badge badge-info mr-2">
+              <span class="icon">
+                <i class="fas fa-cog"></i>
+              </span>
+              &nbsp; Settings
+            </a>
+  
+            <a *ngIf="show_admin_set" href="#" routerLink="/spam-list" class="badge badge-danger mr-2">
+              <span class="icon">
+                <i class="fas fa-user-times"></i>
+              </span>
+              &nbsp; Spam/Deleted
+            </a>
+            <!-- <div *ngIf="this.user_type == 2" style="cursor: pointer;" (click)="ClearAll()"  class="info badge badge-danger">
+              <div class="dropdown-title">Clear All
+                </div>
+            </div> -->
+  
+          </div>
+          <div class="col-md-3">
+            <div *ngIf="!filterON" class="show badge badge-primary fr pointer collapsed" data-toggle="collapse" href="#generalFilter">
+              <i class="fas fa-filter"></i> &nbsp; Filter
+            </div>
+  
+            <div *ngIf="filterON">
+              <div class="show collapsed">
+                <span (click)="my_externaltickets()" style="cursor: pointer;" class="badge badge-danger fr">Reset Filter</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        </div>
+        <!------------------
+        Filter
+        -------------------->
+        <div id="accordion" class="card accordion">
+          <div id="generalFilter" class="card-body collapse" data-parent="#accordion">
+            <div id="wizard_horizontal" class="wizard filterTab">
+              <div class="steps">
+                <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#generalFilterTab">
+                      <span class="wizard-icon"> <i class="fas fa-filter"></i></span>
+                      General Filter
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#customisedFilterTab">
+                      <span class="wizard-icon"><i class="fas fa-calendar-alt"></i> </span>
+                      Customised Filter
+                    </a>
+                  </li>
+                </ul>
+              </div>
+  
+  
+  
+              <div class="tab-content content">
+                <!-------------------
+                General Filter
+                ------------------->
+                <div id="generalFilterTab" class="tab-pane active">
+                  <div class="row margin-0">
+                    <div class="col-md-4">
+                      <div class="date-range-filter">
+                        <div class="form-group">
+                          <label for="from_date">From</label>
+                          <input id="from_date" class="form-control" type="date">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="date-range-filter">
+                        <div class="form-group">
+                          <label for="to_date">To</label>
+                          <input id="to_date" class="form-control" type="date">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <button type="button" (click)="searchFromTo()" class="btn btn-success mt-5">Search Filter</button>
+                    </div>
+                  </div>
+                </div>
+  
+                <!-------------------
+                Customised Filter
+                ------------------->
+                <div id="customisedFilterTab" class="tab-pane fade">
+                  <div class="row margin-0">
+                    <div class="col-md-6">
+                      <div class="date-range-filter">
+                        <div class="form-group">
+                          <label for="from_to">Custom Filter</label>
+                          <select id="custome_filter" class="form-control">
+                            <option value="Today">Today</option>
+                            <option value="This Month">This Month</option>
+                            <option value="Last 30 Days">Last 30 Days</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <button type="button" (click)="CustomFromTo()" class="btn btn-success mt-5">Search Filter</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Tab panes End -->
+          </div>
+        </div>
+        <!------------------
+        Filter End
+        -------------------->
+  
+        <div id="Dash-view-1" class="row margin-0">
+        <!------------------
+        Agent Cart
+        -------------------->
+        
+        <div  *ngFor="let list of queue_list_all;" class="col-12 col-sm-6 col-lg-3 member-list-box has-border">
+          <div class="card">
+            <div class="card-body">
+              <div class="list-unstyled members-list list-styled-border">
+                <div class="row">
+                  <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="user-images text-center">
+                      <img  class="msr-3 rounded-circle" alt="Avatar" width="50" style="width: 50px;object-fit: cover;height: 50px;" src={{list.profile_image}}  onerror=" this.src='assets/images/user.jpg'">
+                      <!-- <img alt="image" class="msr-3 rounded-circle" width="50" src="https://www.radixtouch.com/templates/admin/gati/source/light/assets/img/users/user-3.png"> -->
+                     </div>
+                     
+                       <div class="text-center mt-3 ">
+                     <h6>{{list.agent_name}}</h6>
+                    </div>
+  
+                    <div class="d-flex justify-content-center">
+                    <div style="display: none;" class="hexagon">
+                      <span class="points">XX</span>
+                    </div>
+  
+                    <div class="text-center">
+                      <a  class="call-info tooltip-container">
+                        <i style="margin-right: 5px;" class="fas fa-phone"></i>
+                     <span class="cutom-tooltip">{{list.sip_login}}</span>
+                      </a>
+                     </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-6 col-lg-8">
+                    <div class="set-flex">
+                        <div class="agent-ticket-label">Not responded <b class="fr">{{list.not_respond_ticket}}</b></div>
+                        <div class="progress  mt-1">
+                          <div class="progress-bar bg-danger progress-bar-striped" [ngStyle]="{ 'width' :'calc(('+list.not_respond_ticket+' / '+list.total_ticket_count+')  * 100%)' }"></div>
+                        </div>
+                        <div class="agent-ticket-label mt-1">Total Open Tickets<b class="fr">{{list.open_ticket_count}}</b></div>
+                        <div class="progress mt-1">
+                          <div class="progress-bar bg-warning progress-bar-striped"[ngStyle]="{ 'width' :'calc(('+list.open_ticket_count+' / '+list.total_ticket_count+')  * 100%)' }"></div>
+                        </div>
+                        <div class="agent-ticket-label mt-1">Total Tickets of this Agent<b class="fr">{{list.total_ticket_count}}</b></div>
+                        <div class="progress mt-1">
+                          <div class="progress-bar bg-info progress-bar-striped" [ngStyle]="{ 'width' :'calc(('+list.total_ticket_count+' / '+list.total_ticket_count+')  * 100%)' }"></div>
+                        </div>
+                        
+                        <div class="agent-ticket-label mt-1">Closed Tickets <b class="fr">{{list.close_ticket_count}}</b></div>
+                        <div class="progress mt-1">
+                          <div class="progress-bar bg-success progress-bar-striped"[ngStyle]="{ 'width' :'calc(('+list.close_ticket_count+' / '+list.total_ticket_count+')  * 100%)' }"></div>
+                        </div>
+                        
+                    </div>
+                  </div>
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>  
+    
+       <!------------------
+        Agent Cart End
+        -------------------->
+      </div>
+  
+   <!------------------
+        Agent Cart
+        -------------------->
+        
+        <div id="Dash-view-2" style="display: none;" >
+          <!-- <div class="card-body"> -->
+        <div class="row">
+          <div *ngFor="let list of queue_list_all;" class="col-md-3 has-border">
+            <div class="member-details-box ">
+              <div class="member-box-top">
+                <div class="member-box-left">
+                  <!--The image are in ERP site location, BUT Integration code is in include/class.staff.php file-->
+                  <figure><img class="avatar" alt="Avatar" style="object-fit: cover;" src={{list.profile_image}}
+                      onerror=" this.src='assets/images/user.jpg'"> </figure>
+                  <div class="user_name tooltip-container"><span class="cutom-tooltip">{{list.agent_name}} -
+                      {{list.sip_login}}</span> {{list.agent_name}}</div>
+                </div>
+                <div class="member-item-details">
+                  <ul>
+                    <li>
+                      <div class="progress-count-txt">
+                        <a  class="tooltip-container"
+                          target="_blank">
+                          <span class="cutom-tooltip">Agent Not responded tickets</span>
+                          <strong>{{list.not_respond_ticket}}
+                            Ticket</strong>
+                        </a>
+                      </div>
+                      <div class="progress bar-txt">
+                        <div class="progress-bar progress-bar-striped bg-danger"
+                          [ngStyle]="{ 'width' : 'calc(('+list.not_respond_ticket+' / '+list.total_ticket_count+') * 100%)' }">
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="progress-count-txt"><a class="tooltip-container" target="_blank">
+                          <span class="cutom-tooltip">Total open tickets</span> <strong>{{list.open_ticket_count}}
+                            Tickets</strong></a></div>
+                      <div class="progress bar-txt">
+                        <div class="progress-bar progress-bar-striped bg-warning"
+                          [ngStyle]="{ 'width' :'calc(('+list.open_ticket_count+' / '+list.total_ticket_count+')  * 100%)' }">
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="progress-count-txt"><a class="tooltip-container" target="_blank">
+                          <span class="cutom-tooltip">Total Closed Tickets</span><strong>{{list.close_ticket_count}}
+                            Tickets</strong></a></div>
+                      <div class="progress bar-txt">
+                        <div class="progress-bar progress-bar-striped bg-success"
+                          [ngStyle]="{'width': 'calc(('+list.close_ticket_count+' / '+list.total_ticket_count+')  * 100%)'}">
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  <ul class="ticket-info">
+                    <li class="not-responded-ticket"><a href="javascript:;" class="tooltip-container"><span
+                          class="cutom-tooltip">Over all not responded by Agent</span>{{list.not_respond_ticket}}</a></li>
+                    <li class="progress-ticket"><a href="javascript:;" class="tooltip-container"> <span
+                          class="cutom-tooltip">Agents total open tickets</span>{{list.open_ticket_count}}</a></li>
+                    <li class="agent-month-ticket"><a href="javascript:;" class="tooltip-container"><span
+                          class="cutom-tooltip">Total Agent ticket</span>{{list.total_ticket_count}}</a></li>
+                    <li class="closed-ticket"><a href="javascript:;" class="tooltip-container"><span
+                          class="cutom-tooltip">Total closed ticket</span>{{list.close_ticket_count}}</a></li>
+                  </ul>
+                </div>
+                <div class="member-box-right">
+  
+                  <div  class="hexagon"><span class="points">XX</span><span class="points-name">Points</span></div>
+  
+                  <a class="call-info2"> <span class="call-data2">{{list.sip_login}}</span></a>
+  
+                </div>
+  
+              </div>
+              <div style="min-height: 90px;" class="member-box-bottom">
+                <p><b>{{list.agent_name}}</b> has completed <b>{{list.close_ticket_count}}</b> out of
+                  <b>{{list.total_ticket_count}}</b> tickets  <b *ngIf="filterON">according to the Filter</b><b *ngIf="!filterON">for this month</b>. Currently <b>{{list.open_ticket_count}}</b>
+                  tickets on his Pool
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      <!-- </div> -->
+    </div>
+    <div *ngIf="this.emptydata==true" class="ticket-details fl">
+  
+      <div class="card fullHeightCard keep-connect-chat-content">   
+        <div class="card-body">
+  
+          <div class="keep-connect" style="text-align: center;">
+            <div class="connect-logo">
+              <img src="assets/img/logo.png">
+              <span class="logo-name">Omni Email Ticket</span>
+            </div>
+            <!-- <h3>Sorry, No Tickets</h3> -->
+            <img style="border-radius: 55px;height: 337px;width: 508px;object-fit: cover;"
+              src="https://image.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg"
+              alt="NO dATA">
+            <!-- <p > Ticket were empty <i class="fas fa-empty-set"></i></p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+       <!------------------
+        Agent Cart End
+        -------------------->
+    
+  </div>

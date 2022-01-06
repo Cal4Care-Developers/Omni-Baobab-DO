@@ -1,6 +1,7 @@
 import { BrowserModule,Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { EditorModule } from '@tinymce/tinymce-angular';
+// import { CommonModule } from '@angular/common';
 
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule }  from '@angular/forms';
@@ -52,6 +53,7 @@ import { TicketCreateNewComponent } from './ticket-create-new/ticket-create-new.
 import { WhatsappChatComponent } from './whatsapp-chat/whatsapp-chat.component';
 import { AuxCodeComponent } from './aux-code/aux-code.component';
 import { AppSettingsComponent } from './app-settings/app-settings.component';
+import { EmailsUnassignedComponent } from './emails-unassigned/emails-unassigned.component';
 // import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
 // import { WallboardComponent } from './wallboard/wallboard.component';
 import { GlobalSettingsComponent } from './global-settings/global-settings.component';
@@ -161,6 +163,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { SpamListComponent } from './spam-list/spam-list.component';
+import { EmailDashboardComponent } from './email-dashboard/email-dashboard.component';
 // import { CustomWallboardSixComponent } from './custom-wallboard-six/custom-wallboard-six.component';
 // import { NetwrixReportComponent } from './netwrix-report/netwrix-report.component';
 
@@ -523,6 +526,12 @@ const appRoutes: Routes = [
         path :'spam-list', component:SpamListComponent
     },{
         path :'email-settings',component:EmailSettingsComponent
+    },
+    {
+        path :'email-dashboard', component:EmailDashboardComponent
+    },
+    {
+        path :'unassinged-tickets',component:EmailsUnassignedComponent
     }
 ];
 
@@ -663,6 +672,8 @@ const appRoutes: Routes = [
     SmsServicesComponent,
     EmailSettingsComponent,
     SpamListComponent,
+    EmailDashboardComponent,
+    EmailsUnassignedComponent
     // CustomWallboardSixComponent,
     // NetwrixReportComponent
     

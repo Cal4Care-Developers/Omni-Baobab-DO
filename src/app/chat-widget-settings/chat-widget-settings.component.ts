@@ -5,6 +5,7 @@ import '../../assets/js/scripts.js';
 declare var $:any;
 declare var iziToast:any;
 import Swal from 'sweetalert2'
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-chat-widget-settings',
@@ -48,35 +49,62 @@ chatSounds;
 agent_list;
 department_list;
 wid_color = 'red';
-
+admin_id_enc;
+checks;
+widget_names;
+round_status;
+showerror = false;
+limit_count;
+has_round_robin = false;
   constructor(private serverService: ServerService,private router:Router) { }
 
   ngOnInit() {
+
+
     this.admin_id = localStorage.getItem('admin_id');
-    this.user_id = localStorage.getItem('userId');
-    this.customHtml = 'https://'+window.location.hostname+'/webchat/?aid='+btoa(this.admin_id);
+    this.user_id = localStorage.getItem('admin_id');
+    this.admin_id_enc=btoa(this.admin_id);
+    // this.customHtml = 'https://'+window.location.hostname+'/webchat/?aid='+btoa(this.admin_id);
+    this.customHtml = 'https://baobabgroup.mconnectapps.com/webchat/?aid='+this.admin_id_enc;
    
     this.listConsentFormms();
     this.get_timezone();
     this.get_sounds();
     this.get_country();
+    this.getOverAllSettings();
     if (! localStorage.justOnce) {
       localStorage.setItem("justOnce", "true");
       window.location.reload();
     }
+    $(".colorpickerinput").colorpicker({
+      format: 'hex',
+      component: '.input-group-append',
+    });
   }
 
 listChatWidget(){
+  Swal.fire({
+    html:
+      '<div style="display: flex;justify-content: center;"><div class="pong-loader"></div></div>',
+    showCloseButton: false,
+    showCancelButton: false,
+    showConfirmButton: false,
+    focusConfirm: false,
+    background: 'transparent',
+
+  });
     let access_token: any=localStorage.getItem('access_token');
     let user_id: any=localStorage.getItem('userId');
     let widget_name: any =$('#widget_name').val() ;
     let api_req:any = '{"operation":"chat_widget", "moduleType":"chat_widget", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"widget_list","user_id":"'+this.user_id +'"}}';
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       console.log(response);
+      Swal.close();
       if(response.status==true){
  
 
-      this.customHtml = 'https://'+window.location.hostname+'/webchat/?aid='+btoa(this.admin_id)+'&wid='+btoa(response.result.data[0].widget_name);
+      // this.customHtml = 'https://'+window.location.hostname+'/webchat/?aid='+btoa(this.admin_id)+'&wid='+btoa(response.result.data[0].widget_name);
+      this.customHtml = 'https://baobabgroup.mconnectapps.com/webchat/?aid='+this.admin_id_enc+'&wid='+btoa(response.result.data[0].widget_name);
        this.chatWigets =  response.result.data;
        this.currWidgetName = response.result.data[0].widget_name;
        $('#widget_edit_name').val(response.result.data[0].widget_name);
@@ -238,9 +266,20 @@ listChatWidget(){
 
 
   addChatWidget(){
+
+   let validate_name =this.widget_names;
+    console.log(this.widget_names);
+
+    if(validate_name == " " || validate_name == undefined || validate_name == null){
+      this.showerror = true;
+      return false;
+    }else{
+      this.showerror = false;
+    }
+
     let access_token: any=localStorage.getItem('access_token');
-    let user_id: any=localStorage.getItem('userId');
-    let widget_name: any =$('#widget_name').val() ;
+    let user_id: any=localStorage.getItem('admin_id');
+    let widget_name: any =$('#widget_name').val();
     let api_req:any = '{"operation":"chat_widget", "moduleType":"chat_widget", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"add_chat_widget","user_id":"'+this.user_id +'","widget_name":"'+widget_name+'"}}';
   
     this.serverService.sendServer(api_req).subscribe((response:any) => {
@@ -303,7 +342,8 @@ listChatWidget(){
    
       if(response.status==true){
 
-      this.customHtml = 'https://'+window.location.hostname+'/webchat/?aid='+btoa(this.admin_id)+'&wid='+btoa(response.result.data.widget_name);
+      // this.customHtml = 'https://'+window.location.hostname+'/webchat/?aid='+btoa(this.admin_id)+'&wid='+btoa(response.result.data.widget_name);
+      this.customHtml = 'https://baobabgroup.mconnectapps.com/webchat/?aid='+this.admin_id_enc+'&wid='+btoa(response.result.data.widget_name);
        $('#widget_edit_name').val(response.result.data.widget_name);
        $('#widgetColor').val(response.result.data.color);
        $('#behaviour').val(response.result.data.behaviour);
@@ -503,7 +543,10 @@ listChatWidget(){
     let user_id: any=localStorage.getItem('userId');
     let widget_appearance: any = $("input[name='widget_appearance_type']:checked").val();
     let widget_position: any =$("input[name='widget_position']:checked").val();
-    let attention_grabber: any =$('#attention_grabber').is(':checked');
+    let attention_grabber: any=false;
+     attention_grabber =$('#attention_grabber').is(':checked');
+    // alert(attention_grabber)
+    // return false;
     let mobile_widget: any =$("input[name='widget_appearance_m_type']:checked").val();
     let api_req:any = '{"operation":"chat_widget", "moduleType":"chat_widget", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"widget_advanced_settings","user_id":"'+this.user_id+'","widget_id":"'+id+'","widget_position":"'+widget_position+'","attention_grabber":"'+attention_grabber+'","mobile_widget":"'+mobile_widget+'","widget_appearance":"'+widget_appearance+'"}}';
   
@@ -538,7 +581,7 @@ listChatWidget(){
   uploadImageChat(widget_id){
  
     let access_token: any=localStorage.getItem('access_token');
-    let user_id: any =  localStorage.getItem('userId'); 
+    let user_id: any =  localStorage.getItem('admin_id'); 
 
   
       var formData = new FormData();
@@ -689,9 +732,19 @@ addConsentForn(widget_id){
     let access_token: any=localStorage.getItem('access_token');
     let user_id: any=localStorage.getItem('userId');
     let display_options: any =$('#display_options').val();
+    Swal.fire({
+      html:
+        '<div style="display: flex;justify-content: center;"><div class="pong-loader"></div></div>',
+      showCloseButton: false,
+      showCancelButton: false,
+      showConfirmButton: false,
+      focusConfirm: false,
+      background: 'transparent',
+    });
     let api_req:any = '{"operation":"chat_widget", "moduleType":"chat_widget", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"edit_consent_form_option","user_id":"'+this.user_id +'","id":"'+display_options+'"}}';
   
     this.serverService.sendServer(api_req).subscribe((response:any) => {
+      Swal.close();
       if(response.result.status==true){
        $('#editconsentformss').modal('show');
         
@@ -745,9 +798,17 @@ addConsentForn(widget_id){
 deleteConsentForn(widget_id){
     let access_token: any=localStorage.getItem('access_token');
     let user_id: any=localStorage.getItem('userId');
-    let display_options: any =$('#display_options').val();
-    let option_name: any =$('#edit_option_name').val();
-    let api_req:any = '{"operation":"chat_widget", "moduleType":"chat_widget", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"update_consent_form_option","user_id":"'+this.user_id +'","display_option_value":"'+option_name+'","id":"'+display_options+'"}}';
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+    let api_req:any = '{"operation":"chat_widget", "moduleType":"chat_widget", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"delete_consent_form_option","user_id":"'+this.user_id +'","id":"'+widget_id+'"}}';
   
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.data==1){
@@ -767,6 +828,8 @@ deleteConsentForn(widget_id){
     (error)=>{
         console.log(error);
     });
+  }
+});
   }
 
 
@@ -913,7 +976,7 @@ deleteConsentForn(widget_id){
       if(response.status=="true"){
         this.time_list = response.timezone_options;
         this.listConsentImages();
-          this.getAgentsList();
+        this.getAgentsList();
         console.log(this.time_list);
       } else {
        
@@ -927,21 +990,8 @@ deleteConsentForn(widget_id){
 
 
 
-  get_timezones(widget_id){
-    // let access_token: any=localStorage.getItem('access_token');
-    // let api_req:any = '{"operation":"getTimezone", "moduleType":"agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"get_timezone"}}';
-    // this.serverService.sendServer(api_req).subscribe((response:any) => {
-    //   if(response.status=="true"){
-    //     this.time_list = response.timezone_options;
-       
-    //     console.log(this.time_list);
-    //   } else {
-       
-    //   }
-    // }, 
-    // (error)=>{
-    //     console.log(error);
-    // });
+  get_timezones(widget_id){    
+    this.getAgentsList();
     this.listConsentImagess(widget_id)
   }
 
@@ -1211,6 +1261,182 @@ deleteConsentForn(widget_id){
 
   }
 
+  getOverAllSettings(){
+    // {"operation":"chat","moduleType":"chat","api_type":"web","access_token":"","element_data":{"action":"overallChatSettings","admin_id":"1203"}}  
+    let api_req: any = new Object();
+    let chat_req: any = new Object();
+    chat_req.action = "overallChatSettings";
+    chat_req.admin_id = this.admin_id;
+    api_req.operation = "chat";
+    api_req.moduleType = "chat";
+    api_req.api_type = "web";
+    api_req.access_token = localStorage.getItem('access_token');
+    api_req.element_data = chat_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response.status == true) {
+        // admin_id: "1203"
+        // created_at: "2021-08-17 10:52:55"
+        // id: "1"
+        // round_robin: "0"
+        // updated_at: "2021-08-17 10:52:55"
+        if(response.result.data[0].round_robin == 0){
+          this.checks = false;
+          this.has_round_robin = false;
+        }else{
+          this.checks = true;
+          this.has_round_robin = true;
+        }
+
+        this.limit_count = response.result.data[0].chat_limit;
+
+      }
+      },
+      (error) => {
+        console.log(error);
+      });
+
+  }
 
 
+  changeChatRobinStatus(checkedstatus){
+
+    // {"operation":"chat","moduleType":"chat","api_type":"web","access_token":"","element_data":{"action":"overallChatSettingsUpdate","round_robin":"0","admin_id":"1203"}}
+    var rob = '0';
+    var limit='0';
+    var text="Would you Need to Assign incoming Chat to all agents in the department?";
+      if($('#round_rob_set').prop('checked')){ rob = '1';limit=this.limit_count; text="Do you want to change, and be assigned a round-robin system for incoming email to Department agents?"; }
+   
+    Swal.fire({
+      title: 'Are you sure?',
+      text: text ,
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Update it!'
+    }).then((result) => {
+      if (result.value) {
+        let api_req: any = new Object();
+        let chat_req: any = new Object();
+        chat_req.action = "overallChatSettingsUpdate";
+        chat_req.admin_id = this.admin_id;
+        chat_req.round_robin = checkedstatus;
+        chat_req.chat_limit = limit;        
+        api_req.operation = "chat";
+        api_req.moduleType = "chat";
+        api_req.api_type = "web";
+        api_req.access_token = localStorage.getItem('access_token');
+        api_req.element_data = chat_req;
+        Swal.fire({
+          html:
+            '<div style="display: flex;justify-content: center;"><div class="pong-loader"></div></div>',
+          showCloseButton: false,
+          showCancelButton: false,
+          showConfirmButton: false,
+          focusConfirm: false,
+          background: 'transparent',
+      
+        });
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          Swal.close();
+          if (response.status == true) {
+            if(response.result.data[0].round_robin == 0){
+              this.checks = false;
+              this.has_round_robin = false;
+            }else{
+              this.checks = true;
+              this.has_round_robin = true;
+            }
+            this.round_status = checkedstatus;
+            this.limit_count = response.result.data[0].chat_limit;
+            iziToast.success({
+              message: "Changed Incomming Chat strategy successfully",
+              position: 'topRight'
+            });
+  
+          } else {
+          if(this.checks)
+            this.checks=false;
+           else
+           this.checks=true;
+            iziToast.error({
+              message: "Update Failed",
+              position: 'topRight'
+            });
+          }
+  
+  
+        },
+          (error) => {
+            console.log(error);
+          });
+  
+      }
+  else{
+   if(this.checks)
+    this.checks=false;
+   else
+   this.checks=true;
+  }
+    });
+     
+  }
+
+  robin_update(){
+
+    // {"operation":"chat","moduleType":"chat","api_type":"web","access_token":"","element_data":{"action":"overallChatSettingsUpdate","round_robin":"0","admin_id":"1203"}}
+    if(this.has_round_robin){
+
+    let api_req: any = new Object();
+    let chat_req: any = new Object();
+    chat_req.action = "overallChatSettingsUpdate";
+    chat_req.admin_id = this.admin_id;
+    chat_req.round_robin = 1;
+    chat_req.chat_limit = this.limit_count;
+    api_req.operation = "chat";
+    api_req.moduleType = "chat";
+    api_req.api_type = "web";
+    api_req.access_token = localStorage.getItem('access_token');
+    api_req.element_data = chat_req;
+    Swal.fire({
+      html:
+        '<div style="display: flex;justify-content: center;"><div class="pong-loader"></div></div>',
+      showCloseButton: false,
+      showCancelButton: false,
+      showConfirmButton: false,
+      focusConfirm: false,
+      background: 'transparent'
+    });
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+     Swal.close();
+      if(response.status == true){
+
+
+        if(response.result.data[0].round_robin == 0){
+          this.checks = false;
+          this.has_round_robin = false;
+        }else{
+          this.checks = true;
+          this.has_round_robin = true;
+        }
+
+        this.limit_count = response.result.data[0].chat_limit;
+        
+        iziToast.success({
+          message: "Update Successfully",
+          position: 'topRight'
+        });
+      }else{
+        iziToast.error({
+          message: "Updated Failed",
+          position: 'topRight'
+        });
+      }
+    },
+    (error) => {
+      console.log(error);
+    });``
+  }
+}
+ 
 }

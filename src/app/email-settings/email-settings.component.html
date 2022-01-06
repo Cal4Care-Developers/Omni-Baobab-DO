@@ -1,3 +1,43 @@
+<div class="card padding-15" >
+	<div class="row">
+	  <div class="col-md-9">
+		<a routerLink="/ticketing-system-new" href="#" class="badge badge-success mr-2">
+		  <span class="icon">
+			<i class="fas fa-ticket-alt"></i>
+		  </span>
+		  &nbsp; My Tickets
+		</a>
+		<a href="#" routerLink="/unassinged-tickets" class="badge badge-warning mr-2">
+		  <span class="icon">
+			<i class="fas fa-ticket-alt"></i>
+		  </span>
+		  &nbsp; Queue Tickets
+		</a>
+
+		<a *ngIf="user_type==2" href="#" routerLink="/ticket-template" class="badge badge-primary mr-2">
+		  <span class="icon">
+			<i class="fas fa-palette"></i>
+		  </span>
+		  &nbsp; Templates
+		</a>
+
+		<a *ngIf="user_type==2" routerLink="/email-settings" class="badge badge-info mr-2 pointer-event-none">
+		  <span class="icon">
+			<i class="fas fa-cog"></i>
+		  </span>
+		  &nbsp; Settings
+		</a>
+
+		<a *ngIf="user_type==2" href="#" routerLink="/spam-list" class="badge badge-danger mr-2">
+		  <span class="icon">
+			<i class="fas fa-user-times"></i>
+		  </span>
+		  &nbsp; Spam/Deleted
+		</a>
+
+	  </div>	 
+	</div>
+	</div>
 <div class="section-body">
 
     <!-- ============================ ADMIN EMAIL SETTINGS =============================== -->
@@ -159,6 +199,7 @@
                                 <th>Reply EMail Alert</th>
                                 <th>Close EMail Alert</th>
                                 <th>Fullthread</th>
+                                <th>Share My Ticket</th>
                             </tr>
 
 
@@ -170,7 +211,7 @@
                                 <tr *ngFor="let agent of agent_list;let i = index">
 
                                     <!-- <ng-container > -->
-                                    <td>{{i+1}}</td>
+                                    <td>{{this.offset_count+i+1}}</td>
                                     <td>{{agent.agent_name}}</td>
                                     <!-- <td>jn@cal4care.com</td> -->
                                     <!-- <td><span class="badge badge-success">Development</span></td> -->
@@ -215,96 +256,19 @@
                                             </div>
                                         </div>
                                     </td>
-
-                                    <!-- </ng-container> -->
-                                    <!-- <ng-container *ngIf="settings.agent_id !== agent.user_id">
-                                            <td>{{i+1}} not equal</td>
-                                            <td>{{agent.agent_name}}</td>
-                                            <td>
-                                                <div class="pretty p-switch p-fill">
-                                                    <input type="checkbox" id="new_email_alert_{{i}}"
-                                                        (change)="updateAgentSettings(agent.user_id,i)">
-                                                    <div class="state p-success">
-                                                        <label for="has_sms"></label>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="pretty p-switch p-fill">
-                                                    <input type="checkbox" id="reply_email_alert_{{i}}"
-                                                        (change)="updateAgentSettings(agent.user_id,i)">
-                                                    <div class="state p-success">
-                                                        <label for="has_sms"></label>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="pretty p-switch p-fill">
-                                                    <input type="checkbox" id="close_email_alert_{{i}}"
-                                                        (change)="updateAgentSettings(agent.user_id,i)">
-                                                    <div class="state p-success">
-                                                        <label for="has_sms"></label>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="pretty p-switch p-fill">
-                                                    <input type="checkbox" id="send_full_thread_{{i}}"
-                                                        (change)="updateAgentSettings(agent.user_id,i)">
-                                                    <div class="state p-success">
-                                                        <label for="has_sms"></label>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </ng-container> -->
+                                    <td>
+                                        <div class="pretty p-switch p-fill">
+                                            <input type="checkbox" id="share_my_ticket{{i}}"
+                                                checked="{{agent.share_tickets == 1 ? 'checked' : ''}}"
+                                                (change)="shareMyTicket(agent.user_id,i)">
+                                            <div class="state p-success">
+                                                <label for="has_sms"></label>
+                                            </div>
+                                        </div>
+                                    </td>
 
                                 </tr>
-                                <!-- <ng-container *ngIf="email_setting_list == ''">
-                                        <tr *ngFor="let agent of agent_list;let i=index">
-                                            <td>{{i+1}} not</td>
-                                            <td>{{agent.agent_name}}</td>
-                                            <td>
-                                                <div class="pretty p-switch p-fill">
-                                                    <input type="checkbox" id="new_email_alert_{{i}}"
-                                                        (change)="updateAgentSettings(agent.user_id,i)">
-                                                    <div class="state p-success">
-                                                        <label for="has_sms"></label>
-                                                    </div>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="pretty p-switch p-fill">
-                                                    <input type="checkbox" id="reply_email_alert_{{i}}"
-                                                        (change)="updateAgentSettings(agent.user_id,i)">
-                                                    <div class="state p-success">
-                                                        <label for="has_sms"></label>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="pretty p-switch p-fill">
-                                                    <input type="checkbox" id="close_email_alert_{{i}}"
-                                                        (change)="updateAgentSettings(agent.user_id,i)">
-                                                    <div class="state p-success">
-                                                        <label for="has_sms"></label>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="pretty p-switch p-fill">
-                                                    <input type="checkbox" id="send_full_thread_{{i}}"
-                                                        (change)="updateAgentSettings(agent.user_id,i)">
-                                                    <div class="state p-success">
-                                                        <label for="has_sms"></label>
-                                                    </div>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                    </ng-container> -->
-
-                                <!-- </ng-container> -->
+                   
 
                             </tbody>
 
@@ -353,106 +317,7 @@
         </div>
     </div>
     <!-- ============================= END EMAIL SETTINGS ============================== -->
-    <!-- <div class="row">
-        <div class="col-12 col-lg-6">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Default Email Department</h4>
-                </div>
-                <div class="card-body p-30">
 
-                    <div class="row">
-                        <div class="col-12 col-md-5">
-                            <div class="fl mb-15">
-                                <h6 class="font-medium m-b-10">Select Email</h6>
-                                <div class="form-group">
-                                    <select class="form-control">
-                                        <option value="Developemnt">dev@cal4care.com</option>
-                                        <option value="Sales">sales@cal4care.com</option>
-                                        <option value="Support">support@cal4acre.com</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-1">
-                            <div class="connecting-arrow text-center">
-                                <i class="fas fa-arrows-alt-h"></i>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-5">
-                            <div class="fl mb-15">
-                                <h6 class="font-medium m-b-10">Select Department</h6>
-                                <div class="form-group">
-                                    <select class="form-control">
-                                        <option value="Developemnt">Developemnt</option>
-                                        <option value="Sales">Sales</option>
-                                        <option value="Support">Support</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="fl m-0">
-                        <button class="btn btn-success" type="button">
-                            Save Changes
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-lg-6">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Default Email Department</h4>
-                </div>
-                <div class="card-body p-30">
-
-                    <div class="row">
-                        <div class="col-12 col-md-5">
-                            <div class="fl mb-15">
-                                <h6 class="font-medium m-b-10">Select Email</h6>
-                                <div class="form-group">
-                                    <select class="form-control">
-                                        <option value="Developemnt">dev@cal4care.com</option>
-                                        <option value="Sales">sales@cal4care.com</option>
-                                        <option value="Support">support@cal4acre.com</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-1">
-                            <div class="connecting-arrow text-center">
-                                <i class="fas fa-arrows-alt-h"></i>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-5">
-                            <div class="fl mb-15">
-                                <h6 class="font-medium m-b-10">Select Department</h6>
-                                <div class="form-group">
-                                    <select class="form-control">
-                                        <option value="Developemnt">Developemnt</option>
-                                        <option value="Sales">Sales</option>
-                                        <option value="Support">Support</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="fl m-0">
-                        <button class="btn btn-info" type="button">
-                            Save Changes
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
 
     <!--=============================== FORWARDER TABLE LIST ================================== -->
 
@@ -473,12 +338,12 @@
                             <tr>
                                 <th>#</th>
                                 <!-- <th>Email</th> -->
-                                <th>Alias Name</th>
-                                <th></th>
                                 <th>Default Email</th>
                                 <th></th>
+                                <th>Email Pipe</th>
+                                <th></th>
                                 <th>Department</th>
-                                <th>Sender ID</th>
+                                <!-- <th>Sender ID</th> -->
                                 <th>Action</th>
                             </tr>
                             <tbody>
@@ -489,25 +354,25 @@
                                         {{list.aliseEmail}}
                                     </td>
                                     <td>
-                                        <div class="connecting-arrow text-center" style="padding: 0px;">
+                                        <div class="connecting-arrow text-center" style="padding-top: 0 !important;">
                                             <i class="fas fa-arrows-alt-h"></i>
                                         </div>
                                     </td>
                                     <td>{{list.emailAddr}}</td>
                                     <td>
-                                        <div class="connecting-arrow text-center" style="padding: 0px;">
+                                        <div class="connecting-arrow text-center" style="padding-top: 0 !important;">
                                             <i class="fas fa-arrows-alt-h"></i>
                                         </div>
                                     </td>
                                     <td>
                                         {{list.department_name}}
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         {{list.senderID}}
-                                    </td>
+                                    </td> -->
                                     <td>
                                         <span class="user-icon" style="cursor: pointer;"><i class="far fa-edit"
-                                                (click)="editEmailSettings(list.emailAddr)"></i></span>
+                                                (click)="editEmailSettings(list.id)"></i></span>
                                         <span class="user-icon" style="cursor: pointer;"><i class="far fa-trash-alt"
                                                 (click)="deletedata(list.id)"></i></span>
                                     </td>
@@ -602,22 +467,25 @@
     <!--=============================== Robin LIST ================================== -->
 
     <div class="row">
-        <div class="col-12 col-lg-12">
+        <div class="col-12 col-lg-8">
             <div class="card">
                 <div class="card-header">
                     <h4>Incoming Email Strategy</h4>
+                    <div *ngIf="has_round_robin"   class="addBtn">
+                        <h4 class="text-right">Ticket Override Limits</h4>
+                    </div>
                 </div>
-                <div class="card-body p-30">
+                <div style="margin-bottom: 11px;" class="card-body p-30">
 
                     <div class="row">
                         <div class="col-12 col-md-3">
                             <div class="fl mb-15">
-                                <h6 class="font-medium3">All Agents in Department</h6>
+                                <h6 style="margin-bottom: 0;" class="font-medium3">All Agents in Department</h6>
                             </div>
                         </div>
 
                         <div class="col-12 col-md-1">
-                            <div class="connecting-arrow text-center">
+                            <div class="connecting-arrow text-center"  style="padding-top: 0 !important;">
                                 <i class="fas fa-arrows-alt-h"></i>
                             </div>
                         </div>
@@ -633,25 +501,131 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-1">
-                            <div class="connecting-arrow text-center">
+                            <div class="connecting-arrow text-center"  style="padding-top: 0 !important;">
                                 <i class="fas fa-arrows-alt-h"></i>
                             </div>
                         </div>
-                        <div class="col-12 col-md-3">
-                            <div class="fl mb-15">
-                                <h6 class="font-medium2">Round Robin</h6>
-                              
+                        <div class="col-12 col-md-5">
+                            <div   class="fl mb-15 robin-limit">
+                                <h6 style="margin-bottom: 0; width: 336px;" class="font-medium2">Round Robin</h6>                           
+                            <div>
+                                <b class="line-height" *ngIf="has_round_robin">0 = Unlimited</b>                              
+                                  <div *ngIf="has_round_robin"class="input-group mb-3">
+                                    <input type="text" placeholder="Enter Value" (keyup.enter)="robin_update()" [(ngModel)]="limit_count" class="form-control" #ctrl="ngModel">
+                                    <div class="input-group-append">
+                                       <button type="submit" (click)="robin_update()" class="btn btn-primary">Submit</button>
+                                    </div>
+                                  </div>
                             </div>
+                            </div>
+                            <!-- <div class="fl padding-15">
+                            </div> -->
                         </div>
+                        
                     </div>
                     
                 </div>
             </div>
         </div>
 
-      
+        <div class="col-12 col-lg-4">
+            <div class="card" style="padding: 19px 7px 54px 1px;">
+                <div class="card-header" style="display: flex;justify-content: space-between;">
+                    <h4 style="width: auto;">Share Profile Image  <span class="tooltip-container">
+                        <span class="cutom-tooltip">Manage to display user's profile pictures in outgoing emails</span>
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        </span>  
+                    </h4>
+                     <div class="addBtn">                       
+                        <h4 class="text-right" style="width: auto;">Manage Delete  <span class="tooltip-container">
+                            <span class="cutom-tooltip">Allow the user's to delete the tickets</span>
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            </span>  
+                        </h4>
+                    </div>
+                </div>
+                <div class="card-body p-30">
+
+                    <div class="row">
+                        
+
+                        <div class="col-10 col-md-10">
+                            <div class="form-check form-check-inline" style="display: flex;justify-content: space-between;" >
+                                <div (change)="shareMyPciture()" class="pretty p-switch p-fill">
+                                    <input type="checkbox" id="profile_pic_share">
+                                    <div class="state p-success">
+                                        <label for="profile_pic_share"></label>
+                                    </div>
+                                </div>     
+                                <div class="form-check form-check-inline text-right">
+                                    <div (change)="manageDeletePerm()" class="pretty p-switch p-fill">
+                                        <input type="checkbox" id="delete_ticket_prem">
+                                        <div class="state p-success">
+                                            <label for="delete_ticket_prem"></label>
+                                        </div>
+                                    </div>
+                                </div>                          
+                            </div>                       
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
     </div>
     <!--=============================== END Robin LIST ================================== -->
+
+
+    <!--=============================== Filter the Email  LIST ================================== -->
+
+    <div class="row">
+        <div class="col-12 col-md-12 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Filter (Block) Incoming Email</h4>
+                    <div class="addBtn">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createNewFilter">+ Add New Filter</button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table email-settings table-bordered table-striped table-md">
+                            <tr>
+                                <th>#</th>
+                                <!-- <th>Email</th> -->
+                                <th>Filter Word</th>
+                                
+                                <th>Action</th>
+                            </tr>
+                            <tbody>
+                                <tr *ngFor="let splist of filter_list;let i=index">
+                                    <td>{{i+1}}</td>
+                                    <!-- <td>{{list.aliseEmail}}</td> -->
+                                    <td>{{splist.filter_word}}</td>                                    
+                                 
+                                    <td>
+                                        <!-- <span class="user-icon" style="cursor: pointer;"><i class="far fa-edit"
+                                                (click)="EditFilter(splist.id)"></i></span> -->
+                                        <span class="user-icon" style="cursor: pointer;"><i class="far fa-trash-alt"
+                                                (click)="DeleteFilter(splist.id)"></i></span>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!--=============================== END Filter Email TABLE LIST ================================== -->
 
     <div class="modal fade bd-example-modal-md" id="add_deptform">
         <div class="modal-dialog modal-md">
@@ -677,21 +651,21 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="alias_name">Alias Name</label>
+                                    <label for="alias_name">Default Email </label>
                                     <input type="text" id="alias_name" class="form-control"
                                         formControlName="alias_name">
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="sender_id">Sender ID</label>
                                     <input type="text" id="sender_id" class="form-control" formControlName="sender_id">
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="row">
                             <div class="col-md-12">
@@ -719,7 +693,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="add_default_email">Default Email</label>
+                                    <label for="add_default_email">Email Pipe</label>
                                     <select name="add_default_email" id="add_default_email" class="form-control">
                                         <option value='0'> Select email </option>
                                         <!-- <option *ngFor="let cat of get_all_dept_list" value="{{cat.emailAddr}}">
@@ -771,14 +745,13 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="edit_alias_name">Alias Name</label>
+                                    <label for="edit_alias_name">Default Email </label>
                                     <input type="email" id="edit_alias_name" class="form-control" >
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <!-- <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="edit_sender_id">Sender ID</label>
-                                    <!-- <input type="text" id="edit_sender_id" class="form-control"> -->
                                     <select name="edit_sender_id" id="edit_sender_id" class="form-control">
                                         <option value=''> Select Sender ID </option>
                                         <option *ngFor="let send of edit_sender_value" value="{{send}}">
@@ -786,7 +759,7 @@
                                     </select>
 
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -1321,6 +1294,214 @@
             </div>
         </div>
     </div>
+    <!-- ================================ END EDIT SMTP LIST MODAL ==================================== -->
+
+    <!-- ================================ ADD Filter LIST MODAL ==================================== -->
+
+    <div class="modal fade bd-example-modal-md" id="createNewFilter">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <form >
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myLargeModalLabel">Filter / Block the Incoming Email</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="host_name"> Enter Keyword to Block</label>
+                                    <input type="text" id="Add_keyword" class="form-control" placeholder="Incoming Email will be skipped if there is a keyword">
+                                   
+                                    <div class="error-message message-small" >
+                                        This means you will not receive an email if it has a keyword
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="buttons">
+                            <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                            <input type="submit" class="btn btn-primary update_agent" value="Update"  (click)="createFilter()" >
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <!-- ================================ END FILTER LIST MODAL ==================================== -->
+
+    <!-- ================================  filter by priority LIST MODAL ==================================== -->
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Priority Flags</h4>
+                    <div class="addBtn">
+                        <button type="button" data-toggle="modal" data-target="#add_priority" class="btn btn-primary" >+Add Key</button>
+                    </div>                
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-md">
+
+                            <tr>
+                                <th>#</th>
+                                <th>Priority</th>
+                                <th>Keyword</th>
+                                <th>Action</th>
+                            </tr>
+
+                            <tbody>
+                                <tr *ngFor="let queue of new_priorityQueue; let i=index">
+                                    <td>{{0+i+1}}</td>
+                                    <td>{{queue.priority}}</td>
+                                    <td>
+                                        <ul class="badge-list">
+                                            <li *ngFor="let item of queue.key_word"><span class="badge">{{item}}</span></li>
+                                       
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <span  class="user-icon" style="cursor: pointer;"><i class="far fa-edit"
+                                                (click)="editprioritySettings(queue.id)"></i></span>
+                                        <span class="user-icon" style="cursor: pointer;"><i class="far fa-trash-alt"
+                                                (click)="deletefilterdata(queue.id)"></i></span>
+                                    </td>
+                                </tr>
+
+                                <tr *ngIf="recordNotFound == true">
+                                    <td colspan="12">Data not found</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-lg" id="add_priority">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form >
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myLargeModalLabel">Add Priority Flag</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+    
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="add_pri_id">Priority</label>
+                                    <select (change)="statusChange()" name="add_pri_id" id="add_pri_id" class="form-control">
+                                        <option value="0"> Select Priority </option>
+                                        <option  *ngFor="let cat of priorityLists" value="{{cat.id}}">
+                                            {{cat.priority}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+    
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="department_name">Key Word (By click Enter Add multiple Codes)</label>
+                                        <mat-form-field class="form-controls" appearance="none">
+                                            <mat-chip-list  #addWrapCode2>
+                                              <mat-chip *ngFor="let wrapCode of priority_list" [selectable]="selectable"
+                                                       [removable]="removable" (removed)="remove2(wrapCode)" >
+                                                {{wrapCode.name}}
+                                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                              </mat-chip>
+                                              <input  placeholder="Type here"
+                                                     [matChipInputFor]="addWrapCode2"
+                                                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                     [matChipInputAddOnBlur]="addOnBlur"
+                                                     (matChipInputTokenEnd)="add2($event)">
+                                            </mat-chip-list>
+                                          </mat-form-field>
+    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="modal-footer">
+                        <div class="buttons">
+                            <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                            <input type="submit" (click)="addPriorityFilter()" class="btn btn-primary update_agent" value="Update" >
+                        </div>
+                    </div>
+                </form>
+    
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-md" id="edit_priority">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myLargeModalLabel">Update Priority keywords</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">                        
+                        <div class="row">                   
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="department_name">Type Keywords <span
+                                            style="color: brown;font-size: 12px;"> (By click <b>Enter </b> Add multiple
+                                            keys) </span></label>
+
+                                    <mat-form-field class="form-controls" appearance="none">
+                                        <mat-chip-list #editaddWrapCode2>
+                                            <mat-chip *ngFor="let wrapCode of editwrapUpCode2" [selectable]="selectable"
+                                                [removable]="removable" (removed)="editremove2(wrapCode)">
+                                                {{wrapCode.name}}
+                                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                            </mat-chip>
+                                            <input placeholder="" [matChipInputFor]="editaddWrapCode2"
+                                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                [matChipInputAddOnBlur]="addOnBlur"
+                                                (matChipInputTokenEnd)="editadd2($event)">
+                                        </mat-chip-list>
+                                    </mat-form-field>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="buttons">
+                            <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+
+                            <input (click)="updatePriority()" type="submit" class="btn btn-primary update_agent" value="Update">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- ================================ END priority LIST MODAL ==================================== -->
 
 
 </div>

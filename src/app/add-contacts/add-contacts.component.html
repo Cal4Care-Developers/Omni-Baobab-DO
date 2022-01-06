@@ -3,219 +3,467 @@
 
 
 	<form [formGroup]="addContact" (ngSubmit)="addContactown()">
-					<div class="row">
-						<div class="col-12 col-md-12 col-lg-12">
-							<div class="card">
-								<div class="card-header">
-									<h4>Add Contacts</h4>
+		<div class="row">
+			<div class="col-12 col-md-12 col-lg-12">
+				<div class="card">
+					<div class="card-header">
+						<h4>Add Contacts</h4>
+					</div>
+					<div class="card-body p-0">
+						<div class="form-panel">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="contact_owner">Customer Number</label>
+										<input type="text"  id="contact_owner" value="{{contact_owner}}" class="form-control" formControlName="contact_owner" >
+									</div>
 								</div>
-								<div class="card-body p-0">
-									<div class="form-panel">
-										<div class="row">
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="contact_owner">Contact Owner <span style="color: red;"> *</span> </label>
-													<input type="text" id="contact_owner" class="form-control" formControlName="contact_owner" >
-												</div>
-											</div>
-			
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="pbx_count">Lead Source</label>
-			
-													<input formControlName="lead_source" type="text" name="first_name" class="form-control" >
-												</div>
-											</div>
-			
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="contact_owner">Full Name <span style="color: red;"> *</span></label>
-													<div class="input-group">
-														<span class="input-group-addon">
-															<select name="sal" id="sal" class="form-control" >
-																<option selected="selected" value="Mr.">Mr.</option>
-																<option value="Mrs.">Mrs.</option>
-																<option value="Miss">Miss</option>
-															</select>
-														</span>
-														<input formControlName="first_name" type="text" name="first_name" class="form-control" placeholder="Full Name">
-													</div>
-												</div>
-											</div>
-			
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="last_name">Last Name</label>
-													<input type="text" id="last_name" class="form-control" formControlName="last_name" >
-												</div>
-											</div>
-			
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="account_name">Account Name</label>
-													<input type="text" id="account_name" class="form-control" formControlName="account_name" >
-												</div>
-											</div>
-			
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="title">Title</label>
-													<input type="text" id="title" class="form-control" formControlName="title" >
-												</div>
-											</div>
-			
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="email">Email <span style="color: red;"> *</span></label>
-													<input type="email" id="email" class="form-control" formControlName="email" >
-													<label class="error-message message-small" *ngIf="!addContact.get('email').valid && addContact.get('email').touched ">Please enter the valid email id</label>
 
-												</div>
-											</div>
-			
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="department">Department</label>
-													<select name="departments"  id="departments" class="form-control">
-														<option value='0'> Select Department </option>
-														<option *ngFor="let dept of departments" value="{{dept.dept_id}}">{{dept.department_name}}</option>
-														</select>
-												</div>
-											</div>
-			
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="department">Responsible Department</label>
-													<select name="res_departments"  id="res_departments" class="form-control">
-														<option value='0'> Select Department </option>
-														<option *ngFor="let dept of departments" value="{{dept.dept_id}}">{{dept.department_name}}</option>
-														</select>
-												</div>
-											</div>
-			
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="activity">Activity</label>
-													<input type="text" id="activity" class="form-control" formControlName="activity" >
-												</div>
-											</div>
-			
-											<div class="col-md-6">
-												<div class="form-group">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="lead_source">Civility</label>
 
-												<div class="input-group">
-													<label for="phone"><b>Phone (Primary Number)</b> <span style="color: red;"> *</span></label>
-													<span class="input-group-addon">
-													  <input type="country" id="country_code" class="form-control" placeholder="country code" formControlName="country_code" >
-													</span>
-													<input type="text" id="phone" class="form-control" formControlName="phone" >
-												</div>
-												<p>While adding an extension, the country code may be '0'</p>
-
-												</div>
-											</div>
-			
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="home_phone">Home Phone</label>
-													<input type="text" id="home_phone" class="form-control" formControlName="home_phone" >
-												</div>
-											</div>
-			
-											<!-- <div class="col-md-6">
-												<div class="form-group">
-													<label for="office_phone">Office Phone</label>
-													<input type="text" id="office_phone" class="form-control" formControlName="office_phone" >
-												</div>
-											</div> -->
-			
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="fax">Fax</label>
-													<input type="text" id="fax" class="form-control" formControlName="fax" >
-												</div>
-											</div>
-			
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="mobile">Mobile</label>
-													<input type="text" id="mobile" class="form-control" formControlName="mobile" >
-												</div>
-											</div>
-			
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="dob">Date of Birth</label>
-													<input type="text" id="dob" class="form-control" formControlName="dob" >
-												</div>
-											</div>
-			
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="assistant">Assistant</label>
-													<input type="text" id="assistant" class="form-control" formControlName="assistant" >
-												</div>
-											</div>
-			
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="assitant_phone">Asst Phone</label>
-													<input type="text" id="assitant_phone" class="form-control" formControlName="assitant_phone" >
-												</div>
-											</div>
-			
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="reports_to">Reports To</label>
-													<input type="text" id="reports_to" class="form-control" formControlName="reports_to" >
-												</div>
-											</div>
-			
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="email_opt_out">Email Opt Out</label>
-													<input type="checkbox" class="form-control" formControlName="email_opt_out">
-												</div>
-											</div>
-			
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="skype">Skype</label>
-													<input type="text" id="skype" class="form-control" formControlName="skype" >
-												</div>
-											</div>
-			
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="secondary_email">Secondary Email</label>
-													<input type="text" id="secondary_email" class="form-control" formControlName="secondary_email" >
-												</div>
-											</div>
-			
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="twitter">Twitter</label>
-													<input type="text" id="twitter" class="form-control" formControlName="twitter" >
-												</div>
-											</div>
-			
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for="reporting_to">Reporting To</label>
-													<input type="text" id="reporting_to" class="form-control" formControlName="reporting_to" >
-												</div>
-											</div>
+										<input type="text"  id="lead_source" class="form-control" formControlName="lead_source" >
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="contact_owner">First Name</label>
+										<div class="input-group">
+											<span class="input-group-addon">
+												<select name="sal" id="sal" class="form-control" >
+													<option selected="selected" value="Mr.">Mr.</option>
+													<option value="Mrs.">Mrs.</option>
+													<option value="Miss">Miss</option>
+												</select>
+											</span>
+											<input formControlName="first_name" type="text" name="first_name" class="form-control" placeholder="Full Name">
 										</div>
+									</div>
+								</div>
+								
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="last_name">Last Name</label>
+										<input type="text" id="last_name" class="form-control" formControlName="last_name" >
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="email">Email Address</label>
+										<input type="text" id="email"  class="form-control" formControlName="email" >
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="dob">Date of Birth</label>
+										<input type="text" id="dob"  class="form-control" formControlName="dob" >
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="title">Conference Contact #</label>
+										<input type="text" id="title"  class="form-control" formControlName="title" >
+									</div>
+								</div>
+								<div class="col-md-6" (click)="getDepartments()">
+									<div class="form-group">
+										<label for="department">Gender</label>
+										<select name="departments"  id="departments" class="form-control">
+											<option value='0'> Select Gender </option>
+											<option value="Male">Male</option> 
+											<option value="Female">Female</option> 
+											<option value=" ">Others </option> 
+											<!-- <option *ngFor="let dept of departments" value="{{dept.dept_id}}">{{dept.department_name}}</option> -->
+										</select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+
+									<div class="input-group">
+										<label for="phone"><b>Mobile Phone# </b></label>
+										<span class="input-group-addon">
+										  <input type="country" id="country_code" class="form-control" placeholder="country code" formControlName="country_code" >
+										</span>
+										<input type="text" id="phone" class="form-control" formControlName="phone" >
+									</div>
+									<p>While adding an extension, the country code may be '0'</p>
+
+									</div>
+								</div>
+								<!-- <div class="col-md-6">
+									<div class="form-group">
+										<label for="phone">Mobile Phone# </label>
+										<input type="text" id="phone"  class="form-control" formControlName="phone" >
+									</div>
+								</div> -->
+								
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="mobile">Other Phone #</label>
+										<input type="text" id="mobile"  class="form-control" formControlName="mobile" >
+									</div>
+								</div>
+
+								
+
+								<div class="col-md-6" >
+									<div class="form-group">
+										<label for="department">Nationality</label>
+										<select name="res_departments"  id="res_departments" class="form-control">
+											<option value='0'> Select Nationality </option>
+											<option value="">Select one...</option>
+	<option value='afghan'>Afghan</option>
+	<option value='albanian'>Albanian</option>
+	<option value='algerian'>Algerian</option>
+	<option value='american'>American</option>
+	<option value='andorran'>Andorran</option>
+	<option value='angolan'>Angolan</option>
+	<option value='anguillan'>Anguillan</option>
+	<option value='citizen-of-antigua-and-barbuda'>Citizen of Antigua and Barbuda</option>
+	<option value='argentine'>Argentine</option>
+	<option value='armenianaustralian'>ArmenianAustralian</option>
+	<option value='austrian'>Austrian</option>
+	<option value='azerbaijani'>Azerbaijani</option>
+	<option value='bahamian'>Bahamian</option>
+	<option value='bahraini'>Bahraini</option>
+	<option value='bangladeshi'>Bangladeshi</option>
+	<option value='barbadian'>Barbadian</option>
+	<option value='belarusian'>Belarusian</option>
+	<option value='belgian'>Belgian</option>
+	<option value='belizean'>Belizean</option>
+	<option value='beninese'>Beninese</option>
+	<option value='bermudian'>Bermudian</option>
+	<option value='bhutanese'>Bhutanese</option>
+	<option value='bolivian'>Bolivian</option>
+	<option value='citizen-of-bosnia-and-herzegovina'>Citizen of Bosnia and Herzegovina</option>
+	<option value='botswanan'>Botswanan</option>
+	<option value='brazilian'>Brazilian</option>
+	<option value='british'>British</option>
+	<option value='british-virgin-islander'>British Virgin Islander</option>
+	<option value='bruneian'>Bruneian</option>
+	<option value='bulgarian'>Bulgarian</option>
+	<option value='burkinan'>Burkinan</option>
+	<option value='burmese'>Burmese</option>
+	<option value='burundian'>Burundian</option>
+	<option value='cambodian'>Cambodian</option>
+	<option value='cameroonian'>Cameroonian</option>
+	<option value='canadian'>Canadian</option>
+	<option value='cape-verdean'>Cape Verdean</option>
+	<option value='cayman-islander'>Cayman Islander</option>
+	<option value='central-african'>Central African</option>
+	<option value='chadian'>Chadian</option>
+	<option value='chilean'>Chilean</option>
+	<option value='chinese'>Chinese</option>
+	<option value='colombian'>Colombian</option>
+	<option value='comoran'>Comoran</option>
+	<option value='congolese-(congo)'>Congolese (Congo)</option>
+	<option value='congolese-(drc)'>Congolese (DRC)</option>
+	<option value='cook-islander'>Cook Islander</option>
+	<option value='costa-rican'>Costa Rican</option>
+	<option value='croatian'>Croatian</option>
+	<option value='cuban'>Cuban</option>
+	<option value='cymraes'>Cymraes</option>
+	<option value='cymro'>Cymro</option>
+	<option value='cypriot'>Cypriot</option>
+	<option value='czech'>Czech</option>
+	<option value='danish'>Danish</option>
+	<option value='djiboutian'>Djiboutian</option>
+	<option value='dominican'>Dominican</option>
+	<option value='citizen-of-the-dominican-republic'>Citizen of the Dominican Republic</option>
+	<option value='dutch'>Dutch</option>
+	<option value='east-timorese'>East Timorese</option>
+	<option value='ecuadorean'>Ecuadorean</option>
+	<option value='egyptian'>Egyptian</option>
+	<option value='emirati'>Emirati</option>
+	<option value='english'>English</option>
+	<option value='equatorial-guinean'>Equatorial Guinean</option>
+	<option value='eritrean'>Eritrean</option>
+	<option value='estonian'>Estonian</option>
+	<option value='ethiopian'>Ethiopian</option>
+	<option value='faroese'>Faroese</option>
+	<option value='fijian'>Fijian</option>
+	<option value='filipino'>Filipino</option>
+	<option value='finnish'>Finnish</option>
+	<option value='french'>French</option>
+	<option value='gabonese'>Gabonese</option>
+	<option value='gambian'>Gambian</option>
+	<option value='georgian'>Georgian</option>
+	<option value='german'>German</option>
+	<option value='ghanaian'>Ghanaian</option>
+	<option value='gibraltarian'>Gibraltarian</option>
+	<option value='greek'>Greek</option>
+	<option value='greenlandic'>Greenlandic</option>
+	<option value='grenadian'>Grenadian</option>
+	<option value='guamanian'>Guamanian</option>
+	<option value='guatemalan'>Guatemalan</option>
+	<option value='citizen-of-guinea-bissau'>Citizen of Guinea-Bissau</option>
+	<option value='guinean'>Guinean</option>
+	<option value='guyanese'>Guyanese</option>
+	<option value='haitian'>Haitian</option>
+	<option value='honduran'>Honduran</option>
+	<option value='hong-konger'>Hong Konger</option>
+	<option value='hungarian'>Hungarian</option>
+	<option value='icelandic'>Icelandic</option>
+	<option value='indian'>Indian</option>
+	<option value='indonesian'>Indonesian</option>
+	<option value='iranian'>Iranian</option>
+	<option value='iraqi'>Iraqi</option>
+	<option value='irish'>Irish</option>
+	<option value='israeli'>Israeli</option>
+	<option value='italian'>Italian</option>
+	<option value='ivorian'>Ivorian</option>
+	<option value='jamaican'>Jamaican</option>
+	<option value='japanese'>Japanese</option>
+	<option value='jordanian'>Jordanian</option>
+	<option value='kazakh'>Kazakh</option>
+	<option value='kenyan'>Kenyan</option>
+	<option value='kittitian'>Kittitian</option>
+	<option value='citizen-of-kiribati'>Citizen of Kiribati</option>
+	<option value='kosovan'>Kosovan</option>
+	<option value='kuwaiti'>Kuwaiti</option>
+	<option value='kyrgyz'>Kyrgyz</option>
+	<option value='lao'>Lao</option>
+	<option value='latvian'>Latvian</option>
+	<option value='lebanese'>Lebanese</option>
+	<option value='liberian'>Liberian</option>
+	<option value='libyan'>Libyan</option>
+	<option value='liechtenstein-citizen'>Liechtenstein citizen</option>
+	<option value='lithuanian'>Lithuanian</option>
+	<option value='luxembourger'>Luxembourger</option>
+	<option value='macanese'>Macanese</option>
+	<option value='macedonian'>Macedonian</option>
+	<option value='malagasy'>Malagasy</option>
+	<option value='malawian'>Malawian</option>
+	<option value='malaysian'>Malaysian</option>
+	<option value='maldivian'>Maldivian</option>
+	<option value='malian'>Malian</option>
+	<option value='maltese'>Maltese</option>
+	<option value='marshallese'>Marshallese</option>
+	<option value='martiniquais'>Martiniquais</option>
+	<option value='mauritanian'>Mauritanian</option>
+	<option value='mauritian'>Mauritian</option>
+	<option value='mexican'>Mexican</option>
+	<option value='micronesian'>Micronesian</option>
+	<option value='moldovan'>Moldovan</option>
+	<option value='monegasque'>Monegasque</option>
+	<option value='mongolian'>Mongolian</option>
+	<option value='montenegrin'>Montenegrin</option>
+	<option value='montserratian'>Montserratian</option>
+	<option value='moroccan'>Moroccan</option>
+	<option value='mosotho'>Mosotho</option>
+	<option value='mozambican'>Mozambican</option>
+	<option value='namibian'>Namibian</option>
+	<option value='nauruan'>Nauruan</option>
+	<option value='nepalese'>Nepalese</option>
+	<option value='new-zealander'>New Zealander</option>
+	<option value='nicaraguan'>Nicaraguan</option>
+	<option value='nigerian'>Nigerian</option>
+	<option value='nigerien'>Nigerien</option>
+	<option value='niuean'>Niuean</option>
+	<option value='north-korean'>North Korean</option>
+	<option value='northern-irish'>Northern Irish</option>
+	<option value='norwegian'>Norwegian</option>
+	<option value='omani'>Omani</option>
+	<option value='pakistani'>Pakistani</option>
+	<option value='palauan'>Palauan</option>
+	<option value='palestinian'>Palestinian</option>
+	<option value='panamanian'>Panamanian</option>
+	<option value='papua-new-guinean'>Papua New Guinean</option>
+	<option value='paraguayan'>Paraguayan</option>
+	<option value='peruvian'>Peruvian</option>
+	<option value='pitcairn-islander'>Pitcairn Islander</option>
+	<option value='polish'>Polish</option>
+	<option value='portuguese'>Portuguese</option>
+	<option value='prydeinig'>Prydeinig</option>
+	<option value='puerto-rican'>Puerto Rican</option>
+	<option value='qatari'>Qatari</option>
+	<option value='romanian'>Romanian</option>
+	<option value='russian'>Russian</option>
+	<option value='rwandan'>Rwandan</option>
+	<option value='salvadorean'>Salvadorean</option>
+	<option value='sammarinese'>Sammarinese</option>
+	<option value='samoan'>Samoan</option>
+	<option value='sao-tomean'>Sao Tomean</option>
+	<option value='saudi-arabian'>Saudi Arabian</option>
+	<option value='scottish'>Scottish</option>
+	<option value='senegalese'>Senegalese</option>
+	<option value='serbian'>Serbian</option>
+	<option value='citizen-of-seychelles'>Citizen of Seychelles</option>
+	<option value='sierra-leonean'>Sierra Leonean</option>
+	<option value='singaporean'>Singaporean</option>
+	<option value='slovak'>Slovak</option>
+	<option value='slovenian'>Slovenian</option>
+	<option value='solomon-islander'>Solomon Islander</option>
+	<option value='somali'>Somali</option>
+	<option value='south-african'>South African</option>
+	<option value='south-korean'>South Korean</option>
+	<option value='south-sudanese'>South Sudanese</option>
+	<option value='spanish'>Spanish</option>
+	<option value='sri-lankan'>Sri Lankan</option>
+	<option value='st-helenian'>St Helenian</option>
+	<option value='st-lucian'>St Lucian</option>
+	<option value='stateless'>Stateless</option>
+	<option value='sudanese'>Sudanese</option>
+	<option value='surinamese'>Surinamese</option>
+	<option value='swazi'>Swazi</option>
+	<option value='swedish'>Swedish</option>
+	<option value='swiss'>Swiss</option>
+	<option value='syrian'>Syrian</option>
+	<option value='taiwanese'>Taiwanese</option>
+	<option value='tajik'>Tajik</option>
+	<option value='tanzanian'>Tanzanian</option>
+	<option value='thai'>Thai</option>
+	<option value='togolese'>Togolese</option>
+	<option value='tongan'>Tongan</option>
+	<option value='trinidadian'>Trinidadian</option>
+	<option value='tristanian'>Tristanian</option>
+	<option value='tunisian'>Tunisian</option>
+	<option value='turkish'>Turkish</option>
+	<option value='turkmen'>Turkmen</option>
+	<option value='turks-and-caicos-islander'>Turks and Caicos Islander</option>
+	<option value='tuvaluan'>Tuvaluan</option>
+	<option value='ugandan'>Ugandan</option>
+	<option value='ukrainian'>Ukrainian</option>
+	<option value='uruguayan'>Uruguayan</option>
+	<option value='uzbek'>Uzbek</option>
+	<option value='vatican-citizen'>Vatican citizen</option>
+	<option value='citizen-of-vanuatu'>Citizen of Vanuatu</option>
+	<option value='venezuelan'>Venezuelan</option>
+	<option value='vietnamese'>Vietnamese</option>
+	<option value='vincentian'>Vincentian</option>
+	<option value='wallisian'>Wallisian</option>
+	<option value='welsh'>Welsh</option>
+	<option value='yemeni'>Yemeni</option>
+	<option value='zambian'>Zambian</option>
+	<option value='zimbabwean'>Zimbabwean</option>
+											<!-- <option *ngFor="let dept of departments" value="{{dept.dept_id}}">{{dept.department_name}}</option> -->
+										</select>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<div class="input-group">
+											
+
+										<label for="phone">staff</label>
+										<input type="text" id="home_phone"  class="form-control" formControlName="home_phone" >
+											<!-- <span class="input-group-addon">
+													<input type="text" id="country_code"  class="form-control" formControlName="country_code" >
+											</span>
+										<input type="text" id="phone"  class="form-control" formControlName="phone" > -->
+
+										 </div>
+										<!-- <p>When adding an extension, the country code is not important</p> -->
+										 
+											 
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="home_phone">Customer Type</label>
+										<input type="text" id="home_phone"  class="form-control" formControlName="home_phone" >
+									</div>
+								</div>
+
+								
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="fax">Account Officer</label>
+										<input type="text" id="fax"  class="form-control" formControlName="fax" >
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="assistant">Branch ID</label>
+										<input type="text"  id="assistant" class="form-control" formControlName="assistant" >
+									</div>
+								</div>
+
+
+								
+
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="reports_to">Bio status</label>
+										<input type="text"  id="reports_to" class="form-control" formControlName="reports_to" >
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="assitant_phone">Bio flag</label>
+										<input type="text"  id="assitant_phone" class="form-control" formControlName="assitant_phone" >
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="created_by">WOF</label>
+										<input type="text"  id="created_by" class="form-control" formControlName="created_by">
+										<!-- <div class="small">{{ this.created_time }}</div> -->
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="email_opt">Blacklisted</label>
+										<input type="text" name="email_opt" class="form-control">
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="modified_by">BVN</label>
+										<input type="text" value="Naveen" id="modified_by" class="form-control" formControlName="modified_by">
+										<!-- <div class="small">{{ this.modified_time }}</div> -->
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="skype">Legal Info</label>
+										<input type="text" id="skype"  class="form-control" formControlName="skype" >
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="secondary_email">Legal ID Type</label>
+										<input type="text" id="secondary_email"  class="form-control" formControlName="secondary_email" >
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="twitter">Legal ID Number</label>
+										<input type="text" id="twitter"  class="form-control" formControlName="twitter" >
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="twitter">Expiry Date</label>
+										<input type="text" id="twitter"  class="form-control" formControlName="twitter" >
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				
+				</div>
+			</div>
+		</div>					
 					
 						
 	
-					<div class="row">
+					<!-- <div class="row">
 						<div class="col-12 col-md-12 col-lg-12">
 							<div class="card">
 								<div class="card-header">
@@ -299,8 +547,8 @@
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="row">
+					</div> -->
+					<!-- <div class="row">
 						<div class="col-12 col-md-12 col-lg-12">
 							<div class="card">
 								<div class="card-header">
@@ -369,8 +617,8 @@
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="row">
+					</div> -->
+					<!-- <div class="row">
 						<div class="col-12 col-md-12 col-lg-12">
 							<div class="card">
 								<div class="card-header">
@@ -397,16 +645,16 @@
 				
 											</div>
 										</div>
-										<br />
+										<br /> -->
 										<div class="buttons">
 											<input type="button" class="btn btn-primary" type="submit" value="Add New Contact" [disabled]="!addContact.valid"  >
 										</div>
-									</div>
+									<!-- </div>
 								</div>
 							
 							</div>
 						</div>
-					</div>
+					</div> -->
 				
 				</form>
 				

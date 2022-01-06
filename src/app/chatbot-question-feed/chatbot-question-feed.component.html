@@ -8,178 +8,666 @@
                     <div class="addBtn">
                         <button type="button" class="btn btn-primary" (click)="addQuestion()">+ Add Question</button>
                     </div>
-                    <a (click)="showdoc('https://baobabgroup.mconnectapps.com/api/v1.0/pro_contents/chatbot.pdf')"  target="_blank"><i style="font-size: 24px;
-                        float: right;" class="fa fa-exclamation-circle"></i></a>
+                    <!-- <a (click)="showdoc('https://baobabgroup.mconnectapps.com/api/v1.0/pro_contents/chatbot.pdf')"  target="_blank"><i style="font-size: 24px;
+                        float: right;" class="fa fa-question-circle"></i></a> -->
                     <!-- <a href="https://baobabgroup.mconnectapps.com/api/v1.0/pro_contents/chatbot.pdf"  target="_blank"><i style="font-size: 24px;float: right;padding-left: 20px;" class="fa fa-exclamation-circle"></i></a> -->
                 </div>
                 <div class="card-body p-0">
-                   <div class="table-responsive">
-                    <table class="table table-striped table-md">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-md">
 
-                        <tr>
-                            <th>S.no </th>
-                            <th>Question</th>
-                            <th>Answer</th>
-                            <th>Action</th>
+                            <tr>
+                                <th>S.no </th>
+                                <th>Question</th>
+                                <th>Answer</th>
+                                <th>Status</th>
+                                <th>Action</th>
 
-                        </tr>
+                            </tr>
 
 
-                        <tr *ngFor="let queue of qusn_list; let i=index">
-                            <td>{{0+i+1}}</td>
-                            <td>{{queue.question}}</td>
-                            <td>{{queue.answer}}</td>
-                            <td>
-                                <span class="user-icon" style="cursor: pointer;"><i class="far fa-edit"      (click)="editquestionSettings(queue.id)"></i></span>
-                                <span class="user-icon" style="cursor: pointer;"><i class="far fa-trash-alt" (click)="deleteQuestion(queue.id)"></i></span>
-                            </td>
-                        </tr>
+                            <tr *ngFor="let queue of qusn_list; let i=index">
+                                <td>{{0+i+1}}</td>
+                                <td [innerHTML]="queue.question">{{queue.question}}</td>
 
-                        <tr *ngIf="recordNotFound == true">
-                            <td colspan="12">Data not found</td>
-                        </tr>
+                                <!-- <td [innerHTML]="queue.answer">{{queue.answer}}</td> -->
+                                <td [innerHTML]="queue.answer"></td>
+                                <td>
+                                    {{queue.status == 0 ? "Q&A Reply" : queue.status == 1 ? "Greetings" : queue.status
+                                    == 2 ? "Connect to Agent":"null"}}
+                                    <!-- String year = credits < 30 ? "freshman" : credits <= 59 ? "sophomore" : credits <= 89 ? "junior" : "senior"; -->
+                                </td>
+                                <td>
+                                    <span class="user-icon" style="cursor: pointer;"><i class="far fa-edit"
+                                            (click)="editquestionSettings(queue.id)"></i></span>
+                                    <span class="user-icon" style="cursor: pointer;"><i class="far fa-trash-alt"
+                                            (click)="deleteQuestion(queue.id)"></i></span>
+                                </td>
+                            </tr>
 
-                    </table>
-                </div>
-            </div>
+                            <tr *ngIf="recordNotFound == true">
+                                <td colspan="12">Data not found</td>
+                            </tr>
 
-        </div>
-    </div>
-</div>
-
-<!----------------
-Add Question 
-------------->
-<div class="modal fade bd-example-modal-md" id="add_qusnform">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Add Questions</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-                <form [formGroup]="addQusn" id="add_qusnform" class="question-panel fl" (ngSubmit)="addQusnData()">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="form-group">
-                                       <label for="chat_question">Enter Your Question</label>
-                                       <input type="text" id="" formControlName="chat_question" class="form-control">
-                                   </div>
-                               </div>
-
-                               <div class="card-body p-30">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="chat_answer">Enter Answer</label>
-                                            <textarea   class="form-control" formControlName="chat_answer"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </table>
                     </div>
                 </div>
 
-                <div class="col-md-6">
-                    <div class="buttons">
-                      <input type="button" data-dismiss="modal" class="btn btn-secondary" value="Cancel">
-                      <input type="submit" class="btn btn-success" value="Add" [disabled]="!addQusn.valid">
-                  </div>
-              </div>
-
-          </form>
-      </div>
-
-  </div>
-</div>
-</div>
-
-<!----------------
-Add Question  End
-------------->
-
-<div class="modal fade bd-example-modal-md" id="edit_qusnform">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-
-             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Update Questions</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
+        </div>
+    </div>
 
-  <div class="modal-body">
-            <form [formGroup]="editQusn" id="edit_qusnform" class="question-panel fl" (ngSubmit)="edit_qusnData(a_id)">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="form-group" (click)="noToggle()">
-                                       <label for="chat_question">Enter Question</label>
-                                    <input type="text"  formControlName="chat_question" class="form-control">
-                                </div>
-                            </div>
+    <!----------------
+Add Question 
+------------->
+    <div class="modal fade bd-example-modal-md" id="add_qusnform">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
 
-                            <div  id="chatbot_question_2">
-                                <div class="card-body p-30">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="chat_answer">Enter Answer</label>
-                                                <textarea   class="form-control" formControlName="chat_answer"></textarea>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myLargeModalLabel">Add Questions</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form [formGroup]="addQusn" id="add_qusnform" class="question-panel fl" (ngSubmit)="addQusnData()">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="form-group">
+                                            <label for="chat_question">Enter Your Question</label>
+                                            <input type="text" id="" formControlName="chat_question"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="card-body p-30">
+                                        <div class="row">
+                                            <!-- <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="status">Status</label>
+                                                    <select name="dept_status" id="dept_status" class="form-control"
+                                                        formControlName="status" (change)="statusChange()">
+                                                        <option value=''> Select Status </option>
+                                                        <option value='0'> Q&A Reply </option>
+                                                        <option value='1'> Greetings </option>
+                                                        <option value='2'> Connect to Agent </option>
+                                                    </select>
+                                                    <p *ngIf="showerrorstatus" style="color: red;font-weight: 600;">
+                                                        Status Already Exist</p>
+                                                </div>
+                                            </div> -->
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="chat_answer">Enter Answer</label>
+                                                    <textarea class="form-control"
+                                                        formControlName="chat_answer"></textarea>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+                        <div class="col-md-6">
+                            <div class="buttons">
+                                <input type="button" data-dismiss="modal" class="btn btn-secondary" value="Cancel">
+                                <input type="submit" class="btn btn-success" value="Add" [disabled]="!addQusn.valid">
+                            </div>
+                        </div>
+
+                    </form>
                 </div>
 
-                <div class="col-md-6">
-                    <div class="buttons">
-                         <input type="button" data-dismiss="modal" class="btn btn-secondary" value="Cancel">
-                        <input type="submit" class="btn btn-success" value="Update" [disabled]="!editQusn.valid">
-                    </div>
-                </div>
-                
-            </form>
+            </div>
         </div>
+    </div>
+
+    <!----------------
+Add Question  End
+------------->
+
+    <div class="modal fade bd-example-modal-md" id="edit_qusnform">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myLargeModalLabel">Update Questions</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form [formGroup]="editQusn" id="edit_qusnform" class="question-panel fl"
+                        (ngSubmit)="edit_qusnData(a_id,b_id)">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="form-group" (click)="noToggle()">
+                                            <label for="chat_question">Enter Question</label>
+                                            <input type="text" formControlName="chat_question" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div id="chatbot_question_2">
+                                        <div class="card-body p-30">
+                                            <div class="row">
+                                                <!-- <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="status">Status</label>
+                                                    
+                                                        <select name="dept_status" id="dept_status" class="form-control"
+                                                            formControlName="status" (change)="editstatusChange()">
+                                                            <option value=''> Select Status </option>
+                                                            <option value='0'> Q&A Reply </option>
+                                                            <option value='1'> Greetings </option>
+                                                            <option value='2'> Connect to Agent </option>
+                                                        </select>
+                                                        <p *ngIf="showediterror" style="color: red;font-weight: 600;">
+                                                            Status Already Exist</p>
+                                                    </div>
+                                                </div> -->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="chat_answer">Enter Answer</label>
+                                                        <textarea class="form-control"
+                                                            formControlName="chat_answer"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="buttons">
+                                <input type="button" data-dismiss="modal" class="btn btn-secondary" value="Cancel">
+                                <input type="submit" class="btn btn-success" value="Update"
+                                    [disabled]="!editQusn.valid">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<!-- ====================================== ADD CHATBOT STATUS ================================================= -->
+<div class="modal fade bd-example-modal-md" id="add_form">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Update Chatbot</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form [formGroup]="addbot" id="add_form" class="question-panel fl" (ngSubmit)="edit_qusnData(a_id)">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="form-group" (click)="noToggle()">
+                                        <label for="chat_question">Enter Question</label>
+                                        <input type="text" formControlName="chat_question" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div id="chatbot_question_2">
+                                    <div class="card-body p-30">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="status">Status</label>
+
+                                                    <select name="dept_status" id="dept_status" class="form-control"
+                                                        formControlName="status" (change)="editstatusChange()">
+                                                        <option value=''> Select Status </option>
+                                                        <!-- <option value='0'> Q&A Reply </option> -->
+                                                        <option value='1'> Greetings </option>
+                                                        <option value='2'> Connect to Agent </option>
+                                                    </select>
+                                                    <p *ngIf="showediterror" style="color: red;font-weight: 600;">
+                                                        Status Already Exist</p>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="col-md-12" >
+                                                <div class="form-group">
+                                                    <label for="chat_answer">Enter Answer</label>
+                                                    <textarea class="form-control"
+                                                        formControlName="chat_answer"></textarea>
+                                                </div>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="buttons">
+                            <input type="button" data-dismiss="modal" class="btn btn-secondary" value="Cancel">
+                            <input type="submit" class="btn btn-success" value="Update" [disabled]="!addbot.valid">
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ====================================== Edit CHATBOT STATUS ================================================= -->
+<div class="modal fade bd-example-modal-md" id="edit_form">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Update Chatbot</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form [formGroup]="editbot" id="edit_form" class="question-panel fl"
+                    (ngSubmit)="edit_qusnData(a_id,b_id)">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="form-group">
+                                        <label for="chat_question">Enter Question</label>
+                                        <input type="text" formControlName="chat_question" class="form-control">
+                                    </div>
+                                </div>
+
+                                <!-- <div id="chatbot_question_2">
+                                    <div class="card-body p-30">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="status">Status</label>
+                                                
+                                                    <select name="dept_status" id="dept_status" class="form-control"
+                                                        formControlName="status" (change)="editstatusChange()">
+                                                        <option value=''> Select Status </option>
+                                                        <option value='1'> Greetings </option>
+                                                        <option value='2'> Connect to Agent </option>
+                                                    </select>
+                                                    <p *ngIf="showediterror" style="color: red;font-weight: 600;">
+                                                        Status Already Exist</p>
+                                                </div>
+                                            </div>
+                                   
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="buttons">
+                            <input type="button" data-dismiss="modal" class="btn btn-secondary" value="Cancel">
+                            <input type="submit" class="btn btn-success" value="Update" [disabled]="!editbot.valid">
+                        </div>
+                    </div>
+
+                </form>
+            </div>
         </div>
     </div>
 </div>
 
 
-</div>
+
+
 
 <div class="modal fade bd-example-modal-md" id="document_model">
-	<div class="modal-dialog modal-md"  style="max-width: 1200px;">
-	  <div class="modal-content">
-		<div class="modal-header">
-		  <h5 class="modal-title" style="color:crimson" >Help Manual</h5>
-		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		  </button>
-		</div>
-		<div class="modal-body">
-				  <!-- <iframe [src]="this.doc_link | safe"  width="100%" style="height: 575px;" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
-				  <!-- style="margin-bottom: -6px;" width="100%" height="325"  -->
-				<embed [src]="this.doc_link | safe"  width="100%" style="height: 575px;" />
-		</div>     
-		<div class="modal-footer" >
-			<div class="buttons">
-				<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="close">
-			</div>
-		</div>
+    <div class="modal-dialog modal-md" style="max-width: 1200px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color:crimson">Help Manual</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <iframe [src]="this.doc_link | safe"  width="100%" style="height: 575px;" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+                <!-- style="margin-bottom: -6px;" width="100%" height="325"  -->
+                <embed [src]="this.doc_link | safe" width="100%" style="height: 575px;" />
+            </div>
+            <div class="modal-footer">
+                <div class="buttons">
+                    <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="close">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="section-body">
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>ChatBot Greetings</h4>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-md">
+
+                            <tr>
+                                <th>#</th>
+                                <th>Key Response</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+
+                            <tbody>
+                                <tr *ngFor="let queue of chatbot_status; let i=index">
+                                    <td>{{0+i+1}}</td>
+                                    <td>{{queue.question}}</td>
+                                    <td>
+                                        {{ queue.status == 1 ? "Greetings" : queue.status == 2 ? "Connect to
+                                        Agent":"Agent Offline State"}}
+                                    </td>
+
+                                    <td>
+                                        <span class="user-icon" style="cursor: pointer;"><i class="far fa-edit"
+                                                (click)="editquestionSettings(queue.id)"></i></span>
+                                        <!-- <span class="user-icon" style="cursor: pointer;"><i class="far fa-trash-alt"
+                                                (click)="editquestionSettings(queue.id)"></i></span> -->
+                                    </td>
+                                </tr>
+
+                                <tr *ngIf="recordNotFound == true">
+                                    <td colspan="12">Data not found</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    <!-- </div>
+</div>
+
+<div class="section-body">
+    <div class="row"> -->
+        <div class="col-12 col-md-6 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Keywords</h4>
+                    <!-- <div class="addBtn">
+                        <button type="button" class="btn btn-primary" (click)="addKeywords()">+ Add keywords</button>
+                    </div> -->
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-md">
+
+                            <tr>
+                                <th>#</th>
+                                <th>Keywords</th>
+                                <th>Action</th>
+                            </tr>
+
+                            <tbody>
+                                <tr >
+                                    <td>{{1}}</td>
+                                    <!-- <td>{{queue.keyword}}</td> -->
+                                    <td style="padding: 2px;">
+                                        <ul class="badge-list">
+                                            <li *ngFor="let queue of list_keywords;"><span
+                                                    class="badge" style="font-size: 12px;">{{queue}}</span></li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <span class="user-icon" style="cursor: pointer;"><i class="far fa-edit"
+                                                (click)="editkeywords(list_key_id)"></i></span>
+                                        <!-- <span class="user-icon" style="cursor: pointer;"><i class="far fa-trash-alt"
+                                                (click)="deletekeywords(queue.id)"></i></span> -->
+                                    </td>
+                                </tr>
+
+                                <tr *ngIf="recordNotFound == true">
+                                    <td colspan="12">Data not found</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    <!-- </div> -->
+
+
+   <!--=============================== CHATBOT OFFLINE TOGGLE ================================== -->
+
+   <!-- <div class="row"> -->
+    <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h4>ChatBot Offline</h4>
+            </div>
+            <div style="height: 100px;" class="card-body p-30">
+
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        <div class="fl mb-15">
+                            <h6 style="margin-bottom: 0;" class="font-medium3">Disable</h6>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-1" style="text-align: center;">
+                        <!-- <div class="connecting-arrow text-center"> -->
+                        <div>
+                            <i class="fas fa-arrows-alt-h"></i>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-1">
+                        <div class="form-check form-check-inline">
+                            <div  class="pretty p-switch p-fill">
+                                <input type="checkbox" id="round_rob_set" [(ngModel)]="botstatus" (change)="changeBotOfflineStatus(botstatus)">
+                                <div class="state p-success">
+                                    <label for="round_rob_set"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2" style="text-align: center;">
+                        <!-- <div class="connecting-arrow text-center"> -->
+                        <div>
+                            <i class="fas fa-arrows-alt-h"></i>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="fl mb-15">
+                            <h6 style="margin-bottom: 0;" class="font-medium2">Enable</h6>
+                          
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
   
-	  </div>
-	</div>
-  </div>
+
+</div>
+<!--=============================== END CHATBOT OFFLINE TOGGLE ================================== -->
+
+
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="add_keywordform">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form  (ngSubmit)="createKeyword()">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myLargeModalLabel">Create Keywords</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <!-- <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="add_keywords">Keywords</label>
+                                <input type="text" class="form-control" id="add_keywords" formControlName="title">
+                            </div>
+                        </div> -->
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="department_name">Keyword (By click Enter Add multiple Keyword)</label>
+
+
+                                <mat-form-field class="form-controls" appearance="none">
+                                    <mat-chip-list [formControl]="emailFormControl" #addWrapCode>
+                                        <mat-chip *ngFor="let wrapCode of addwrapUpCode" [selectable]="selectable"
+                                            [removable]="removable" (removed)="removecreate(wrapCode)">
+                                            {{wrapCode.name}}
+                                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                        </mat-chip>
+                                        <input placeholder="" [matChipInputFor]="addWrapCode"
+                                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                            [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addcreate($event)">
+                                    </mat-chip-list>
+                                </mat-form-field>
+
+                            </div>
+                            <p class="error-colors" *ngIf="this.presentEmails == true;">This Keyword Already Entered
+                            </p>
+                            <p class="error-colors" *ngIf="this.presentempty == true;">Atleast One Keyword should be Entered
+                            </p>
+                        </div>
+
+
+
+
+                        <!-- <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="department_name">Status</label>
+                                                    <input type="text" id="department_name" class="form-control"
+                                    formControlName="department_name">
+                                        </div>
+                        </div> -->
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="buttons">
+                        <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                        <!-- <input type="submit" class="btn btn-primary update_agent" value="Update"
+                            [disabled]="!addDept.valid"> -->
+                        <input type="submit" class="btn btn-primary update_agent" value="Update"
+                           >
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade bd-example-modal-lg" id="edit_keywordform">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form [formGroup]="editkeyword" (ngSubmit)="updateKeyword()">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myLargeModalLabel">Edit Keywords</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <!-- <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="add_eidt_keywords">Keywords</label>
+                             <input type="text" class="form-control" id="add_eidt_keywords" formControlName="edit_value">
+                            </div>
+                        </div> -->
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="department_name">Keyword (By click Enter Add multiple Keyword)</label>
+
+
+                                <mat-form-field class="form-controls" appearance="none">
+                                    <mat-chip-list [formControl]="emailFormControl" #addWrapCode>
+                                        <mat-chip *ngFor="let wrapCode of wrapUpCode" [selectable]="selectable"
+                                            [removable]="removable" (removed)="remove(wrapCode)">
+                                            {{wrapCode.name}}
+                                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                        </mat-chip>
+                                        <input placeholder="" [matChipInputFor]="addWrapCode"
+                                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                            [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                                    </mat-chip-list>
+                                </mat-form-field>
+
+                            </div>
+                            <p class="error-colors" *ngIf="this.presentEmails == true;">This Keyword Already Entered
+                            </p>
+                            <p class="error-colors" *ngIf="this.presentempty == true;">Atleast One Keyword should be Entered
+                            </p>
+                        </div>
+
+
+
+                        <!-- <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="department_name">Status</label>
+                                                    <input type="text" id="department_name" class="form-control"
+                                    formControlName="department_name">
+                                        </div>
+                        </div> -->
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="buttons">
+                        <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                        <!-- <input type="submit" class="btn btn-primary update_agent" value="Update"
+                            [disabled]="!addDept.valid"> -->
+                        <input type="submit" class="btn btn-primary update_agent" value="Update" *ngIf="presentempty == false">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

@@ -170,13 +170,13 @@
 												<div style="width: 400px;" class="dropdown-menu">
 													<div class="dropdown-title">Select Email </div>
 
-													<div class="pullDown">
+													
+													<div class="pullDown" *ngFor="let item of email_from_list">
 														<a href="javascript:void(0)" class="dropdown-item"
-															(click)="selectFromEmail('newz')">
-															omni@pipe.mconnectapps.com
+															(click)="selectFromEmail(item)">
+															{{item}}
 														</a>
 													</div>
-													
 												</div>
 											</div>
 
