@@ -27,6 +27,7 @@ export class CustomWallboardComponent implements OnInit {
   total_chat = 0;
   total_ticket = 0;
   perabandoned = 0;
+  obtotal = 0;
   peranswered = 0;
   talktime = 0;
   waitingtime = 0;
@@ -37,6 +38,7 @@ export class CustomWallboardComponent implements OnInit {
   avlagent_queue = 0;
   auxagents=0;
   totagents=0;
+  qualityofservice = 0;
   quesData;
   admin_id;
   has_hard_id;
@@ -53,6 +55,7 @@ export class CustomWallboardComponent implements OnInit {
   admin_permision;
   user_admin= false;
   doc_link;
+  resagent = 0;
   constructor(private serverService: ServerService, private router:Router) {  }
 
  
@@ -299,7 +302,7 @@ changeWallType(){
   let socketData = $('#mrVoipType').val(); 
   let mData = JSON.parse(socketData);
   this.socketData = mData[0].data[0];
-
+console.log(this.socketData)
 
 
 if(this.socketData.type == "answered"){
@@ -318,6 +321,9 @@ if(this.socketData.type == "waiting"){
 }
 if(this.socketData.type == "perabandoned"){
   this.perabandoned = this.socketData.value;
+}
+if(this.socketData.type == "obtotal"){
+  this.obtotal = this.socketData.value;
 }
 if(this.socketData.type == "peranswered"){
   this.peranswered = this.socketData.value;
@@ -344,6 +350,11 @@ if(this.socketData.type == "auxagent"){
   this.auxagents = this.socketData.value;
 }if(this.socketData.type == "totagent"){
   this.totagents = this.socketData.value;
+}if(this.socketData.type == "qualityofservice"){
+  this.qualityofservice = this.socketData.value;
+  console.log(this.qualityofservice)
+}if(this.socketData.type == "resagent"){
+  this.resagent = this.socketData.value;
 }
 if(this.socketData.type == "shedulereset"){
   // alert(this.socketData.value)
