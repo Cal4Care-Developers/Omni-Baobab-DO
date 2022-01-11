@@ -1,0 +1,220 @@
+<div class="section-body">
+    <div class="row">
+        <div class="col-7 col-md-7 col-lg-7">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Customize Report</h4>
+                  
+                </div>
+                <div class="card-body p-30">
+                <form [formGroup]="getRep" (ngSubmit)="getReports()">
+                    <div class="row">
+                        
+                        <!-- <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="auxcode_name">Select Wrap Up code</label>
+                                <select name="auxcode_name"  id="auxcode_name" class="form-control " formControlName="auxcode_name">
+                                    <option value="" selected>All</option>
+                                    <option *ngFor="let auxcode of auxcodes" value="{{auxcode.auxcode_name}}">{{auxcode.auxcode_name}}</option>
+                                </select>
+                            </div>
+                        </div> -->
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="from_date">Select Date</label>
+                                <input type="date" id="from_date" class="form-control" formControlName="from_date">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                        
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="to_date">To Date</label>
+                                <input type="date" id="to_date" class="form-control" formControlName="to_date">
+                            </div>
+                        </div>
+
+                    </div> -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary" (click)="getReports()">Generate Report</button>
+                            </div>
+                        </div>
+                        </div>
+                    
+                </form>
+                </div>
+            </div>
+            
+        </div>
+    </div> 
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Customize Report</h4>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-md">
+                            <tr>
+                                <td colspan="12" class="search-text-tbl">
+                                    <div class="input-group"><input type="text" class="form-control" (keyup.enter)="callHistoryList({'search_text':call_history_search.value})" #call_history_search>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" (click)="callHistoryList({'search_text':call_history_search.value})"><i class="fas fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>S.no</th>
+                                <th>Indicator</th>
+                                <th>Phone inbound </th>
+                                <th>Phone outbound</th>
+                                <th>Whatsapp </th>
+                                <th>Messenger </th>
+                                <th>Email</th>
+                            </tr>
+                            <tr>
+                                <td>Interactions received during opening hours</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Interactions received outside opening hours </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Handled inbound interactions</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Issued calls </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Completed calls </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Argumentative calls</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Tel Quality of Service (QS) </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Tel Service Level</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>1rst response time </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Average waiting time before response </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Average time for 1st answer</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>% Argumentative calls Rate </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Claims processing </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Nb of cases created </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Average Talk Time Inbound </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Average Talk Time Outbound </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Phone Average Handling Time (AHT)</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                               
+                            </tr>
+                      
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer text-right" *ngIf="recordNotFound == false">
+                        <nav class="d-inline-block">
+                        <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+
+                                <li class="page-item">
+                                    <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'" href="javascript:void(0)" (click)="paginationData.backtab=='show' ? callHistoryList({'search_text':call_history_search.value,'offset':paginationData.start}) : false"><i class="fas fa-angle-left"></i></a>
+                                </li>
+                                <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                                    <a class="page-link" href="javascript:void(0)" (click)="callHistoryList({'search_text':call_history_search.value,'offset':paginationData.back})"><i class="fas fa-angle-double-left"></i></a>
+                                </li>
+
+
+                                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'" *ngFor="let pagination of paginationData.data;let i=index">
+                                    <a class="page-link" href="javascript:void(0)" (click)=" pagination.load ==true ? callHistoryList({'search_text':call_history_search.value,'offset':pagination.offset_count}) : false">{{pagination.btn_length}} <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                                </li>
+
+                                <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                                    <a class="page-link" href="javascript:void(0)" (click)="callHistoryList({'search_text':call_history_search.value,'offset':paginationData.next})"><i class="fas fa-angle-double-right"></i></a>
+                                </li>
+
+                                <li class="page-item">
+                                    <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'" href="javascript:void(0)" (click)="paginationData.nexttab =='show' ? callHistoryList({'search_text':call_history_search.value,'offset':paginationData.end}) : false"><i class="fas fa-angle-right"></i></a>
+                                </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

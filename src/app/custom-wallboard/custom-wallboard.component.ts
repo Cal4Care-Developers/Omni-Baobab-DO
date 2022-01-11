@@ -221,7 +221,7 @@ addUsers(){
 
 
 sendOnload(){
-  var socket_message  =  '[{"cust_id":"'+this.has_hard_id+'","data":[{"Name":"onload","Type":"advance_wallboard_1"}]}]' ;
+  var socket_message  =  '[{"cust_id":"'+this.has_hard_id+'","data":[{"Name":"onload","Type":"advance_wallboard_12"}]}]' ;
   this.websocket.send(socket_message);
  }
 

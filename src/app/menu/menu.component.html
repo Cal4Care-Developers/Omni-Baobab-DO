@@ -264,6 +264,7 @@
         <div *ngIf="report_checked && report_checked.indexOf(items.id) > -1; else notSelected"> 
           <!-- <div>  -->
           <li routerLinkActive="active"  ><a href="javascript:void(0)" class="nav-link" routerLink="/{{items.report_url}}" ><i class="fas fa-file-alt"></i><span>{{items.report_name}}</span></a></li>
+          <!-- <li routerLinkActive="active"  ><a href="javascript:void(0)" class="nav-link" routerLink="/customize_reports" ><i class="fas fa-file-alt"></i><span>Customize Reports</span></a></li> -->
         </div>
       </div>
     </ul>
@@ -336,6 +337,7 @@
          <div *ngIf="report_checked && report_checked.indexOf(items.id) > -1; else notSelected"> 
            <!-- <div>  -->
            <li routerLinkActive="active"  ><a href="javascript:void(0)" class="nav-link" routerLink="/{{items.report_url}}" ><i class="fas fa-file-alt"></i><span>{{items.report_name}}</span></a></li>
+           
          </div>
        </div>
      </ul>
