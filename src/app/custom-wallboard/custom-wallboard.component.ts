@@ -318,6 +318,7 @@ if(this.socketData.type == "waiting"){
 }  
  if(this.socketData.type == "total"){
   this.total_call = this.socketData.value;
+  console.log(this.total_call)
 }
 if(this.socketData.type == "perabandoned"){
   this.perabandoned = this.socketData.value;
@@ -353,7 +354,7 @@ if(this.socketData.type == "auxagent"){
 }if(this.socketData.type == "qualityofservice"){
   this.qualityofservice = this.socketData.value;
   console.log(this.qualityofservice)
-}if(this.socketData.type == "resagent"){
+}if(this.socketData.type == "registeredagent"){
   this.resagent = this.socketData.value;
 }
 if(this.socketData.type == "shedulereset"){
