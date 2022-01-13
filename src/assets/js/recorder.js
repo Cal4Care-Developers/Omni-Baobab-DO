@@ -90,8 +90,8 @@ function stopRecording() {
     // mediaRecorder.stop();
     audio_rec.stop();
     audio_stream.getAudioTracks()[0].stop();
-    // $("#recordButton").show();
-    // $("#stopButton").hide();
+    $("#recordButton").show();
+    $("#stopButton").hide();
     // buttons reset
     // recordButton.disabled = false;
     // recordButton.innerText = "Redo Recording"

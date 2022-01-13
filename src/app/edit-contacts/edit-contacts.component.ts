@@ -5,6 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { ServerService } from '../services/server.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DialpadComponent } from '../mc/dialpad/dialpad.component';
 declare var $:any;
 declare var iziToast:any;
@@ -26,6 +27,7 @@ export class EditContactsComponent implements OnInit {
 
   param1: string;
   created_time;
+  addRefined: FormGroup;
   modified_time;
   contact_id;
   editContact: FormGroup;
@@ -62,20 +64,62 @@ export class EditContactsComponent implements OnInit {
   z_orgId;
   paramCall;
   popupnumber;
-
-  constructor(private serverService: ServerService, private router:Router,private route: ActivatedRoute, private sanitizer: DomSanitizer) { 
+  category_name;
+  extension;
+  has_hard_id;
+  auxcode_catagory;
+  user_type;
+  admin_permission;
+  get_dailer_value;
+  no_contact = false;
+  show_mini_butons = false;
+  show_ans_del = false;
+  show_ans = false;
+  show_del = false;
+  param3;
+  websocket;
+  constructor(private serverService: ServerService, private router:Router,private route: ActivatedRoute, private sanitizer: DomSanitizer,public modalService: NgbModal) { 
     
+    this.addRefined = new FormGroup({
+      'add_group_name': new FormControl(null, Validators.required),
+    });
+
     this.param1 = this.route.snapshot.queryParamMap.get('phone');
-    this.paramq = this.route.snapshot.queryParamMap.get('q');
-    this.paramCall = this.route.snapshot.queryParamMap.get('phone');
-    this.hapikey = this.route.snapshot.queryParamMap.get('hapikey');
+    this.param3 = this.route.snapshot.queryParamMap.get('ids');
+    this.paramCall = this.route.snapshot.queryParamMap.get('calltype');
+   //alert(this.paramCall)
     var decodedString = atob(this.param1);
     this.param1 = decodedString;
-
-    this.call_record_id = this.route.snapshot.queryParamMap.get('call_rec_id');
-    this.fromEdit = this.route.snapshot.queryParamMap.get('from_edit');
-    this.IFlink = this.route.snapshot.queryParamMap.get('clink');
+    this.get_dailer_value = localStorage.getItem("income_calls_num");
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+
+    this.serverService.editContact.subscribe((val: any) => {
+
+      var dpContent = JSON.parse(val);
+      // console.log(dpContent);
+      if (dpContent.type == "show_popup") {
+        this.param1 = dpContent.caller_no;
+        this.paramCall = dpContent.call_type;
+      //  alert(this.paramCall)
+        // this.queue_values = dpContent.queue_num;
+        if (dpContent.show_buttons == "true") {
+          this.show_mini_butons = true;
+          this.show_ans = true;
+          this.show_del = true;
+        } else {
+          this.show_mini_butons = false;
+          this.show_ans = false;
+          this.show_del = false;
+        }
+        console.log(this.param1);
+        //  this.editConatcts();        
+      }
+      if (dpContent.type == "call_ended") {
+        this.show_ans = false;
+        this.show_del = false;
+      }
+
+    });
     
   }
   
@@ -84,8 +128,8 @@ export class EditContactsComponent implements OnInit {
       'contact_owner' :new FormControl(null,Validators.required),
       'first_name' :new FormControl(null),
       'last_name' :new FormControl(null),
-      'account_name' :new FormControl(null,Validators.required),
-      'lead_source' :new FormControl(null,Validators.required),
+      'account_name' :new FormControl(null),
+      'lead_source' :new FormControl(null),
       'title' :new FormControl(null),
       'email' :new FormControl(null,[
         Validators.required,
@@ -130,33 +174,88 @@ export class EditContactsComponent implements OnInit {
      });
      this.uadmin_id = localStorage.getItem('userId');
      this.show_caller_id = localStorage.getItem('show_caller_id');
+     
+    this.extension = localStorage.getItem('ext_num');
+    this.has_hard_id = localStorage.getItem('hardware_id');
+    // let user_id: any=localStorage.getItem('userId');
+
+    $('#user_number').val(this.extension);
+    //  this.getDepartments();
+    //  this.getAuxCode();
+    // if (this.param3 != '' && this.param3 != null && this.param3 != undefined) {
+    //   if (this.get_dailer_value != 'unknown' && this.get_dailer_value != 'anonymous') {
+    //     this.editbutttonContacts();
+    //   } else {
+    //     $('#first_name').val('');
+    //     $('#last_name').val('');
+    //     $('#job_title').val('');
+    //     $('#acc_name').val('');
+    //     $('#ax_name').val('');
+    //     $('#account_ids').val('');
+    //     this.no_contact=true;
+    //     Swal.fire({
+    //       title: 'Contact Unknown',
+    //       text: "You can save contact by hitting the Add contact button",
+    //       icon: 'info',
+    //       showCancelButton: false,
+    //       confirmButtonColor: '#3085d6',
+    //       confirmButtonText: 'Got it'
+    //     })
+    //   }
+    // } else {
+      if (this.get_dailer_value != 'unknown' && this.get_dailer_value != 'anonymous') {
+        this.editConatcts();
+      } else {
+        $('#first_name').val('');
+        $('#last_name').val('');
+        $('#email').val('');
+        $('#title').val('');
+        $('#phone').val('');
+        $('#mobile').val('');       
+        this.no_contact=true;
+        Swal.fire({
+          title: 'Contact Unknown',
+          text: "You can save contact by hitting the Add contact button",
+          icon: 'info',
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Got it'
+        })
+
+      }
     //  this.getDepartments();
     //  this.getAuxCode();
      this.editConatcts();
-   
+     //this.getAuxCatogory();
     // if(this.fromEdit){
      
     // } else {
     //   this.getquestionnaire();
     // }
-    
+    this.toggleClass();
     this.admin_id = localStorage.getItem('admin_id');
     this.dsk_access = localStorage.getItem('dsk_access');
     this.has_external_contact = localStorage.getItem('has_external_contact');
-    this.external_contact_url = localStorage.getItem('external_contact_url');
-    this.crm_type = localStorage.getItem('crm_type');
-    console.log(this.external_contact_url);
-    if(this.admin_id == '128'){
-      this.dailyfood = true;
-      this.alladmin = false;
-      this.dailyfoodurl = 'http://dkb.dailyfoodsa.com/maestrokb/crm_report.php?customer_number='+this.param1;
-    }
-    if(this.has_external_contact == '1'){
-      this.dailyfood = true;
-      this.alladmin = false;
-      this.dailyfoodurl = this.external_contact_url;
+    this.user_type = localStorage.getItem('user_type');
+    this.admin_permission = localStorage.getItem('admin_permision');
+	
 
+		if (this.user_type == 'Super Admin') {
+			this.user_type = 1;
+		}
+		else if (this.user_type == 'Admin' || this.admin_permission =='1') {
+			this.user_type = 2;	 
+		}
+		else {
+			this.user_type = 3;		 
+		}
+    if ($("body").hasClass("sidebar-mini")) {
+      $("body").removeClass("sidebar-mini");
+      $("body").addClass("sidebar-mini");
+    } else {
+      $("body").addClass("sidebar-mini");
     }
+
   }
 
   ngAfterViewInit() {
@@ -227,7 +326,68 @@ tesr(){
   this.allowMp = false;
   $("#btns").css("display", "block");
 }
+initSocket() {
+  var self=this;
+      if (this.admin_id == '66') {
+        this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4002");
+      } else if (this.admin_id == '201') {
+        this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4003");
+      } else {
+        this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4036");
+      }
+  
+  
+      this.websocket.onopen = function (event) {
+        console.log('Dialpad socket connected');
+      }
+  
+      this.websocket.onmessage = function (event) {
+        // console.log(event.data);
+        var result_message = JSON.parse(event.data);
+        //    console.log(result_message);  
+        //    console.log($('#user_number').val());
+        this.has_hard_id = localStorage.getItem('hardware_id');
+        if (result_message[0].cust_id == this.has_hard_id) {
+          // console.log('matched');
+        } else {
+          // console.log('not matched');
+          return false;
+        }
+  
+        if (result_message[0].data[0].wrapuptype == "wrapupcall_id" && result_message[0].data[0].extno == $('#user_number').val()) {
+          $('#wrapup_callID').val(result_message[0].data[0].callid);
+         // alert(result_message[0].data[0].callid)
+         alert('asnja')
+          // $('#wrapup_callID').click();
+        }
+        if (result_message[0].data[0].calltype == "Incoming Call" && result_message[0].data[0].ag_no == $('#user_number').val()) {
+          $('#queue_ids2').val(result_message[0].data[0].q_no);
+        //   self.Queue_number=result_message[0].data[0].q_no;
+        //   // alert(result_message[0].data[0].q_no)
+        //   iziToast.info({
+        //     title:""+result_message[0].data[0].q_no+"",
+        //     message: "Queue No is '"+result_message[0].data[0].q_no+"'",
+        //     position: 'topRight',                
+        //     timeout: 1000,
+        // });
+        }
+  
+  
+      }
+  
+      this.websocket.onerror = function (event) {
+        console.log('error');
+      }
+      this.websocket.onclose = function (event) {
+        console.log('close');
+        $('#reconnect_socket').click();
 
+      }
+  
+  
+  
+  
+    }
 
 getquestionnaire(){
 if(this.questions != null)
@@ -255,7 +415,8 @@ closeQuestion(){
 
 
 toggleClass(){
-  this.getAuxCode();
+  //this.getAuxCode();
+  this.getAuxCatogory();
   if(this.fromEdit){
      
   } else {
@@ -264,8 +425,47 @@ toggleClass(){
   
   $('.settingSidebar').toggleClass('showSettingPanel');
 }
+getCatname(id) {
+  let access_token: any = localStorage.getItem('access_token');
+  let api_req: any = '{"operation":"getAuxcode_data", "moduleType": "contact", "api_type": "web", "access_token":"' + access_token + '", "element_data":{"action":"edit_aux_code_category","cat_id":"' + id + '","admin_id":"' + this.admin_id + '"}}';
 
+  this.serverService.sendServer(api_req).subscribe((response: any) => {
+    if (response.result.status == true) {
+      var agent_data = response.result.data;
+      this.category_name = agent_data.category_name;
 
+    } else {
+      iziToast.warning({
+        message: "Wrap Up codes not retrive. Please try again",
+        position: 'topRight'
+      });
+
+    }
+  },
+    (error) => {
+      console.log(error);
+    });
+}
+
+getAuxCatogory() {
+  //alert('123')
+  if (this.auxcode_catagory != null)
+    return false;
+
+  let access_token: any = localStorage.getItem('access_token');
+  let admin_id: any = localStorage.getItem('admin_id');
+  let api_req: any = '{"operation":"getAuxcode", "moduleType":"contact", "api_type": "web", "access_token":"' + access_token + '", "element_data":{"action":"get_aux_code_category","admin_id":"' + admin_id + '","user_id":"' + this.uadmin_id + '"}}';
+
+  this.serverService.sendServer(api_req).subscribe((response: any) => {
+    if (response.result.status == true) {
+      this.auxcode_catagory = response.result.data;
+    } else {
+    }
+  },
+    (error) => {
+      console.log(error);
+    });
+}
 
 
   getDepartments(){
@@ -288,25 +488,25 @@ toggleClass(){
   }
 
 
-  getAuxCode(){
-    if(this.auxcodes!=null)
-     return false;
+  getAuxCode() {
+    // if(this.auxcodes!=null)
+    //  return false;
+    let cat_id = $('#auxcodes_pop').val();
+    this.getCatname(cat_id);
+    let access_token: any = localStorage.getItem('access_token');
 
-    let access_token: any=localStorage.getItem('access_token');
-  
-    let api_req:any = '{"operation":"getAuxcode", "moduleType":"contact", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"get_aux_code","admin_id":"'+this.admin_id+'"}}';
-  
-    this.serverService.sendServer(api_req).subscribe((response:any) => {
-      if(response.result.status==true){
+    let api_req: any = '{"operation":"getAuxcode", "moduleType":"contact", "api_type": "web", "access_token":"' + access_token + '", "element_data":{"action":"getuax_by_cat","cat_id":"' + cat_id + '","admin_id":"' + this.admin_id + '"}}';
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response.result.status == true) {
         this.auxcodes = response.result.data;
       } else {
       }
-    }, 
-    (error)=>{
+    },
+      (error) => {
         console.log(error);
-    });
+      });
   }
-
 editConatcts(){
   // alert(this.paramCall);
   // alert(this.paramq);
@@ -666,5 +866,108 @@ if(this.admin_id == this.uadmin_id){
 
 addNotes(id){
   this.router.navigate(['/activity'], { queryParams: { contact_id: id } });
+}
+addWrapupcode() {
+ // alert('hii')
+  let wrapcall_id = $('#wrapup_callID').val();
+  let cat_id = $('#auxcodes_pop').val();
+  let wraupcode = $('#auxcodes_subcat').val();
+  let notes = $('#notes').val();
+  //alert(notes)
+  let access_token: any = localStorage.getItem('access_token');
+  let from_no;
+  let to_no;
+  let queue_ids = $('#queue_ids2').val();
+//alert(queue_ids)
+// alert(this.Queue_number);
+  var wrap = this.category_name + ' -> ' + wraupcode;
+  var contact_id=this.contact_id;
+ // alert(contact_id)
+  // alert(this.param1)
+  // alert(this.extension)
+
+  if (this.paramCall == 'incoming') {
+    from_no = this.param1;
+    to_no = this.extension;
+  }
+  else {
+    from_no = this.extension;
+    to_no = this.param1;
+  }
+  //  notes=notes.toString().replace('"',' ');
+  notes = notes.toString().replaceAll(/"|'/g, '');
+
+  if(queue_ids==''||queue_ids==null){
+   console.log('No Queuename found');
+  }
+ // alert(from_no)
+
+  let api_reqs: any = '{"type": "updatewrapupCode","call_type":"'+this.paramCall+'","aux_code": "'+wraupcode+'","cat_id": "'+cat_id+'","call_note": "'+notes+'","from_no": "'+from_no+'","to_no": "'+to_no+'","wrapCode": "'+wrap+'","contact_id": "'+contact_id+'"}';
+  this.serverService.minimize.next(api_reqs);
+return false;  
+  
+  let api_req: any = new Object;
+  let conct_req: any = new Object();
+
+  api_req.operation = "contact";
+  api_req.moduleType = "contact";
+  api_req.api_type = "web";
+  api_req.access_token = localStorage.getItem('access_token');
+
+  conct_req.from_no = from_no;
+  conct_req.to_no = to_no;
+  conct_req.type = this.paramCall;
+  conct_req.aux_code = wraupcode;
+  conct_req.cat_id = cat_id;
+  conct_req.call_note = notes;
+  conct_req.call_queue_num = queue_ids;
+  conct_req.user_id = this.uadmin_id;
+  api_req.element_data = conct_req;
+
+
+  api_req.element_data.admin_id = this.admin_id;
+  api_req.element_data.action = "add_auxcode_wall";
+  this.serverService.sendServer(api_req).subscribe((response: any) => {
+   
+    if (response.status == false) {
+
+    }
+  },
+    (error) => {
+      console.log(error);
+    });
+  var socket_message = '[{"cust_id":"' + this.has_hard_id + '","data":[{"Name":"wrapupcode","callid":"' + wrapcall_id + '","wcode":"' + wrap + '","wcodenote":"' + notes + '","extno":"' + this.extension + '"}]}]';
+  //this.websocket.send(socket_message);
+  this.closeQuestion();
+  iziToast.success({
+    message: "Wrapup Code Added successfully",
+    position: "topRight"
+  });
+  $('#auxcodes_pop').val('');
+  $('#auxcodes_subcat').val('');
+  $('#notes').val('');
+}
+acceptIncomeCall() {
+  let api_reqtest: any = '{"type": "showpopupdialer"}';
+  this.serverService.show.next(api_reqtest);
+  let api_reqs: any = '{"type": "attendincomingCall"}';
+  this.serverService.minimize.next(api_reqs);
+  this.show_mini_butons = true;
+  this.show_ans = false;
+  this.show_del = true;
+}
+
+declineIncomeCall() {
+  let api_reqs: any = '{"type": "declineincomingCall"}';
+  this.serverService.minimize.next(api_reqs);
+  this.show_mini_butons = true;
+  this.show_ans = false;
+  this.show_del = false;
+}
+closeModelPopup(link) {
+
+  const modalRef = this.modalService.dismissAll(EditContactsComponent);
+  let api_reqs: any = '{"type": "minimize"}';
+  this.serverService.minimize.next(api_reqs);
 }
 }

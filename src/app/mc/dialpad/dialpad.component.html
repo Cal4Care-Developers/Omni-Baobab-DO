@@ -16,12 +16,14 @@
 <input type="hidden" id="show_error" (click)="showerror()">
 <input type="hidden" autocomplete="off" id="sip_urld">
 <input type="hidden" autocomplete="off" id="outcall_number">
-<input type="hidden" id="reconnect_socket"  (click)="initSocket()">
+<input type="hidden" id="dial_reconnect_socket"  (click)="initSocket()">
 <input type="hidden" id="reconnect_janus"  (click)="reconnect_janus()">
-<input type="hidden"  id="MrvoIPQueueStatus"  (click)="MrvoIPQueueStatus()">
-<input type="hidden"  id="queueStatus"  (click)="queueStatus()">
-<input type="hidden" id="load_pbx"  (click)="pbxSettings()">
 <input type="hidden" id="dataforACK">
+<input type="hidden"  id="MrvoIPQueueStatus"  (click)="MrvoIPQueueStatus()">
+
+<input type="hidden" id="load_pbx"  (click)="pbxSettings()">
+<input type="hidden" id="wrapup_callID">
+<input type="hidden" id="queue_ids">
 <button id="addhelper" (click)="addhelperasdsadasds()" style="display: none;" class="btn btn-xs btn-info pull-right" title="Add a new line"><i class="fa fa-plus"></i></button>
 
 <!-- <div> 
@@ -188,7 +190,7 @@
             </div> -->
 
             <div class="dialpad-header-logo">
-                <img style="padding-left: 21px;" src="assets/images/logo-white-favicon.png" height="18">
+                <img style="padding-left:20px;" src="assets/images/logo-white-favicon.png" height="18">
             </div>
         </div>
         <div class="dialpad-header-right">
@@ -268,7 +270,10 @@
 
 
 <div *ngIf="dialPadActionview=='number_dailer_transfer'">
-    <div class="search-field"><input id="dialpad_number" class="form-control" type="text" name="searchfield" placeholder="Enter the number..." ></div>
+    <div class="search-field">
+        <input id="dialpad_number" class="form-control" type="text" name="searchfield" placeholder="Enter the number..." >
+        
+    </div>
     <div class="dial-panel">
         <div class="row">
             <div class="digit" id="one" (click)="keyPad(1)" (keypress)="keyPad(1)">1</div>
@@ -317,28 +322,28 @@
         <!-- <h5  *ngIf="this.show_caller_id == '1'">{{recent_call.call_data}}</h5>
         <h5  *ngIf="this.show_caller_id == '0' && recent_call.call_type == 'incoming'">Call from xxxxx </h5>
         <h5  *ngIf="this.show_caller_id == '0' && recent_call.call_type == 'outgoing'">Call to xxxxx </h5> -->
-                    <div *ngIf="this.show_caller_id == '1'">       
-                        <h5 *ngIf="this.show_caller_id == '1' && recent_call.type == 'MissedCall'">
-                            <div *ngIf="recent_call.from_no == this.extension && recent_call.to_no != this.extension ">
-                                <span class="callType" ><img src="assets/images/missed-call.svg"></span>
-                                Outgoing Call To {{recent_call.to_no}}
-                            </div>
-                            <div *ngIf="recent_call.to_no == this.extension && recent_call.from_no != this.extension">
-                            <span class="callType" ><img src="assets/images/missed-call.svg"></span>
-                                Missed Call From {{recent_call.from_no}}
-                            </div>
-                        </h5>
-                        <h5  *ngIf="this.show_caller_id == '1' && recent_call.type == 'AnswerdCall'">
-                            <div *ngIf="recent_call.from_no == this.extension && recent_call.to_no != this.extension">
-                                <span class="callType" ><img src="assets/images/outgoing-call.svg"></span>
-                                Outgoing Call To {{recent_call.to_no}}
-                            </div>
-                            <div *ngIf="recent_call.to_no == this.extension && recent_call.from_no != this.extension ">
-                                <span class="callType" ><img src="assets/images/incoming-call.svg"></span>
-                                Incoming Call From {{recent_call.from_no}}
-                            </div>
-                        </h5>
-                    </div>
+        <div *ngIf="this.show_caller_id == '1'">       
+            <h5 *ngIf="this.show_caller_id == '1' && recent_call.type == 'MissedCall'">
+                <div *ngIf="recent_call.from_no == this.extension && recent_call.to_no != this.extension " (click)="copynumber(recent_call.to_no)">
+                    <span class="callType" ><img src="assets/images/missed-call.svg"></span>
+                    Outgoing Call To {{recent_call.to_no}}
+                </div>
+                <div *ngIf="recent_call.to_no == this.extension && recent_call.from_no != this.extension" (click)="copynumber(recent_call.from_no)">
+                <span class="callType" ><img src="assets/images/missed-call.svg"></span>
+                    Missed Call From {{recent_call.from_no}}
+                </div>
+            </h5>
+            <h5  *ngIf="this.show_caller_id == '1' && recent_call.type == 'AnswerdCall'">
+                <div *ngIf="recent_call.from_no == this.extension && recent_call.to_no != this.extension" (click)="copynumber(recent_call.to_no)">
+                    <span class="callType" ><img src="assets/images/outgoing-call.svg"></span>
+                    Outgoing Call To {{recent_call.to_no}}
+                </div>
+                <div *ngIf="recent_call.to_no == this.extension && recent_call.from_no != this.extension " (click)="copynumber(recent_call.from_no)">
+                    <span class="callType" ><img src="assets/images/incoming-call.svg"></span>
+                    Incoming Call From {{recent_call.from_no}}
+                </div>
+            </h5>
+        </div>
                         <div *ngIf="this.show_caller_id == '0'">       
                                 <h5 *ngIf="recent_call.type == 'MissedCall'">
                                 <div *ngIf="recent_call.from_no == this.extension && recent_call.to_no != this.extension ">
@@ -389,7 +394,7 @@
     <div class="tab-content-data">
         <div id="userList" class="tab-pane in active">
 
-            <div class="contact-list-item" *ngFor="let user_list of dialpadUserList;" (click)="copynumber(user_list.sip_login)">
+            <div class="contact-list-item" *ngFor="let user_list of dialpadUserList" (click)="copynumber(user_list.sip_login)">
                 <div class="contact-number-details" style="display: flex;"><span class="user-img"><img src="assets/images/user.jpg"></span><h5>{{user_list.sip_login}} - {{user_list.agent_name}}</h5></div>
             </div>
 
@@ -450,8 +455,7 @@
     <input type="hidden" (click)="outGongCallstatus()" id="outGongCallstatus">
     <div class="active-call">
         <div class="caller-img"><img src="assets/images/user.jpg"></div>
-        <h4><b>Outgoing Call </b></h4>
-        <h5><span class="callee" *ngIf="this.show_caller_id == '1'">{{dialpadOutgoingCalls.call_data}}</span>
+        <h5><b> <span class="callee" *ngIf="this.show_caller_id == '1'">{{dialpadOutgoingCalls.call_data}}</span></b> 
             <span class="callee" *ngIf="this.show_caller_id == '0'">Call to xxxxxxx</span></h5>
         <div id="call_duration" style="display:none"><span id="call_minutes" class="call_minutes">00</span>:<span id="call_seconds" class="call_seconds">00</span></div>
         <div class="call-icon outgoing-call">
@@ -482,22 +486,22 @@
                      <span class="call-action-label">Blind Transfer</span>
                 </a>
             </div>
-
             <div class="dig">
+                <a class="hold_btn"  href="javascript:void(0);">
+                    <i data-toggle="tooltip" id="rec_stop_btn" title="Stop" class="fas fa-compact-disc" aria-hidden="true" (click)="incomingCallRecordStop('out')"></i>
+                    <i data-toggle="tooltip" id="rec_start_btn" title="Start" class="fas fa-compact-disc" aria-hidden="true" (click)="incomingCallRecordStart('out')" style="display:none;color: #454343;"></i>
+                    <span style="font-size: 11px" class="call-action-label">Stop / Start</span>
+                </a>
+            </div>
+			<div class="dig">
                 <a class="rotate" href="javascript:void(0);" (click)="Callforword2('transfer')">
                     <i data-toggle="tooltip" title="Call Forward" class="fas fa-random" aria-hidden="true"></i>
-                     <span class="call-action-label">Att.Transfer</span>
+                     <span class="call-action-label">Warm Transfer</span>
                 </a>
             </div>
             <div class="dig"><a class="rotate" href="javascript:void(0);" (click)="transferCallToSurvay()"><i data-toggle="tooltip" title="Calls Transfer" class="fa fa-reply-all" aria-hidden="true"></i>
                  <span class="call-action-label">Survey</span></a>
             </div>
-            <!-- <div class="dig">
-                <a class="rotate" href="javascript:void(0);" (click)="Callforword('dtmf')">
-                    <i data-toggle="tooltip" title="Call Forward" class="fas fa-random" aria-hidden="true"></i>
-                     <span class="call-action-label">Transfer / Forward</span>
-                </a>
-            </div> -->
         </div>
     </div>
 
@@ -561,25 +565,29 @@
                         </div> -->
                         <div class="dig ">
                             <a class="rotate" href="javascript:void(0);" (click)="Callforword('transfer')" >
-                                <i data-toggle="tooltip" title="Blind Transfer" class="fas fa-random" aria-hidden="true"></i> 
+                                <i data-toggle="tooltip" title="Call Forward" class="fas fa-random" aria-hidden="true"></i> 
                                  <span style="font-size: 11px" class="call-action-label">Blind Transfer</span>
                             </a>
                         </div>
 
-                        <div class="dig ">
+                     
+                        <div class="dig">
+                            <a class="hold_btn"  href="javascript:void(0);">
+                                <i data-toggle="tooltip" id="rec_stop_btn" title="Stop" class="fas fa-compact-disc" aria-hidden="true" (click)="incomingCallRecordStop()"></i>
+                                <i data-toggle="tooltip" id="rec_start_btn" title="Start" class="fas fa-compact-disc" aria-hidden="true" (click)="incomingCallRecordStart()" style="display:none;color: #454343;"></i>
+                                <span style="font-size: 11px" class="call-action-label">Stop / Start</span>
+                            </a>
+                        </div>
+						 <div class="dig ">
                             <a class="rotate" href="javascript:void(0);" (click)="Callforword2('transfer')" >
-                                <i data-toggle="tooltip" title="Attended Transfer" class="fas fa-random" aria-hidden="true"></i> 
-                                 <span style="font-size: 11px" class="call-action-label">Att.Transfer </span>
+                                <i data-toggle="tooltip" title="Call Forward" class="fas fa-random" aria-hidden="true"></i> 
+                                 <span style="font-size: 11px" class="call-action-label">Warm Transfer </span>
                             </a>
                         </div>
 
-                        <!-- <div class="dig ">
-                            <a class="rotate" href="javascript:void(0);" (click)="Callforword('dtmf')" >
-                                <i data-toggle="tooltip" title="Call Forward" class="fas fa-random" aria-hidden="true"></i>  <span class="call-action-label">Transfer / Forward</span>
-                            </a>
-                        </div> -->
 
-                        <div class="dig"><a class="rotate" href="javascript:void(0);" (click)="transferCallToSurvay()"><i data-toggle="tooltip" title="Transfer for Survey" class="fa fa-reply-all" aria-hidden="true"></i></a>
+
+                        <div class="dig"><a class="rotate" href="javascript:void(0);" (click)="transferCallToSurvay()"><i data-toggle="tooltip" title="Calls Transfer" class="fa fa-reply-all" aria-hidden="true"></i></a>
                              <span class="call-action-label">Survey</span>
                         </div>
                     </div>
@@ -643,8 +651,10 @@ Call Forward
 
 
 
-  <div class="forwardDialpadPanel hide-fwd-dialpad"  style="display: none;">
-                   <div class="dialpad-close-icon" id="close-call-fwd-modal">
+  <div cdkDrag class="forwardDialpadPanel hide-fwd-dialpad"  style="display: none;" >
+   
+                   <div class="dialpad-close-icon" (click)="Closemodal1()" >
+                    <!-- id="close-call-fwd-modal" -->
                     <i aria-hidden="true" class="fa fa-times"></i>
                    </div>
 
@@ -663,9 +673,20 @@ Call Forward
                                     </div>  
                                 </div> -->
 
-                                <div class="search-field">
-                                    <input class="form-control" *ngIf="dtmf == false" id="makeCallForwordNumber" placeholder="Enter the number..."  type="text">
-                                    <input class="form-control" *ngIf="dtmf" id="makeCallForwordNumber" placeholder="Entered number..." disabled type="text">
+                                <div style="display: flex;" class="search-field">
+                                    <!-- <input class="form-control" id="makeCallForwordNumber" placeholder="Enter the number..."  type="text">
+                                    <select  (change)="addtotransfer()" id="add_to_transfer" style="width: 89px;font-size:12px !important;text-align:left !important;" class="form-control" *ngIf="dtmf == false">
+                                        <option> Contacts</option>
+                                        <option *ngFor="let user_list of dialpadUserList;" value="{{user_list.sip_login}}" >{{user_list.agent_name}}</option>
+                                    </select> -->
+
+                                    <input list="cities" type="text" id="makeCallForwordNumber" class="form-control" placeholder="Enter the number..."
+									 (keyup)="autosuggestAccName()"> 
+									<!-- <input  name="city" value="San Diego"> -->
+									<datalist id="cities" >
+										<option value="{{ls.sip_login}}"  *ngFor="let ls of produitsFiltres">{{ls.agent_name}}</option>
+									</datalist>
+
                                 </div>
 
 
@@ -791,7 +812,7 @@ Call Conference End
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Queue Details</h5>
+                <h5 class="modal-title" id="myLargeModalLabel">Logged out from following Queues</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -820,7 +841,7 @@ Call Conference End
                     <div class="table-responsive">
                     <table class="table table-bordered table-striped table-md">
                     
-                    <tr>
+                    <tr >
                     <th style="width: 20px;display:none;">
                     <div class="pretty p-default">
                         <input type="checkbox" id="getallmyqueue" (click)="checkallQueues()">
@@ -869,8 +890,18 @@ Call Conference End
     </div>
 </div> 
 
+<!------------------------
+Call Contact Action Modal
+--------------------------->
+<div class="call-contact-minimize pulse"  *ngIf="show_minimize_button">
+    <p><a href="#" class="bold" (click)="openModelPopup('')">
+        <img src="assets/images/custom-wallboard/call-answered.svg" height="18" class="mr-2 shake-animation" >
+        Incoming Call form {{getNums}}</a></p>
+</div>
 
-
+<!------------------------
+Call Contact Action Modal End
+--------------------------->
 
 
 <!-- <div class="modal dialpadModal fade bd-example-modal-md" id="makeCallForword">
@@ -959,8 +990,9 @@ Call Forward
 
 
 
-<div class="forwardDialpadPanel2 hide-fwd-dialpad"  style="display: none;">
-    <div class="dialpad-close-icon" id="close-call-fwd-modal2">
+<div cdkDrag class="forwardDialpadPanel2 hide-fwd-dialpad"  style="display: none;">
+    <div class="dialpad-close-icon"  (click)="Closemodal2()" >
+        <!-- id="close-call-fwd-modal2" -->
      <i aria-hidden="true" class="fa fa-times"></i>
     </div>
 
@@ -979,10 +1011,28 @@ Call Forward
                      </div>  
                  </div> -->
 
-                 <div class="search-field">
+                 <!-- <div class="search-field">
                     <input  class="form-control" id="peer_att" placeholder="Enter the number..."  type="text" onkeypress="return checkEnter(this, event, 1);">
                      <input  class="form-control" id="peer1" type="hidden" >
-                 </div>
+                 </div> -->
+                 
+                 <div style="display: flex;" class="search-field">
+                    <!-- <input  class="form-control" id="peer_att" style="font-size: 22px !important;" placeholder="Enter the number..."  type="text" onkeypress="return checkEnter(this, event, 1);">
+                    <select  (change)="adransfer()" id="add_tansfer" style="width: 89px;font-size:12px !important;text-align:left !important;" class="form-control">
+                        <option> Contacts</option>
+                        <option *ngFor="let user_list of dialpadUserList;" value="{{user_list.sip_login}}" >{{user_list.agent_name}}</option>
+                    </select> -->
+
+
+                    <input  class="form-control" id="peer1" type="hidden" >
+                    <input list="listing" type="text" id="peer_att" style="font-size: 22px !important;" class="form-control" placeholder="Enter the number..."  onkeypress="return checkEnter(this, event, 1);"
+                    (keyup)="autosuggestAccName2()"> 
+                   <datalist id="listing" >
+                       <option value="{{ls.sip_login}}"  *ngFor="let ls of atttransferList">{{ls.agent_name}}</option>
+                   </datalist>
+
+                    <!-- </div> -->
+                </div>
 
 
                  <div class="dial-panel" >
@@ -1017,7 +1067,8 @@ Call Forward
 
                              <span *ngIf="show_end_helper" class="dig on list_details call-green-btn  has-tooltip btn-success" (click)="makecallTransferDemo()"  style="cursor: pointer;margin-left: -48px;"><i class="call-btn-icon"> <img  src="assets/images/call-forward.png" height="32"><span class="tooltip-modal" style="min-width: 115px;left: -43px;">Click to Transfer</span></i></span>&nbsp;&nbsp;
                              <div *ngIf="show_end_helper" class="dig off list_details call-green-btn has-tooltip btn-danger" (click)="endCallTransfer()"  style="cursor: pointer;"><i class="call-btn-icon"><img  src="assets/images/missed-call.svg" height="32"><span class="tooltip-modal" style="min-width: 115px;left: -43px;">End Call</span></i></div>
-                             <div *ngIf="!show_end_helper"  class="dig on list_details call-green-btn has-tooltip" id="call1" (click)="makecallTransfer2()" style="cursor: pointer;" ><i class="call-btn-icon"><img  src="assets/images/outgoing-call.png" height="32"> <span class="tooltip-modal" style="min-width: 115px;left: -43px;">Click to Add Helper</span></i></div>
+                             <!-- <div *ngIf="!show_end_helper"  class="dig on list_details call-green-btn has-tooltip" id="call1" (click)="makecallTransfer2()" style="cursor: pointer;" ><i class="call-btn-icon"><img  src="assets/images/outgoing-call.png" height="32"> <span class="tooltip-modal" style="min-width: 115px;left: -43px;">Click to Add Helper</span></i></div> -->
+                             <div *ngIf="!show_end_helper"  class="dig on list_details call-green-btn has-tooltip" id="call1" (click)="makecallTransfer2()" style="cursor: pointer;" ><i class="call-btn-icon"><img  src="assets/images/call-forward.png" height="32"> <span class="tooltip-modal" style="min-width: 115px;left: -43px;">Click to Add Helper</span></i></div>
                              <!-- <div class="dig on list_details call-green-btn" (click)="makecallTransferDemo()" ><span class="call-btn-icon"><img  src="assets/images/call-forward.png" height="32"></span>
                              </div> -->
                              <!-- <div  id="call1" class="dig on list_details call-green-btn has-tooltip btn-danger" style="cursor: pointer;">Hangup</div> -->

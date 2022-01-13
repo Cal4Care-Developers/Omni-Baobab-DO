@@ -164,7 +164,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { SpamListComponent } from './spam-list/spam-list.component';
 import { EmailDashboardComponent } from './email-dashboard/email-dashboard.component';
-import { CustomizeReportsComponent } from './customize-reports/customize-reports.component';
+import { EditContactDupComponent } from './edit-contact-dup/edit-contact-dup.component';
+import { CustomizedReportComponent } from './customized-report/customized-report.component';
 // import { CustomWallboardSixComponent } from './custom-wallboard-six/custom-wallboard-six.component';
 // import { NetwrixReportComponent } from './netwrix-report/netwrix-report.component';
 
@@ -535,7 +536,10 @@ const appRoutes: Routes = [
         path :'unassinged-tickets',component:EmailsUnassignedComponent
     },
     {
-        path :'customize_reports',component:CustomizeReportsComponent
+        path :'edit-contact-dup', component:EditContactDupComponent
+    },
+    {
+        path :'customize_reports',component:CustomizedReportComponent
     }
 ];
 
@@ -678,7 +682,8 @@ const appRoutes: Routes = [
     SpamListComponent,
     EmailDashboardComponent,
     EmailsUnassignedComponent,
-    CustomizeReportsComponent
+   EditContactDupComponent,
+   CustomizedReportComponent
     // CustomWallboardSixComponent,
     // NetwrixReportComponent
     

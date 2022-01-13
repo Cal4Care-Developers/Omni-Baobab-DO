@@ -14,13 +14,13 @@
 						<div class="card-header">
 							<h4><i class="fas fa-edit"></i> Note</h4>
 							<div class="addBtn call-date-details">
-								<small><strong>{{note.created_at}}</strong></small>
+								<small><strong>{{note.created_dt}}</strong></small>
 							</div>
 						</div>
 						<div class="card-body p-0">
 							<div class="call-detail-panel">
 								<h6>Wrapup Code : {{note.auxcode_name}}</h6>
-								<p>{{note.notes}}</p>
+								<p>{{note.call_note}}</p>
 								<div class="note-detais">
 									<h6><span class="user-icon"><i class="far fa-user-circle"></i></span> &nbsp;&nbsp;{{note.creater}} left a Note</h6>
 									<div class="audio-file" *ngIf="note.call_rec != null ">
@@ -103,3 +103,7 @@
 					</div>
 				</div>
 			</div>
+			<!-- <div class="input-group"><input type="text" class="form-control" placeholder="Search Phone Number - Call Type" (keyup.enter)="callHistoryList({'search_text':call_history_search.value})" #call_history_search> -->
+				<!-- <div class="input-group-append">
+					<button class="btn btn-primary" (click)="callHistoryList({'search_text':call_history_search.value})"><i class=""></i></button>
+				</div> -->

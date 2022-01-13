@@ -7,19 +7,24 @@ import { BehaviorSubject } from 'rxjs'
 import { Router } from '@angular/router';
 import { mergeMapTo } from 'rxjs/operators';
 import { imageSelected } from '@syncfusion/ej2-angular-richtexteditor';
+import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 declare var iziToast: any;
 @Injectable({
     providedIn: 'root'
     })
 export class ServerService {
+    
     show:Subject<any> = new Subject();
     qLogin:Subject<any> = new Subject();
     profile:Subject<any> = new Subject();
     showChat:Subject<any> = new Subject();
     showvedioDialer:Subject<any> = new Subject();
+    minimize: Subject<any> = new Subject();
+    editContact:Subject<any> = new Subject();
     // attendCall:Subject<any> = new Subject();
     currentMessage = new BehaviorSubject(null);
     changeDetectionEmitter: EventEmitter<any> = new EventEmitter<any>();
+ 
     constructor(private http:HttpClient,private afMessaging: AngularFireMessaging,public router:Router){
         this.afMessaging.messaging.subscribe(
             (_messaging) => {
@@ -56,25 +61,32 @@ export class ServerService {
         };  
         return this.http.post("https://baobabgroup.mconnectapps.com/api/v1.0/index.php", postData,httpOptions);
        } 
-
-
-    requestPermission() {
-        this.afMessaging.requestPermission
-            .pipe(mergeMapTo(this.afMessaging.tokenChanges))
-            .subscribe(
-                (token) => {
-                    let access_token: any = localStorage.getItem('access_token');
-                    let user_id: any = localStorage.getItem('userId');
-                    localStorage.setItem('N_token', token);
-                    let api_req: any = '{"operation":"agents", "moduleType":"agents", "api_type": "web", "access_token":"' + access_token + '", "element_data":{"action":"notification_code","user_id":"' + user_id + '","notification_code":"' + token + '"}}';
-                    this.sendServer(api_req).subscribe((response: any) => {
-                        this.receiveMessage()
-                    });
-                    console.log('Permission granted! Save to the server!', token);
-                },
-                (error) => { console.error(error); },
-            );
+       MDy_Contacts_API(postData: any[]) {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json'
+            })
+        };
+        return this.http.post("https://uatassaabloyccapi.mconnectapps.com/microsoftDynamicsDialer/get_contacts.php", postData, httpOptions);
     }
+
+    // requestPermission() {
+    //     this.afMessaging.requestPermission
+    //         .pipe(mergeMapTo(this.afMessaging.tokenChanges))
+    //         .subscribe(
+    //             (token) => {
+    //                 let access_token: any = localStorage.getItem('access_token');
+    //                 let user_id: any = localStorage.getItem('userId');
+    //                 localStorage.setItem('N_token', token);
+    //                 let api_req: any = '{"operation":"agents", "moduleType":"agents", "api_type": "web", "access_token":"' + access_token + '", "element_data":{"action":"notification_code","user_id":"' + user_id + '","notification_code":"' + token + '"}}';
+    //                 this.sendServer(api_req).subscribe((response: any) => {
+    //                     this.receiveMessage()
+    //                 });
+    //                 console.log('Permission granted! Save to the server!', token);
+    //             },
+    //             (error) => { console.error(error); },
+    //         );
+    // }
 
     receiveMessage() {
         //    alert('1'); 
@@ -354,7 +366,7 @@ export class ServerService {
 
 
     sendNotifications(postData: any) {
-
+//alert('123')
         console.log(postData);
 
         let notify = postData.notification_for;
@@ -398,7 +410,10 @@ export class ServerService {
             imgs = '../../assets/img/mc-dashboard/tele.png';
              heading = 'Telegram';
         }
-
+        else if (notify == 'incomming_call') {
+            imgs = '../../assets/img/mc-dashboard/call.png';
+             heading = 'Incomming Call';
+        }
 
         if (Notification.permission !== "granted") {
             Notification.requestPermission();
@@ -411,9 +426,21 @@ export class ServerService {
                 icon: imgs,
                 badge: '../../assets/images/icons/appicon72x72.png',
             });
-            notification.onclick = function () {
-                window.open(clicks);
+            // notification.onclick = function () {
+            //     window.open(clicks);
+            // };
+            notification.onclick = () => {
+                if(notify == 'incomming_call') {     
+                   window.focus();                
+                }else{                    
+                    window.open(clicks); 
+                }
+                // this.zone.run(() => {
+                //     console.log('onclick');
+                //     this.router.navigate(['']);
+                // });
             };
+
         }
 
     }

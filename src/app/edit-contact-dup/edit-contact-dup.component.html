@@ -1,0 +1,830 @@
+<div class="section-body edit-form call-contact-modal">
+	<input type="hidden" id="user_number">
+	<input type="hidden" id="wrapup_callID">
+	<input type="hidden" id="queue_ids2">
+
+	<div style="margin-left: 27px;" class="card">
+		<div class="card-header">
+			<h4><i class="fa fa-address-book" aria-hidden="true"></i> {{contact_name}}</h4>
+			<!-- <p>Contact</p> -->
+
+		</div>
+	</div>
+	<form *ngIf="alladmin">
+        <div class="card-body p-0">
+            <div class="form-panel">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="contact_owner">Customer Number</label>
+                            <input type="text"  id="contact_owner_dup" value="{{contact_owner}}" class="form-control" formControlName="contact_owner" >
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="lead_source">Civility</label>
+
+                            <input type="text"  id="lead_source_dup" class="form-control" formControlName="lead_source" >
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="contact_owner">First Name</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <select name="sal" id="sal_dup" class="form-control" >
+                                        <option selected="selected" value="Mr.">Mr.</option>
+                                        <option value="Mrs.">Mrs.</option>
+                                        <option value="Miss">Miss</option>
+                                    </select>
+                                </span>
+                                <input formControlName="first_name" type="text" name="first_name" class="form-control" placeholder="Full Name">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="last_name">Last Name</label>
+                            <input type="text" id="last_name_dup" class="form-control" formControlName="last_name" >
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="text" id="email"  class="form-control" formControlName="email" >
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="dob">Date of Birth</label>
+                            <input type="text" id="dob_dup"  class="form-control" formControlName="dob" >
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="title">Conference Contact #</label>
+                            <input type="text" id="title_dup"  class="form-control" formControlName="title" >
+                        </div>
+                    </div>
+                    <div class="col-md-6" (click)="getDepartments()">
+                        <div class="form-group">
+                            <label for="department">Gender</label>
+                            <select name="departments"  id="departments_dup" class="form-control">
+                                <option value='0'> Select Gender </option>
+                                <option value="Male">Male</option> 
+                                <option value="Female">Female</option> 
+                                <option value=" ">Others </option> 
+                                <!-- <option *ngFor="let dept of departments" value="{{dept.dept_id}}">{{dept.department_name}}</option> -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="phone">Mobile Phone# </label>
+                            <input type="text" id="phone_dup"  class="form-control" formControlName="phone" >
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="mobile">Other Phone #</label>
+                            <input type="text" id="mobile_dup"  class="form-control" formControlName="mobile" >
+                        </div>
+                    </div>
+
+                    
+
+                    <div class="col-md-6" >
+                        <div class="form-group">
+                            <label for="department">Nationality</label>
+                            <select name="res_departments"  id="res_departments_dup" class="form-control">
+                                <option value='0'> Select Nationality </option>
+                                <option value="">Select one...</option>
+<option value='afghan'>Afghan</option>
+<option value='albanian'>Albanian</option>
+<option value='algerian'>Algerian</option>
+<option value='american'>American</option>
+<option value='andorran'>Andorran</option>
+<option value='angolan'>Angolan</option>
+<option value='anguillan'>Anguillan</option>
+<option value='citizen-of-antigua-and-barbuda'>Citizen of Antigua and Barbuda</option>
+<option value='argentine'>Argentine</option>
+<option value='armenianaustralian'>ArmenianAustralian</option>
+<option value='austrian'>Austrian</option>
+<option value='azerbaijani'>Azerbaijani</option>
+<option value='bahamian'>Bahamian</option>
+<option value='bahraini'>Bahraini</option>
+<option value='bangladeshi'>Bangladeshi</option>
+<option value='barbadian'>Barbadian</option>
+<option value='belarusian'>Belarusian</option>
+<option value='belgian'>Belgian</option>
+<option value='belizean'>Belizean</option>
+<option value='beninese'>Beninese</option>
+<option value='bermudian'>Bermudian</option>
+<option value='bhutanese'>Bhutanese</option>
+<option value='bolivian'>Bolivian</option>
+<option value='citizen-of-bosnia-and-herzegovina'>Citizen of Bosnia and Herzegovina</option>
+<option value='botswanan'>Botswanan</option>
+<option value='brazilian'>Brazilian</option>
+<option value='british'>British</option>
+<option value='british-virgin-islander'>British Virgin Islander</option>
+<option value='bruneian'>Bruneian</option>
+<option value='bulgarian'>Bulgarian</option>
+<option value='burkinan'>Burkinan</option>
+<option value='burmese'>Burmese</option>
+<option value='burundian'>Burundian</option>
+<option value='cambodian'>Cambodian</option>
+<option value='cameroonian'>Cameroonian</option>
+<option value='canadian'>Canadian</option>
+<option value='cape-verdean'>Cape Verdean</option>
+<option value='cayman-islander'>Cayman Islander</option>
+<option value='central-african'>Central African</option>
+<option value='chadian'>Chadian</option>
+<option value='chilean'>Chilean</option>
+<option value='chinese'>Chinese</option>
+<option value='colombian'>Colombian</option>
+<option value='comoran'>Comoran</option>
+<option value='congolese-(congo)'>Congolese (Congo)</option>
+<option value='congolese-(drc)'>Congolese (DRC)</option>
+<option value='cook-islander'>Cook Islander</option>
+<option value='costa-rican'>Costa Rican</option>
+<option value='croatian'>Croatian</option>
+<option value='cuban'>Cuban</option>
+<option value='cymraes'>Cymraes</option>
+<option value='cymro'>Cymro</option>
+<option value='cypriot'>Cypriot</option>
+<option value='czech'>Czech</option>
+<option value='danish'>Danish</option>
+<option value='djiboutian'>Djiboutian</option>
+<option value='dominican'>Dominican</option>
+<option value='citizen-of-the-dominican-republic'>Citizen of the Dominican Republic</option>
+<option value='dutch'>Dutch</option>
+<option value='east-timorese'>East Timorese</option>
+<option value='ecuadorean'>Ecuadorean</option>
+<option value='egyptian'>Egyptian</option>
+<option value='emirati'>Emirati</option>
+<option value='english'>English</option>
+<option value='equatorial-guinean'>Equatorial Guinean</option>
+<option value='eritrean'>Eritrean</option>
+<option value='estonian'>Estonian</option>
+<option value='ethiopian'>Ethiopian</option>
+<option value='faroese'>Faroese</option>
+<option value='fijian'>Fijian</option>
+<option value='filipino'>Filipino</option>
+<option value='finnish'>Finnish</option>
+<option value='french'>French</option>
+<option value='gabonese'>Gabonese</option>
+<option value='gambian'>Gambian</option>
+<option value='georgian'>Georgian</option>
+<option value='german'>German</option>
+<option value='ghanaian'>Ghanaian</option>
+<option value='gibraltarian'>Gibraltarian</option>
+<option value='greek'>Greek</option>
+<option value='greenlandic'>Greenlandic</option>
+<option value='grenadian'>Grenadian</option>
+<option value='guamanian'>Guamanian</option>
+<option value='guatemalan'>Guatemalan</option>
+<option value='citizen-of-guinea-bissau'>Citizen of Guinea-Bissau</option>
+<option value='guinean'>Guinean</option>
+<option value='guyanese'>Guyanese</option>
+<option value='haitian'>Haitian</option>
+<option value='honduran'>Honduran</option>
+<option value='hong-konger'>Hong Konger</option>
+<option value='hungarian'>Hungarian</option>
+<option value='icelandic'>Icelandic</option>
+<option value='indian'>Indian</option>
+<option value='indonesian'>Indonesian</option>
+<option value='iranian'>Iranian</option>
+<option value='iraqi'>Iraqi</option>
+<option value='irish'>Irish</option>
+<option value='israeli'>Israeli</option>
+<option value='italian'>Italian</option>
+<option value='ivorian'>Ivorian</option>
+<option value='jamaican'>Jamaican</option>
+<option value='japanese'>Japanese</option>
+<option value='jordanian'>Jordanian</option>
+<option value='kazakh'>Kazakh</option>
+<option value='kenyan'>Kenyan</option>
+<option value='kittitian'>Kittitian</option>
+<option value='citizen-of-kiribati'>Citizen of Kiribati</option>
+<option value='kosovan'>Kosovan</option>
+<option value='kuwaiti'>Kuwaiti</option>
+<option value='kyrgyz'>Kyrgyz</option>
+<option value='lao'>Lao</option>
+<option value='latvian'>Latvian</option>
+<option value='lebanese'>Lebanese</option>
+<option value='liberian'>Liberian</option>
+<option value='libyan'>Libyan</option>
+<option value='liechtenstein-citizen'>Liechtenstein citizen</option>
+<option value='lithuanian'>Lithuanian</option>
+<option value='luxembourger'>Luxembourger</option>
+<option value='macanese'>Macanese</option>
+<option value='macedonian'>Macedonian</option>
+<option value='malagasy'>Malagasy</option>
+<option value='malawian'>Malawian</option>
+<option value='malaysian'>Malaysian</option>
+<option value='maldivian'>Maldivian</option>
+<option value='malian'>Malian</option>
+<option value='maltese'>Maltese</option>
+<option value='marshallese'>Marshallese</option>
+<option value='martiniquais'>Martiniquais</option>
+<option value='mauritanian'>Mauritanian</option>
+<option value='mauritian'>Mauritian</option>
+<option value='mexican'>Mexican</option>
+<option value='micronesian'>Micronesian</option>
+<option value='moldovan'>Moldovan</option>
+<option value='monegasque'>Monegasque</option>
+<option value='mongolian'>Mongolian</option>
+<option value='montenegrin'>Montenegrin</option>
+<option value='montserratian'>Montserratian</option>
+<option value='moroccan'>Moroccan</option>
+<option value='mosotho'>Mosotho</option>
+<option value='mozambican'>Mozambican</option>
+<option value='namibian'>Namibian</option>
+<option value='nauruan'>Nauruan</option>
+<option value='nepalese'>Nepalese</option>
+<option value='new-zealander'>New Zealander</option>
+<option value='nicaraguan'>Nicaraguan</option>
+<option value='nigerian'>Nigerian</option>
+<option value='nigerien'>Nigerien</option>
+<option value='niuean'>Niuean</option>
+<option value='north-korean'>North Korean</option>
+<option value='northern-irish'>Northern Irish</option>
+<option value='norwegian'>Norwegian</option>
+<option value='omani'>Omani</option>
+<option value='pakistani'>Pakistani</option>
+<option value='palauan'>Palauan</option>
+<option value='palestinian'>Palestinian</option>
+<option value='panamanian'>Panamanian</option>
+<option value='papua-new-guinean'>Papua New Guinean</option>
+<option value='paraguayan'>Paraguayan</option>
+<option value='peruvian'>Peruvian</option>
+<option value='pitcairn-islander'>Pitcairn Islander</option>
+<option value='polish'>Polish</option>
+<option value='portuguese'>Portuguese</option>
+<option value='prydeinig'>Prydeinig</option>
+<option value='puerto-rican'>Puerto Rican</option>
+<option value='qatari'>Qatari</option>
+<option value='romanian'>Romanian</option>
+<option value='russian'>Russian</option>
+<option value='rwandan'>Rwandan</option>
+<option value='salvadorean'>Salvadorean</option>
+<option value='sammarinese'>Sammarinese</option>
+<option value='samoan'>Samoan</option>
+<option value='sao-tomean'>Sao Tomean</option>
+<option value='saudi-arabian'>Saudi Arabian</option>
+<option value='scottish'>Scottish</option>
+<option value='senegalese'>Senegalese</option>
+<option value='serbian'>Serbian</option>
+<option value='citizen-of-seychelles'>Citizen of Seychelles</option>
+<option value='sierra-leonean'>Sierra Leonean</option>
+<option value='singaporean'>Singaporean</option>
+<option value='slovak'>Slovak</option>
+<option value='slovenian'>Slovenian</option>
+<option value='solomon-islander'>Solomon Islander</option>
+<option value='somali'>Somali</option>
+<option value='south-african'>South African</option>
+<option value='south-korean'>South Korean</option>
+<option value='south-sudanese'>South Sudanese</option>
+<option value='spanish'>Spanish</option>
+<option value='sri-lankan'>Sri Lankan</option>
+<option value='st-helenian'>St Helenian</option>
+<option value='st-lucian'>St Lucian</option>
+<option value='stateless'>Stateless</option>
+<option value='sudanese'>Sudanese</option>
+<option value='surinamese'>Surinamese</option>
+<option value='swazi'>Swazi</option>
+<option value='swedish'>Swedish</option>
+<option value='swiss'>Swiss</option>
+<option value='syrian'>Syrian</option>
+<option value='taiwanese'>Taiwanese</option>
+<option value='tajik'>Tajik</option>
+<option value='tanzanian'>Tanzanian</option>
+<option value='thai'>Thai</option>
+<option value='togolese'>Togolese</option>
+<option value='tongan'>Tongan</option>
+<option value='trinidadian'>Trinidadian</option>
+<option value='tristanian'>Tristanian</option>
+<option value='tunisian'>Tunisian</option>
+<option value='turkish'>Turkish</option>
+<option value='turkmen'>Turkmen</option>
+<option value='turks-and-caicos-islander'>Turks and Caicos Islander</option>
+<option value='tuvaluan'>Tuvaluan</option>
+<option value='ugandan'>Ugandan</option>
+<option value='ukrainian'>Ukrainian</option>
+<option value='uruguayan'>Uruguayan</option>
+<option value='uzbek'>Uzbek</option>
+<option value='vatican-citizen'>Vatican citizen</option>
+<option value='citizen-of-vanuatu'>Citizen of Vanuatu</option>
+<option value='venezuelan'>Venezuelan</option>
+<option value='vietnamese'>Vietnamese</option>
+<option value='vincentian'>Vincentian</option>
+<option value='wallisian'>Wallisian</option>
+<option value='welsh'>Welsh</option>
+<option value='yemeni'>Yemeni</option>
+<option value='zambian'>Zambian</option>
+<option value='zimbabwean'>Zimbabwean</option>
+                                <!-- <option *ngFor="let dept of departments" value="{{dept.dept_id}}">{{dept.department_name}}</option> -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="input-group">
+                                
+
+                            <label for="phone">staff</label>
+                            <input type="text" id="home_phone"  class="form-control" formControlName="home_phone" >
+                                <!-- <span class="input-group-addon">
+                                        <input type="text" id="country_code"  class="form-control" formControlName="country_code" >
+                                </span>
+                            <input type="text" id="phone"  class="form-control" formControlName="phone" > -->
+
+                             </div>
+                            <!-- <p>When adding an extension, the country code is not important</p> -->
+                             
+                                 
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="home_phone">Customer Type</label>
+                            <input type="text" id="home_phone_dup"  class="form-control" formControlName="home_phone" >
+                        </div>
+                    </div>
+
+                    
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="fax">Account Officer</label>
+                            <input type="text" id="fax_dup"  class="form-control" formControlName="fax" >
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="assistant">Branch ID</label>
+                            <input type="text"  id="assistant_dup" class="form-control" formControlName="assistant" >
+                        </div>
+                    </div>
+
+
+                    
+
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="reports_to">Bio status</label>
+                            <input type="text"  id="reports_to_dup" class="form-control" formControlName="reports_to" >
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="assitant_phone">Bio flag</label>
+                            <input type="text"  id="assitant_phone_dup" class="form-control" formControlName="assitant_phone" >
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="created_by">WOF</label>
+                            <input type="text"  id="created_by_dup" class="form-control" formControlName="created_by" >
+                            <!-- <div class="small">{{ this.created_time }}</div> -->
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="email_opt">Blacklisted</label>
+                            <input type="text" name="email_opt_dup" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="modified_by">BVN</label>
+                            <input type="text" value="Naveen" id="modified_by_dup" class="form-control" formControlName="modified_by">
+                            <!-- <div class="small">{{ this.modified_time }}</div> -->
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="skype">Legal Info</label>
+                            <input type="text" id="skype_dup"  class="form-control" formControlName="skype" >
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="secondary_email">Legal ID Type</label>
+                            <input type="text" id="secondary_email_dup"  class="form-control" formControlName="secondary_email" >
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="twitter">Legal ID Number</label>
+                            <input type="text" id="twitter_dup"  class="form-control" formControlName="twitter" >
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="twitter">Expiry Date</label>
+                            <input type="text" id="twitter_dup"  class="form-control" formControlName="twitter" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		
+
+	</form>
+</div>
+
+
+
+<div class="card" *ngIf="dailyfood">
+	<div class="card-header" *ngIf="this.has_external_contact == '0'">
+		<h4>Has DSK Access</h4>
+	</div>
+	<div class="card-header" *ngIf="this.has_external_contact == '1'">
+		<h4>Contact</h4>
+	</div>
+	<div class="card-body p-0" *ngIf="this.has_external_contact == '0'">
+		<iframe [src]="this.dailyfoodurl " id="dailyfIframe" class="dailyfIfram" width="100%" height="100%"
+			frameborder="0" allowfullscreen></iframe>
+	</div>
+	<div class="card-body p-0" *ngIf="this.has_external_contact == '1'">
+		<div id="dailyfIframes">
+
+		</div>
+	</div>
+</div>
+
+<div class="settingSidebar">
+	<a href="javascript:void(0)" class="settingPanelToggle" (click)="toggleClass()">
+		<span title="Add Wrapup Code" class="plus-icon"><i class="fas fa-plus" style="margin: 0px;"></i></span>
+		<span class="minus-icon"><i class="fas fa-minus" style="margin: 0px;"></i></span>
+	</a>
+
+	<div class="settingSidebar-body ps-container ps-theme-default">
+		<form>
+			<div class=" fade show active">
+				<button *ngIf="this.no_contact==true" class="btn btn-primary" (click)="AddContact()"
+					style="float: right;margin: 9px 20px 0px 0px;"> Add Contact</button>
+
+				<div class="setting-panel-header">Wrapup Code
+
+
+				</div>
+				<div class="p-15">
+
+					<div class="row">
+						<!-- <div class="col-md-12" *ngFor="let item of questions">
+       					<div class="form-group">
+       						<label for="department">Question</label>
+       						<p>{{item.question}}</p>
+       					</div>	
+       				</div> -->
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="department">Wrap Up Category</label>
+								<select (change)="getAuxCode()" name="auxcodes" id="auxcodes_pop" class="form-control">
+									<option value='0'> Select Category </option>
+									<option *ngFor="let auxcode of auxcode_catagory" value="{{auxcode.id}}">
+										{{auxcode.category_name}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="department">Wrap Up Code</label>
+								<select name="auxcodes" id="auxcodes_subcat" class="form-control">
+									<option value='0'> Select Wrapup Code </option>
+									<option *ngFor="let auxcode of auxcodes" value="{{auxcode.auxcode_name}}">
+										{{auxcode.auxcode_name}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="notes">Notes <i class="far fa-edit"></i></label>
+								<textarea id="notes" class="form-control"></textarea>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="buttons form-group">
+								<input type="button" class="btn btn-secondary" (click)="toggleClass()" value="Close"
+									type="button">
+								<input type="button" class="btn btn-primary" value="Update Wrapup"
+									(click)="addWrapupcode()">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+
+		<div class="dialer-call-action">
+			<div class="row">
+				<!-- <div class="col-md-12" *ngIf="show_ans">
+					<div class="pulse call-attend-btn" (click)="acceptIncomeCall()">
+						<a href="javascript:;" class="btn btn-success">
+							<img src="assets/images/custom-wallboard/call-answered.svg" height="18"
+								class="mr-2 shake-animation"> Answer Call from {{get_dailer_value}}</a>
+					</div>
+				</div>
+				<div class="col-md-6" (click)="closeModelPopup()" *ngIf="show_mini_butons">
+					<a href="javascript:;" class="btn btn-warning fl"><i class="far fa-window-maximize"></i>
+						Minimize</a>
+				</div>
+				<div class="col-md-6" (click)="declineIncomeCall()" *ngIf="show_del">
+					<a href="javascript:;" class="btn btn-danger fl"><i class="fas fa-phone-slash"></i> Decline</a> -->
+				<div class="col-md-12 d-flex justify-content-center" *ngIf="show_ans">
+					<h6>Incoming Call from {{get_dailer_value}}</h6>
+				</div>
+			</div>
+			<br />
+			<div class="row">
+				<div class="col-md-4 d-flex justify-content-center" *ngIf="show_ans">
+					<div class="call-attend-btn" (click)="acceptIncomeCall()">
+						<a href="javascript:;" class="pulse btn btn-success">
+							<i class="fas fa-phone shake-animation"></i>
+							<span class="btn-action-text">Answer</span></a>
+						<!-- <span class="btn-action-text">Answer Call from {{get_dailer_value}}</span></a> -->
+					</div>
+				</div>
+				<div class="col-md-4 d-flex justify-content-center" (click)="declineIncomeCall()" *ngIf="show_del">
+					<a href="javascript:;" class="btn btn-danger fl"><i class="fas fa-phone-slash"></i>
+						<span class="btn-action-text">Decline</span> </a>
+				</div>
+				<div class="col-md-4 d-flex justify-content-center" (click)="closeModelPopup()"
+					*ngIf="show_mini_butons">
+					<a href="javascript:;" class="btn btn-warning fl"><i class="far fa-window-maximize"></i>
+						<span class="btn-action-text">Minimize </span></a>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
+</div>
+
+
+
+<div class="modal fade bd-example-modal-lg" id="add_refinement">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<form>
+				<div class="modal-header">
+					<h5 class="modal-title" id="myLargeModalLabel">Refinement Search</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
+					<div class="row">
+
+
+						<!-- <img src="assets/images/test.gif" alt=""> -->
+
+						<div class="col-md-11">
+
+							<div class="form-group">
+								<label>Account Name <span style="color:brown;font-size:12px;">(click
+										enter after typing account name)</span></label>
+								<!-- <select name="add_cat_id" id="add_cat_id" class="form-control">
+									<option value='0'> Select Category </option>
+									<option *ngFor="let cat of cat_query_list" value="{{cat.id}}">
+										{{cat.category_name}}</option>
+									</select> -->
+
+								<!-- <input list="cities" type="text" id="account_name" class="form-control"
+									placeholder="Enter atleast 5 Character" (keyup.enter)="searchnumAccount()"
+									(input)="autosuggestAccName()" />
+									<datalist id="cities">
+										<option *ngFor="let test of listsuggestion" value="{{test.accountid}}" >
+									</datalist>
+										<span *ngIf="show_failed" style="color: red;">No contact Found</span> -->
+
+								<!-- <input list="datasid" name="city" value="" id="account_name" class="form-control"
+									placeholder="Enter atleast 5 Character" (keyup.enter)="searchnumAccount()"
+									(input)="autosuggestAccName()"> -->
+								<!-- <input list="datasid" name="city" value="" id="account_name" class="form-control"
+									placeholder="Enter atleast 5 Character" (keyup.enter)="autosuggestAccName()"
+									> -->
+								<input  name="city" value="" id="account_name" class="form-control"
+									placeholder="Enter atleast 5 Character" (input)="autosuggestAccName()" (keyup.enter)="searchnumAccount()"
+									>
+
+								<!-- <datalist id="datasid">
+									<i class="fas fa-angle-left"></i>
+									<option value="{{ls.name}}" *ngFor="let ls of listsuggestion">{{ls.name}}</option>
+              
+								</datalist> -->
+								<div class="card padding-15" *ngIf="showdatalist"> 
+									<ul class="pagination mb-0" *ngFor="let ls of listsuggestion">
+										<li class="page-item" style="cursor: pointer;" (click)="sentDataInInput(ls.name)">{{ls.name}}</li>
+									</ul>
+									<ul class="pagination mb-3 mt-2">
+										<li><a class="page-link" href="javascript:void(0)" (click)="prevPage()"><i class="fas fa-angle-left"></i></a></li>
+										<li><a  class="page-link" href="javascript:void(0)" (click)="nextPage()"><i class="fas fa-angle-right"></i></a></li>
+									</ul>
+								</div>
+
+							</div>
+
+						</div>
+
+						<div class="col-md-1" style="padding-top:4%" *ngIf="showloading">
+							<img src="assets/images/test.gif" style="width: 40px;">
+						</div>
+
+					</div>
+
+					<div class="col-md-12" *ngIf="show_contact_value">
+						<div class="form-group">
+							<label for="add_acc_num">Contact Name</label>
+							<select name="add_acc_num" id="add_acc_num" class="form-control">
+								<option value='0'> Select contact </option>
+								<option *ngFor="let conc of conc_query_list" value="{{conc.contactid}}">
+									{{conc.fullname}}</option>
+							</select>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="modal-footer" *ngIf="show_contact_value">
+					<div class="buttons">
+						<input type="button" (click)="cancelbutton()" class="btn btn-outline-secondary" value="Cancel">
+						<input type="button" class="btn btn-primary update_agent" value="Update"
+							(click)="searchGetContact()">
+						<!-- <input type="submit" class="btn btn-primary update_agent" value="Update"> -->
+					</div>
+				</div>
+			</form>
+
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+<div class="modal fade bd-example-modal-xl" id="showpop_timeline">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<div class="modal-body">
+
+				<div id="accordion" class="accordion">
+					<div class="card mb-0">
+						<div class="card-header show" data-toggle="collapse" href="#collapseOne">
+							<h4><i class="fa fa-address-book" aria-hidden="true"></i> Call Details</h4>
+						</div>
+						<div id="collapseOne" class="card-body collapse show" data-parent="#accordion">
+							<div class="modal-body">
+
+								<div class="message-thread-header">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="thread-details-section fl">
+												<div style="padding: 5px 25px;" class="ticket-message-details fl">
+													<strong style="min-width: 72px; float: left;">Subject</strong>
+													<span style="text-align: center;">
+														<span class="blk-clr"><b>: &nbsp;&nbsp;
+																{{this.Tsubject}}</b></span>
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="message-thread-header">
+									<div class="row">
+										<div class="col-md-9">
+											<div class="thread-details-section fl">
+												<div style="padding: 5px 25px;" class="ticket-message-details fl">
+													<strong style="min-width: 72px; float: left;">Phone</strong>
+													<span style="text-align: center;">
+														<span class="blk-clr"><b>: &nbsp;&nbsp;
+																{{this.Tphone}}</b></span>
+													</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-3">
+											<div style="padding: 5px 25px;" class="ticket-message-details fl"><strong
+													style="min-width: 72px; float: left;">Direction</strong>
+												<span style="text-align: center;">
+													<span *ngIf="this.Tsubject=='Inbound Call'" class="callType"
+														style="color: #3d77a7;"><b>:&nbsp;&nbsp;<img
+																src="assets/images/incoming-call.svg">
+															Incoming</b></span>
+													<span *ngIf="this.Tsubject=='Outbound Call'" class="callType"
+														style="color: #3d77a7; "><b>:&nbsp;&nbsp; <img
+																src="assets/images/outgoing-call.svg">
+															Outgoing</b></span>
+													<span
+														*ngIf="this.Tsubject!='Outbound Call' && this.Tsubject!='Inbound Call'"
+														class="callType" style="color: #3d77a7;"><b>:&nbsp;&nbsp;<i
+																style="font-size: 17px;" class="fa fa-phone"></i>
+															{{this.Tsubject}}</b></span>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="message-thread-header">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="thread-details-section fl">
+												<div style="padding: 5px 25px;" class="ticket-message-details fl">
+													<strong style="min-width: 72px; float: left;">Description</strong>
+													<span style="text-align: center;">
+														<span class="blk-clr"><b>: &nbsp;&nbsp;
+																{{this.Tdescription}}</b></span>
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div *ngIf="this.user_type == 2" class="message-thread-header">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="thread-details-section fl">
+												<div style="padding: 5px 25px;" class="ticket-message-details fl">
+													<strong style="min-width: 72px; float: left;">Recording :</strong>
+													<span style="text-align: center;">
+														<a style="cursor: pointer;color: aqua;" target="_blank"
+															href="{{this.Trecord}}" class="blk-clr"><b> &nbsp;&nbsp;
+																{{this.Trecord}}</b></a>
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="message-thread-header">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="thread-details-section fl">
+												<div style="padding: 5px 25px;" class="ticket-message-details fl">
+													<strong style="min-width: 72px; float: left;">Wrapup </strong>
+													<span style="text-align: center;">
+														<span class="blk-clr"><b>: &nbsp;&nbsp;
+																{{this.Twrapcode}}</b></span>
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="message-thread-header">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="thread-details-section fl">
+												<div style="padding: 5px 25px;" class="ticket-message-details fl">
+													<strong style="min-width: 72px; float: left;">Note <i
+															class="fas fa-list-alt"></i></strong>
+													<span style="text-align: center;">
+														<span class="blk-clr"><b>: &nbsp;&nbsp;
+																{{this.Twrapnote}}</b></span>
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="buttons">
+					<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="close">
+					<!-- <input type="button" class="btn btn-success update_agent" value="Submit" (click)="AddNote()"> -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

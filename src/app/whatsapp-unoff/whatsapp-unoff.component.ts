@@ -55,6 +55,7 @@ export class WhatsappUnoffComponent implements OnInit {
   offset_count_msg = 0;
   doc_link;
   audiofile;
+  media_voice: any;
   constructor(private serverService: ServerService,private _ngZone: NgZone,private route: ActivatedRoute,private router:Router) { 
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.param1 = this.route.snapshot.queryParamMap.get('wp_id');
@@ -1237,8 +1238,7 @@ stpbtn(){
 }
 addWhatsappVoice(){ 
   $('#VoiceModel').modal('hide');
- 
-console.log($('#audio-playback')[0]);
+
   let access_token: any=localStorage.getItem('access_token');
   let user_id: any =  localStorage.getItem('userId'); 
   let chat_id: any=this.chat_detail_id.nativeElement.value;
@@ -1251,9 +1251,9 @@ console.log($('#audio-playback')[0]);
     fd.append('operation', 'wp_instance');
     fd.append('moduleType', 'wp_instance');
     fd.append('api_type', 'web');
-    fd.append('action', 'whatsapp_media_upload');
+    fd.append('action', 'whatsapp_upload_voice');
     fd.append('access_token', access_token);
-    fd.append("whatsapp_media", blob,$('#audio-playback').attr("src"));
+    fd.append("audiofile", blob,$('#audio-playback').attr("src"));
      // alert($('#audio-playback')[0])
      fd.append('user_id', user_id);
      fd.append('chat_id', chat_id);
@@ -1268,8 +1268,11 @@ console.log($('#audio-playback')[0]);
  
   .then((responsenew) => {
     console.log(responsenew); 
-    $('#whatsapp_media_url_voice').val(responsenew.url);
-   alert($('#whatsapp_media_url_voice').val())
+    var self=this;
+    self.media_voice=responsenew.url;
+    //alert( media_voice)
+  $('this.media_voice').val(responsenew.url);
+  //  alert($('#self.media_voice').val())
    
     $('#whatsapp_media').val('');
   $('#hit_image_voice').click();
@@ -1370,7 +1373,8 @@ sendvoiceMediaData(){
  console.log(chat_message);
      let api_req:any = new Object();
     let chat_req:any = new Object();
-    
+   //alert(this.media_voice);
+    //return false;
     chat_req.action="send_chat_message_unoffvoice";
     chat_req.chat_id=this.chat_detail_id.nativeElement.value;
     chat_req.user_id=this.loginUser;
@@ -1381,7 +1385,8 @@ sendvoiceMediaData(){
     api_req.moduleType="wp_instance";
     api_req.api_type="web";
     api_req.access_token=localStorage.getItem('access_token');
-    chat_req.whatsapp_media_url= $('whatsapp_media_url').val();
+    chat_req.whatsapp_media_url= this.media_voice;
+    //alert(chat_req.whatsapp_media_url);
     api_req.element_data = chat_req;
   
     

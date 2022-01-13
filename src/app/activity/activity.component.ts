@@ -12,6 +12,11 @@ declare var iziToast:any;
   styleUrls: ['./activity.component.css']
 })
 export class ActivityComponent implements OnInit {
+  call_history_list;
+	recordNotFound = false;
+	pageLimit = 20;
+	paginationData: any = { "info": "hide" };
+	offset_count = 0;
   contact_id;
   addnotes: FormGroup;
   oldNotes;
@@ -19,24 +24,33 @@ export class ActivityComponent implements OnInit {
   users;
   departments;
   note_id;
+  call_note;
+  auxcode_name;
   constructor(private serverService: ServerService, private router:Router,private route: ActivatedRoute) { 
     this.contact_id = this.route.snapshot.queryParamMap.get('contact_id');
+   // this.call_note = this.route.snapshot.queryParamMap.get('call_note');
+   // this.auxcode_name= this.route.snapshot.queryParamMap.get('auxcode_name');
+
   }
 
   ngOnInit() {
     this.uadmin_id = localStorage.getItem('userId');
-  this.getNotes(this.contact_id );
+ this.get_activity(this.contact_id);
   this.addnotes= new FormGroup({
     'modified_by' :new FormControl(null)
   });
+  //this.callHistoryList({});
   this.getDepartments();
   }
-  getNotes(contact_id){
+  get_activity(contact_id){
     let conct_req:any = new Object();
     let api_req:any = new Object();
     conct_req.user_id=localStorage.getItem('userId');
-    conct_req.action="get_contact_notes";
+    conct_req.action="get_activity";
     conct_req.contact_id=contact_id;
+    //conct_req.auxcode_name= auxcode_name;
+    //conct_req.call_note=this.call_note;
+    //alert(this.call_note)
     api_req.operation="contact";
     api_req.moduleType="contact";
     api_req.api_type="web";
@@ -44,18 +58,44 @@ export class ActivityComponent implements OnInit {
     api_req.element_data = conct_req;
   
       this.serverService.sendServer(api_req).subscribe((response:any) => {
-
+  
         if(response.result.status==true){
           this.oldNotes=response.result.data;
+          console.log(this.oldNotes)
+          //alert( this.oldNotes)
         }
     }, 
     (error)=>{
         console.log(error);
     });
   }
+  // getNotes(contact_id){
+  //   let conct_req:any = new Object();
+  //   let api_req:any = new Object();
+  //   conct_req.user_id=localStorage.getItem('userId');
+  //   conct_req.action="get_contact_notes";
+  //   conct_req.contact_id=contact_id;
+  //   api_req.operation="contact";
+  //   api_req.moduleType="contact";
+  //   api_req.api_type="web";
+  //   api_req.access_token=localStorage.getItem('access_token');
+  //   api_req.element_data = conct_req;
+  
+  //     this.serverService.sendServer(api_req).subscribe((response:any) => {
+
+  //       if(response.result.status==true){
+  //         this.oldNotes=response.result.data;
+  //       }
+  //   }, 
+  //   (error)=>{
+  //       console.log(error);
+  //   });
+  // }
 
 bcktoContc(contact_id){
       console.log(contact_id);
+      var b_phone_num = btoa(b_phone_num); // Base64 encode the String
+  var conct_num =btoa(contact_id);
       let conct_req:any = new Object();
       let api_req:any = new Object();
       conct_req.user_id=localStorage.getItem('userId');
@@ -68,8 +108,10 @@ bcktoContc(contact_id){
       api_req.element_data = conct_req;
       this.serverService.sendServer(api_req).subscribe((response:any) => {
         if(response.result.status==true){
-          var decodedString = btoa(response.result.data[0].phone );
-          this.router.navigate(['/edit-contacts'], { queryParams: { phone:  decodedString} });
+         // var decodedString = btoa(response.result.data[0].phone );
+          var cont_id = btoa(this.contact_id );
+          this.router.navigate(['/edit-contacts'], { queryParams: { phone: b_phone_num,cont_id:cont_id,ids:conct_num,calltype:'outgoing'} });
+         // this.router.navigate(['/edit-contacts'], { queryParams: { phone:  decodedString,cont_id:cont_id} });
         }
       }, 
       (error)=>{
@@ -162,7 +204,7 @@ return false;
                     position: 'topRight'
                 });
                 $('#assign_ticket').modal('hide');
-                this.getNotes(this.contact_id );
+                this.get_activity(this.contact_id );
             } else {
             
                 iziToast.warning({
@@ -181,7 +223,78 @@ return false;
         console.log(error);
     });
 }
+listDataInfo(list_data) {
 
+  list_data.search_text = list_data.search_text == undefined ? "" : list_data.search_text;
+  list_data.order_by_name = list_data.order_by_name == undefined ? "history.callid" : list_data.order_by_name;
+  list_data.order_by_type = list_data.order_by_type == undefined ? "desc" : list_data.order_by_type;
+  list_data.limit = list_data.limit == undefined ? this.pageLimit : list_data.limit;
+  list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
+  return list_data;
+}
+callHistoryList(data) {
+  var new_user_id;
+  var admin_permission = localStorage.getItem('admin_permision');
+  if (admin_permission == '1') {
+    new_user_id = localStorage.getItem('admin_id');
+  } else {
+    new_user_id = localStorage.getItem('userId');
+  }
 
+  var list_data = this.listDataInfo(data);
+  let api_req: any = new Object();
+  let history_req: any = new Object();
+  history_req.action = "recent_list";
+  history_req.search_text = list_data.search_text;
+  history_req.order_by_name = list_data.order_by_name;
+  history_req.order_by_type = list_data.order_by_type;
+  history_req.limit = list_data.limit;
+  history_req.offset = list_data.offset;
+  history_req.user_id = new_user_id;
+  api_req.operation = "call";
+  api_req.moduleType = "call";
+  api_req.api_type = "web";
+  api_req.access_token = localStorage.getItem('access_token');
+  api_req.element_data = history_req;
+  this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+    if (response.result.status == 1) {
+
+      this.call_history_list = response.result.data.list_data;
+      this.offset_count = list_data.offset;
+      this.paginationData = this.serverService.pagination({ 'offset': response.result.data.list_info.offset, 'total': response.result.data.list_info.total, 'page_limit': this.pageLimit });
+      this.recordNotFound = this.call_history_list.length == 0 ? true : false;
+    }
+
+  },
+    (error) => {
+      console.log(error);
+    });
 
 }
+// get_activity(contact_id){
+//   let conct_req:any = new Object();
+//   let api_req:any = new Object();
+//   conct_req.user_id=localStorage.getItem('userId');
+//   conct_req.action="get_activity";
+//   conct_req.contact_id=contact_id;
+//   api_req.operation="contact";
+//   api_req.moduleType="contact";
+//   api_req.api_type="web";
+//   api_req.access_token=localStorage.getItem('access_token');
+//   api_req.element_data = conct_req;
+
+//     this.serverService.sendServer(api_req).subscribe((response:any) => {
+
+//       if(response.result.status==true){
+//         this.oldNotes=response.result.data;
+//       }
+//   }, 
+//   (error)=>{
+//       console.log(error);
+//   });
+// }
+
+}
+
+

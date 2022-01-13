@@ -6,6 +6,9 @@ import { HostListener } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 // import Icon from '../../../assets/images/wallboard/call.svg';
 import Swal from 'sweetalert2'
+
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { EditContactsComponent } from '../../edit-contacts/edit-contacts.component';
 declare var $:any;
 declare var doCall: any;
 declare var transferCall: any;
@@ -91,14 +94,16 @@ export class DialpadComponent implements OnInit {
     user_type;
     connect_count=1;
     regis;
-    logged_in;
-    
-    //att Trans
+    caller_no;
+    getNums;
     showWrapUp =false;
     call_type;
-    caller_no;
     temp_status;
-  	constructor(private serverService: ServerService,private router:Router,private http:HttpClient) {
+    produitsFiltres;
+    atttransferList;
+    show_minimize_button = false;
+    contact_id;
+  	constructor(private serverService: ServerService, public modalService: NgbModal,private router:Router,private http:HttpClient) {
 
        this.serverService.show.subscribe( (val:any) => 
        {
@@ -130,16 +135,51 @@ export class DialpadComponent implements OnInit {
 
         //this.q_logout(dpContent.status);
         }
+
+        if(dpContent.type == "hidepopupdialer"){
+            this.dialPadClose();
+        }
+        if(dpContent.type == "showpopupdialer"){
+            this.dialPadOpen();
+        }
+
        });
-    //    this.serverService.attendCall.subscribe( (val:any) => 
+       
+       this.serverService.minimize.subscribe( (val:any) => {
 
-    //   );
+         let viewContent = JSON.parse(val);
+        if(viewContent.type == "minimize"){
+            this.getNums = localStorage.getItem('income_calls_num');
+            this.show_minimize_button = true;
+        }else{
+            this.show_minimize_button = false;
+        }
 
+        if(viewContent.type == "attendincomingCall"){
+            this.getNums = localStorage.getItem('income_calls_num');
+            this.incomingCallAccept(this.getNums);
+        }
+        
+        if(viewContent.type == "declineincomingCall"){
+            this.incomingCallDecline();
+        }
+        if(viewContent.type == "updatewrapupCode"){
+            this.addWrapupcode(viewContent.call_type,viewContent.aux_code,viewContent.cat_id,viewContent.call_note,viewContent.from_no,viewContent.to_no,viewContent.wrapCode,viewContent.contact_id);
+        }
 
-    }
+       });
+
+// document.getElementById('close-call-fwd-modal').click(function() {
+//     alert("click")
+// });
+// $("#close-call-fwd-modal").click(function() {
+//     alert("click");
+// });
+  }
 
   ngOnInit() {
     if(localStorage.getItem('access_token')) {
+
 	this.dialPadContainer=false;
 	this.dialPadCirclePlus=true;
 	this.dialPadRefresh=false;
@@ -184,10 +224,12 @@ export class DialpadComponent implements OnInit {
 
 initSocket(){
    
-    if(this.admin_id == '64'){
+    if(this.admin_id == '66'){
         this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4002"); 
+      } else if(this.admin_id == '201'){
+        this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4003"); 
       } else {
-        this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4001"); 
+        this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4036"); 
       }
 
 
@@ -196,16 +238,18 @@ initSocket(){
         }
     
         this.websocket.onmessage = function(event) {      
+       console.log(event.data);  
         var result_message = JSON.parse(event.data);
     //    console.log(result_message);  
     //    console.log($('#user_number').val());
-            this.has_hard_id = localStorage.getItem('hardware_id');
-            if(result_message[0].cust_id == this.has_hard_id){
-                console.log('matched');
-            } else {
-                console.log('not matched');
-                return false;
-            }
+    this.has_hard_id = localStorage.getItem('hardware_id');
+      if(result_message[0].cust_id == this.has_hard_id){
+        // console.log('matched');
+        // console.log(result_message);  
+      } else {
+        // console.log('not matched');
+        return false;
+      }
 
          if(result_message[0].data[0].type =='callend' && result_message[0].data[0].userno == $('#user_number').val()){            
             // iziToast.error({
@@ -228,11 +272,20 @@ initSocket(){
             $('#queulogin').val(event.data);
             $('#queulogin').click();
           }
-          if(result_message[0].data[0].calltype == "Incoming Call" && result_message[0].data[0].ag_no == $('#user_number').val()){
+          if(result_message[0].data[0].wrapuptype=="wrapupcall_id" && result_message[0].data[0].extno == $('#user_number').val()){            
+            $('#wrapup_callID').val(result_message[0].data[0].callid);
+            // alert(result_message[0].data[0].callid)
+            // $('#wrapup_callID').click();
+            }
+          if(result_message[0].data[0].calltype == "Incoming Call" && result_message[0].data[0].ag_no == $('#user_number').val() && result_message[0].data[0].ag_no !=null && result_message[0].data[0].ag_no !=''  && result_message[0].data[0].ag_no !='undefined'){
+             console.log(result_message);  
+           
+            $('#queue_ids').val(result_message[0].data[0].q_no);
             iziToast.info({
                 title:""+result_message[0].data[0].q_name+"",
                 message: "You receiving incomming call from Queue '"+result_message[0].data[0].q_name+"'",
-                position: 'topRight'
+                position: 'topRight',                
+                timeout: 100000,
             });
             // Swal.fire({
             //     title: ""+result_message[0].data[0].q_name+"",
@@ -250,7 +303,7 @@ initSocket(){
         }
         this.websocket.onclose = function(event){
           console.log('close');
-     $('#reconnect_socket').click();
+     $('#dial_reconnect_socket').click();
 
     }
 
@@ -303,7 +356,6 @@ handleKeyboardEvent(event: KeyboardEvent){
 
 }
 pbxSettings(){
-
 // let api_req:any = new Object();
 // let chat_req:any = new Object();
 //  chat_req.action = "get_pbx_settings";
@@ -357,7 +409,7 @@ let chat_req:any = '{"operation":"chat", "moduleType": "chat", "api_type": "web"
                 return false;
             } else {
 
-            //    if(this.admin_id == '64'){
+            //    if(this.admin_id == '66'){
 
             //         this.http.get('https://erp.cal4care.com/cms/api_cms/v1.0/webrtc_index.php?ip_addr='+IP+'&action_info=find_ip_allowed').toPromise().then(data => {
             //             // console.log(data[0].data);
@@ -435,31 +487,11 @@ registerStatus2(){
     //     this.sipRegistration('0');
     // }
 }
-queuelogin_logout(){
-    let access_token: any=localStorage.getItem('access_token'); 
-    let api_req:any = '{"operation":"call", "moduleType":"call", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"queue_login_logout","user_id":"'+this.uadmin_id+'"}}';
-    this.serverService.sendServer(api_req).subscribe((response:any) => {
-      if(response.result.data.status== "1"){
-        // this.dialPadContainer = true;
-        // this.dialPadCirclePlus = false;
-        this.queLogStatus = response.result.data.status;
-        this.redyForCall = 'Available';
-      } else {
-        this.queLogStatus = response.result.data.status;
-        this.redyForCall = response.result.data.reason;
-        // this.dialPadContainer = true;
-        // this.dialPadCirclePlus = false;
-        $('#onHookIndi').addClass('red')
-      }
-    }, 
-    (error)=>{
-        console.log(error);
-    });
-}
 dialPadOpen() {
     this.dialpadOpen=true;
     this.dialPadContainer = true;
     this.dialPadCirclePlus = false;
+    console.log(this.dial_status);
     if(this.dial_status === 'external'){
         iziToast.warning({
             message: "Sorry, Please Change the dialer settings or give the valid pbx details",
@@ -490,7 +522,6 @@ dialPadOpen() {
     this.queueStatusWhenOpen();
 
    
-    this.addHelp();
 }
 
 
@@ -545,18 +576,31 @@ $(".card").removeClass("none");
 $(".main-sidebar, .main-footer, .navbar, .card, .main-content").removeClass("blur");
 
 }
+
+
+// keyPad(key_data) {
+// if(this.forwordPopup == 'forward'){
+//     var dailed_number = $('#makeCallForwordNumber').val();
+//     $('#makeCallForwordNumber').val(dailed_number + key_data);
+// } else {
+//     var dailed_number = $('#dialpad_number').val();
+//     $('#dialpad_number').val(dailed_number + key_data);
+// }
+    
+
+// }
 keyPad(key_data) {
     if(this.dtmf == true){
         var dailed_number = $('#makeCallForwordNumber').val();
         $('#makeCallForwordNumber').val(dailed_number + key_data);
         sendDtmf(key_data);
     } else {
-    if(this.forwordPopup == 'forward'){
-        var dailed_number = $('#makeCallForwordNumber').val();
-        $('#makeCallForwordNumber').val(dailed_number + key_data);
-    } else if(this.forwordPopup == 'conference') {
-        var dailed_number = $('#makeCallConferenceNumber').val();
-        $('#makeCallConferenceNumber').val(dailed_number + key_data);
+        if(this.forwordPopup == 'forward'){
+            var dailed_number = $('#makeCallForwordNumber').val();
+            $('#makeCallForwordNumber').val(dailed_number + key_data);
+        } else if(this.forwordPopup == 'conference') {
+            var dailed_number = $('#makeCallConferenceNumber').val();
+            $('#makeCallConferenceNumber').val(dailed_number + key_data);
         } 
   else if(this.forwordPopup == 'attendedTransfer') {
             var dailed_number = $('#peer_att').val();
@@ -615,10 +659,6 @@ dialPadview(view_type) {
             dialpad_req.limit = 50;
             dialpad_req.offset = 0;
         }
-        else if (view_type == "user_list") {
-            dialpad_req.user_id = this.admin_id;
-
-        }
 
         api_req.operation = "call";
         api_req.moduleType = "call";
@@ -634,6 +674,7 @@ dialPadview(view_type) {
                     this.dialpadRecentCalls = response.result.data.list_data;
                 } else if (view_type == "user_list") {
                     this.dialpadUserList = response.result.data;
+                    this.pushbridgeuser();
                 }
 
                 this.dialPadActionview = view_type;
@@ -649,6 +690,21 @@ dialPadview(view_type) {
 
 
 
+// dialPadbackSpace() {
+//     if(this.forwordPopup == 'forward'){
+//         var dialpad_number = $('#makeCallForwordNumber').val();
+//         if(dialpad_number == undefined){
+//         } else {
+//             $('#makeCallForwordNumber').val(dialpad_number.substring(0, dialpad_number.length - 1));
+//         }
+//      } else {
+//         var dialpad_number = $('#dialpad_number').val();
+//         if(dialpad_number == undefined){
+//         } else {
+//             $('#dialpad_number').val(dialpad_number.substring(0, dialpad_number.length - 1));
+//         }
+//      }   
+// }
 dialPadbackSpace() {
     if(this.forwordPopup == 'forward'){
         var dialpad_number = $('#makeCallForwordNumber').val();
@@ -669,7 +725,7 @@ dialPadbackSpace() {
         } else {
             $('#peer_att').val(dialpad_number.substring(0, dialpad_number.length - 1));
         }
-} else {
+     } else {
         var dialpad_number = $('#dialpad_number').val();
         if(dialpad_number == undefined){
         } else {
@@ -798,7 +854,6 @@ countdownTim(){
 
 
 outgoingCallEnd() {
-    this.endBycus=true;
     outgoingCallEnd();
     $("#makecallHanupBtn").click();
     if(this.dialPadActionview == 'call_incoming'){
@@ -815,8 +870,17 @@ outgoingCallEnd() {
     this.dtmf =false;
     this.forwordPopup = 'outgoingCallEnd';
     $('#makeCallForwordNumber').val('');
-    $('#peer_att').val('');
-
+    let api_reqs:any = '{"type": "call_ended"}';
+    this.serverService.editContact.next(api_reqs);
+    
+}
+Closemodal1(){
+    $(".forwardDialpadPanel").addClass('hide-fwd-dialpad');
+    $(".forwardDialpadPanel").hide();
+}
+Closemodal2(){
+    $(".forwardDialpadPanel2").addClass('hide-fwd-dialpad');
+    $(".forwardDialpadPanel2").hide();
 }
 outgoingCallEnd2() {
     // outgoingCallEnd();
@@ -837,7 +901,6 @@ outgoingCallEnd2() {
     this.forwordPopup = 'outgoingCallEnd';
     $('#makeCallForwordNumber').val('');
     $('#peer_att').val('');
-
 }
 outgoingCallEndREASON(){
     // alert('asas')
@@ -855,6 +918,28 @@ incomingCallAccept(det) {
 }
 
 
+
+incomingCallRecordStop(type) {
+
+    var socket_message  =  '[{"cust_id":"'+this.has_hard_id+'","data":[{"Name":"callrecord","extnum":"'+this.extension+'","status":"stop"}]}]';
+    this.websocket.send(socket_message);
+$('#rec_stop_btn').css('display','none');
+$('#rec_start_btn').css('display','block');
+}
+
+// Unmute audio in the call
+incomingCallRecordStart(type) {
+
+    var socket_message  =  '[{"cust_id":"'+this.has_hard_id+'","data":[{"Name":"callrecord","extnum":"'+this.extension+'","status":"start"}]}]';
+    this.websocket.send(socket_message);
+$('#rec_stop_btn').css('display','block');
+$('#rec_start_btn').css('display','none');
+}
+
+
+
+
+
 incomingCallDecline() {
     this.call_declined=true;
 
@@ -865,10 +950,8 @@ incomingCallDecline() {
 }
 
 incomingCallEndByCustomer() {
-    // alert('ended')
+    // alert('true');
     this.dialPadDetailViewIncomming('call_history_detail', this.call_history_id);
-    // if(this.show_end_helper)
-    // this.endCallTransfer();
 
 }
 
@@ -884,14 +967,11 @@ incomingCallEnd() {
     this.dtmf =false;
     this.forwordPopup = 'incCallEnd';
     $('#makeCallForwordNumber').val('');
-    $('#peer_att').val('');
-
     $('#dialpad_number').val('');
-
-    // alert('ended')
-    this.dialPadDetailViewIncomming('call_history_detail', this.call_history_id);
-    // if(this.show_end_helper)
     this.endCallTransfer();
+    // alert('test');
+    let api_reqs:any = '{"type": "call_ended"}';
+    this.serverService.editContact.next(api_reqs);
 }
 
 
@@ -907,11 +987,9 @@ endIncCallSection(){
     $(".forwardDialpadPanel").hide();
     $(".forwardDialpadPanel2").addClass('hide-fwd-dialpad');
     $(".forwardDialpadPanel2").hide();
-    this.dtmf =false;
+     this.dtmf =false;
     this.forwordPopup = 'incCallEnd';
     $('#makeCallForwordNumber').val('');
-    $('#peer_att').val('');
-
     $('#dialpad_number').val('');
     }
 }
@@ -926,10 +1004,10 @@ incoming_call_trigger() {
     // $('#accept_callscall').click();
     // this.incomingCallAccept();
     //alert(this.has_autoanswer);
-    this.call_declined=false;
-    this.call_accepted= false;
+    
     var call_incoming_number = $('#call_incoming_number').val();
     this.inc_or_out = call_incoming_number;
+    localStorage.setItem('income_calls_num',call_incoming_number);
     if (call_incoming_number != "") {
         this.dialPadOpenInCommingCall();
         this.dialPadDetailViewIncomming('call_incoming', call_incoming_number);
@@ -941,12 +1019,12 @@ incoming_call_trigger() {
                     position: 'topRight'
                 });
                 setTimeout( () => {
-                    if(this.call_declined==false && this.call_accepted == false && this.endBycus==false){
+                    if(this.call_declined==false && this.call_accepted == false){
                         this.incomingCallAccept(this.dialpadIncomingCalls.phone);
                         // alert('snjas');
                     }
-                     this.endBycus=false;
-                    // alert(this.endBycus);
+                     
+                    
                     }, 5000 );
             }
         
@@ -964,7 +1042,9 @@ dialPadDetailViewIncomming(view_type, detail_id) {
     //alert("ouyt");
     this.isDisabled = false;
     this.showWrapUp =false;
-this.show_end_helper=false;
+    this.call_type='incoming';
+     this.show_end_helper=false;
+
     if (detail_id == '' || detail_id == undefined) {
 
         detail_id = null;
@@ -980,13 +1060,11 @@ this.show_end_helper=false;
             $(".forwardDialpadPanel").addClass('hide-fwd-dialpad');
             $(".forwardDialpadPanel").removeClass('active');
             $(".forwardDialpadPanel").hide();
-            $('#makeCallForwordNumber').val('');
             $(".forwardDialpadPanel2").addClass('hide-fwd-dialpad');
             $(".forwardDialpadPanel2").removeClass('active');
             $(".forwardDialpadPanel2").hide();
-            $('#peer_att').val('');
-
-            this.dtmf =false;
+            this.dtmf =false;            
+            $('#makeCallForwordNumber').val('');
             this.forwordPopup = 'forwarded';
             this.callDetailView = '';
             
@@ -1022,6 +1100,7 @@ this.show_end_helper=false;
             dialpad_req.call_status = "open";
             dialpad_req.call_note = "";
             $('#outcall_number').val(detail_id);
+            // this.incomingNotification(detail_id);
         }  else if (view_type == "incoming_call_inprogess") {
             iziToast.destroy();
             this.isDisabled = true;
@@ -1036,9 +1115,8 @@ this.show_end_helper=false;
             this.caller_no=detail_id;
             this.dialpadIncomingCalls = dialpad_req;
             this.dialPadActionview = view_type;
-            // alert(detail_id);
             detail_id = btoa(detail_id); // Base64 encode the String
-            // alert(detail_id);
+
 
             api_req.operation = "call";
             api_req.moduleType = "call";
@@ -1049,69 +1127,10 @@ this.show_end_helper=false;
                 this.dialpadIncomingCalls = dialpad_req;
                 // $('#call_history_id').val(response.result.data);
                 // this.call_history_id = response.result.data;
-                var predective_dialer_behave = localStorage.getItem('predective_dialer_behave');
-                if(predective_dialer_behave == '0')
-                {
-                    var has_external_contact = localStorage.getItem('has_external_contact');
-
-                    if(has_external_contact == '0') {
-               this.router.navigate(['/edit-contacts'], { queryParams: { phone: detail_id , call_rec_id: this.call_history_id} });
-                    } else {                             
-                        var crm_type = localStorage.getItem('crm_type');
-                        if(crm_type == 'HubSpot'){
-                        var ext_url = localStorage.getItem('external_contact_url');
-                        let searchParams = new URLSearchParams(ext_url)
-                        let h_authkey = searchParams.get('hapikey');
-                        var decodedString = atob(detail_id );
-                      this.router.navigate(['/edit-contacts'], { queryParams: { q: decodedString , hapikey: h_authkey} });                   
-                       } else if(crm_type == 'ZohoDesk'){
-                        var ad = localStorage.getItem('admin_id');
-
-                        var ext_url = localStorage.getItem('external_contact_url');
-                        let searchParams = new URLSearchParams(ext_url)
-                        let Z_orgId = searchParams.get('orgId');
-                        let z_authkey = searchParams.get('authkey');
-
-                        var decodedString = atob(detail_id );
-                       this.router.navigate(['/edit-contacts'], { queryParams: { q: decodedString ,authkey: z_authkey,orgId: Z_orgId } });                
-                       }else if(crm_type == 'SalesForce'){
-                       this.router.navigate(['/edit-contacts'], { queryParams: { q: 'locale=in' } });                   
-                      } else {
-
-                       }
-                    }
-                   
-
-                } else {
-                    
-
-                    var has_external_contact = localStorage.getItem('has_external_contact');
-
-                    if(has_external_contact == '0') {
-                        this.router.navigate(['/predictive-dialer-calls'], { queryParams: { phone: detail_id , call_rec_id: this.call_history_id} });
-                    } else {
-                        var crm_type = localStorage.getItem('crm_type');
-                        if(crm_type == 'HubSpot'){
-                            var decodedString = atob(detail_id );
-                         this.router.navigate(['/edit-contacts'], { queryParams: { q: decodedString , hapikey: 'ed15f3fa-87c4-4169-a555-6bb845c257e9'} });                   
-                       } else if(crm_type == 'ZohoDesk'){
-                           var ad = localStorage.getItem('admin_id');
-                           var ext_url = localStorage.getItem('external_contact_url');
-                           let searchParams = new URLSearchParams(ext_url)
-                           let Z_orgId = searchParams.get('orgId');
-                           let z_authkey = searchParams.get('authkey');
-
-                           var decodedString = atob(detail_id );
-                           this.router.navigate(['/edit-contacts'], { queryParams: { q: decodedString ,authkey: z_authkey,orgId: Z_orgId } });    
-                                       
-                       }else if(crm_type == 'SalesForce'){
-                        this.router.navigate(['/edit-contacts'], { queryParams: { q: 'locale=in' } });                   
-                      } else {
-
-                       }
-                    }
-                }
-              
+              // this.router.navigate(['/edit-contacts'], { queryParams: { phone: detail_id,calltype: this.call_type} });
+               this.openModelPopup('');
+               let data=  {title: 'Incomming call from '+atob(detail_id)+'', notification_for: 'incomming_call', click_action: ' ', unique_id: ' ', sound: 'default', badge: '1', host_name: 'https://baobabgroup.mconnectapps.com'};
+              this.serverService.sendNotifications(data);
             }
     return false;
             this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1199,7 +1218,7 @@ this.show_end_helper=false;
     dialPadDetailView(view_type, detail_id) {
         this.isDisabled = false;
        this.showWrapUp =false;
- this.show_end_helper=false;
+    this.show_end_helper=false;
         if (detail_id == '' || detail_id == undefined) {
     
             detail_id = null;
@@ -1218,12 +1237,12 @@ this.show_end_helper=false;
                 $(".forwardDialpadPanel").addClass('hide-fwd-dialpad');
                 $(".forwardDialpadPanel").removeClass('active');
                 $(".forwardDialpadPanel").hide();
-                $('#makeCallForwordNumber').val('');
                 $(".forwardDialpadPanel2").addClass('hide-fwd-dialpad');
                 $(".forwardDialpadPanel2").removeClass('active');
                 $(".forwardDialpadPanel2").hide();
-                $('#peer_att').val('');
                 this.dtmf =false;
+                $('#makeCallForwordNumber').val('');
+                
                 this.forwordPopup = 'forwarded';
                 this.callDetailView = dialpad_req;
 
@@ -1243,9 +1262,8 @@ return false;
                 dialpad_req.user_id = detail_id;
             } else if (view_type == "outgoing_call_inprogess") {
                 this.isDisabled = true;
-this.showWrapUp=true;
-this.call_type='outgoing';
-
+                this.showWrapUp=true;
+                this.call_type='outgoing';
                 dialpad_req.call_data = "Calling to " + detail_id;
                 dialpad_req.customer_id = 0;
                 dialpad_req.call_type = "outgoing";
@@ -1270,10 +1288,15 @@ this.call_type='outgoing';
                 dialpad_req.phone = detail_id;
                 dialpad_req.call_status = "open";
                 dialpad_req.call_note = "";
+                this.call_type='incoming';
+
             } else if (view_type == "incoming_call_inprogess") {
                 dialpad_req.callid = detail_id;
                 this.in_current_call = view_type;
+                this.call_type='incoming';
+
             }
+
             api_req.operation = "call";
             api_req.moduleType = "call";
             api_req.api_type = "web";
@@ -1309,9 +1332,8 @@ this.call_type='outgoing';
                     } else if (view_type == "user_detail_view") {
                         this.userDetailView = response.result.data;
                     } else if (view_type == "outgoing_call_inprogess") {
-this.showWrapUp=true;
+                        this.showWrapUp=true;
 this.call_type='outgoing';
-
                         this.dialpadOutgoingCalls = dialpad_req;
                         $('#call_history_id').val(response.result.data);
                         this.call_history_id = response.result.data;
@@ -1461,16 +1483,16 @@ myqueues(){
 
 logoutClick(){
     // this.sendOnload('0','Omni Logout','');
-    // alert('Logoutt clikee')
+    // var socket_message  =  '[{"cust_id":"'+this.has_hard_id+'","data":[{"Name":"omnistatus","extension":"'+this.extension+'","status":"0"}]}]';
+    // this.websocket.send(socket_message);
 
-    var socket_message  =  '[{"cust_id":"'+this.has_hard_id+'","data":[{"Name":"omnistatus","extension":"'+this.extension+'","status":"0"}]}]';
-    this.websocket.send(socket_message);
-    // let access_token: any=localStorage.getItem('access_token');
-    // let api_req:any = '{"operation":"call", "moduleType":"call", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"in_login_logout","agent_id":"'+this.uadmin_id+'","reason":"Omni Logout","status":"0"}}';
+    let access_token: any=localStorage.getItem('access_token');
+    let api_req:any = '{"operation":"call", "moduleType":"call", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"in_login_logout","agent_id":"'+this.uadmin_id+'","reason":"Away","status":"0"}}';
   
     // this.serverService.sendServer(api_req).subscribe((response:any) => {
+
     //     // let api_reqs:any = '{"type": "profile"}';
-    //     // this.serverService.profile.next(api_reqs);Individual_status
+    //     // this.serverService.profile.next(api_reqs);
     //   if(response.result.status == true){
     //     // iziToast.success({
     //     //     message: "Logout successfully",
@@ -1491,17 +1513,15 @@ logoutClick(){
 
 updateQ(){
     let access_token: any=localStorage.getItem('access_token');
-
     $(".getallmyqueues").each(function() {
         $("#checkedAll").prop("checked", true);
     });
     $(".getallmyqueues").prop("checked", true);
-
     var queues = $('.getallmyqueues:checked').map(function(){
         return this.value;
     }).get();
 
-
+    
 
     if(queues ==''|| queues=='0' ){
         iziToast.warning({
@@ -1521,12 +1541,20 @@ updateQ(){
         return false;
     }
     this.sendOnload('0',que,queues);
-
+    Swal.fire({
+        html:
+            '<div style="display: flex;justify-content: center;"><div class="pong-loader"></div></div>',
+    showCloseButton: false,
+        showCancelButton: false,
+        showConfirmButton: false,
+        focusConfirm: false,
+        background: 'transparent'
+    });
 
     let api_req:any = '{"operation":"call", "moduleType":"call", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"in_login_logout","agent_id":"'+this.uadmin_id+'","reason":"'+que+'","status":"0"}}';
   
     this.serverService.sendServer(api_req).subscribe((response:any) => {
-
+Swal.close();
         // let api_reqs:any = '{"type": "profile"}';
         // this.serverService.profile.next(api_reqs);
 
@@ -1568,9 +1596,17 @@ loginQ(){
     let api_req:any = '{"operation":"call", "moduleType":"call", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"in_login_logout","agent_id":"'+this.uadmin_id+'","reason":"-","status":"1"}}';
     this.sendOnload('1',que,'');
     this.queLogStatus = '1';
-  
+    Swal.fire({
+        html:
+            '<div style="display: flex;justify-content: center;"><div class="pong-loader"></div></div>',
+    showCloseButton: false,
+        showCancelButton: false,
+        showConfirmButton: false,
+        focusConfirm: false,
+        background: 'transparent'
+    });
     this.serverService.sendServer(api_req).subscribe((response:any) => {
-
+Swal.close();
         // let api_reqs:any = '{"type": "profile"}';
         // this.serverService.profile.next(api_reqs);
         if(response.result.status == true){
@@ -1617,6 +1653,7 @@ openFullscreen(){
 $("#dialpad-wrapper").addClass("enable-fullscreen-dialpad");
 $(".card").addClass("none");
 $(".main-sidebar, .main-footer, .navbar, .card, .main-content").addClass("blur");
+
 
 }
 
@@ -1674,7 +1711,8 @@ sipRegistration(status){
     $(".forwardDialpadPanel").addClass('active');
     $(".forwardDialpadPanel").show();
     $(".forwardDialpadPanel").removeClass('hide-fwd-dialpad');
-    // To hide warm transfer
+    this.dialpadeContactsDropdown();
+ // To hide warm transfer
     $(".forwardDialpadPanel2").addClass('hide-fwd-dialpad');
     $(".forwardDialpadPanel2").hide();
     $(".forwardDialpadPanel2").removeClass('active');
@@ -1878,10 +1916,10 @@ makecallConference(){
       var dins = this.sip_login;
       if(this.dialPadActionview == 'incoming_call_inprogess'){
         var s = $('#call_incoming_number').val();
-            alert('Call From '+s+', to '+dins); 
+            // alert('Call From '+s+', to '+dins); 
       } else {
         var s = $('#outcall_number').val();
-            alert('Call From '+dins+', to '+s); 
+            // alert('Call From '+dins+', to '+s); 
       }
   }
   callConference(){
@@ -1893,7 +1931,8 @@ makecallConference(){
 shownotification(){
 
 }
-  public loadScript(url: string) {
+public loadScript(url: string) {
+    console.log('scriptCalled');
     const body = <HTMLDivElement> document.body;
     const script = document.createElement('script');
     script.innerHTML = '';
@@ -1957,6 +1996,7 @@ reconnect_janus(){
 queueStatus(){
     let access_token: any=localStorage.getItem('access_token');
 	// let que: any =  $('#que').val();  
+ 
     let api_req:any = '{"operation":"call", "moduleType":"call", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"queue_login_logout","user_id":"'+this.uadmin_id+'"}}';
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.data.status== "1"){
@@ -2045,13 +2085,23 @@ queueStatus2(){
         console.log(error);
     });
 }
+
 WrapUpUpdated(){
     let detail_id=btoa(this.caller_no);
 
-    this.router.navigate(['/edit-contacts'], { queryParams: { phone: detail_id , call_rec_id: this.call_history_id} });
+    this.router.navigate(['/edit-contacts'], { queryParams: {phone:detail_id, calltype:this.call_type} });
     this.showWrapUp=false;         
 }
-MrvoIPQueueStatus(){
+incomingNotification(id){
+    // alert(id)
+    let access_token: any=localStorage.getItem('access_token');
+	// let que: any =  $('#que').val();  
+    let api_req:any = '{"operation":"chat", "moduleType":"chat", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"send_notification","user_id":"'+this.loginUser+'","text":"Receiving New incoming call from '+id+'"}}';
+    this.serverService.sendServer(api_req).subscribe((response:any) => {
+
+    });
+}
+ MrvoIPQueueStatus(){
     let access_token: any=localStorage.getItem('access_token');
     let socketData = $('#MrvoIPQueueStatus').val(); 
     let mData = JSON.parse(socketData);    
@@ -2120,24 +2170,54 @@ if(Status == 0){
   
     this.serverService.sendServer(api_req).subscribe((response:any) => {
         this.dialpadUserList = response.result.data;
+        this.pushbridgeuser();
+        
     }, 
     (error)=>{
         console.log(error);
     });
   }
-  addtotransfer(){
-    //   alert();
-      let num =$('#add_to_transfer').val();
-    //   alert(num);
 
-$('#makeCallForwordNumber').val(num);
+  autosuggestAccName(){      
+    let acc_name = $("#makeCallForwordNumber").val();
+    const searchString = acc_name.toLowerCase();
+    console.log(this.dialpadUserList)
+    this.produitsFiltres=this.dialpadUserList.filter(item => {
+        return (
+            item.agent_name.toLowerCase().includes(searchString)
+        )
+    });
+console.log(this.produitsFiltres);
   }
+  
+  autosuggestAccName2(){
+      
+    let acc_name = $("#peer_att").val();
+    const searchString = acc_name.toLowerCase();
+     
+    this.atttransferList=this.dialpadUserList.filter(item => {
+        return (
+            item.agent_name.toLowerCase().includes(searchString)
+        )
+    });
+console.log(this.atttransferList);
+  }
+
+  addtotransfer(){
+    //   alert('');
+      let num =$('#cities').val();
+      const myArr = num.split("-");
+    //   alert(myArr);
+    console.log(myArr);
+    $('#makeCallForwordNumber').val(myArr[1]);
+  }
+
+
   adransfer(){
     //   alert();
       let num =$('#add_tansfer').val();
     //   alert(num);
-
-$('#peer_att').val(num);
+    $('#peer_att').val(num);
   }
   copynumber(to){
     Swal.fire({
@@ -2155,13 +2235,28 @@ $('#peer_att').val(num);
         }
       });
 }
+openModelPopup(link) {
 
-Callforword2(type){
+    var queue_num = $('#queue_ids').val();
+
+    let api_reqtest:any = '{"type": "hidepopupdialer"}';
+    this.serverService.show.next(api_reqtest);
+
+   this.modalService.dismissAll(EditContactsComponent);
+    const modalRef = this.modalService.open(EditContactsComponent);
+    modalRef.componentInstance.src = link;
+    let api_reqs:any = '{"type": "show_popup", "caller_no": "'+this.caller_no+'","call_type":"'+this.call_type+'","queue_num":"'+queue_num+'","show_buttons":"true"}';
+    console.log(api_reqs);
+    this.serverService.editContact.next(api_reqs);
+    this.show_minimize_button = false;
+  }
+  Callforword2(type){
     if(type == 'dtmf'){
         this.dtmf2 = true;
     } else {
         this.dtmf2 = false;
     }
+    this.dialpadeContactsDropdown();
     $(".forwardDialpadPanel2").addClass('active');
     $(".forwardDialpadPanel2").show();
     $(".forwardDialpadPanel2").removeClass('hide-fwd-dialpad');
@@ -2210,7 +2305,7 @@ addHelp(){
 
 endCallTransfer(){
     this.show_end_helper=false;
-    endHeplCall()
+    endHeplCall();
 }
 makecallTransferDemo(){
     this.show_end_helper=false;
@@ -2220,4 +2315,81 @@ makecallTransferDemo(){
      $(".forwardDialpadPanel2").removeClass('active');
      $(".forwardDialpadPanel2").hide();
 }
+pushbridgeuser(){
+    let api_req:any = '{"operation":"ticket", "moduleType":"ticket", "api_type": "web","element_data":{"action":"view_bridge_users","admin_id":"'+this.admin_id+'"}}';
+  
+    this.serverService.sendServer(api_req).subscribe((response:any) => {
+        // console.log(this.dialpadUserList)
+        let bridge_users=response.agents;
+        // let data=JSON.parse(Zoho_users); 
+        // this.Zoho_users=data.users;  
+        // console.log(bridge_users);
+        // this.dialpadUserList =this.dialpadUserList.push(bridge_users);
+        for (let obj of bridge_users ){
+            for (let obj2 of obj ){
+            this.dialpadUserList.push(obj2);
+            }
+        }
+        this.dialpadUserList.sort(function(a, b) { return a.sip_login - b.sip_login; })
+
+        // setTimeout(() => {
+        //     this.dialpadUserList =  this.dialpadUserList.sort(function(a,b){
+        //         return a.sip_login >b.sip_login?1:a.sip_login <b.sip_login?-1:0;
+        //        })
+        // }, 1000);
+        
+        // console.log(this.dialpadUserList);
+
+        // let result = [this.dialpadUserList,bridge_users].reduce((a, b) => a.map((c, i) => Object.assign({}, c, b[i])));
+        // console.log(result)
+    }, 
+    (error)=>{
+        console.log(error);
+    });
+}
+addWrapupcode(call_type,aux_code,cat_id,call_note,from_no,to_no,wrap,contact_id) {  
+    let wrapcall_id = $('#wrapup_callID').val();
+
+var queue_num = $('#queue_ids').val();  
+    let api_req: any = new Object;
+    let conct_req: any = new Object();
+
+    api_req.operation = "contact";
+    api_req.moduleType = "contact";
+    api_req.api_type = "web";
+    api_req.access_token = localStorage.getItem('access_token');
+
+    conct_req.from_no = from_no;
+    conct_req.to_no = to_no;
+    conct_req.type = call_type;
+    conct_req.aux_code = aux_code;
+    conct_req.cat_id = cat_id;
+    conct_req.call_note = call_note;
+    conct_req.call_queue_num = queue_num;
+    conct_req.call_id_3cx = wrapcall_id;
+    conct_req.user_id = this.uadmin_id;
+    api_req.element_data = conct_req;
+   api_req.element_data.admin_id = this.admin_id;
+   api_req.element_data.contact_id =contact_id;
+    api_req.element_data.action = "add_auxcode_wall";
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+     
+      if (response.status == false) {
+
+      }
+    },
+      (error) => {
+        console.log(error);
+      });
+    var socket_message = '[{"cust_id":"' + this.has_hard_id + '","data":[{"Name":"wrapupcode","callid":"' + wrapcall_id + '","wcode":"' + wrap + '","wcodenote":"' + call_note + '","extno":"' + this.extension + '"}]}]';
+    this.websocket.send(socket_message);
+    $('.settingSidebar').removeClass('showSettingPanel');
+    iziToast.success({
+      message: "Wrapup Code Added successfully",
+      position: "topRight"
+    });
+    $('#auxcodes_pop').val('');
+    $('#auxcodes_subcat').val('');
+    $('#notes').val('');
+  }
 }

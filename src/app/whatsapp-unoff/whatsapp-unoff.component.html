@@ -162,9 +162,9 @@
      <!-- <form id="chat-form"> -->
        <textarea class="form-control" id="chat_msg" placeholder="Press 'Shift+Enter' to next line and 'Enter' to send" style="height: 50px;" (keydown)="onMessageSend($event)"  #chat_message></textarea>
        <input type="hidden" name="chat_id" id="chat_detail_id" value="{{chat_detail_key}}" #chat_detail_id>
-       <input type="hidden" name="whatsapp_media_url" id="whatsapp_media_url_voice" >
-       <input type="hidden"  id="hit_image" (click)="sendChatMediaData()">
        <input type="hidden" name="whatsapp_media_url" id="whatsapp_media_url" >
+       <input type="hidden"  id="hit_image" (click)="sendChatMediaData()">
+       <input type="hidden" name="whatsapp_media_url" id="media_voice" >
        <input type="hidden"  id="hit_image_voice" (click)="sendvoiceMediaData()">
        <button type="button" class="btn btn-primary" (click)="template()" style="right: 85px;" >
         <i class="fas fa-fill-drip"></i>

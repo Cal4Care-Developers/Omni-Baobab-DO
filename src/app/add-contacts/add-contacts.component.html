@@ -27,8 +27,9 @@
 									</div>
 								</div>
 								<div class="col-md-6">
-									<div class="form-group">
-										<label for="contact_owner">First Name</label>
+									<div class="form-group required ">
+										<label for="contact_owner">First Name <span style="color:#ff0000">*</span></label> 
+										
 										<div class="input-group">
 											<span class="input-group-addon">
 												<select name="sal" id="sal" class="form-control" >
@@ -51,8 +52,12 @@
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="email">Email Address</label>
+										
+										<label for="email">Email Address <span style="color:#ff0000">*</span></label>
+										
 										<input type="text" id="email"  class="form-control" formControlName="email" >
+										<label class="error-message message-small" *ngIf="!addContact.get('email').valid && addContact.get('email').touched ">Please enter the valid email id</label>
+										
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -83,7 +88,8 @@
 									<div class="form-group">
 
 									<div class="input-group">
-										<label for="phone"><b>Mobile Phone# </b></label>
+										<label for="phone"><b>Mobile Phone </b><span style="color:#ff0000">*</span></label>
+										
 										<span class="input-group-addon">
 										  <input type="country" id="country_code" class="form-control" placeholder="country code" formControlName="country_code" >
 										</span>
@@ -95,6 +101,21 @@
 								</div>
 								<!-- <div class="col-md-6">
 									<div class="form-group">
+
+									<div class="input-group">
+										<label for="phone"><b>Mobile Phone </b></label>
+										<span style="color:#ff0000">*</span>
+										<span class="input-group-addon">
+										  <input type="country" id="country_code" class="form-control" placeholder="country code" formControlName="country_code" >
+										</span>
+										<input type="text" id="phone" class="form-control" formControlName="phone"  >
+									</div>
+									<p>While adding an extension, the country code may be '0'</p>
+									 <label class="error-message message-small" *ngIf="!addContact.get('phone').valid && addContact.get('phone').touched ">Please enter the valid phone number</label> -->
+									<!-- </div>
+								</div>  -->
+								<!-- <div class="col-md-6">
+									<div class="form-group">
 										<label for="phone">Mobile Phone# </label>
 										<input type="text" id="phone"  class="form-control" formControlName="phone" >
 									</div>
@@ -102,7 +123,7 @@
 								
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="mobile">Other Phone #</label>
+										<label for="mobile">Other Phone </label>
 										<input type="text" id="mobile"  class="form-control" formControlName="mobile" >
 									</div>
 								</div>

@@ -7,7 +7,7 @@
                   
                 </div>
                 <div class="card-body p-30">
-                <form [formGroup]="getRep" (ngSubmit)="getReports()">
+                <form [formGroup]="getdate" (ngSubmit)="getcustom_report()">
                     <div class="row">
                         
                         <!-- <div class="col-md-6">
@@ -60,7 +60,7 @@
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table class="table table-striped table-md">
+                        <table class="table table-striped table-md" *ngIf="this.customize !=''">
                             <tr>
                                 <td colspan="12" class="search-text-tbl">
                                     <div class="input-group"><input type="text" class="form-control" (keyup.enter)="callHistoryList({'search_text':call_history_search.value})" #call_history_search>
@@ -79,158 +79,158 @@
                                 <th>Messenger </th>
                                 <th>Email</th>
                             </tr>
-                            <tr>
+                            <tr *ngIf="show_table == true">
                                 <td>Interactions received during opening hours</td>
-                                <td></td>
+                                <td>{{this.customize}}</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>
 
-                            <tr>
+                            <tr *ngIf="show_table">
                                 <td>Interactions received outside opening hours </td>
-                                <td></td>
+                                <td>{{this.off_time}}</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 </tr>
 
-                                <tr>
+                                <tr *ngIf="show_table">
                                 <td>Handled inbound interactions</td>
-                                <td></td>
+                                <td>{{this.total_answer}}</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 </tr>
 
-                                <tr>
+                                <tr *ngIf="show_table">
                                 <td>Issued calls </td>
                                 <td></td>
-                                <td></td>
+                                <td>{{this.total_missed_call}}</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                    </tr>
                                    
-                                   <tr>
+                                   <tr *ngIf="show_table">
                                 <td>Completed calls </td>
                                 <td></td>
-                                <td></td>
+                                <td>{{this.completed_calls}}</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 </tr>
 
-                                <tr>
+                                <!-- <tr *ngIf="show_table">
                                 <td>Argumentative calls</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                </tr>
+                                </tr> -->
 
-                                <tr>
+                                <tr *ngIf="show_table">
                                 <td>Tel Quality of Service (QS) </td>
-                                <td></td>
+                                <td>{{this.qulity_service}}</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 </tr>
 
-                                <tr>
+                                <tr *ngIf="show_table">
                                 <td>Tel Service Level</td>
-                                <td></td>
+                                <td>{{this.sla_per}}</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 </tr>
 
-                                <tr>
+                                <!-- <tr *ngIf="show_table">
                                 <td>1rst response time </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                </tr>
+                                </tr> -->
 
-                                <tr>
+                                <tr *ngIf="show_table">
                                 <td>Average waiting time before response </td>
-                                <td></td>
+                                <td>{{this.avg_waiting_time}}</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 </tr>
 
-                                <tr>
+                                <!-- <tr *ngIf="show_table">
                                 <td>Average time for 1st answer</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                </tr>
+                                </tr> -->
 
-                                <tr>
+                                <tr *ngIf="show_table">
                                 <td>% Argumentative calls Rate </td>
                                 <td></td>
-                                <td></td>
+                                <td>{{this.call_rate}}</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 </tr>
 
-                                <tr>
+                                <!-- <tr *ngIf="show_table">
                                 <td>Claims processing </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                </tr>
+                                </tr> -->
 
-                                <tr>
+                                <!-- <tr *ngIf="show_table">
                                 <td>Nb of cases created </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                </tr>
+                                </tr> -->
 
-                                <tr>
+                                <tr *ngIf="show_table">
                                 <td>Average Talk Time Inbound </td>
-                                <td></td>
+                                <td>{{this.avg_takl_time}}</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 </tr>
 
-                                <tr>
+                                <tr *ngIf="show_table">
                                 <td>Average Talk Time Outbound </td>
                                 <td></td>
-                                <td></td>
+                                <td>{{this.avg_out_talk_time}}</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 </tr>
 
-                                <tr>
+                                <!-- <tr *ngIf="show_table">
                                 <td>Phone Average Handling Time (AHT)</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                </tr>
+                                </tr> -->
                                
                             <!-- </tr>   -->
                       

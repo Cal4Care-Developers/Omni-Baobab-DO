@@ -74,6 +74,7 @@
               "src/assets/spin.min.js",
               "src/assets/bootbox.min.js",
               "src/assets/toastr.min.js"
+             
             ]
           },
           "configurations": {

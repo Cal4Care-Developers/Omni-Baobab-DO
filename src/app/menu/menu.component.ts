@@ -93,6 +93,9 @@ h_call_rec; wall_basic; h_que_manage;
   agent_name;
   stop_interval;
   has_admin_permission=false;
+  loginUser;
+  wp_unoff=false;
+  instance_value;i_id;
   // listinstacne;
   constructor(public router: Router, private _ngZone: NgZone, private serverService: ServerService, private afMessaging: AngularFireMessaging, private bnIdle: BnNgIdleService) {
     this.serverService.profile.subscribe((val: any) => {
@@ -124,7 +127,7 @@ h_call_rec; wall_basic; h_que_manage;
 
 
    requestPermission(){
-    this.serverService.requestPermission();
+   // this.serverService.requestPermission();
 
     if(localStorage.getItem('N_token') == "undefined"){
       this.reqPermission = true;
@@ -176,6 +179,7 @@ h_call_rec; wall_basic; h_que_manage;
       }
       this.uadmin_id = localStorage.getItem('userId');
       this.admin_id = localStorage.getItem('admin_id');
+      this.loginUser = localStorage.getItem('userId');
       this.admin_reports = localStorage.getItem('has_reports');
       this.predective_dialer_behave = localStorage.getItem('predective_dialer_behave');
 
@@ -1114,11 +1118,11 @@ showVideofialers(){
     var self = this;
     socket.on('connect', function () {
       console.log('connected');
-
+//alert('connected')
       socket.on('broadcast', function (data) {
         console.log(data);
-
-        if (data.notification_for == 'SMS') {
+//alert(data)
+        if (data.notification_for == 'SMS' || data.notification_for == 'fb' || data.notification_for == 'whatsapp_unoff') {
           
           let nameArr = data.user_id;
           nameArr.push(localStorage.getItem('admin_id'));
@@ -1134,7 +1138,6 @@ showVideofialers(){
 
         } else {
           if (data.user_id == localStorage.getItem('userId')) {
-
             self.serverService.sendNotifications(data);
             self.serverService.receivePopup(data);
           }
@@ -1157,7 +1160,26 @@ showVideofialers(){
 
 
   }
+  getadmininstance(){
+    let access_token: any=localStorage.getItem('access_token');
+  
+    let api_req:any = '{"operation":"wp_instance", "moduleType": "wp_instance", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"getInstanceDetailsForAdmin","user_id":"'+this.loginUser+'","user_type":"'+this.user_type+'"}}';
+  
+    this.serverService.sendServer(api_req).subscribe((response:any) => {
+      if(response.status==true){
+        if(response.result.data.length)
+        this.instance_value = response.result.data[0].wp_inst_id;
+      
+     
+        // this.routedept=response.result.data.dept;
+        
 
+      } 
+    }, 
+    (error)=>{
+        console.log(error);
+    });
+  }
 
 
   //   sendNotifications(postData) {
@@ -1177,6 +1199,62 @@ showVideofialers(){
   //     }
 
   // }
+  viewMC(mc_block){
 
+    if(mc_block == "mail_view"){
+      // this.mailPageView = true;
+      // this.chatPageView = false;
+      // this.smsPageView = false;
+      this.router.navigate(['/ticketing-system-new']);
+    }
+    if(mc_block == "chat_view"){
+      // this.chatPageView = true;
+      // this.mailPageView = false;
+      // this.smsPageView = false;
+
+      this.router.navigate(['/chat']);
+    }
+    if(mc_block == "sms_view"){
+      // this.chatPageView = false;
+      // this.mailPageView = false;
+      // this.smsPageView = true;
+      this.router.navigate(['/sms']);
+    }
+    if(mc_block == "wp_view"){
+      // this.chatPageView = false;
+      // this.mailPageView = false;
+      // this.smsPageView = true;
+      if(this.wp_unoff){
+         this.i_id= btoa(this.instance_value);
+      this.router.navigate(['/wp-unoff'],{ queryParams: { wp_id: this.i_id} });
+      }else{
+        this.router.navigate(['/wp-chat']);
+      }
+    }
+    if(mc_block == "fb_view"){
+      // this.chatPageView = false;
+      // this.mailPageView = false;
+      // this.smsPageView = true;
+      this.router.navigate(['/fb-chat']);
+    } 
+    if(mc_block == "line_view"){
+      // this.chatPageView = false;
+      // this.mailPageView = false;
+      // this.smsPageView = true;
+      this.router.navigate(['/line-chat']);
+    }
+    if(mc_block == "tele_view"){
+      // this.chatPageView = false;
+      // this.mailPageView = false;
+      // this.smsPageView = true;
+      this.router.navigate(['/tele-chat']);
+    }if(mc_block == "internal_chat"){
+      // this.chatPageView = false;
+      // this.mailPageView = false;
+      // this.smsPageView = true;
+      this.router.navigate(['/internal-chat']);
+    }
+
+}
 
 }

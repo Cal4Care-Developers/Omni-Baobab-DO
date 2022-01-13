@@ -734,81 +734,115 @@
 	</div>
 </div>
 
-<div class="settingSidebar" >
-          <a href="javascript:void(0)" class="settingPanelToggle" (click)="toggleClass()"> 
-          	<span class="plus-icon"><i class="fas fa-plus" style="margin: 0px;"></i></span>
-          	<span class="minus-icon"><i class="fas fa-minus" style="margin: 0px;"></i></span>
-	   </a>
-	   
-       <div class="settingSidebar-body ps-container ps-theme-default">
-       	<form [formGroup]="editContact" (ngSubmit)="updateContact(this.contact_id)"> 
-       	<div class=" fade show active">
-       		<div class="setting-panel-header">Questions
-       		</div>
-       		<div class="p-15">
+<div class="settingSidebar">
+	<a href="javascript:void(0)" class="settingPanelToggle" (click)="toggleClass()">
+		<span title="Add Wrapup Code" class="plus-icon"><i class="fas fa-plus" style="margin: 0px;"></i></span>
+		<span class="minus-icon"><i class="fas fa-minus" style="margin: 0px;"></i></span>
+	</a>
 
-       			<div class="row">
-       				<div class="col-md-12" *ngFor="let item of questions">
+	<div class="settingSidebar-body ps-container ps-theme-default">
+		<form>
+			<div class=" fade show active">
+				<button *ngIf="this.no_contact==true" class="btn btn-primary" (click)="AddContact()"
+					style="float: right;margin: 9px 20px 0px 0px;"> Add Contact</button>
+
+				<div class="setting-panel-header">Wrapup Code
+
+
+				</div>
+				<div class="p-15">
+
+					<div class="row">
+						<!-- <div class="col-md-12" *ngFor="let item of questions">
        					<div class="form-group">
        						<label for="department">Question</label>
        						<p>{{item.question}}</p>
        					</div>	
-       				</div>
-       				<div class="col-md-12">
-       					<div class="form-group">
-       						<label for="department">Wrap Up code</label>
-       						<select name="auxcodes"  id="auxcodes_pop" class="form-control">
-       							<option value='0'> Select Wrap Up Code </option>
-       							<option *ngFor="let auxcode of auxcodes" value="{{auxcode.auxcode_name}}">{{auxcode.auxcode_name}}</option>
-       						</select>
-       					</div>	
-       				</div>
-       				<div class="col-md-12">
-       					<div class="form-group">
-       						<label for="notes">Notes <i class="far fa-edit"></i></label>
-       						<textarea id="notes" class="form-control" formControlName="notes"></textarea>
-       					</div>
-       				</div>
-
-
-       				<!-- <div class="col-md-12">
-						   <h4 >Record Voice</h4><br>
-						   <p> For now it is supported only in Firefox(v25+) and Chrome(v47+)</p> 
-						   <button *ngIf="allowMp" type="button" (click)="tesr()" class="btn btn-success" >Allow Microphone</button>
-       					<div id='gUMArea' style="display:none">
-       						<div>
-       							Record:
-       							<input type="radio" name="media" value="video" checked id='mediaVideo'>Video
-       							<input type="radio" name="media" value="audio">audio
-       						</div>
-       						<button class="btn btn-default"  id='gUMbtn'>Request Stream</button>
-						   </div>
-						   <div >
-							<div id='btns' style="display: none;">
-								<button type="button" onclick="mediStart()" class="btn btn-success" id='start'>Start</button>
-								<button type="button" onclick="mediStop()"  class="btn btn-error" id='stop'>Stop</button>
+       				</div> -->
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="department">Wrap Up Category</label>
+								<select (change)="getAuxCode()" name="auxcodes" id="auxcodes_pop" class="form-control">
+									<option value='0'> Select Category </option>
+									<option *ngFor="let auxcode of auxcode_catagory" value="{{auxcode.id}}">
+										{{auxcode.category_name}}</option>
+								</select>
 							</div>
-						   </div>
-       					
-       					<div>
-       						<ul class="list-unstyled" id='ul'></ul>
-       					</div>
-					   </div> -->
-
-					   <div class="col-md-12">
-						<div class="buttons form-group">
-							<input type="button" class="btn btn-secondary" value="Close" type="button" (click)="closeQuestion()">
-							<input type="button" class="btn btn-primary" value="Save Changes" type="submit">
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="department">Wrap Up Code</label>
+								<select name="auxcodes" id="auxcodes_subcat" class="form-control">
+									<option value='0'> Select Wrapup Code </option>
+									<option *ngFor="let auxcode of auxcodes" value="{{auxcode.auxcode_name}}">
+										{{auxcode.auxcode_name}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="notes">Notes <i class="far fa-edit"></i></label>
+								<textarea id="notes" class="form-control"></textarea>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="buttons form-group">
+								<input type="button" class="btn btn-secondary" (click)="toggleClass()" value="Close"
+									type="button">
+								<input type="button" class="btn btn-primary" value="Update Wrapup"
+									(click)="addWrapupcode()">
+							</div>
 						</div>
 					</div>
-       			</div>
-       		</div>       		
-       	</div>
-       	 </form>
-	   </div>
-	  
-   </div>
+				</div>
+			</div>
+		</form>
 
+		<div class="dialer-call-action">
+			<div class="row">
+				<!-- <div class="col-md-12" *ngIf="show_ans">
+					<div class="pulse call-attend-btn" (click)="acceptIncomeCall()">
+						<a href="javascript:;" class="btn btn-success">
+							<img src="assets/images/custom-wallboard/call-answered.svg" height="18"
+								class="mr-2 shake-animation"> Answer Call from {{get_dailer_value}}</a>
+					</div>
+				</div>
+				<div class="col-md-6" (click)="closeModelPopup()" *ngIf="show_mini_butons">
+					<a href="javascript:;" class="btn btn-warning fl"><i class="far fa-window-maximize"></i>
+						Minimize</a>
+				</div>
+				<div class="col-md-6" (click)="declineIncomeCall()" *ngIf="show_del">
+					<a href="javascript:;" class="btn btn-danger fl"><i class="fas fa-phone-slash"></i> Decline</a> -->
+				<div class="col-md-12 d-flex justify-content-center" *ngIf="show_ans">
+					<h6>Incoming Call from {{get_dailer_value}}</h6>
+				</div>
+			</div>
+			<br />
+			<div class="row">
+				<div class="col-md-4 d-flex justify-content-center" *ngIf="show_ans">
+					<div class="call-attend-btn" (click)="acceptIncomeCall()">
+						<a href="javascript:;" class="pulse btn btn-success">
+							<i class="fas fa-phone shake-animation"></i>
+							<span class="btn-action-text">Answer</span></a>
+						<!-- <span class="btn-action-text">Answer Call from {{get_dailer_value}}</span></a> -->
+					</div>
+				</div>
+				<div class="col-md-4 d-flex justify-content-center" (click)="declineIncomeCall()" *ngIf="show_del">
+					<a href="javascript:;" class="btn btn-danger fl"><i class="fas fa-phone-slash"></i>
+						<span class="btn-action-text">Decline</span> </a>
+				</div>
+				<div class="col-md-4 d-flex justify-content-center" (click)="closeModelPopup()"
+					*ngIf="show_mini_butons">
+					<a href="javascript:;" class="btn btn-warning fl"><i class="far fa-window-maximize"></i>
+						<span class="btn-action-text">Minimize </span></a>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
+</div>
 
 
 

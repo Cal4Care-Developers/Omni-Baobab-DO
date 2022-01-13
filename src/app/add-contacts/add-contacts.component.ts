@@ -19,7 +19,7 @@ export class AddContactsComponent implements OnInit {
 
   ngOnInit() {
     this.addContact = new FormGroup({
-      'contact_owner' :new FormControl(null,Validators.required),
+      'contact_owner' :new FormControl(null),
       'first_name' :new FormControl(null),
       'last_name' :new FormControl(null),
       'account_name' :new FormControl(null),
@@ -29,7 +29,7 @@ export class AddContactsComponent implements OnInit {
         Validators.required,
         Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
       'activity' :new FormControl(null),
-      'phone' :new FormControl(null,Validators.required),
+      'phone' :new FormControl(null),
       'home_phone' :new FormControl(null),
       'office_phone' :new FormControl(null),
       'fax' :new FormControl(null),
