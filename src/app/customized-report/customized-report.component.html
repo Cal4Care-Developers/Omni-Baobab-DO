@@ -79,13 +79,18 @@
                                 <th>Messenger </th>
                                 <th>Email</th>
                             </tr>
+                            <tr *ngIf="show_table == false">
+                                <td></td>
+                                <td></td>
+                                <td>Data Not Found</td>
+                            </tr>
                             <tr *ngIf="show_table == true">
                                 <td>Interactions received during opening hours</td>
                                 <td>{{this.customize}}</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
+                                <td>{{this.total_tickets}}</td>
                             </tr>
 
                             <tr *ngIf="show_table">
@@ -103,7 +108,7 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
+                                <td>{{this.incoming_tickets}}</td>
                                 </tr>
 
                                 <tr *ngIf="show_table">
@@ -151,14 +156,14 @@
                                 <td></td>
                                 </tr>
 
-                                <!-- <tr *ngIf="show_table">
+                                <tr *ngIf="show_table">
                                 <td>1rst response time </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                                </tr> -->
+                                <td>{{this.first_responce_time}} hrs</td>
+                                </tr>
 
                                 <tr *ngIf="show_table">
                                 <td>Average waiting time before response </td>
@@ -169,14 +174,14 @@
                                 <td></td>
                                 </tr>
 
-                                <!-- <tr *ngIf="show_table">
+                                <tr *ngIf="show_table">
                                 <td>Average time for 1st answer</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                                </tr> -->
+                                <td>{{this.email_ticket_average}}</td>
+                                </tr>
 
                                 <tr *ngIf="show_table">
                                 <td>% Argumentative calls Rate </td>

@@ -204,7 +204,7 @@ this.reqPermission = true;
 }
     
   
-    this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4023"); 
+    this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4004"); 
 
     this.websocket.onopen = function(event) { 
         console.log('common socket connected');

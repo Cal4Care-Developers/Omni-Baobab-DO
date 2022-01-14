@@ -1276,7 +1276,15 @@ addWhatsappVoice(){
    
     $('#whatsapp_media').val('');
   $('#hit_image_voice').click();
+  if(responsenew.status=='true'){
+    iziToast.success({
+      message:'Sent Successfully',
+      position:'topRight'
   });
+}
+  
+});
+
 
  
   
@@ -1411,6 +1419,12 @@ sendvoiceMediaData(){
               //  this.chatPanelDetail(this.chat_detail_id.nativeElement.value);
                this.chatPanelDetail(this.chat_detail_key);
                $('#chat_msg').val('');
+               // $('#chat_msg').val('');
+              this.media_voice.val('');
+              iziToast.success({
+               message:'Sent Successfully',
+               position:'topRight'
+              });
             }
             else{
               this.validateQR();

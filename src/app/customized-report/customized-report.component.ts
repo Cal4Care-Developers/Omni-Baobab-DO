@@ -21,6 +21,11 @@ export class CustomizedReportComponent implements OnInit {
   avg_takl_time: any;
   avg_out_talk_time: any;
   show_table = false;
+  total_tickets: any;
+  first_responce_time: any;
+  email_ticket_average: any;
+  incoming_tickets: any;
+  not_found = false;
   constructor(private serverService: ServerService) { }
 
   ngOnInit(): void {
@@ -28,7 +33,7 @@ export class CustomizedReportComponent implements OnInit {
     this.getdate = new FormGroup({
       'from_date' : new FormControl(null),
     })
-    
+    this.not_found = true;
   }
   getReports(){
     this.access_token = localStorage.getItem('access_token');
@@ -47,6 +52,10 @@ export class CustomizedReportComponent implements OnInit {
         this.call_rate = response.result.data.call_rate;
         this.avg_takl_time = response.result.data.avg_takl_time;
         this.avg_out_talk_time = response.result.data.avg_out_talk_time;
+        this.total_tickets = response.result.data.total_tickets
+        this.first_responce_time = response.result.data.first_responce_time;
+        this.email_ticket_average = response.result.data.email_ticket_average;
+        this.incoming_tickets = response.result.data.incoming_tickets;
 		  } else {
 		  }
 		}, 
