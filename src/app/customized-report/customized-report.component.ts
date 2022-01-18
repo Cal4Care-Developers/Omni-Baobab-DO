@@ -26,6 +26,12 @@ export class CustomizedReportComponent implements OnInit {
   email_ticket_average: any;
   incoming_tickets: any;
   not_found = false;
+  hide_hrs: boolean;
+  tot_out_office_time_wp: any;
+  total_wp_msg: any;
+  first_responce_wp: any;
+  avg_wp_first_ans: any;
+  tot_office_wp: any;
   constructor(private serverService: ServerService) { }
 
   ngOnInit(): void {
@@ -52,8 +58,23 @@ export class CustomizedReportComponent implements OnInit {
         this.call_rate = response.result.data.call_rate;
         this.avg_takl_time = response.result.data.avg_takl_time;
         this.avg_out_talk_time = response.result.data.avg_out_talk_time;
-        this.total_tickets = response.result.data.total_tickets
+        this.total_tickets = response.result.data.total_tickets;
+        this.tot_out_office_time_wp = response.result.data.out_off_time;
+        this.total_wp_msg = response.result.data.one_day_total_whatsapp;
+        if(response.result.data.first_responce_wp == '' || response.result.data.first_responce_wp == null || response.result.data.first_responce_wp == undefined){
+          this.hide_hrs = false;
+        }else{
+          this.hide_hrs = true;
+          this.first_responce_wp = response.result.data.first_responce_wp;
+        }
+        this.avg_wp_first_ans = response.result.data.avg_wp_first_ans;
+        this.tot_office_wp = response.result.data.office_time_whatsapp_msg;
+        if(response.result.data.first_responce_time == '' || response.result.data.first_responce_time == null || response.result.data.first_responce_time == undefined){
+          this.hide_hrs = false;
+        }else{
+          this.hide_hrs = true;
         this.first_responce_time = response.result.data.first_responce_time;
+        }
         this.email_ticket_average = response.result.data.email_ticket_average;
         this.incoming_tickets = response.result.data.incoming_tickets;
 		  } else {

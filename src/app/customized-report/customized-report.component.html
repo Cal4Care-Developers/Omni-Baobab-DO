@@ -76,7 +76,7 @@
                                 <th>Phone inbound </th>
                                 <th>Phone outbound</th>
                                 <th>Whatsapp </th>
-                                <th>Messenger </th>
+                                <!-- <th>Messenger </th> -->
                                 <th>Email</th>
                             </tr>
                             <tr *ngIf="show_table == false">
@@ -88,8 +88,8 @@
                                 <td>Interactions received during opening hours</td>
                                 <td>{{this.customize}}</td>
                                 <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{this.tot_office_wp}}</td>
+                                <!-- <td></td> -->
                                 <td>{{this.total_tickets}}</td>
                             </tr>
 
@@ -97,8 +97,8 @@
                                 <td>Interactions received outside opening hours </td>
                                 <td>{{this.off_time}}</td>
                                 <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{this.tot_out_office_time_wp}}</td>
+                                <!-- <td></td> -->
                                 <td></td>
                                 </tr>
 
@@ -106,8 +106,8 @@
                                 <td>Handled inbound interactions</td>
                                 <td>{{this.total_answer}}</td>
                                 <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{this.total_wp_msg}}</td>
+                                <!-- <td></td> -->
                                 <td>{{this.incoming_tickets}}</td>
                                 </tr>
 
@@ -116,7 +116,7 @@
                                 <td></td>
                                 <td>{{this.total_missed_call}}</td>
                                 <td></td>
-                                <td></td>
+                                <!-- <td></td> -->
                                 <td></td>
                                    </tr>
                                    
@@ -125,7 +125,7 @@
                                 <td></td>
                                 <td>{{this.completed_calls}}</td>
                                 <td></td>
-                                <td></td>
+                                <!-- <td></td> -->
                                 <td></td>
                                 </tr>
 
@@ -143,7 +143,7 @@
                                 <td>{{this.qulity_service}}</td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
+                                <!-- <td></td> -->
                                 <td></td>
                                 </tr>
 
@@ -152,7 +152,7 @@
                                 <td>{{this.sla_per}}</td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
+                                <!-- <td></td> -->
                                 <td></td>
                                 </tr>
 
@@ -160,9 +160,9 @@
                                 <td>1rst response time </td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>{{this.first_responce_time}} hrs</td>
+                                <td *ngIf="hide_hrs">{{this.first_responce_wp}} hrs</td>
+                                <!-- <td></td> -->
+                                <td *ngIf="hide_hrs">{{this.first_responce_time}} hrs</td>
                                 </tr>
 
                                 <tr *ngIf="show_table">
@@ -170,7 +170,7 @@
                                 <td>{{this.avg_waiting_time}}</td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
+                                <!-- <td></td> -->
                                 <td></td>
                                 </tr>
 
@@ -178,8 +178,8 @@
                                 <td>Average time for 1st answer</td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{this.avg_wp_first_ans}}</td>
+                                <!-- <td></td> -->
                                 <td>{{this.email_ticket_average}}</td>
                                 </tr>
 
@@ -188,7 +188,7 @@
                                 <td></td>
                                 <td>{{this.call_rate}}</td>
                                 <td></td>
-                                <td></td>
+                                <!-- <td></td> -->
                                 <td></td>
                                 </tr>
 
@@ -215,7 +215,7 @@
                                 <td>{{this.avg_takl_time}}</td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
+                                <!-- <td></td> -->
                                 <td></td>
                                 </tr>
 
@@ -224,7 +224,7 @@
                                 <td></td>
                                 <td>{{this.avg_out_talk_time}}</td>
                                 <td></td>
-                                <td></td>
+                                <!-- <td></td> -->
                                 <td></td>
                                 </tr>
 
