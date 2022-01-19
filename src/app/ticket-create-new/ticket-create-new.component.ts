@@ -38,6 +38,7 @@ export class TicketCreateNewComponent implements OnInit {
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   collobrators: Collobrator[] = [ ];
   EmailToAddress: EmailAddress[] = [ ];
+  email: any;
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
@@ -143,7 +144,13 @@ removeTo(EmailAddress: EmailAddress): void {
   sel_agent='Select Agent';
   email_from="Select Email";
   email_from_list;
-  constructor(private serverService: ServerService, private router:Router,private route: ActivatedRoute) { }
+  email_id;
+  constructor(private serverService: ServerService, private router:Router,private route: ActivatedRoute) { 
+    this.email_id = this.route.snapshot.queryParamMap.get('contact_id');
+    if(this.email_id != '' || this.email_id != null || this.email_id != undefined){
+      this.get_email();
+    }
+  }
   userEmails = new FormGroup({
     primaryEmail: new FormControl('',[
       Validators.required
@@ -165,6 +172,33 @@ removeTo(EmailAddress: EmailAddress): void {
     // this.initTiny();
     this.getDeptAliasName();
     this.getAlldetailsOfAgents();
+  }
+  get_email(){
+    let access_token: any=localStorage.getItem('access_token');
+    let api_req:any = '{"operation":"contact","moduleType":"contact","api_type":"web","access_token":"'+access_token+'","element_data":{"action":"get_email","contact_id":"'+this.email_id+'"}}';
+    console.log(api_req)
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+        if (response.result.status == true) {
+          this.email = response.result.data;
+          this.EmailToAddress.push({ email_to: this.email });
+        }else {
+            
+                iziToast.warning({
+                  message: "Email address is empty",
+                  position: 'topRight'
+                 
+                });
+                return false;  
+        }
+  
+    },
+    (error) => {
+         iziToast.error({
+            message: "Sorry, some server issue occur. Please contact admin",
+            position: 'topRight'
+        });
+        console.log(error);
+    });
   }
   getAlldetailsOfAgents(){
     let access_token: any=localStorage.getItem('access_token');

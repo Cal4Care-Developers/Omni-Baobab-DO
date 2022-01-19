@@ -78,6 +78,8 @@ export class EditContactsComponent implements OnInit {
   show_del = false;
   param3;
   websocket;
+  email_id: string;
+  type_appellant: any;
   constructor(private serverService: ServerService, private router:Router,private route: ActivatedRoute, private sanitizer: DomSanitizer,public modalService: NgbModal) { 
     
     this.addRefined = new FormGroup({
@@ -87,6 +89,7 @@ export class EditContactsComponent implements OnInit {
     this.param1 = this.route.snapshot.queryParamMap.get('phone');
     this.param3 = this.route.snapshot.queryParamMap.get('ids');
     this.paramCall = this.route.snapshot.queryParamMap.get('calltype');
+    this.email_id = this.route.snapshot.queryParamMap.get('email');
    //alert(this.paramCall)
     var decodedString = atob(this.param1);
     this.param1 = decodedString;
@@ -865,7 +868,7 @@ if(this.admin_id == this.uadmin_id){
 }
 
 addNotes(id){
-  this.router.navigate(['/activity'], { queryParams: { contact_id: id } });
+  this.router.navigate(['/activity'], { queryParams: { contact_id: id, email : this.email_id } });
 }
 addWrapupcode() {
  // alert('hii')
@@ -882,6 +885,7 @@ addWrapupcode() {
 // alert(this.Queue_number);
   var wrap = this.category_name + ' -> ' + wraupcode;
   var contact_id=this.contact_id;
+  var type_appellant=$('#type_applicant').val();
  // alert(contact_id)
   // alert(this.param1)
   // alert(this.extension)
@@ -902,7 +906,7 @@ addWrapupcode() {
   }
  // alert(from_no)
 
-  let api_reqs: any = '{"type": "updatewrapupCode","call_type":"'+this.paramCall+'","aux_code": "'+wraupcode+'","cat_id": "'+cat_id+'","call_note": "'+notes+'","from_no": "'+from_no+'","to_no": "'+to_no+'","wrapCode": "'+wrap+'","contact_id": "'+contact_id+'"}';
+  let api_reqs: any = '{"type": "updatewrapupCode","call_type":"'+this.paramCall+'","aux_code": "'+wraupcode+'","cat_id": "'+cat_id+'","call_note": "'+notes+'","from_no": "'+from_no+'","to_no": "'+to_no+'","wrapCode": "'+wrap+'","contact_id": "'+contact_id+'","type_appellant": "'+type_appellant+'"}';
   this.serverService.minimize.next(api_reqs);
 return false;  
   

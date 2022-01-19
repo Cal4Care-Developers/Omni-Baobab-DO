@@ -56,7 +56,7 @@
                         <td><span *ngIf="show_caller_id == 1"><i title="Click to call" class="fa fa-phone-square" aria-hidden="true" (click)="clictToCall(contact.phone)" style="cursor: pointer; margin-right: 10px;font-size: 15px;"></i>{{contact.phone}}</span><span *ngIf="show_caller_id == 0">xxxxxxx</span></td>
                         <td>{{contact.contact_owner}}</td>
                         <td>
-                            <span class="user-icon" style="cursor: pointer;"><i class="far fa-edit" (click)="editContact(contact.phone)"></i></span>
+                            <span class="user-icon" style="cursor: pointer;"><i class="far fa-edit" (click)="editContact(contact.phone,contact.contact_id,contact.email)"></i></span>
                             <span *ngIf="hide_admin_sett" class="user-icon" style="cursor: pointer;"><i class="far fa-trash-alt" (click)="deleteContact(contact.contact_id)"></i></span>
                         </td>
                     </tr>

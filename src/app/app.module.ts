@@ -166,6 +166,11 @@ import { SpamListComponent } from './spam-list/spam-list.component';
 import { EmailDashboardComponent } from './email-dashboard/email-dashboard.component';
 import { EditContactDupComponent } from './edit-contact-dup/edit-contact-dup.component';
 import { CustomizedReportComponent } from './customized-report/customized-report.component';
+import { CampaignComponent } from './campaign/campaign.component';
+import { PredictiveDialerContactComponent } from './predictive-dialer-contact/predictive-dialer-contact.component';
+import { CampaignContactsComponent } from './campaign-contacts/campaign-contacts.component';
+import { InvalidCampaignContactComponent } from './invalid-campaign-contact/invalid-campaign-contact.component';
+import { DndComponent } from './dnd/dnd.component';
 // import { CustomWallboardSixComponent } from './custom-wallboard-six/custom-wallboard-six.component';
 // import { NetwrixReportComponent } from './netwrix-report/netwrix-report.component';
 
@@ -410,12 +415,12 @@ const appRoutes: Routes = [
     {
         path :'compose-wp', component:ComposeWpComponent
     },
-    // {
-    //     path :'invalid-campaign-contact', component:InvalidCampaignContactComponent
-    // },
-    // {
-    //     path :'predictive-wrapups', component:DndComponent
-    // },
+    {
+        path :'invalid-campaign-contact', component:InvalidCampaignContactComponent
+    },
+    {
+        path :'predictive-wrapups', component:DndComponent
+    },
     // {
     //     path :'fax-admin', component:FaxAdministrationComponent
     // },
@@ -540,6 +545,14 @@ const appRoutes: Routes = [
     },
     {
         path :'customize_reports',component:CustomizedReportComponent
+    },
+    {
+        path :'predictive-dialer-calls', component:PredictiveDialerContactComponent,
+    }, {
+        path :'campaign', component:CampaignComponent
+    },
+    {
+        path :'campaign-contact', component:CampaignContactsComponent
     }
 ];
 
@@ -596,8 +609,8 @@ const appRoutes: Routes = [
     GlobalSettingsComponent,
     AuxCodesComponent,
     // AuxCodeReportComponent,
-    // CampaignComponent,
-    // CampaignContactsComponent,
+    CampaignComponent,
+   CampaignContactsComponent,
     // CampaignContactsAddComponent,
     // CampaignContactsEditComponent,
     AgentPermissionComponent,
@@ -635,7 +648,7 @@ const appRoutes: Routes = [
     ReportComponent,
     InternalChatComponent,
     ComposeWpComponent,
-    // InvalidCampaignContactComponent,
+    InvalidCampaignContactComponent,
     // DndComponent,
     // FaxAdministrationComponent,
     FooterComponent,
@@ -683,7 +696,12 @@ const appRoutes: Routes = [
     EmailDashboardComponent,
     EmailsUnassignedComponent,
    EditContactDupComponent,
-   CustomizedReportComponent
+   CustomizedReportComponent,
+   CampaignComponent,
+   PredictiveDialerContactComponent,
+   CampaignContactsComponent,
+   InvalidCampaignContactComponent,
+   DndComponent,
     // CustomWallboardSixComponent,
     // NetwrixReportComponent
     

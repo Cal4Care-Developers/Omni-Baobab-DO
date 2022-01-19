@@ -147,10 +147,11 @@ listDataInfo(list_data){
     }
   })
 }
-editContact(phone_num,cont_id) {
+editContact(phone_num,cont_id,email) {
   var b_phone_num = btoa(phone_num); // Base64 encode the String
   var conct_num = btoa(cont_id); // Base64 encode the String
-  this.router.navigate(['/edit-contacts'], { queryParams: { phone: b_phone_num,ids:conct_num,calltype:'outgoing'} });
+  var conct_email = btoa(email);
+  this.router.navigate(['/edit-contacts'], { queryParams: { phone: b_phone_num,ids:conct_num,calltype:'outgoing' , email : conct_email} });
 
   // this.router.navigate(['/edit-contacts'], { queryParams: { phone: b_phone_num ,from_edit:'edit' }});
 }

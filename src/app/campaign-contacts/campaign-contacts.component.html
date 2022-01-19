@@ -1,0 +1,309 @@
+
+<div class="section-body">
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card"> 
+                <div class="card-header">
+                    <h4>Contacts</h4>
+                    <div class="addBtn btn-group">
+                         <button *ngIf="show_admin_sett" type="button" class="btn btn-primary" (click)="uploadCSV()">+ Upload CSV</button>
+                        <button type="button" class="btn btn-primary" (click)="addContact()">+ Add Contact</button>
+                        <button type="button" class="btn btn-primary" (click)="deleteAllContact()">Delete Contact</button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                       <table class="table table-bordered table-striped table-md">
+
+                          <tr>
+                            <td colspan="12" class="search-text-tbl">
+                                <div class="input-group"><input type="text" class="form-control" (keyup.enter)="contactsList({'search_text':queue_search.value})" #queue_search>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" (click)="contactsList({'search_text':queue_search.value})"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                           <!-- <th style="width: 20px;"><input type="checkbox" name="checkbox"></th> -->
+                           <th style="width: 20px;" ><input type="checkbox"  (click)="slectAll()" id="selectAllQ" ></th>
+
+                           <th>S.no</th>
+                           <th>Name</th>
+                           <th>Phone Number</th>
+                           <th>Campaign Name</th>
+                           <th>Source Data</th>
+                           <th>Contact Owner</th>
+                           <th>Actions</th>
+                       </tr>
+
+                       <tbody>
+                        <tr *ngFor="let contact of contacts_list;let i=index">
+                            <!-- <td style="width: 20px;"><input type="checkbox" name="checkbox"></td> -->
+                          <td style="width: 20px;"><input type="checkbox" (click)="slectunique()" class="invalidContacts" value="{{contact.id}}" name="invalidContacts"></td>
+                           
+                            <td>{{offset_count+i+1}}</td>
+                            <td><span class="user-icon"><i class="far fa-user-circle"></i></span>{{contact.customer_name}}</td>
+                            <td *ngIf="isRAK">{{decode(contact.phone_number)}}</td>
+                            <td *ngIf="!isRAK">{{contact.phone_number}}</td>
+                            <td>{{contact.camp_name}}</td>
+                            <td>{{contact.source_data}}</td>
+                            <td>{{contact.address}}</td>
+                            <td>
+                                <span class="user-icon" style="cursor: pointer;"><i class="far fa-edit" (click)="editContact(contact.id)"></i></span>
+                                <span class="user-icon" style="cursor: pointer;"><i class="far fa-trash-alt" (click)="deleteContact(contact.id)"></i></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
+
+
+        <div class="card-footer text-right">
+            <nav class="d-inline-block">
+                <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+
+                    <li class="page-item">
+                        <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'" href="javascript:void(0)" (click)="paginationData.backtab=='show' ? contactsList({'search_text':queue_search.value,'offset':paginationData.start}) : false"><i class="fas fa-angle-left"></i></a>
+                    </li>
+                    <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                        <a class="page-link" href="javascript:void(0)" (click)="contactsList({'search_text':queue_search.value,'offset':paginationData.back})"><i class="fas fa-angle-double-left"></i></a>
+                    </li>
+
+
+                    <li [class]="pagination.load ==false ? 'page-item active' :'page-item'" *ngFor="let pagination of paginationData.data;let i=index">
+                        <a class="page-link" href="javascript:void(0)" (click)=" pagination.load ==true ? contactsList({'search_text':queue_search.value,'offset':pagination.offset_count}) : false">{{pagination.btn_length}} <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                    </li>
+
+                    <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                        <a class="page-link" href="javascript:void(0)" (click)="contactsList({'search_text':queue_search.value,'offset':paginationData.next})"><i class="fas fa-angle-double-right"></i></a>
+                    </li>
+
+                    <li class="page-item">
+                        <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'" href="javascript:void(0)" (click)="paginationData.nexttab =='show' ? contactsList({'search_text':queue_search.value,'offset':paginationData.end}) : false"><i class="fas fa-angle-right"></i></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        
+    </div>
+</div>
+</div>
+</div>
+
+
+
+
+<div class="modal fade bd-example-modal-md" id="add_pbxform">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form [formGroup]="addConatct" (ngSubmit)="addConatctData()">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myLargeModalLabel">Contact Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                  
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="department">Campaign</label>
+                                <select name="camp_name"  id="camp_name" class="form-control">
+                                    <option value='0'> Select Campaign </option>
+                                    <option *ngFor="let auxcode of campaigns" value="{{auxcode.camp_id}}">{{auxcode.camp_name}}</option>
+                                </select>
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="customer_name">Customer Name</label>
+                                <input type="text" id="customer_name" class="form-control" formControlName="customer_name">
+                            </div>
+                        </div> 
+                        <div *ngIf="this.admin_id== 1211" class="col-md-6">
+                            <div class="form-group">
+                                <label for="customer_name">Technician Name</label>
+                                <input type="text" id="agent_name" class="form-control">
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <input type="text" id="address" class="form-control" formControlName="address">
+                            </div>
+                        </div> 
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input type="text" id="city" class="form-control" formControlName="city">
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="state">State</label>
+                                <input type="text" id="state" class="form-control" formControlName="state">
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="zipcode">Zipcode</label>
+                                <input type="text" id="zipcode" class="form-control" formControlName="zipcode">
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="country">Country</label>
+                                <input type="text" id="country" class="form-control" formControlName="country">
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="phone_number">Phone Number</label>
+                                <input type="text" id="phone_number" class="form-control" formControlName="phone_number">
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="source_data">Source Data</label>
+                                <input type="text" id="source_data" class="form-control" formControlName="source_data">
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="notes">Notes</label>
+                                <input type="text" id="notes" class="form-control" formControlName="notes">
+                            </div>
+                        </div> 
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <div class="buttons">
+                        <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                        <input type="submit" class="btn btn-primary update_agent" value="Update" [disabled]="!addConatct.valid">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="modal fade bd-example-modal-md" id="edit_adminform">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form [formGroup]="editData" (ngSubmit)="updateData(this.contact_id)">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myLargeModalLabel">Update Contact Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                  
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="department">Campaign</label>
+                                <select name="camp_name"  id="camp_names" class="form-control">
+                                    <option value='0'> Select Campaign </option>
+                                    <option *ngFor="let auxcode of campaigns" value="{{auxcode.camp_id}}">{{auxcode.camp_name}}</option>
+                                </select>
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="customer_name">Customer Name</label>
+                                <input type="text" id="customer_name" class="form-control" formControlName="customer_name">
+                            </div>
+                        </div> 
+                        <div *ngIf="this.admin_id== 1211" class="col-md-6">
+                            <div class="form-group">
+                                <label for="customer_name">Technician Name</label>
+                                <input type="text" id="edt_agent_name" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <input type="text" id="address" class="form-control" formControlName="address">
+                            </div>
+                        </div> 
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input type="text" id="city" class="form-control" formControlName="city">
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="state">State</label>
+                                <input type="text" id="state" class="form-control" formControlName="state">
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="zipcode">Zipcode</label>
+                                <input type="text" id="zipcode" class="form-control" formControlName="zipcode">
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="country">Country</label>
+                                <input type="text" id="country" class="form-control" formControlName="country">
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="phone_number">Phone Number</label>
+                                <input type="text" id="phone_number" class="form-control" formControlName="phone_number">
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="source_data">Source Data</label>
+                                <input type="text" id="source_data" class="form-control" formControlName="source_data">
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="notes">Notes</label>
+                                <input type="text" id="notes" class="form-control" formControlName="notes">
+                            </div>
+                        </div> 
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <div class="buttons">
+                        <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
+                        <input type="submit" class="btn btn-primary update_agent" value="Update" [disabled]="!editData.valid">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+

@@ -3,7 +3,9 @@
 		<div class="card-header">
 			<h4>Notes</h4>
 			<div class="addBtn">
-				<button class="btn btn-primary" (click)="bcktoContc(this.contact_id)" style="float: right;"> Overview</button> </div>
+				<button class="btn btn-primary" (click)="bcktoContc(this.contact_id)" style="float: right;">Overview</button> </div>
+				<div class="addBtn">
+					<button class="btn btn-primary"(click)="generate_ticket(this.email_id)"style="float: right;">Generate Ticket</button> </div>
 			</div>
 		</div> 
 
@@ -19,7 +21,7 @@
 						</div>
 						<div class="card-body p-0">
 							<div class="call-detail-panel">
-								<h6>Wrapup Code : {{note.auxcode_name}}</h6>
+								<h6>TYPE : {{note.auxcode_name}}</h6>
 								<p>{{note.call_note}}</p>
 								<div class="note-detais">
 									<h6><span class="user-icon"><i class="far fa-user-circle"></i></span> &nbsp;&nbsp;{{note.creater}} left a Note</h6>
@@ -34,7 +36,7 @@
 											
 
 											<div class="fl">
-												<button type="button" class="btn btn-primary" (click)="genTicket(note.note)">Generate Ticket</button>
+												<button type="button" class="btn btn-primary" (click)="genTicket(note.call_note)">Generate Ticket</button>
 											</div>
 											</div>
 

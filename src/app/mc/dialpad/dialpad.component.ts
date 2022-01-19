@@ -164,7 +164,7 @@ export class DialpadComponent implements OnInit {
             this.incomingCallDecline();
         }
         if(viewContent.type == "updatewrapupCode"){
-            this.addWrapupcode(viewContent.call_type,viewContent.aux_code,viewContent.cat_id,viewContent.call_note,viewContent.from_no,viewContent.to_no,viewContent.wrapCode,viewContent.contact_id);
+            this.addWrapupcode(viewContent.call_type,viewContent.aux_code,viewContent.cat_id,viewContent.call_note,viewContent.from_no,viewContent.to_no,viewContent.wrapCode,viewContent.contact_id,viewContent.type_appellant);
         }
 
        });
@@ -2347,7 +2347,7 @@ pushbridgeuser(){
         console.log(error);
     });
 }
-addWrapupcode(call_type,aux_code,cat_id,call_note,from_no,to_no,wrap,contact_id) {  
+addWrapupcode(call_type,aux_code,cat_id,call_note,from_no,to_no,wrap,contact_id,type_appellant) {  
     let wrapcall_id = $('#wrapup_callID').val();
 
 var queue_num = $('#queue_ids').val();  
@@ -2368,6 +2368,7 @@ var queue_num = $('#queue_ids').val();
     conct_req.call_queue_num = queue_num;
     conct_req.call_id_3cx = wrapcall_id;
     conct_req.user_id = this.uadmin_id;
+    conct_req.type_appellant =type_appellant;
     api_req.element_data = conct_req;
    api_req.element_data.admin_id = this.admin_id;
    api_req.element_data.contact_id =contact_id;

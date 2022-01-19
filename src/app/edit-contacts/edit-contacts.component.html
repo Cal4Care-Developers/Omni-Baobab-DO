@@ -759,11 +759,22 @@
        						<p>{{item.question}}</p>
        					</div>	
        				</div> -->
+					   <div class="form-group">
+						<label for="type applicant">TYPE APPELLANT</label>
+						<select name="type_applicant"  id="type_applicant" class="form-control">
+							<option value='0'> Select APPELLANT </option>
+							<option value="client">client</option> 
+							<option value="Correspondant">Correspondant</option> 
+							<option value="Prospect">Prospect</option> 
+							<option value="Autres">Autres</option> 
+							<!-- <option *ngFor="let dept of departments" value="{{dept.dept_id}}">{{dept.department_name}}</option> -->
+						</select>
+					</div>
 						<div class="col-md-12">
 							<div class="form-group">
-								<label for="department">Wrap Up Category</label>
+								<label for="department">TYPE</label>
 								<select (change)="getAuxCode()" name="auxcodes" id="auxcodes_pop" class="form-control">
-									<option value='0'> Select Category </option>
+									<option value='0'> Select Type </option>
 									<option *ngFor="let auxcode of auxcode_catagory" value="{{auxcode.id}}">
 										{{auxcode.category_name}}</option>
 								</select>

@@ -26,8 +26,11 @@ export class ActivityComponent implements OnInit {
   note_id;
   call_note;
   auxcode_name;
+  email;
+  email_id: string;
   constructor(private serverService: ServerService, private router:Router,private route: ActivatedRoute) { 
     this.contact_id = this.route.snapshot.queryParamMap.get('contact_id');
+    this.email_id = this.route.snapshot.queryParamMap.get('email');
    // this.call_note = this.route.snapshot.queryParamMap.get('call_note');
    // this.auxcode_name= this.route.snapshot.queryParamMap.get('auxcode_name');
 
@@ -223,6 +226,52 @@ return false;
         console.log(error);
     });
 }
+generate_ticket(email){  
+
+  // let email: any= $('#email').val();
+   //alert(email)
+  
+ // if(email == ''){
+ //   iziToast.warning({
+ //     message: "Email address is empty",
+ //     position: 'topRight'
+ // });
+ // return false;
+ // }
+ if(email == '' || email == null || email == undefined){
+   iziToast.warning({
+     message: "Email address is empty",
+     position: 'topRight'
+    
+   });
+ }else{
+  let access_token: any=localStorage.getItem('access_token');
+     let api_req:any = '{"operation":"contact","moduleType":"contact","api_type":"web","access_token":"'+access_token+'","element_data":{"action":"get_email","contact_id":"'+this.contact_id+'"}}';
+     console.log(api_req)
+         this.serverService.sendServer(api_req).subscribe((response: any) => {
+         if (response.result.status == true) {
+           this.router.navigate(['/ticket-create-new'], { queryParams: { contact_id:this.contact_id} });    
+                 
+         }else {
+             
+                 iziToast.warning({
+                   message: "Email address is empty",
+                   position: 'topRight'
+                  
+                 });
+                 return false;  
+         }
+   
+     },
+     (error) => {
+          iziToast.error({
+             message: "Sorry, some server issue occur. Please contact admin",
+             position: 'topRight'
+         });
+         console.log(error);
+     });
+ }
+ }
 listDataInfo(list_data) {
 
   list_data.search_text = list_data.search_text == undefined ? "" : list_data.search_text;
