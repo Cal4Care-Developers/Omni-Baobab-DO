@@ -22,8 +22,15 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="from_date">Select Date</label>
+                                <label for="from_date">From Date</label>
                                 <input type="date" id="from_date" class="form-control" formControlName="from_date">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="to_date">To Date</label>
+                                <input type="date" id="to_date" class="form-control" formControlName="to_date">
                             </div>
                         </div>
                     </div>
@@ -41,8 +48,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <button type="button" class="btn btn-primary" (click)="getReports()">Generate Report</button>
+                                <button type="button" class="btn btn-primary" (click)="getcustomReports()">Custom Search</button>
                             </div>
+                        </div>
+                        <div class="col-md-6">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary g_report" *ngIf="show_table == true" (click)="getReports(this.arrStr)">Generate Report</button>
+                        </div>
                         </div>
                         </div>
                     
@@ -61,7 +73,7 @@
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table table-striped table-md" *ngIf="this.customize !=''">
-                            <tr>
+                            <!-- <tr>
                                 <td colspan="12" class="search-text-tbl">
                                     <div class="input-group"><input type="text" class="form-control" (keyup.enter)="callHistoryList({'search_text':call_history_search.value})" #call_history_search>
                                         <div class="input-group-append">
@@ -69,7 +81,7 @@
                                         </div>
                                     </div>
                                 </td>
-                            </tr>
+                            </tr> -->
                             <tr>
                                 <!-- <th>S.no</th> -->
                                 <th>Indicator</th>
