@@ -60,7 +60,7 @@ export class CustomizedReportComponent implements OnInit {
     this.access_token = localStorage.getItem('access_token');
     let api_req : any = '{"operation": "report", "moduleType": "report","api_type": "web","access_token": "'+this.access_token+'","element_data": {"action": "custom_report","dt_time": "'+this.getdate.value.from_date+'","to_dt":"'+this.getdate.value.to_date+'"}}';
     this.serverService.sendServer(api_req).subscribe((response:any) => {
-		  if(response.result.status==true){
+		  if(response.result.data.status!=false){
         this.show_table = true;
         this.res_data = response.result.data;
         console.log(this.res_data);
