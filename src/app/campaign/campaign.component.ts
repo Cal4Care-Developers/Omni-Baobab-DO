@@ -537,12 +537,12 @@ export class CampaignComponent implements OnInit {
   
     actCamp(id,vid){
       this.show_caller_id = localStorage.getItem('show_caller_id');
-      if($('#statu_'+id).is(':checked')){
-        let api_reqs:any = '{"type": "makecall", "number": "'+vid+'","show_caller_id":"'+this.show_caller_id+'"}';
-        this.serverService.show.next(api_reqs);
-      } else {
+      // if($('#statu_'+id).is(':checked')){
+      //   let api_reqs:any = '{"type": "makecall", "number": "'+vid+'","show_caller_id":"'+this.show_caller_id+'"}';
+      //   this.serverService.show.next(api_reqs);
+      // } else {
   
-      }
+      // }
       let access_token: any = localStorage.getItem('access_token');
       let api_req:any = '{"operation":"campaign", "moduleType":"campaign", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"toggle_status","id":"'+id+'"}}';
       this.serverService.sendServer(api_req).subscribe((response:any) => {

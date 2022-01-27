@@ -45,8 +45,9 @@
                            
                             <td>{{offset_count+i+1}}</td>
                             <td><span class="user-icon"><i class="far fa-user-circle"></i></span>{{contact.customer_name}}</td>
-                            <td *ngIf="isRAK">{{decode(contact.phone_number)}}</td>
-                            <td *ngIf="!isRAK">{{contact.phone_number}}</td>
+                            <!-- <td *ngIf="isRAK">{{decode(contact.phone_number)}}</td> -->
+                            <!-- <td *ngIf="!isRAK">{{contact.phone_number}}</td> -->
+                            <td ><i title="Click to call" class="fa fa-phone-square" aria-hidden="true" (click)="clictToCall(contact.phone_number,contact.campaign_id)" style="cursor: pointer; margin-right: 10px;font-size: 15px;"></i>{{contact.phone_number}}</td>
                             <td>{{contact.camp_name}}</td>
                             <td>{{contact.source_data}}</td>
                             <td>{{contact.address}}</td>

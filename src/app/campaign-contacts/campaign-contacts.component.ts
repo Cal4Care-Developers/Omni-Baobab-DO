@@ -26,13 +26,15 @@ export class CampaignContactsComponent implements OnInit {
   editData;
   contact_id;
   isRAK=false;
+  show_caller_id='1';
+  campaign_status;
   constructor(private serverService: ServerService, private router:Router) { }
 
   ngOnInit(): void {
     this.user_type = localStorage.getItem('user_type');
     this.user_id = localStorage.getItem('userId');
     this.admin_id = localStorage.getItem('admin_id');
-
+    this.show_caller_id = localStorage.getItem('show_caller_id');
     if(this.user_type == 'Admin'){
       this.show_admin_sett = true;
       
@@ -414,5 +416,47 @@ decode(content){
   // console.log(atob(content))
   return atob(content);
 }
+clictToCall(to,campaign_id){
+  let access_token: any=localStorage.getItem('access_token');
+  let api_req:any = '{"operation":"campaign", "moduleType": "campaign", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"get_camp_status","id":"'+campaign_id+'"}}';
 
+  this.serverService.sendServer(api_req).subscribe((response:any) => {
+    if( response.result.data.camp_status=='1'){
+      this.campaign_status= response.result.data.camp_status;
+    
+        // if(to == 'phone'){  this.to_num = $('#phone').val(); } else {  this.to_num = $('#mobile').val(); }
+       
+        if(to == ''){
+             iziToast.warning({
+               message: "No Number To Call",
+               position: 'topRight'
+             });
+         } else {       
+           let access_token: any=localStorage.getItem('access_token');
+         
+           var extention = localStorage.getItem('ext_int_status');
+           if(extention == '2'){
+            let api_reqs:any = '{"type": "makecall", "number": "'+to+'","show_caller_id":"'+this.show_caller_id+'"}';
+            this.serverService.show.next(api_reqs);
+           } else {
+            let api_reqs:any = '{"type": "makecallauto", "number": "'+to+'"}';
+            this.serverService.show.next(api_reqs);
+           }
+       
+         }
+     
+    } 
+    else{
+            
+      iziToast.warning({
+          message: "Campaign is not active. Please activate",
+          position: 'topRight'
+      });
+  
+}
+  }, 
+  (error)=>{
+      console.log(error);
+  });
+}
 }
