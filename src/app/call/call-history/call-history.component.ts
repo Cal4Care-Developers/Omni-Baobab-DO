@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+// import { Router } from '@angular/router';
 import { Router } from '@angular/router';
 import { ServerService } from '../../services/server.service';
 import Swal from 'sweetalert2';
@@ -23,7 +24,16 @@ export class CallHistoryComponent implements OnInit {
 	uadmin_id;
 	auxcode_catagory;
 	res;
-	constructor(private serverService: ServerService) { }
+	
+	call_id: any;
+	email_id: any;
+	route: any;
+	ticket_status: any;
+	call_history_list_id: any;
+	ticket_status_id: any;
+	constructor(private serverService: ServerService,private router:Router) { 
+		
+	}
 
 	ngOnInit() {
 		this.callHistoryList({});
@@ -171,11 +181,23 @@ export class CallHistoryComponent implements OnInit {
 		this.serverService.sendServer(api_req).subscribe((response: any) => {
 
 			if (response.result.status == 1) {
-
 				this.call_history_list = response.result.data.list_data;
 				this.offset_count = list_data.offset;
 				this.paginationData = this.serverService.pagination({ 'offset': response.result.data.list_info.offset, 'total': response.result.data.list_info.total, 'page_limit': this.pageLimit });
 				this.recordNotFound = this.call_history_list.length == 0 ? true : false;
+
+				//this.call_history_list = response.result.data.list_data;
+				//this.call_history_list_id = response.result.data.list_data.list_data.ext_ticket_id;
+				// this.ticket_status = response.result.data.status;
+				// this.ticket_status_id = response.result.data.status.ticket_no;
+				// for( var i=0 ; i< this.call_history_list_id; i++){
+				// 	var k = this.call_history_list_id[i];
+				// }
+				// console.log(k);
+				// console.log(this.ticket_status)
+				// this.offset_count = list_data.offset;
+				// this.paginationData = this.serverService.pagination({ 'offset': response.result.data.list_info.offset, 'total': response.result.data.list_info.total, 'page_limit': this.pageLimit });
+				// this.recordNotFound = this.call_history_list.length == 0 ? true : false;
 			}
 
 		},
@@ -199,6 +221,8 @@ export class CallHistoryComponent implements OnInit {
 		let auxcode_name: any = $('#auxcode_name').val();
 		let fromDate: any = $('#from_date').val();
 		let to_date: any = $('#to_date').val();
+		let first_name:any=$('#first_name').val();
+
 		if (fromDate == null || fromDate == '') {
 			iziToast.warning({
 				message: "Please Select From Date",
@@ -223,8 +247,10 @@ export class CallHistoryComponent implements OnInit {
 		agents_req.user_id =  new_user_id;
 		agents_req.auxcode_name = this.getRep.value.auxcode_name;
 		agents_req.cat_ids = this.getRep.value.cat_ids;
+	//	alert(agents_req.cat_ids)
 		agents_req.fromDate = this.getRep.value.from_date;
 		agents_req.toDate = this.getRep.value.to_date;
+		//agents_req.first_name = this.getRep.value.first_name;
 		api_req.operation = "auxcodeReport";
 		api_req.moduleType = "call";
 		api_req.api_type = "web";
@@ -250,7 +276,7 @@ Swal.close();
 				// document.location.href = 'https://uatassaabloyccapi.mconnectapps.com/api/storage/contact/download.php?res='+arrStr;
 
 
-				var url = 'https://uatassaabloyccapi.mconnectapps.com/api/storage/contact/aux_code_report.php';
+				var url = 'https://baobabgroup.mconnectapps.com/api/storage/contact/aux_code_report.php';
 				var form = $('<form target="_blank" action="' + url + '" method="post">' +
 					'<input type="text" name="res" value="' + arrStr + '" />' +
 					'</form>');
@@ -269,7 +295,58 @@ Swal.close();
 			});
 	}
 
-
+	generate_ticket(c_id,email,note){  
+	
+	//	alert(c_id)
+	// var ca_id = btoa(c_id);
+	
+		this.router.navigate(['/ticket-create-new'], { queryParams: { call_id:c_id,email :email,note : note} });
+	}
+		// let email: any= $('#email').val();
+		 //alert(email)
+		
+	   // if(email == ''){
+	   //   iziToast.warning({
+	   //     message: "Email address is empty",
+	   //     position: 'topRight'
+	   // });
+	   // return false;
+	   // }
+	//    if(email == '' || email == null || email == undefined){
+	// 	 iziToast.warning({
+	// 	   message: "Email address is empty",
+	// 	   position: 'topRight'
+		  
+	// 	 });
+	// 	 return false;
+	//    }else{
+	// 	let access_token: any=localStorage.getItem('access_token');
+	// 	   let api_req:any = '{"operation":"contact","moduleType":"contact","api_type":"web","access_token":"'+access_token+'","element_data":{"action":"get_email","contact_id":"'+this.call_id+'"}}';
+	// 	   console.log(api_req)
+	// 		   this.serverService.sendServer(api_req).subscribe((response: any) => {
+	// 		   if (response.result.status == true) {
+				    
+					   
+	// 		   }else {
+				   
+	// 				   iziToast.warning({
+	// 					 message: "Email address is empty",
+	// 					 position: 'topRight'
+						
+	// 				   });
+	// 				   return false;  
+	// 		   }
+		 
+	// 	   },
+	// 	   (error) => {
+	// 			iziToast.error({
+	// 			   message: "Sorry, some server issue occur. Please contact admin",
+	// 			   position: 'topRight'
+	// 		   });
+	// 		   console.log(error);
+	// 	   });
+	//    }
+	//    }
 
 
 

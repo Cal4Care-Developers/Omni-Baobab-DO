@@ -3,7 +3,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { ServerService } from '../services/server.service';
-// import { EditorModule } from "@tinymce/tinymce-angular";
+import { EditorModule } from "@tinymce/tinymce-angular";
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 
@@ -39,6 +39,7 @@ export class TicketCreateNewComponent implements OnInit {
   collobrators: Collobrator[] = [ ];
   EmailToAddress: EmailAddress[] = [ ];
   email: any;
+  call_id: string;
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
@@ -145,12 +146,26 @@ removeTo(EmailAddress: EmailAddress): void {
   email_from="Select Email";
   email_from_list;
   email_id;
-  constructor(private serverService: ServerService, private router:Router,private route: ActivatedRoute) { 
-    this.email_id = this.route.snapshot.queryParamMap.get('contact_id');
-    if(this.email_id != '' || this.email_id != null || this.email_id != undefined){
-      this.get_email();
-    }
+  notes;
+
+  constructor(private serverService: ServerService, private router:Router,private route: ActivatedRoute) {
+    this.email_id = this.route.snapshot.queryParamMap.get('email');
+    this.call_id = this.route.snapshot.queryParamMap.get('call_id');
+    this.notes = this.route.snapshot.queryParamMap.get('note');
+   
+   if(this.notes!= ''&& this.notes != null && this.notes != undefined){
+       //alert(this.notes)
+      
+   // tinymce.get('.richTextArea').setContent(this.notes);
+      //tinymce.get('richTextArea').getContent('this.notes')
   }
+    
+
+    if(this.email_id != ''&& this.email_id != null && this.email_id != undefined){
+      this.EmailToAddress.push({ email_to: this.email_id });
+     
+    }
+   }
   userEmails = new FormGroup({
     primaryEmail: new FormControl('',[
       Validators.required
@@ -174,31 +189,8 @@ removeTo(EmailAddress: EmailAddress): void {
     this.getAlldetailsOfAgents();
   }
   get_email(){
-    let access_token: any=localStorage.getItem('access_token');
-    let api_req:any = '{"operation":"contact","moduleType":"contact","api_type":"web","access_token":"'+access_token+'","element_data":{"action":"get_email","contact_id":"'+this.email_id+'"}}';
-    console.log(api_req)
-        this.serverService.sendServer(api_req).subscribe((response: any) => {
-        if (response.result.status == true) {
-          this.email = response.result.data;
-          this.EmailToAddress.push({ email_to: this.email });
-        }else {
-            
-                iziToast.warning({
-                  message: "Email address is empty",
-                  position: 'topRight'
-                 
-                });
-                return false;  
-        }
-  
-    },
-    (error) => {
-         iziToast.error({
-            message: "Sorry, some server issue occur. Please contact admin",
-            position: 'topRight'
-        });
-        console.log(error);
-    });
+    
+        
   }
   getAlldetailsOfAgents(){
     let access_token: any=localStorage.getItem('access_token');
@@ -316,6 +308,8 @@ var EmailTo = this.getFields(this.EmailToAddress, "email_to");
 //       Swal.showLoading();
 //   }
 // });
+// alert(this.call_id)
+
 agent_req.action='createExternalTicket';
 agent_req.subject=subject;
 agent_req.description=description;
@@ -325,6 +319,7 @@ agent_req.priority_id=priority;
 agent_req.admin_id=this.admin_id;
 agent_req.user_id=this.user_id;
 agent_req.agent_id=agent;
+agent_req.call_id=this.call_id;
 agent_req.to=EmailTo;
 agent_req.from_address=this.email_from;
 var formData = new FormData();
@@ -350,6 +345,7 @@ var json_arr = JSON.stringify(agent_req);
     formData.append('to', EmailTo);
     formData.append('from_address', this.email_from);
     formData.append('mail_cc', email_cc);
+    formData.append('call_id', this.call_id);
     // formData.append('up_files', $('#create_file')[0].files[0]);
 
     // formData.append('logo_image', $('#logo_image')[0].files[0]);

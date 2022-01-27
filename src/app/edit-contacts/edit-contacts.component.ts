@@ -90,6 +90,7 @@ export class EditContactsComponent implements OnInit {
     this.param3 = this.route.snapshot.queryParamMap.get('ids');
     this.paramCall = this.route.snapshot.queryParamMap.get('calltype');
     this.email_id = this.route.snapshot.queryParamMap.get('email');
+
    //alert(this.paramCall)
     var decodedString = atob(this.param1);
     this.param1 = decodedString;
@@ -885,8 +886,9 @@ addWrapupcode() {
 // alert(this.Queue_number);
   var wrap = this.category_name + ' -> ' + wraupcode;
   var contact_id=this.contact_id;
+  //var callid=this.call
   var type_appellant=$('#type_applicant').val();
- // alert(contact_id)
+ //alert(type_appellant)
   // alert(this.param1)
   // alert(this.extension)
 
@@ -974,4 +976,5 @@ closeModelPopup(link) {
   let api_reqs: any = '{"type": "minimize"}';
   this.serverService.minimize.next(api_reqs);
 }
+
 }

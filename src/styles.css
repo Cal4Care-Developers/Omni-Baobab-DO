@@ -2656,3 +2656,51 @@ Reorder List
   }
 
   .nicescroll-cursors { visibility: hidden; }
+  .call-contact-modal {
+    /* max-width: 1500px;
+        margin: 1.75rem auto; */
+        width: calc(100% - 30%);
+        float: left;
+        background: #fff;
+        position: fixed;
+        left: 3%;
+}
+.call-contact-inner {
+    overflow-y: scroll;
+    padding: 0 30px;
+    height: 82vh;
+}
+.dialer-call-action {
+    float: left;
+    width: 100%;
+    padding: 15px;
+    margin: -0;
+}
+.dialer-call-action .btn i { 
+    font-size: 20px;
+    padding: 0;
+}
+.dialer-call-action .btn-action-text { 
+   position: absolute;
+   bottom: -30px;
+   left: 0px;
+   color: #000;
+   right: 0;
+   margin: 0 auto;
+   font-weight: 600;
+   font-size: 14px;
+}
+.incoming-call-profile i { 
+    font-size: 40px;
+    margin-bottom: 10px;
+ }
+ .dialer-call-action .btn {
+    position: relative;
+     border-radius: 50%; 
+   padding: 0;
+   width: 50px;
+   height: 50px;
+   display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -93,42 +93,71 @@
                             </tr>
                             <tr>
                                 <th>#</th>
-                                <th>Agent</th>
-                                <th>Phone number</th>
-                                <th>Call Type</th>
-                                <th>Notes</th>
+                                <th>DATE&TIME</th>
+                                <th>CONNAISSANCE BAOBOB</th>
+                                 <th>HOUR</th>
+
+                                <th>AGENT</th>
+                                <th>NAME CILENT</th>
+                                <th>NUM CLIENT</th>
+                                <th>PHONE NUMBER</th>
+                                <th>NUM TEL</th>
+                                <th>CALL TYPE</th>
+                                <th>NOTES</th>
                                 <th>TYPE</th>
-                                <th>WrapUp Code</th>
+                                <th>CODE</th>
                                 <th>TYPE APPELLANT</th>
-                                <th>Queue Name</th>
-                                <th>Call time</th>
+                                <th>AGENCE</th>
+                                <th>TICKET ID</th>
+                                <th>TICKET STATUS</th>
+                                <th>Action</th>
+                                <!-- <button class="btn btn-primary"(click)="generate_ticket(this.email_id)"style="float: right;">Generate Ticket</button> -->
+                                <!-- <th>Queue Name</th> -->
+                                
                                 <!-- <th>Call Unique ID</th> -->
                             </tr>
                             <tr *ngFor="let history of call_history_list;let i=index" >
                                 <td>{{offset_count+i+1}}</td>
+                                <td>{{history.call_start_dt}}</td>  
+                                <td>{{history.agence}}</td>
+                                <td>{{history.hour}}</td>
                                 <td>{{history.agent_name}}</td>
+                                <td>{{history.first_name}}</td>
+                                <td>{{history.call_data}}</td>
                                 <td>{{history.phone}}</td>
+                                <td>{{history.other_phone}}</td>
                                 <td><span class="callType"> <img src="assets/images/incoming-call.svg" *ngIf="history.call_type == 'incoming'"><img src="assets/images/outgoing-call.svg" *ngIf="history.call_type == 'outgoing'"><img src="assets/images/outgoing-call.svg" *ngIf="history.call_type == 'outbound'"></span>{{history.call_type}}</td>
                                 <td>
-                                    <!-- <ul [ngClass]="{'has-tooltip': history.call_note.length >= '20'}"> -->
-                                        <ul style="padding-left: 0px;" class="has-tooltip">
-                                    
-                                     <span class="tooltip-modal" style="left: -255px;
-                                     right: -369px;" >{{history.call_note}}</span>
-                                     <div id="chat-message">{{history.call_note}}</div>
+                                    <ul [ngClass]="{'has-tooltip': history.call_note.length >= '20'}"> 
+                                            <ul style="padding-left: 0px;" class="has-tooltip">
+                                        
+                                         <span class="tooltip-modal" style="left: -255px;
+                                         right: -369px;" >{{history.call_note}}</span>
+                                         <div id="chat-message">{{history.call_note}}</div>
+                                        </ul>
                                     </ul>
-                                 </td>
+
+                                     </td>
+
                                 <td>{{history.category_name}}</td>
                                 <td>{{history.auxcode_name}}</td>
                                 <td>{{history.type_appellant}}</td>
-                                <td>{{history.queue_names}}</td>                               
-                                <td>{{history.call_start_dt}}</td>                                       
-                                <td>{{history.call_id_3cx}}</td>
+                                <td>{{history.baobab}}</td>
+                                <td>{{history.ext_ticket_id}}</td>
+                                <td>{{history.status_name}}</td>
+                                <!-- <td *ngIf="history.ext_ticket_id !='null'">{{this.ticket_status.status_name}}</td> -->
+                                <!-- <td>{{history.queue_names}}</td>                                -->
+                                                               
+                                <!-- <td>{{history.call_id_3cx}}</td> -->
+                                <td>
+    <span class="user-icon" style="cursor: pointer;"><i class="fas fa-ticket-alt"
+        (click)="generate_ticket(history.callid,history.email,history.call_note)"></i></span>
+                                    </td>
                             </tr>
                             <tr *ngIf="recordNotFound == true">
                                <td colspan="12">Data not found</td>
                             </tr>
-                      
+                            
                         </table>
                     </div>
                 </div>
