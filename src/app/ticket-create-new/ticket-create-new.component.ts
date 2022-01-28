@@ -6,6 +6,8 @@ import { ServerService } from '../services/server.service';
 import { EditorModule } from "@tinymce/tinymce-angular";
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
+import { DatePipe } from '@angular/common';
+
 
 import Swal from 'sweetalert2'
 
@@ -148,7 +150,7 @@ removeTo(EmailAddress: EmailAddress): void {
   email_id;
   notes;
 
-  constructor(private serverService: ServerService, private router:Router,private route: ActivatedRoute) {
+  constructor(private serverService: ServerService, private router:Router,private route: ActivatedRoute,private datePipe: DatePipe) {
     this.email_id = this.route.snapshot.queryParamMap.get('email');
     this.call_id = this.route.snapshot.queryParamMap.get('call_id');
     this.notes = this.route.snapshot.queryParamMap.get('note');
@@ -163,6 +165,7 @@ removeTo(EmailAddress: EmailAddress): void {
 
     if(this.email_id != ''&& this.email_id != null && this.email_id != undefined){
       this.EmailToAddress.push({ email_to: this.email_id });
+      this.getdescrp();
      
     }
    }
@@ -524,5 +527,43 @@ getDeptAliasName(){
       console.log(error);
     });
 
+}
+getdescrp(){
+  let access_token: any=localStorage.getItem('access_token');
+  //let contact_id:any=
+// let api_req.element_data.contact_id=contact_id;
+  // var subject = $('#subject').val();
+  // var description = btoa(tinymce.activeEditor.getContent());
+  // console.log(tinymce.activeEditor.getContent());
+let user_id=localStorage.getItem('userId');
+  let api_req:any = '{"operation":"description","moduleType":"call","api_type":"web","access_token":"' + access_token + '","element_data":{"action":"description","user_id":"'+user_id+'","callid":"'+this.call_id+'"}}';
+
+  this.serverService.sendServer(api_req).subscribe((response:any) => {
+    if(response.status=true){
+    // this.agents_options=response.agents_options;
+    // this.department_options=response.department_options;
+    // this.priority_options=response.priority_options;
+    // this.status_options=response.status_options;
+    var content='<p>DATE:'+this.datePipe.transform(response.result.data.call_start_dt,'yyyy-MM-dd') +'</p> <p>CONNAISSANCE BAOBOB:'+response.result.data.other_street+'</p> <p>HOUR:'+this.datePipe.transform(response.result.data.call_start_dt,'h:mm:ss') +'</p> <p>AGENT:'+response.result.data.agent_name+'</p> <p>NUM CILENT:'+response.result.data.other_phone+'</p> <p>NAME CILENT:'+response.result.data.first_name+'</p> <p>PHONE NUMBER:'+response.result.data.phone+'</p> <p>NUM TEL:'+response.result.data.call_data+'</p> <p>NOTES:'+response.result.data.call_note+'</p> <p>TYPE:'+response.result.data.category_name+'</p> <p>CODE:'+response.result.data.auxcode_name+'</p> <p>TYPE APPELLANT:'+response.result.data.type_appellant+'</p> <p>AGENCE:'+response.result.data.twitter+'</p>'
+  //  var html='DATE:'+response.result.data.call_start_dt+'\\n,CONNAISSANCE BAOBOB:'+response.result.data.call_start_dt+'HOUR:'+response.result.data.created_dt+'AGENT:'+response.result.data.agent_name+'NUM CILENT:'+response.result.data.first_name+'NAME CILENT:'+response.result.data.call_data+'PHONE NUMBER:'+response.result.data.phone+
+    'NUM TEL:'+response.result.data.other_phone+'NOTES:'+response.result.data.call_note+'TYPE:'+response.result.data.category_name+'CODE:'+response.result.data.auxcode_name+'TYPE APPELLANT:'+response.result.data.type_appellant+'AGENCE:'+response.result.data.twitter;
+    // alert(html)
+    setTimeout(() => {
+    tinymce.activeEditor.setContent(content);
+      
+    }, 4000);
+    // tinymce.activeEditor.setContent(this.edit_sign.sig_content);
+  }
+    
+    else{
+      iziToast.warning({
+        message: "Sorry not able to fetch Data.Please contact Admin",
+        position: 'topRight'
+      })
+    }
+  }, 
+  (error)=>{
+      console.log(error);
+  });
 }
 }
