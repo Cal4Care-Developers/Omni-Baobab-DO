@@ -4,11 +4,13 @@ import { NgZone } from '@angular/core';
 import { ServerService } from '../services/server.service';
 // import { ActivatedRoute } from '@angular/router';
 import { BnNgIdleService } from 'bn-ng-idle';
+
 declare var $: any;
 
 declare var io: any;
 
 declare var iziToast: any;
+declare var googleTranslateElementInit:any;
 declare const window: any;
 import Swal from 'sweetalert2'
 // import { IfStmt } from '@angular/compiler';
@@ -94,6 +96,7 @@ h_call_rec; wall_basic; h_que_manage;
   stop_interval;
   has_admin_permission=false;
   loginUser;
+  
   wp_unoff=false;
   instance_value;i_id;
   // listinstacne;
@@ -494,6 +497,7 @@ this.logo_image = localStorage.getItem('logo_image');
 
     this.getinstance();
 }
+googleTranslateElementInit();
   }
 
   getinstance(){
@@ -1256,5 +1260,6 @@ showVideofialers(){
     }
 
 }
+
 
 }

@@ -2704,3 +2704,6 @@ Reorder List
     align-items: center;
     justify-content: center;
 }
+.card .card-header .btn:last-child {
+    margin-right: -8px;
+}

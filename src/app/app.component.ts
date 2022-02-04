@@ -13,6 +13,7 @@ export class AppComponent {
     constructor(private router:Router) { }
     
     onActivate(event) {
+       
         this.file_path=this.router.url;
         console.log(this.router.url);
         if (localStorage.getItem('access_token')) {

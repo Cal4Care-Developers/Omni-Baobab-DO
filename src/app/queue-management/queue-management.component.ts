@@ -52,7 +52,7 @@ export class QueueManagementComponent implements OnInit {
     this.hardware_id =localStorage.getItem('hardware_id');
 
    this.initsocket();
-   alert(this.hardware_id)
+   //alert(this.hardware_id)
   }
   initsocket(){
     this.loginUser = localStorage.getItem('admin_id');
