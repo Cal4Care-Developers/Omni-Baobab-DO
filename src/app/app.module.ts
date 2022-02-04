@@ -65,7 +65,7 @@ import { AuxCodesComponent } from './aux-codes/aux-codes.component';
 // import { CampaignContactsEditComponent } from './campaign-contacts-edit/campaign-contacts-edit.component';
 import { AgentPermissionComponent } from './agent-permission/agent-permission.component';
 // import { CallReportComponent } from './call-report/call-report.component';
-// import { QueueManagementComponent } from './queue-management/queue-management.component';
+
 // import { LeadManagementComponent } from './lead-management/lead-management.component';
 // import { LogReportComponent } from './log-report/log-report.component';
 import { CustomWallboardComponent } from './custom-wallboard/custom-wallboard.component';
@@ -171,6 +171,8 @@ import { PredictiveDialerContactComponent } from './predictive-dialer-contact/pr
 import { CampaignContactsComponent } from './campaign-contacts/campaign-contacts.component';
 import { InvalidCampaignContactComponent } from './invalid-campaign-contact/invalid-campaign-contact.component';
 import { DndComponent } from './dnd/dnd.component';
+import { QueueComponent } from './queue/queue.component';
+import { QueueManagementComponent } from './queue-management/queue-management.component';
 // import { CustomWallboardSixComponent } from './custom-wallboard-six/custom-wallboard-six.component';
 // import { NetwrixReportComponent } from './netwrix-report/netwrix-report.component';
 
@@ -553,6 +555,9 @@ const appRoutes: Routes = [
     },
     {
         path :'campaign-contact', component:CampaignContactsComponent
+    },
+    {
+        path :'queue', component:QueueManagementComponent
     }
 ];
 
@@ -569,7 +574,7 @@ const appRoutes: Routes = [
     ProfileComponent,
     AgentsComponent,
     AgentsformComponent,
-    // QueueComponent,
+    //QueueComponent,
     CallComponent,
     CallHistoryComponent,
     ChatComponent,
@@ -702,6 +707,7 @@ const appRoutes: Routes = [
    CampaignContactsComponent,
    InvalidCampaignContactComponent,
    DndComponent,
+   QueueComponent,
     // CustomWallboardSixComponent,
     // NetwrixReportComponent
     

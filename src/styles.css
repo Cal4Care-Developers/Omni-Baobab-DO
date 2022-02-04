@@ -741,7 +741,7 @@ table td .btn { padding: 0px 10px; }
     margin-right: 8px;
 }
 .card .card-header .btn:last-child {
-    margin-right: 0px;
+    margin-right: -200px;
 }
 .search-text-tbl {
     border-bottom: 1px solid #eef

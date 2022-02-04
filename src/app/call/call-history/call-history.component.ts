@@ -299,8 +299,17 @@ Swal.close();
 	
 	//	alert(c_id)
 	// var ca_id = btoa(c_id);
+	if(email == '' || email == null || email == undefined){
+			 iziToast.warning({
+			   message: "Email address is empty",
+			   position: 'topRight'
+			  
+			 });
+			 return false;
+		   }else{
+			this.router.navigate(['/ticket-create-new'], { queryParams: { call_id:c_id,email :email,note : note} });
+		   }
 	
-		this.router.navigate(['/ticket-create-new'], { queryParams: { call_id:c_id,email :email,note : note} });
 	}
 		// let email: any= $('#email').val();
 		 //alert(email)

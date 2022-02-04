@@ -1440,6 +1440,14 @@ sendvoiceMediaData(){
 
 
 }
+getFileExtension(filename) {
+  console.log(filename);
+  // alert(filename);
+  var ext = /^.+\.([^.]+)$/.exec(filename);
+  // alert(ext);
+  console.log(ext);
+  return ext == null ? "" : ext[1];
+}
 
 
 }

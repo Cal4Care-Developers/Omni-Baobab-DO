@@ -113,7 +113,7 @@ bcktoContc(contact_id){
         if(response.result.status==true){
          // var decodedString = btoa(response.result.data[0].phone );
           var cont_id = btoa(this.contact_id );
-          this.router.navigate(['/edit-contacts'], { queryParams: { phone: b_phone_num,cont_id:cont_id,ids:conct_num,calltype:'outgoing'} });
+          this.router.navigate(['/edit-contact-dup'], { queryParams: { phone: b_phone_num,cont_id:cont_id,ids:conct_num,calltype:'outgoing'} });
          // this.router.navigate(['/edit-contacts'], { queryParams: { phone:  decodedString,cont_id:cont_id} });
         }
       }, 
