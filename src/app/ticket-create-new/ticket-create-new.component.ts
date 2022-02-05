@@ -554,10 +554,10 @@ let user_id=localStorage.getItem('userId');
     // this.department_options=response.department_options;
     // this.priority_options=response.priority_options;
     // this.status_options=response.status_options;
-    var content='<p>DATE:'+this.datePipe.transform(response.result.data.call_start_dt,'yyyy-MM-dd') +'</p> <p>CONNAISSANCE BAOBOB:'+response.result.data.other_street+'</p> <p>HOUR:'+this.datePipe.transform(response.result.data.call_start_dt,'h:mm:ss') +'</p> <p>AGENT:'+response.result.data.agent_name+'</p> <p>NUM CILENT:'+response.result.data.other_phone+'</p> <p>NAME CILENT:'+response.result.data.first_name+'</p> <p>PHONE NUMBER:'+response.result.data.phone+'</p> <p>NUM TEL:'+response.result.data.call_data+'</p> <p>NOTES:'+response.result.data.call_note+'</p> <p>TYPE:'+response.result.data.category_name+'</p> <p>CODE:'+response.result.data.auxcode_name+'</p> <p>TYPE APPELLANT:'+response.result.data.type_appellant+'</p> <p>AGENCE:'+response.result.data.twitter+'</p>'
+    var content='<p>DATE:'+this.datePipe.transform(response.result.data.call_start_dt,'yyyy-MM-dd') +'</p> <p>CONNAISSANCE BAOBOB:'+response.result.data.other_street+'</p> <p>HOUR:'+this.datePipe.transform(response.result.data.call_start_dt,'h:mm:ss') +'</p> <p>AGENT:'+response.result.data.agent_name+'</p> <p>NUM CILENT:'+response.result.data.other_phone+'</p> <p>NAME CILENT:'+response.result.data.first_name+'</p> <p>PHONE NUMBER:'+response.result.data.phone+'</p> <p>NUM TEL:'+response.result.data.mobile+'</p> <p>NOTES:'+response.result.data.call_note+'</p> <p>TYPE:'+response.result.data.category_name+'</p> <p>CODE:'+response.result.data.auxcode_name+'</p> <p>TYPE APPELLANT:'+response.result.data.type_appellant+'</p> <p>AGENCE:'+response.result.data.twitter+'</p>'
   //  var html='DATE:'+response.result.data.call_start_dt+'\\n,CONNAISSANCE BAOBOB:'+response.result.data.call_start_dt+'HOUR:'+response.result.data.created_dt+'AGENT:'+response.result.data.agent_name+'NUM CILENT:'+response.result.data.first_name+'NAME CILENT:'+response.result.data.call_data+'PHONE NUMBER:'+response.result.data.phone+
-    'NUM TEL:'+response.result.data.other_phone+'NOTES:'+response.result.data.call_note+'TYPE:'+response.result.data.category_name+'CODE:'+response.result.data.auxcode_name+'TYPE APPELLANT:'+response.result.data.type_appellant+'AGENCE:'+response.result.data.twitter;
-   // alert(content)
+   
+   //alert(content)
     setTimeout(() => {
     tinymce.activeEditor.setContent(content);
       

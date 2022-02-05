@@ -93,7 +93,9 @@
                             </tr>
                             <tr>
                                 <th>#</th>
-                                <th>DATE&TIME</th>
+                                <th>DATE
+
+                                </th>
                                 <th>CONNAISSANCE BAOBOB</th>
                                  <th>HOUR</th>
 
@@ -123,7 +125,7 @@
                                 <td>{{history.call_start_dt| date: 'h:MM:ss'}}</td>
                                 <td>{{history.agent_name}}</td>
                                 <td>{{history.first_name}}</td>
-                                <td>{{history.call_data}}</td>
+                                <td>{{history.call_data }}</td>
                                 <td>{{history.phone}}</td>
                                 <td>{{history.other_phone}}</td>
                                 <td><span class="callType"> <img src="assets/images/incoming-call.svg" *ngIf="history.call_type == 'incoming'"><img src="assets/images/outgoing-call.svg" *ngIf="history.call_type == 'outgoing'"><img src="assets/images/outgoing-call.svg" *ngIf="history.call_type == 'outbound'"></span>{{history.call_type}}</td>

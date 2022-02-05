@@ -69,13 +69,9 @@ export class QueueManagementComponent implements OnInit {
     //   this.websocket = new WebSocket("wss://socket.mconnectapps.com:5012/"); 
     // }
 
-    if(this.admin_id == '66'){
-      this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4002"); 
-    } else if(this.admin_id == '201'){
-      this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4003"); 
-    } else {
-      this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4036"); 
-    }
+    
+      this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4023"); 
+  
 
 
     this.websocket.onopen = function(event) { 
@@ -87,6 +83,7 @@ export class QueueManagementComponent implements OnInit {
   
     this.websocket.onmessage = function(event) {
       var result_message = JSON.parse(event.data);
+      console.log(result_message);
       this.hardware_id = localStorage.getItem('hardware_id');
       if(result_message[0].cust_id == this.hardware_id){
         // console.log('matched');

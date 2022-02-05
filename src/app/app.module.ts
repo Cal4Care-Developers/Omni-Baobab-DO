@@ -620,7 +620,7 @@ const appRoutes: Routes = [
     // CampaignContactsEditComponent,
     AgentPermissionComponent,
     // CallReportComponent,
-    // QueueManagementComponent,
+    QueueManagementComponent,
     // LeadManagementComponent,
     // LogReportComponent,
     CustomWallboardComponent,

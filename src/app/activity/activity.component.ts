@@ -27,10 +27,13 @@ export class ActivityComponent implements OnInit {
   call_note;
   auxcode_name;
   email;
-  email_id: string;
+  
+  phone_num: string;
+  b_phone_num;
   constructor(private serverService: ServerService, private router:Router,private route: ActivatedRoute) { 
     this.contact_id = this.route.snapshot.queryParamMap.get('contact_id');
-    this.email_id = this.route.snapshot.queryParamMap.get('email');
+    
+     this.phone_num = this.route.snapshot.queryParamMap.get('phone');
    // this.call_note = this.route.snapshot.queryParamMap.get('call_note');
    // this.auxcode_name= this.route.snapshot.queryParamMap.get('auxcode_name');
 
@@ -95,7 +98,8 @@ export class ActivityComponent implements OnInit {
   //   });
   // }
 
-bcktoContc(contact_id){
+  bcktoContc(contact_id,phone){
+    alert(phone)
       console.log(contact_id);
       var b_phone_num = btoa(b_phone_num); // Base64 encode the String
   var conct_num =btoa(contact_id);
@@ -104,6 +108,7 @@ bcktoContc(contact_id){
       conct_req.user_id=localStorage.getItem('userId');
       conct_req.action="get_contact_by_id";
       conct_req.contact_id=contact_id;
+     
       api_req.operation="contact";
       api_req.moduleType="contact";
       api_req.api_type="web";
@@ -113,7 +118,10 @@ bcktoContc(contact_id){
         if(response.result.status==true){
          // var decodedString = btoa(response.result.data[0].phone );
           var cont_id = btoa(this.contact_id );
-          this.router.navigate(['/edit-contact-dup'], { queryParams: { phone: b_phone_num,cont_id:cont_id,ids:conct_num,calltype:'outgoing'} });
+          this.router.navigate(['/edit-contact-dup'], { queryParams: { phone: this.phone_num,ids:conct_num,calltype:'outgoing'} });
+
+
+         // this.router.navigate(['/edit-contact-dup'], { queryParams: { phone: b_phone_num,cont_id:cont_id,ids:conct_num,calltype:'outgoing'} });
          // this.router.navigate(['/edit-contacts'], { queryParams: { phone:  decodedString,cont_id:cont_id} });
         }
       }, 
