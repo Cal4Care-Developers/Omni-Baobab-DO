@@ -34,6 +34,7 @@ export class ActivityComponent implements OnInit {
     this.contact_id = this.route.snapshot.queryParamMap.get('contact_id');
     
      this.phone_num = this.route.snapshot.queryParamMap.get('phone');
+   //  alert( this.phone_num)
    // this.call_note = this.route.snapshot.queryParamMap.get('call_note');
    // this.auxcode_name= this.route.snapshot.queryParamMap.get('auxcode_name');
 
@@ -98,16 +99,18 @@ export class ActivityComponent implements OnInit {
   //   });
   // }
 
-  bcktoContc(contact_id,phone){
-    alert(phone)
-      console.log(contact_id);
-      var b_phone_num = btoa(b_phone_num); // Base64 encode the String
-  var conct_num =btoa(contact_id);
+  bcktoContc(){
+    //alert(phone)
+      console.log(this.contact_id);
+      //var b_phone_num = btoa(b_phone_num); // Base64 encode the String
+  var conct_num =btoa(this.contact_id);
+  this.phone_num=btoa(this.phone_num)
+
       let conct_req:any = new Object();
       let api_req:any = new Object();
       conct_req.user_id=localStorage.getItem('userId');
       conct_req.action="get_contact_by_id";
-      conct_req.contact_id=contact_id;
+      conct_req.contact_id=this.contact_id;
      
       api_req.operation="contact";
       api_req.moduleType="contact";

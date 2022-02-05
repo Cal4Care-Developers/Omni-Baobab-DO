@@ -868,7 +868,7 @@ if(this.admin_id == this.uadmin_id){
 }
 
 addNotes(id){
-  this.router.navigate(['/activity'], { queryParams: { contact_id: id, email : this.email_id } });
+  this.router.navigate(['/activity'], { queryParams: { contact_id: id, phone : this.param1 } });
 }
 addWrapupcode() {
  // alert('hii')
