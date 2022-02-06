@@ -112,7 +112,7 @@ $(function() {
     } else {
       body.addClass("sidebar-mini");
       body.removeClass("sidebar-show");
-      sidebar_nicescroll.remove();
+      //sidebar_nicescroll.remove();
       sidebar_nicescroll = null;
       $(".main-sidebar .sidebar-menu > li").each(function() {
         let me = $(this);

@@ -144,7 +144,7 @@ listDataInfo(list_data){
       if (result.value) {
       let access_token: any=localStorage.getItem('access_token');
     
-      let api_req:any = '{"operation":"predective_dialer_contact", "moduleType":"predective_dialer_contact", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"delete_contact","user_id":"'+this.user_id+'","contact_id":"'+contact_id+'"}}';
+      let api_req:any = '{"operation":"predective_dialer_contact", "moduleType":"predective_dialer_contact", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"delete_contact","user_id":"'+this.admin_id+'","contact_id":"'+contact_id+'"}}';
     
       this.serverService.sendServer(api_req).subscribe((response:any) => {
 
@@ -175,7 +175,7 @@ listDataInfo(list_data){
     let access_token: any=localStorage.getItem('access_token');
     let user_is: any=localStorage.getItem('userId');
   
-    let api_req:any = '{"operation":"predective_dialer_contact", "moduleType":"predective_dialer_contact", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"get_campaign","admin_id":"'+user_is+'"}}';
+    let api_req:any = '{"operation":"predective_dialer_contact", "moduleType":"predective_dialer_contact", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"get_campaign","admin_id":"'+this.admin_id+'"}}';
   
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.status==true){
@@ -196,7 +196,7 @@ listDataInfo(list_data){
   editContact(id){
     let access_token: any=localStorage.getItem('access_token');
     let user_is: any=localStorage.getItem('userId');
-    let api_req:any = '{"operation":"predective_dialer_contact", "moduleType": "predective_dialer_contact", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"edit_contact","contact_id":"'+id+'","user_id":"'+user_is+'"}}';
+    let api_req:any = '{"operation":"predective_dialer_contact", "moduleType": "predective_dialer_contact", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"edit_contact","contact_id":"'+id+'","user_id":"'+this.admin_id+'"}}';
   
     this.serverService.sendServer(api_req).subscribe((response:any) => {
 
@@ -253,12 +253,12 @@ listDataInfo(list_data){
     api_req.element_data = this.addConatct.value;
     api_req.element_data.action='add_contact';
     api_req.element_data.campaign_id= camp_name;
-    if(this.admin_id == 1211)
+    if(this.admin_id == 1232)
     api_req.element_data.agent_name= $('#agent_name').val();
     else
     api_req.element_data.agent_name=" ";
 
-    api_req.element_data.user_id = localStorage.getItem('userId');
+    api_req.element_data.user_id = localStorage.getItem('admin_id');
     api_req.element_data.admin_id = localStorage.getItem('admin_id');    
     console.log(api_req);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -304,12 +304,12 @@ updateData(contact_id){
   api_req.element_data = this.editData.value;
   api_req.element_data.action='update_contact';
   api_req.element_data.campaign_id= camp_name;
-    if(this.admin_id == 1211)
+    if(this.admin_id == 1232)
     api_req.element_data.agent_name= $('#edt_agent_name').val();
     else
     api_req.element_data.agent_name=" ";
   api_req.element_data.contact_id= contact_id;
-  api_req.element_data.user_id = localStorage.getItem('userId');
+  api_req.element_data.user_id = localStorage.getItem('admin_id');
   api_req.element_data.admin_id = localStorage.getItem('admin_id');    
   console.log(api_req);
   this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -384,7 +384,7 @@ return false;
     if (result.value) {
     let access_token: any=localStorage.getItem('access_token');
   
-    let api_req:any = '{"operation":"predective_dialer_contact", "moduleType":"predective_dialer_contact", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"delete_contact","user_id":"'+this.user_id+'","contact_id":"'+invalidContacts+'"}}';
+    let api_req:any = '{"operation":"predective_dialer_contact", "moduleType":"predective_dialer_contact", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"delete_contact","user_id":"'+this.admin_id+'","contact_id":"'+invalidContacts+'"}}';
   
     this.serverService.sendServer(api_req).subscribe((response:any) => {
 

@@ -102,7 +102,7 @@ export class DndComponent implements OnInit {
     let agents_req:any = new Object();
     agents_req.action="dnd_list";
     agents_req.admin_id=localStorage.getItem('admin_id');
-    agents_req.user_id=localStorage.getItem('userId');
+    agents_req.user_id=localStorage.getItem('admin_id');
     agents_req.search_text=list_data.search_text;
     agents_req.order_by_name=list_data.order_by_name;
     agents_req.order_by_type=list_data.order_by_type;
@@ -181,7 +181,7 @@ resetContact(){
   return false;
   }
 
-  let api_req:any = '{"operation":"predective_dialer_contact", "moduleType":"predective_dialer_contact", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"dnd_update","id":"'+invalidContacts+'","user_id":"'+this.user_id+'"}}';
+  let api_req:any = '{"operation":"predective_dialer_contact", "moduleType":"predective_dialer_contact", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"dnd_update","id":"'+invalidContacts+'","user_id":"'+this.admin_id+'"}}';
 
   this.serverService.sendServer(api_req).subscribe((response:any) => {
     if(response.result.status==true){

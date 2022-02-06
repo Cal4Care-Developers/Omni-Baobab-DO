@@ -70,7 +70,7 @@ export class InvalidCampaignContactComponent implements OnInit {
     let agents_req:any = new Object();
     agents_req.action="invalid_list";
     agents_req.admin_id=localStorage.getItem('admin_id');
-    agents_req.user_id=localStorage.getItem('userId');
+    agents_req.user_id=localStorage.getItem('admin_id');
     agents_req.search_text=list_data.search_text;
     agents_req.order_by_name=list_data.order_by_name;
     agents_req.order_by_type=list_data.order_by_type;
