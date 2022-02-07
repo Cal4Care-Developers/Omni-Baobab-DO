@@ -130,6 +130,7 @@
        <div *ngFor="let chat_details of chat_panel_details;let i=index"> 
          <div class="chat-item chat-left" *ngIf="chat_details.msg_user_type == 'customer'"><img src="{{chat_details.customer_image}}"  onerror="this.src='assets/images/user.jpg'" alt="avatar">
            <div class="chat-details">
+            <div *ngIf="isthisgroup">{{chat_details.group_sender_name}}</div>  
             <div class="chat-text" style="white-space: pre-line;" *ngIf="chat_details.chat_msg"> <div style="max-width: 650px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img  href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" ></a></div>{{chat_details.chat_msg}}</div> 
             <div class="chat-text" style="white-space: pre-line;"  *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='csv'" > <div style="max-width: 650px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img  href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></a></div>{{chat_details.chat_msg}}</div>
             <div class="chat-text" style="white-space: pre-line;"  *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='docx'" > <div style="max-width: 650px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img  href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></a></div>{{chat_details.chat_msg}}</div>
