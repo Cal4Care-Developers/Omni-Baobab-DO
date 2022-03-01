@@ -665,8 +665,8 @@ Agent Message
 								    <span *ngIf="replies.rep_name ==null" class="blk-clr">{{replies.user_name}}</span>
 								 Reported Via Email <small><i>{{replies.ticket_created_at}}</i></small></h6>
 								<div class="ticket-message-details fr"><strong>To: </strong> 
-									<!-- {{replies.ticket_to}} -->
-									{{replies.ticket_from}}
+									{{replies.ticket_to}} 
+									<!-- {{replies.ticket_from}} -->
 									<br>
 								<div *ngIf="replies.mail_cc !='null' && replies.mail_cc !='' " ><strong>Cc: </strong> {{replies.mail_cc}}</div>
 

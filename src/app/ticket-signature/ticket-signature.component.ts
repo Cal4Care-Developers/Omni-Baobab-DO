@@ -372,7 +372,46 @@ var self =this;
     });
 
   }
-
+  deletedata(id){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+      let access_token: any=localStorage.getItem('access_token');
+    
+    //   let api_req:any = '{"operation":"predective_dialer_contact", "moduleType":"predective_dialer_contact", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"delete_contact","user_id":"'+this.user_id+'","contact_id":"'+invalidContacts+'"}}';
+     
+      let api_req: any = '{"operation":"ticket", "moduleType": "ticket", "api_type": "web", "access_token":"' + access_token + '", "element_data":{"action":"deleteSignature","admin_id":"' + this.admin_id + '","sig_id":"' + id + '"}}';
+    
+      this.serverService.sendServer(api_req).subscribe((response:any) => {
+    
+      console.log(response);
+      if(response.result.data==true){
+        iziToast.success({
+        message: "Signature deleted successfully",
+        position: 'topRight'
+      });
+      this.get_mails();
+      } else {
+        iziToast.warning({
+        message: "Contact not deleted, Please try again!",
+        position: 'topRight'
+      });
+      }
+      }, 
+      (error)=>{
+        console.log(error);
+      });
+    
+    }  
+    })
+  }
 
 
 }

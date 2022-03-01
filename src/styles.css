@@ -2259,12 +2259,19 @@ span.ticket-title {
     .card .addBtn { width: auto; margin: 10px 0; }
 }
 
-.goog-te-banner-frame{display: none;}
-div#google_translate_element {margin-right: 30px;}
+.goog-te-banner-frame{display: none; } 
+ div#google_translate_element {margin-right: 30px;
+    }
 select.goog-te-combo{border-color: #ddd;padding: 8px; margin-bottom: 0!important;border-radius: 5px;}
 div#google_translate_element:focus{border:none;outline: 0}
 .goog-te-combo{outline: 0;}
-
+.goog-te-gadget-simple{
+background-color: black !important;
+-webkit-text-fill-color: white;
+margin-right: 15px;
+margin-top: 7px;
+border-radius: 4px;
+}
 
 
 /* WallBoard FiVE */

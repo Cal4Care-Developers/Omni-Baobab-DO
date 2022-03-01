@@ -37,3 +37,12 @@ ul#sidemenu, .panel-collapse{padding: 0;}
 #sidebar-wrapper .sidebar-nav li a.accordion-toggle:after {content: "";font-family: "Font Awesome 5 Free";font-weight: 900;position: absolute;top: 50%;right: 20px;transform: translate(0, -50%);font-size: 14px;}
 .sidebar-nav li a:hover{background-color: #60686f;color: #fff!important;}
 ul.panel-collapse{text-indent: 10px;}
+
+.google_translate_element{
+    position:left;border-left: 113px; 
+    background-color: black;
+    -webkit-text-fill-color: white;
+    margin-right: 15px;
+     margin-top: 7px;border-radius: 3px;
+     border-radius: 3px;
+}

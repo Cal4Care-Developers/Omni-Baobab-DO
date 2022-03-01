@@ -12,6 +12,7 @@ declare var $:any;
 declare var iziToast:any;
 // declare var   handleAction:any;
 declare var  startRecording:any;
+
  declare var stopRecording:any;
 @Component({
   selector: 'app-whatsapp-unoff', 
@@ -1448,6 +1449,87 @@ getFileExtension(filename) {
   //console.log(ext);
   return ext == null ? "" : ext[1];
 }
+chatPanelDetail2(chat_id) {
+
+  this.chat_ids = chat_id;
+  $('#chat_msg').val('');
+  let api_req: any = new Object();
+  let chat_req: any = new Object();
+  chat_req.action = "chat_detail_listOFF";
+  chat_req.chat_id = chat_id;
+  chat_req.limit = "5";
+  chat_req.offset = 0;
+  chat_req.user_id = this.loginUser;
+  api_req.operation = "wpchat";
+  api_req.moduleType = "wpchat";
+  api_req.api_type = "web";
+  api_req.access_token = localStorage.getItem('access_token');
+  api_req.element_data = chat_req;
+
+  this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+    if (response.result.status == true) {
+      //console.log(response.result.status);
+      this.chat_panel_detail_type = "chat_detail";
+      this.chat_panel_details = response.result.data.chat_detail_list;
+      this.customer_name = response.result.data.chat_detail_list[0].customer_name;
+      this.group_name = response.result.data.chat_detail_list[0].group_name;
+      this.group_icon = response.result.data.chat_detail_list[0].group_icon;
+      this.prof_image = response.result.data.chat_detail_list[0].customer_image;
+      this.offset_count_msg = 0;
+      if (this.group_name != null) {
+        this.isthisgroup = true;
+        this.customer_name = this.group_name;
+      }
+      else {
+        this.isthisgroup = false;
+        this.customer_name = response.result.data.chat_detail_list[0].customer_name;
+
+      }
+      this.customer_number = response.result.data.chat_detail_list[0].customer_number;
+
+      this.forworduser = response.result.data.chat_detail_list[0].f_user_id;
+      this.username = response.result.data.chat_detail_list[0].user_name;
+
+
+      if (this.forworduser != null || this.forworduser != undefined) {
+        this.transfered = true;
+        if (this.uadmin_id == this.forworduser) {
+          this.transferedforMe = true;
+        }
+        else {
+          this.transferedforMe = false;
+        }
+      }
+
+      else {
+        this.transfered = false;
+        this.transferedforMe = false;
+
+      }
+      this.chat_detail_key = chat_id;
+      // alert(this.chat_detail_key+"  id 3 details");
+
+      if (this.rollonce == false) {
+
+        //  this.chatautoScroll();  2-3-21
+
+        setTimeout(() => {
+          $(".card-body.chat-content").scrollTop($(".card-body.chat-content")[0].scrollHeight);
+
+        }, 10);
+      }
+
+
+    }
+
+  },
+    (error) => {
+      console.log(error);
+    });
+
+}
+
 
 
 }

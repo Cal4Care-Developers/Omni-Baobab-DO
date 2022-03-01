@@ -160,7 +160,7 @@ export class CallHistoryComponent implements OnInit {
 		if (admin_permission == '1') {
 			new_user_id = localStorage.getItem('admin_id');
 		} else {
-			new_user_id = localStorage.getItem('userId');
+			new_user_id = localStorage.getItem('admin_id');
 		}
 
 		var list_data = this.listDataInfo(data);
