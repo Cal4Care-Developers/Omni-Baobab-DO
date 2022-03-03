@@ -337,7 +337,7 @@ initSocket() {
       } else if (this.admin_id == '201') {
         this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4003");
       } else {
-        this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4036");
+        this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4023");
       }
   
   
