@@ -2264,15 +2264,21 @@ span.ticket-title {
     }
 select.goog-te-combo{border-color: #ddd;padding: 8px; margin-bottom: 0!important;border-radius: 5px;}
 div#google_translate_element:focus{border:none;outline: 0}
+
+    
+
 .goog-te-combo{outline: 0;}
 .goog-te-gadget-simple{
-background-color: black !important;
+background-color: #34373e  !important;
 -webkit-text-fill-color: white;
 margin-right: 15px;
 margin-top: 7px;
 border-radius: 4px;
 }
 
+.goog-te-gadget-icon{
+    display: none;
+}
 
 /* WallBoard FiVE */
 
@@ -2713,4 +2719,16 @@ Reorder List
 }
 .card .card-header .btn:last-child {
     margin-right: -8px;
+}
+
+.goog-te-menu2-item div,.goog-te-menu2-item:link div,.goog-te-menu2-item:visited div,.goog-te-menu2-item:active div{
+    color:white;
+    background-color: #34373e !important;
+}
+.goog-te-gadget .goog-te-combo{
+    color:white;
+    background-color:#34373e;  
+}
+.goog-logo-link{
+    display: none;
 }
