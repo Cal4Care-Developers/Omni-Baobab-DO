@@ -683,6 +683,12 @@ table td .btn { padding: 0px 10px; }
 .theme-black table tbody th .pretty .state label:before { border-color: #fff; }
 .theme-black table tbody td .pretty .state label:before, .theme-black .card-header .pretty .state label:before, .theme-black  .form-group .pretty .state label:before { border-color: #333; }
 
+.theme-red .goog-te-gadget .goog-te-combo{ background-color: #dfb1b1 !important; }
+.theme-cyan .goog-te-gadget .goog-te-combo { background-color: #D19FE8 !important; }
+.theme-purple .goog-te-gadget .goog-te-combo { background-color: #318CE7 !important; }
+.theme-black .goog-te-gadget .goog-te-combo { background-color: #353c48 !important; }
+.theme-orange .goog-te-gadget .goog-te-combo { background-color: #DE5D83 !important; }
+.theme-green .goog-te-gadget .goog-te-combo { background-color: #BD33A4 !important; }
 
 .modal-header .close:focus { outline: none; }
 
