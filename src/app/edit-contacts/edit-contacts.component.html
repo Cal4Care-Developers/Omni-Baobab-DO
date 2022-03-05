@@ -4,9 +4,9 @@
 			<div class="card-header">
 				<h4><i class="fa fa-address-book" aria-hidden="true"></i>
 					Edit Contacts</h4>
-				<!-- <div class="addBtn">
+				<div class="addBtn">
 					 <button class="btn btn-primary" (click)="addNotes(this.contact_id)"  style="float: right;"> Activities</button>
-				 </div>  -->
+				 </div> 
 			</div>
 			</div>
 			<form [formGroup]="editContact" (ngSubmit)="updateContact(this.contact_id)" *ngIf="alladmin">
@@ -105,6 +105,7 @@
 										<div class="form-group">
 											<label for="email">Email Address</label>
 											<input type="text" id="email"  class="form-control" formControlName="email" >
+											<label class="error-message message-small" *ngIf="!editContact.get('email').valid && editContact.get('email').touched ">Please enter the valid email id</label>
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -126,7 +127,7 @@
 												<option value='0'> Select Gender </option>
 												<option value="Male">Male</option> 
 												<option value="Female">Female</option> 
-												<option value=" ">Others </option> 
+												<option value=" ">Other </option> 
 												<!-- <option *ngFor="let dept of departments" value="{{dept.dept_id}}">{{dept.department_name}}</option> -->
 											</select>
 										</div>
@@ -142,6 +143,7 @@
 										<div class="form-group">
 											<label for="mobile">Other Phone #</label>
 											<input type="text" id="mobile"  class="form-control" formControlName="mobile" >
+											<label class="error-message message-small" *ngIf="!editContact.get('mobile').valid && editContact.get('mobile').touched ">Please enter the number</label>
 										</div>
 									</div>
 	

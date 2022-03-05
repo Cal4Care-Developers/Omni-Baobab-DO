@@ -1129,7 +1129,7 @@ dialPadDetailViewIncomming(view_type, detail_id) {
                 // this.call_history_id = response.result.data;
               // this.router.navigate(['/edit-contacts'], { queryParams: { phone: detail_id,calltype: this.call_type} });
                this.openModelPopup('');
-               let data=  {title: 'Incomming call from '+atob(detail_id)+'', notification_for: 'incomming_call', click_action: ' ', unique_id: ' ', sound: 'default', badge: '1', host_name: 'https://baobabgroup.mconnectapps.com'};
+               let data=  {title: 'Incoming call from '+atob(detail_id)+'', notification_for: 'incomming_call', click_action: ' ', unique_id: ' ', sound: 'default', badge: '1', host_name: 'https://baobabgroup.mconnectapps.com'};
               this.serverService.sendNotifications(data);
             }
     return false;

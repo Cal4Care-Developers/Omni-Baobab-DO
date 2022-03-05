@@ -125,6 +125,7 @@
 									<div class="form-group">
 										<label for="mobile">Other Phone </label>
 										<input type="text" id="mobile"  class="form-control" formControlName="mobile" >
+										<label class="error-message message-small" *ngIf="!addContact.get('mobile').valid && addContact.get('mobile').touched ">Please enter the number</label>
 									</div>
 								</div>
 

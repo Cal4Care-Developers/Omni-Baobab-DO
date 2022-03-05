@@ -140,7 +140,7 @@ export class EditContactDupComponent implements OnInit {
       'home_phone' :new FormControl(null),
       'office_phone' :new FormControl(null),
       'fax' :new FormControl(null),
-      'mobile' :new FormControl(null),
+      'mobile' :new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
       'dob' :new FormControl(null),
       'assistant' :new FormControl(null),
       'assitant_phone' :new FormControl(null),
@@ -233,7 +233,7 @@ export class EditContactDupComponent implements OnInit {
     // } else {
     //   this.getquestionnaire();
     // }
-    this.toggleClass();
+    // this.toggleClass();
     this.admin_id = localStorage.getItem('admin_id');
     this.dsk_access = localStorage.getItem('dsk_access');
     this.has_external_contact = localStorage.getItem('has_external_contact');

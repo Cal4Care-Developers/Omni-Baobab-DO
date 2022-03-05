@@ -412,7 +412,7 @@ export class ServerService {
         }
         else if (notify == 'incomming_call') {
             imgs = '../../assets/img/mc-dashboard/call.png';
-             heading = 'Incomming Call';
+             heading = 'Incoming Call';
         }
 
         if (Notification.permission !== "granted") {

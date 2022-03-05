@@ -33,7 +33,7 @@ export class AddContactsComponent implements OnInit {
       'home_phone' :new FormControl(null),
       'office_phone' :new FormControl(null),
       'fax' :new FormControl(null),
-      'mobile' :new FormControl(null),
+      'mobile' :new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
       'dob' :new FormControl(null),
       'assistant' :new FormControl(null),
       'assitant_phone' :new FormControl(null),
