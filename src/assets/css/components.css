@@ -313,6 +313,7 @@ green #28c76f -> Byzantine #BD33A4
 }
 .people-list .chat-list img {
     width: 45px;
+    height: auto;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     -ms-border-radius: 50%;
@@ -504,6 +505,7 @@ green #28c76f -> Byzantine #BD33A4
 .chat-box .chat-content .chat-item>img {
     float: left;
     width: 40px;
+    height: auto;
     border-radius: 50%}
 .chat-box .chat-content .chat-item .chat-details {
     margin-left: 70px;

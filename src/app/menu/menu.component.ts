@@ -465,7 +465,7 @@ console.log(this.socketData);
     this.profile_image = localStorage.getItem('profile_image');
    
 
-if( this.profile_image == null || this.profile_image == 'null' || this.profile_image == 'undefined'){
+if( this.profile_image == null || this.profile_image == 'null' || this.profile_image == 'undefined' || this.profile_image == undefined){
   this.profile_image  = 'assets/images/user.jpg';
 } else {
   this.profile_image = localStorage.getItem('profile_image');
