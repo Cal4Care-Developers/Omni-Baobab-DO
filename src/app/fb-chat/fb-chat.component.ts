@@ -90,8 +90,18 @@ export class FbChatComponent implements OnInit {
      
   }
    sendChatMessageData(){
-  
-   
+    
+    Swal.fire({
+      title: 'Please Wait',
+      allowEscapeKey: false,
+      allowOutsideClick: false,
+      //  background: '#19191a',
+      showConfirmButton: false,
+      onOpen: () => {
+        Swal.showLoading();
+      }
+    });
+
     var chat_message=  this.chat_message.nativeElement.value;
     chat_message = chat_message.trim();
    if (chat_message.length > 0) {
@@ -112,7 +122,7 @@ export class FbChatComponent implements OnInit {
       api_req.element_data = chat_req;
       
             this.serverService.sendServer(api_req).subscribe((response:any) => {
-  
+              Swal.close();
               if(response.result.data==1){
 
                  this.chatautoScroll();
