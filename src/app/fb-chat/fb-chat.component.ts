@@ -397,6 +397,18 @@ onMessageSend($event){
   }
 
 addWhatsappMedia(){ 
+
+  Swal.fire({
+    title: 'Please Wait',
+    allowEscapeKey: false,
+    allowOutsideClick: false,
+    //  background: '#19191a',
+    showConfirmButton: false,
+    onOpen: () => {
+      Swal.showLoading();
+    }
+  });
+
   let access_token: any=localStorage.getItem('access_token');
   // let chat_id: any=this.chat_detail_id.nativeElement.value;
     var formData = new FormData();
@@ -420,6 +432,7 @@ addWhatsappMedia(){
     processData: false,  // tell jQuery not to process the data
     contentType: false, 
     success:function(data){ 
+      Swal.close();
       this.parsed_data = JSON.parse(data);
       console.log(this.parsed_data );
       if(this.parsed_data.status == 'true'){  

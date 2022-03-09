@@ -128,14 +128,18 @@
                            
                                                <div class="chat-details">
                                                   <div  *ngIf="chat_details.extension== 'doc' ||chat_details.extension=='docx'||chat_details.extension == 'pdf'||chat_details.extension == 'csv';"  class="chat-text" style="white-space: pre-line;" >
-                                                    <div *ngIf="chat_details.message_attachment" style="max-width: 650px;" > <a target="_blank" href="{{chat_details.message_attachment}}"><img src="assets/images/icons/quickView.png"> <b>{{chat_details.agent_name}}</b> </a>
+                                                    <div>
+                                                      <b>{{chat_details.agent_name}}</b> 
+                                                    </div>
+                                                    <div *ngIf="chat_details.message_attachment" style="max-width: 650px;" > <a target="_blank" href="{{chat_details.message_attachment}}"><img src="assets/images/icons/quickView.png"> </a>
                                                    </div>
                                                </div>
-                                                    <div *ngIf="chat_details.extension!= 'doc' && chat_details.extension != 'docx' && chat_details.extension != 'pdf' &&chat_details.extension != 'csv' ;" class="chat-text" style="white-space: pre-line;">
+                                                    <div *ngIf="chat_details.extension!= 'doc' && chat_details.extension != 'docx' && chat_details.extension != 'pdf' &&chat_details.extension != 'csv';" class="chat-text" style="white-space: pre-line;">
+                                                      <div>
+                                                        <b>{{chat_details.agent_name}}</b>
+                                                      </div> 
                                                      <div *ngIf="chat_details.message_attachment" style="max-width: 650px;" > <a target="_blank" href="{{chat_details.message_attachment}}"><img href="{{chat_details.message_attachment}}"  src="{{chat_details.message_attachment}}"> </a></div>
-                                                     <div>
-                                                      <b>{{chat_details.agent_name}}</b>
-                                                    </div> 
+                                                
                                                        {{chat_details.chat_message}}
                                                  </div>
 
