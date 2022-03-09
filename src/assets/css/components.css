@@ -349,6 +349,7 @@ green #28c76f -> Byzantine #BD33A4
     -ms-border-radius: 50%;
     border-radius: 50%;
     width: 45px;
+    height: auto;
 }
 .chat .chat-header .chat-about {
     float: left;
