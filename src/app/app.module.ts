@@ -173,6 +173,7 @@ import { InvalidCampaignContactComponent } from './invalid-campaign-contact/inva
 import { DndComponent } from './dnd/dnd.component';
 import { QueueComponent } from './queue/queue.component';
 import { QueueManagementComponent } from './queue-management/queue-management.component';
+import { FacebookLoginComponent } from './facebook-login/facebook-login.component';
 // import { CustomWallboardSixComponent } from './custom-wallboard-six/custom-wallboard-six.component';
 // import { NetwrixReportComponent } from './netwrix-report/netwrix-report.component';
 
@@ -558,6 +559,8 @@ const appRoutes: Routes = [
     },
     {
         path :'queue', component:QueueManagementComponent
+    },{
+        path :'facebook-login', component:FacebookLoginComponent
     }
 ];
 
@@ -708,6 +711,7 @@ const appRoutes: Routes = [
    InvalidCampaignContactComponent,
    DndComponent,
    QueueComponent,
+   FacebookLoginComponent,
     // CustomWallboardSixComponent,
     // NetwrixReportComponent
     

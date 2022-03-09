@@ -16,6 +16,7 @@ export class FbChatComponent implements OnInit {
   uadmin_id;
   loginUser;
   chat_panel_list;
+  search_list;
 	chat_panel_details;
 	chat_panel_detail_type = "chat_screen";
   chat_detail_key;
@@ -31,7 +32,37 @@ export class FbChatComponent implements OnInit {
 
   constructor(private serverService: ServerService,private route: ActivatedRoute) {
      
-	this.param1 = this.route.snapshot.queryParamMap.get('c');
+  this.param1 = this.route.snapshot.queryParamMap.get('c');
+  
+  this.serverService.changeDetectionEmitter.subscribe(
+		($event) => {
+	
+		  let mData = JSON.parse($event);
+		  var pagefor = mData.pagefor;
+		  var pageid = mData.id;
+		   
+	
+		  if(pagefor == 'fb'){
+			// this.chatPanelDetail(pageid);			
+      // this.chatPanelView(pageid);
+        // this.chatPanelView2(pageid);
+        
+        
+        if(this.chat_detail_key==pageid)	
+        this.chatPanelDetail2(pageid);
+        else
+        this.chatPanelView2("all");
+
+			// setTimeout(()=>{ 
+			//   $(".card-body.chat-content").scrollTop($(".card-body.chat-content")[0].scrollHeight);
+			//   }, 4000);
+		  }
+		  
+		},
+		(err) => {
+		}
+	  );
+
 
    }
 
@@ -71,6 +102,7 @@ export class FbChatComponent implements OnInit {
       chat_req.action="fb_reply_message";
       chat_req.chat_id=this.chat_detail_id.nativeElement.value;
       chat_req.user_id=this.loginUser;
+      chat_req.admin_id=this.uadmin_id;
       chat_req.sender_id=this.chat_detail_id.nativeElement.value;
       chat_req.chat_message=chat_message;
       api_req.operation="wpchat";
@@ -128,6 +160,7 @@ export class FbChatComponent implements OnInit {
               if(response.status == true){
                    
                    this.chat_panel_list = response.result.data;
+                   this.search_list = response.result.data;
     
                    if(chat_id == "all" || chat_id == "" || chat_id == 0){
                      this.chat_panel_detail_type = "chat_screen";
@@ -187,7 +220,8 @@ export class FbChatComponent implements OnInit {
                    this.last_name = response.result.data[0].last_name;
                    this.profile_pic= response.result.data[this.chat_panel_details.length-1].profile_pic;
                    this.page_name= response.result.data[0].page_name;
-                   this.page_pic=response.result.data[0].page_picture;
+                  //  this.page_pic=response.result.data[0].page_picture;
+                   this.page_pic=response.result.data[0].profile_pic;
       
                    this.chatautoScroll(); 
                    this.chat_detail_key = chat_id;
@@ -224,6 +258,7 @@ export class FbChatComponent implements OnInit {
           if(response.status == true){
                
                this.chat_panel_list = response.result.data;
+               this.search_list = response.result.data;
 
                if(chat_id == "all" || chat_id == "" || chat_id == 0){
                  this.chat_panel_detail_type = "chat_screen";
@@ -279,6 +314,23 @@ export class FbChatComponent implements OnInit {
 // }
 
 
+chatPanelList(search_text){
+  console.log(search_text);
+
+
+    const lcText = search_text.toString().toLowerCase(); // calculate this once
+    this.chat_panel_list = this.search_list.filter(
+      e => (
+        // Added initial opening brace
+        (e.first_name.toLowerCase().indexOf(lcText) === 0) ||
+        (e.last_name.toLowerCase().indexOf(lcText) === 0)         
+      )// added closing brace
+    );
+        console.log(this.chat_panel_list);
+  
+}
+
+
 chatautoScroll(){   
   setTimeout(()=>{ 
     $(".card-body.chat-content").scrollTop($(".card-body.chat-content")[0].scrollHeight);
@@ -313,7 +365,8 @@ console.log(last.id);
              this.last_name = response.result.data[0].last_name;
              this.profile_pic= response.result.data[this.chat_panel_details.length-1].profile_pic;
              this.page_name= response.result.data[0].page_name;
-             this.page_pic=response.result.data[0].page_picture;
+            //  this.page_pic=response.result.data[0].page_picture;
+             this.page_pic=response.result.data[0].profile_pic;
 
             //  this.chatautoScroll(); 
              this.chat_detail_key = chat_id;
@@ -360,8 +413,8 @@ addWhatsappMedia(){
     console.log(formData);
    
   $.ajax({  
-    url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",  
-    // url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",  
+    url:"https://omni.mconnectapps.com/api/v1.0/index_new.php",  
+    // url:"https://omni.mconnectapps.com/api/v1.0/index_new.php",  
     type : 'POST',
     data : formData,
     processData: false,  // tell jQuery not to process the data
@@ -435,6 +488,96 @@ addWhatsappMedia(){
     });
       
      
+  }
+
+
+  chatPanelView2(chat_id){
+  
+  
+    let api_req:any = new Object();
+    let chat_req:any = new Object();
+    chat_req.action="fb_message_panel";
+    
+    chat_req.user_id=this.loginUser;
+    api_req.operation="wpchat";
+    api_req.moduleType="wpchat";
+    api_req.api_type="web";
+    api_req.access_token=localStorage.getItem('access_token');
+    api_req.element_data = chat_req;
+    
+          this.serverService.sendServer(api_req).subscribe((response:any) => {
+            console.log(response);
+            console.log(chat_id);
+            console.log(this.chat_detail_key);
+            if(response.status == true){
+                 
+                 this.chat_panel_list = response.result.data;
+ 
+                 if(chat_id == this.chat_detail_key){
+              
+                   this.chat_panel_details = response.result.data.chat_detail_list;
+                   this.chat_panel_detail_type = "chat_detail";
+                   this.chatPanelDetail2(chat_id);
+                  // this.chatPanelDetail(chat_id);
+                 }
+  
+                 
+                //  this.chatautoScroll();
+                //  this.chat_detail_key = chat_id;
+            }
+              
+          }, 
+          (error)=>{
+              console.log(error);
+          });
+  
+  
+    }
+
+
+
+chatPanelDetail2(chat_id){ 
+
+  let api_req:any = new Object();
+  let chat_req:any = new Object();
+  chat_req.action="fb_single_chat";
+  chat_req.sender_id=chat_id;
+  chat_req.user_id=this.loginUser;
+  api_req.operation="wpchat";
+  api_req.moduleType="wpchat";
+  api_req.api_type="web";
+  api_req.access_token=localStorage.getItem('access_token');
+  api_req.element_data = chat_req;
+  
+        this.serverService.sendServer(api_req).subscribe((response:any) => {      
+          if(response.status == true){ 
+            setTimeout(()=>{ 
+              // alert('rolled')
+			  $(".card-body.chat-content").scrollTop($(".card-body.chat-content")[0].scrollHeight);
+			  }, 1500);           
+            console.log(response.status);
+               this.chat_panel_detail_type = "chat_detail"; 
+          
+               this.chat_panel_details = response.result.data;
+               let last:any = this.chat_panel_details[this.chat_panel_details.length-1];
+  console.log(last.id);
+               this.first_name = response.result.data[0].first_name;
+               this.last_name = response.result.data[0].last_name;
+               this.profile_pic= response.result.data[this.chat_panel_details.length-1].profile_pic;
+               this.page_name= response.result.data[0].page_name;
+               this.page_pic=response.result.data[0].page_picture;
+  
+              //  this.chatautoScroll(); 
+               this.chat_detail_key = chat_id;
+          }
+            
+        
+        }, 
+        (error)=>{
+            console.log(error);
+        });
+  
+  
   }
 
 

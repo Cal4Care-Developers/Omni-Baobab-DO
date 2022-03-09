@@ -9,6 +9,8 @@
                                     <!-- <div class="sidebar-add-btn">
                                         <button  type="button" class="btn btn-primary">Compose New</button>
                                     </div> -->
+                                    <div class="row">
+                                      <div class="col-md-10">
                                     <div class="input-group"> 
                                         <input type="text" class="form-control"  placeholder="Search..." #chat_search (keyup.enter)="chatPanelList(chat_search.value)">
                                         <input type="hidden" name="open_chat_detail_id" id="open_chat_detail_id" value="0" #open_chat_detail_id (click)='chatPanelDetail(open_chat_detail_id.value)'>
@@ -16,23 +18,34 @@
 
                                         <span ></span>
                                         <div class="input-chat_search-append">
-                                            <button class="btn btn-primary chat_list_search" (click)="chatPanelList(chat_search.value)"><i class="fas fa-search"></i></button>
+
+                                          <button class="btn btn-primary chat_list_search" (click)="chatPanelList(chat_search.value)">
+                                            <i class="fas fa-search"></i>
+                                          </button>
+                            
+                               
                                         </div>
                                     </div>
+                                  </div>
                 
+                                  <div class="col-md-2" [routerLink]="['/facebook-login']" routerLinkActive="router-link-active" >
+                                    <i class="fa fa-cog fb-settings"  aria-hidden="true"></i>
+                                  </div>
+                                </div>
+
                              </div>
                             <div class="m-b-20">
                                 <div id="chat-scroll">
                                     <ul class="chat-list list-unstyled m-b-0 chat_list_data">
                         
-                                    <li class="clearfix" *ngFor="let chat_list of chat_panel_list;let i=index" (click)="chatPanelDetail(chat_list.sender_id)">
+                                    <li  [ngClass]="chat_list.read_status == '1' ? 'clearfix' : 'clearfix read_status'" *ngFor="let chat_list of chat_panel_list;let i=index" (click)="chatPanelDetail(chat_list.sender_id)">
                         
 
-                                      <div class="about">
+                                      <div class="about" style="width: 100%;">
                                         <div class="name">
                                           <img  class="thumbnail-image" src="{{chat_list.profile_pic}}"
                                              alt="..." width="50px" height="50px" style="margin-right: 5px;"/>
-                                             <b>{{chat_list.page_name}}</b>  - {{chat_list.first_name}}
+                                             <b>{{chat_list.first_name}}</b>  - {{chat_list.last_name}}
                                           </div>
                                         <div class="text-small text-muted"> <div class="bullet"></div> {{chat_list.chat_dt}}</div>
 
@@ -109,15 +122,20 @@
                         
                                         <!-- <div class="chat-item chat-right" *ngIf="chat_details.msg_user_type == 'agent' && chat_details.msg_user_id == loginUser"><img src="assets/images/user.jpg" >  -->
                                         <div class="chat-item chat-right" *ngIf="chat_details.from_id == 'admin'">
-                                          <img src="{{page_pic}}" > 
+      <!-- <img src="{{page_pic}}" >  -->
+      <img  *ngIf="chat_details.profile_image !== null" src="{{chat_details.profile_image}}" > 
+      <img  *ngIf="chat_details.profile_image == null"  src="assets/images/user.jpg" >
                            
                                                <div class="chat-details">
                                                   <div  *ngIf="chat_details.extension== 'doc' ||chat_details.extension=='docx'||chat_details.extension == 'pdf'||chat_details.extension == 'csv';"  class="chat-text" style="white-space: pre-line;" >
-                                                    <div *ngIf="chat_details.message_attachment" style="max-width: 650px;" > <a target="_blank" href="{{chat_details.message_attachment}}"><img src="assets/images/icons/quickView.png"> <b>{{chat_details.extension}}</b> </a>
+                                                    <div *ngIf="chat_details.message_attachment" style="max-width: 650px;" > <a target="_blank" href="{{chat_details.message_attachment}}"><img src="assets/images/icons/quickView.png"> <b>{{chat_details.agent_name}}</b> </a>
                                                    </div>
                                                </div>
                                                     <div *ngIf="chat_details.extension!= 'doc' && chat_details.extension != 'docx' && chat_details.extension != 'pdf' &&chat_details.extension != 'csv' ;" class="chat-text" style="white-space: pre-line;">
                                                      <div *ngIf="chat_details.message_attachment" style="max-width: 650px;" > <a target="_blank" href="{{chat_details.message_attachment}}"><img href="{{chat_details.message_attachment}}"  src="{{chat_details.message_attachment}}"> </a></div>
+                                                     <div>
+                                                      <b>{{chat_details.agent_name}}</b>
+                                                    </div> 
                                                        {{chat_details.chat_message}}
                                                  </div>
 

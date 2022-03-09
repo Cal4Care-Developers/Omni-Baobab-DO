@@ -74,7 +74,9 @@
               "src/assets/spin.min.js",
               "src/assets/bootbox.min.js",
               "src/assets/toastr.min.js",
-              "src/assets/js/translate.js"
+              "src/assets/js/translate.js",
+              "src/assets/js/sdk.js",
+              "src/assets/custom/js/webhookfb.js"
              
             ]
           },
