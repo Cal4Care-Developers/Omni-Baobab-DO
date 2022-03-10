@@ -22,8 +22,8 @@ export class CustomWallboardComponent implements OnInit {
   abandoned_call = 0;
   waiting_call = 0;
   total_call = 0;
-  total_wp = 0;
-  total_sms = 0;
+  total_wp_count = 0;
+  unread_wp_count = 0;
   total_chat = 0;
   total_ticket = 0;
   perabandoned = 0;
@@ -56,6 +56,8 @@ export class CustomWallboardComponent implements OnInit {
   user_admin= false;
   doc_link;
   resagent = 0;
+  total_fb_count=0;
+  unread_fb_count=0;
   constructor(private serverService: ServerService, private router:Router) {  }
 
  
@@ -89,7 +91,8 @@ ngOnInit() {
     // this.getagentsdata();
   }
   this.getagentsdata();
-
+//GET COUNTS
+this.getChatCount();
   }
 
 
@@ -703,4 +706,22 @@ Schedulerst(){
    $("#document_model").modal('show');   
   }
 
+  getChatCount(){
+    let access_token: any=localStorage.getItem('access_token');
+    let api_req:any = '{"operation":"user", "moduleType":"agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"wallboard_counts","user_id":"'+this.loginUser+'"}}';
+    this.serverService.sendServer(api_req).subscribe((response:any) => {
+      if(response.status=="true"){
+        this.total_wp_count = response.total_wp_count;
+        this.unread_wp_count = response.unread_wp_count;
+        this.total_fb_count = response.total_fb_count;
+        this.unread_fb_count = response.unread_fb_count;
+        this.total_ticket = 2;
+      } else {
+       
+      }
+    }, 
+    (error)=>{
+        console.log(error);
+    });
+  }
 }
