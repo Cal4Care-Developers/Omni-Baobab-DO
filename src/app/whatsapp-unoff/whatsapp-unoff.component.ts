@@ -75,7 +75,11 @@ export class WhatsappUnoffComponent implements OnInit {
        
 
       if(pagefor == 'whatsapp_unoff'){
-        this.chatPanelDetail(pageid);
+
+        if(this.chat_detail_key==pageid)	
+            this.chatPanelDetail2(pageid);
+        else     
+        this.chatPanelView(pageid);
         setTimeout(()=>{ 
           $(".card-body.chat-content").scrollTop($(".card-body.chat-content")[0].scrollHeight);
           }, 4000);
@@ -138,6 +142,9 @@ this.get_temps();
 //  stopRecording();
     }
   
+  ngOnDestroy(){
+    this.chat_detail_key='';
+  }
  ngAfterViewInit() {
      this.chatautoScroll();
   }
