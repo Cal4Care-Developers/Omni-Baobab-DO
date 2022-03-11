@@ -66,6 +66,7 @@ export class FbChatComponent implements OnInit {
 
    }
 
+
   ngOnInit() {
     this.uadmin_id = localStorage.getItem('admin_id');
     this.loginUser = localStorage.getItem('userId');
@@ -87,7 +88,7 @@ export class FbChatComponent implements OnInit {
    }
   ngOnDestroy() {
     clearTimeout(this.callonce);
-     
+    this.chat_detail_key='';
   }
    sendChatMessageData(){
     
