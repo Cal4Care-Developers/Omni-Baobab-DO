@@ -75,11 +75,12 @@ export class WhatsappUnoffComponent implements OnInit {
        
 
       if(pagefor == 'whatsapp_unoff'){
-
+// alert(this.chat_detail_key)
+// alert(pageid)
         if(this.chat_detail_key==pageid)	
             this.chatPanelDetail2(pageid);
         else     
-        this.chatPanelView(pageid);
+        this.chatPanelView('all');
         setTimeout(()=>{ 
           $(".card-body.chat-content").scrollTop($(".card-body.chat-content")[0].scrollHeight);
           }, 4000);
