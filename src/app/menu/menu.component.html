@@ -26,9 +26,9 @@
               <div  *ngIf="this.cust_pbx"  [class]="this.queLogStatusNma == 'Logout' ? 'queue-login-status QueueLogIn' : 'queue-login-status QueueLogOut'"  (click)="queLoginOut()" title="Queue Details" style="cursor: pointer; padding: 0px; ">
                 <i class="fas mainQ" style="font-size: 25px;">Q</i>
               </div>
-              <button (click)="requestPermission()" *ngIf="reqPermission" class="btn btn-primary" style="margin-right: 15px;">
+              <!-- <button (click)="requestPermission()" *ngIf="reqPermission" class="btn btn-primary" style="margin-right: 15px;">
                 Get notified!
-              </button>
+              </button> -->
             </li>
 
             <li class="dropdown"><a href="javascript:void(0)" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="{{this.profile_image}}" class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>

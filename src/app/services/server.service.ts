@@ -212,7 +212,7 @@ export class ServerService {
                      imgs = 'assets/img/mc-dashboard/internal-chat.png';
                      heading = 'Internal Chat';
                 } else if (Edata.notification_for == 'fb') {
-                     imgs = 'assets/img/mc-dashboard/facebook.png';
+                     imgs = 'assets/img/mc-dashboard/facebook.svg';
                      heading = 'Facebook';
                 } else if (Edata.notification_for == 'SMS') {
                      imgs = 'assets/img/mc-dashboard/sms.png';
@@ -221,7 +221,7 @@ export class ServerService {
                     imgs = 'assets/img/mc-dashboard/line.png';
                     heading = 'Line';
                 } else if (Edata.notification_for == 'telegram') {
-                     imgs = 'https://' + window.location.hostname + '/#/tele-chat?c=' + unique_id;
+                     imgs = 'assets/img/mc-dashboard/telegram.svg';
                      heading = 'Telegram';
                     }
                   //  let Edatas: any = '{"pagefor":"'+Edata.notification_for+'","id":"'+Edata.unique_id+'","wp_id":"'+Edata.wp_id+'"}';

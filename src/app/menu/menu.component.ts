@@ -167,18 +167,16 @@ h_call_rec; wall_basic; h_que_manage;
       });
       if (localStorage.getItem('N_token') == "undefined" || localStorage.getItem('N_token') == "") {
         this.reqPermission = true;
-        // setTimeout(() => {
-          this.requestPermission();
-          // this.ifnotrefreshed();
-          // alert('clled')      ;
-        // }, 10000);
+      
+          // this.requestPermission();
+         
       } else {
         // alert()
         this.reqPermission = false;
 
-        // this.stop_interval = setInterval(() => {
-          this.requestPermission();
-        // }, 30000); //1min
+       
+          // this.requestPermission();
+        
       }
       this.uadmin_id = localStorage.getItem('userId');
       this.admin_id = localStorage.getItem('admin_id');
@@ -1117,8 +1115,11 @@ showVideofialers(){
   }
 
   notificationscall() {
-
-    var socket = io.connect('wss://myscoket.mconnectapps.com:4032');
+    this.reqPermission = false;
+    var socket = io.connect('wss://myscoket.mconnectapps.com:4032'); //Baobab.mconnectapps.com Senegal
+    // var socket = io.connect('wss://myscoket.mconnectapps.com:4052'); //Baobabgroup ML Notification wss://myscoket.mconnectapps.com:4052
+    // var socket = io.connect('wss://myscoket.mconnectapps.com:4053'); //Baobabgroup BF Notification wss://myscoket.mconnectapps.com:4053
+    // var socket = io.connect('wss://myscoket.mconnectapps.com:4054'); //Baobabgroup IC Notification wss://myscoket.mconnectapps.com:4054
     var self = this;
     socket.on('connect', function () {
       console.log('connected');
