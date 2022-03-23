@@ -2738,3 +2738,7 @@ Reorder List
 .goog-logo-link{
     display: none;
 }
+/* To resolved the huge img */
+.message-thread-body.fl img {
+    max-width: 100%;
+}
