@@ -106,7 +106,7 @@
                     <input type="text" id="sip_login" class="form-control" formControlName="sip_login" #sip_login >
                 </div>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1" *ngIf="show_admin_sett">
                 <div class="form-group">
                     <button type="button" style="margin-top: 30px;" class="btn btn-primary" title="Retrive Sip Details From 3CX" (click)="retriveFrom3cx(sip_login.value)" *ngIf="this.hardware_id !=''"><i class="fas fa-download" style="padding: 0px;"></i></button> 
                 </div>

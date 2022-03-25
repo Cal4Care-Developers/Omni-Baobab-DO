@@ -89,7 +89,7 @@ export class ProfileComponent implements OnInit {
         // Swal.close();
   
       } 
-      else if(result_message[0].data[0].Name=="getagentdet"){
+      else if(result_message[0].data[0].sipdata=="getagentdet"){
       
         // $('#sip_username_add').val(result_message[0].data[0].sip_username);
         // $('#sip_password_add').val(result_message[0].data[0].sip_password);
@@ -246,8 +246,15 @@ var ext =this.editAgent.value.sip_login;
   agent_req.email_id=this.editAgent.value.email_id;
   agent_req.agent_name=this.editAgent.value.agent_name;
   agent_req.sip_login=this.editAgent.value.sip_login;
-  agent_req.sip_username=$('#sip_username').val();
-  agent_req.sip_password=$('#sip_password').val();
+    if(this.admin_id==user_id){
+    agent_req.sip_username=$('#sip_username').val();
+    agent_req.sip_password=$('#sip_password').val();
+    }
+    else{
+      // Users dont has Sip update permission..So
+      agent_req.sip_username=this.editAgent.value.sip_username;
+      agent_req.sip_password=this.editAgent.value.sip_password;
+    }
   agent_req.phone_number=this.editAgent.value.phone_number;
   agent_req.user_id=this.editAgent.value.user_id;
   agent_req.has_contact=this.editAgent.value.has_contact;
