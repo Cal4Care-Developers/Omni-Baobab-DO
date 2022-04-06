@@ -2742,3 +2742,20 @@ Reorder List
 .message-thread-body.fl img {
     max-width: 100%;
 }
+.call-contact-minimize {
+    position: fixed;
+    bottom: 0;
+    right: 115px;
+    background: #3cb371;
+    z-index: 99999;
+    padding: 1px 25px;
+    border-radius: 12px 12px 0 0;
+}
+.call-contact-minimize a:hover {
+    color: #fff;
+}
+.call-contact-minimize p {
+    color: #ffffff;
+    margin: 0;
+    font-weight: bold;
+}
