@@ -31,9 +31,9 @@ export class WpintsettingsComponent implements OnInit {
   constructor(private serverService: ServerService) { }
 
   ngOnInit(): void {
-    this.user_id =localStorage.getItem('userId');
+    this.user_id =localStorage.getItem('admin_id');
    this.admin_id = localStorage.getItem('admin_id');
-   this.user_type = localStorage.getItem('user_type');
+   this.user_type = "Admin";
 
 
    this.getWp = new FormGroup({

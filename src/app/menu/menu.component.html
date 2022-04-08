@@ -120,7 +120,7 @@
         </ul>
       </li>
     <!-- </li> -->
-      <li *ngIf="this.user_type=='Employee'&& has_admin_permission" class="dropdown" (click)="openMe('Manage_butt')">
+      <li *ngIf="this.user_type=='Employee'&& (has_admin_permission || h_con)" class="dropdown" (click)="openMe('Manage_butt')">
          <!-- *ngIf="this.user_type=='Employee' && has_admin_permission"  (click)="openMe('Manage_butt')" -->
         <a href="javascript:void(0)" class="nav-link has-dropdown"><i class="fas fa-users"></i><span>Manage</span></a>
         <ul id="Manage_butt" class="dropdown-menu menu-bg-clr-2">
@@ -128,9 +128,9 @@
          <!-- <li routerLinkActive="active" *ngIf="lead"><a href="javascript:void(0)" class="nav-link" routerLink="/leads"><i class="far fa-address-card"></i><span>Leads</span></a></li> -->
          <!-- <li routerLinkActive="active" *ngIf="h_sms"><a href="javascript:void(0)" class="nav-link" routerLink="/sms-groups"><i class="far fa-address-card"></i><span>Sms Groups</span></a></li> -->
          <!-- <li routerLinkActive="active" *ngIf="h_sms && this.admin_id=='128'&&show_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/sms-templates"><i class="far fa-address-card"></i><span>Sms Templates</span></a></li> -->
-         <li routerLinkActive="active" *ngIf="this.h_message"><a href="javascript:void(0)" class="nav-link" routerLink="/message-temp"><i class="far fa-address-card"></i><span>Message Templates</span></a></li>
-         <li routerLinkActive="active" ><a href="javascript:void(0)" class="nav-link" routerLink="/department" ><i class="fas fa-list-alt"></i><span>Departments</span></a></li>
-         <li routerLinkActive="active" ><a href="javascript:void(0)" class="nav-link" routerLink="/agent-settings" ><i class="fas fa-users"></i><span>Agents</span></a></li>
+         <li routerLinkActive="active" *ngIf="this.h_message &&has_admin_permission"><a href="javascript:void(0)" class="nav-link" routerLink="/message-temp"><i class="far fa-address-card"></i><span>Message Templates</span></a></li>
+         <li routerLinkActive="active" *ngIf="has_admin_permission" ><a href="javascript:void(0)" class="nav-link" routerLink="/department" ><i class="fas fa-list-alt"></i><span>Departments</span></a></li>
+         <li routerLinkActive="active"  *ngIf="has_admin_permission"><a href="javascript:void(0)" class="nav-link" routerLink="/agent-settings" ><i class="fas fa-users"></i><span>Agents</span></a></li>
        </ul>
      </li>
 

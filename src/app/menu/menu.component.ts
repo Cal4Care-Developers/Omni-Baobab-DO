@@ -493,16 +493,21 @@ this.logo_image = localStorage.getItem('logo_image');
  
     this.getReports();
 
-    this.getinstance();
+    // this.getinstance();//Moved to after hasContactAccess to get admin_permission
 }
 googleTranslateElementInit();
   }
 
   getinstance(){
     let access_token: any=localStorage.getItem('access_token');
-
-  let api_req:any = '{"operation":"wp_instance", "moduleType":"wp_instance", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"getInstanceDetailsForAdmin","user_id":"'+this.userID+'","admin_id":"'+this.admin_id+'","user_type":"'+this.user_type+'"}}';
-
+    let userID=this.userID;
+    let user_type=this.user_type;
+if(this.has_admin_permission){
+  userID=this.admin_id;
+  user_type='Admin';
+}
+  let api_req:any = '{"operation":"wp_instance", "moduleType":"wp_instance", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"getInstanceDetailsForAdmin","user_id":"'+userID+'","admin_id":"'+this.admin_id+'","user_type":"'+user_type+'"}}';
+ 
   this.serverService.sendServer(api_req).subscribe((response:any) => {
     if(response.status==true){
       this.list_wpinsts = response.result.data;
@@ -682,9 +687,9 @@ googleTranslateElementInit();
                         this.h_con= true;
                     }
 
-                  if(this.predective_dialer_behave == '1'){
-                    this.h_con= false;
-                  }
+                  // if(this.predective_dialer_behave == '1'){
+                  //   this.h_con= false;
+                  // }
                    
 
 
@@ -862,7 +867,7 @@ googleTranslateElementInit();
                     localStorage.setItem("justOnce", "true");
                     window.location.reload();
                   }
-
+                  this.getinstance();//Mpved to get admin_permission
                 //   if (!localStorage.getItem("reload")) {
                 //     localStorage.setItem("reload", "true");
                 //     location.reload();
@@ -1007,8 +1012,13 @@ ViewEventDetails(event_id){
 
 ishasInstance(){
   let access_token: any=localStorage.getItem('access_token');
-
-  let api_req:any = '{"operation":"wp_instance", "moduleType":"wp_instance", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"getInstanceDetailsForAdmin","user_id":"'+this.userID+'","admin_id":"'+this.admin_id+'","user_type":"'+this.user_type+'"}}';
+  let userID=this.userID;
+  let user_type=this.user_type
+if(this.has_admin_permission){
+userID=this.admin_id;
+user_type='Admin';
+}
+  let api_req:any = '{"operation":"wp_instance", "moduleType":"wp_instance", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"getInstanceDetailsForAdmin","user_id":"'+userID+'","admin_id":"'+this.admin_id+'","user_type":"'+user_type+'"}}';
 
   this.serverService.sendServer(api_req).subscribe((response:any) => {
     if(response.status==true){
@@ -1167,8 +1177,13 @@ showVideofialers(){
   }
   getadmininstance(){
     let access_token: any=localStorage.getItem('access_token');
-  
-    let api_req:any = '{"operation":"wp_instance", "moduleType": "wp_instance", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"getInstanceDetailsForAdmin","user_id":"'+this.loginUser+'","user_type":"'+this.user_type+'"}}';
+    let userID=this.userID;
+    let user_type=this.user_type
+    if(this.has_admin_permission){
+    userID=this.admin_id;
+    user_type='Admin';
+    }
+    let api_req:any = '{"operation":"wp_instance", "moduleType": "wp_instance", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"getInstanceDetailsForAdmin","user_id":"'+userID+'","user_type":"'+user_type+'"}}';
   
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.status==true){
