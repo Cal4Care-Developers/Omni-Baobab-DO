@@ -13,7 +13,7 @@ declare var iziToast: any;
     providedIn: 'root'
     })
 export class ServerService {
-    
+
     show:Subject<any> = new Subject();
     qLogin:Subject<any> = new Subject();
     profile:Subject<any> = new Subject();
@@ -24,43 +24,43 @@ export class ServerService {
     // attendCall:Subject<any> = new Subject();
     currentMessage = new BehaviorSubject(null);
     changeDetectionEmitter: EventEmitter<any> = new EventEmitter<any>();
- 
+
     constructor(private http:HttpClient,private afMessaging: AngularFireMessaging,public router:Router){
         this.afMessaging.messaging.subscribe(
             (_messaging) => {
             _messaging.onMessage = _messaging.onMessage.bind(_messaging);
             _messaging.onTokenRefresh = _messaging.onTokenRefresh.bind(_messaging);
             }
-            )   
-         
+            )
+
     }
     admin_id;
-    
+
     sendServer(postData:any[]) {
         const httpOptions = {
           headers: new HttpHeaders({
             'Content-Type':  'application/json'
           })
         };
-        
-  
+
+
      this.admin_id= localStorage.getItem('admin_id');
     //   if(this.admin_id == "64")
     //         return this.http.post("https://baobabgroup.mconnectapps.com/api/v1.0/index.php", postData,httpOptions);
     //   else
             return this.http.post("https://baobabgroup.mconnectapps.com/api/v1.0/index.php", postData,httpOptions);
         // return this.http.post("https://" + window.location.hostname + "/api/v1.0/index.php", postData,httpOptions);
-      
 
-    } 
-    sendServer2(postData:any[]) {    
+
+    }
+    sendServer2(postData:any[]) {
         const httpOptions = {
           headers: new HttpHeaders({
             'Content-Type':  'application/json'
           })
-        };  
+        };
         return this.http.post("https://baobabgroup.mconnectapps.com/api/v1.0/index.php", postData,httpOptions);
-       } 
+       }
        MDy_Contacts_API(postData: any[]) {
         const httpOptions = {
             headers: new HttpHeaders({
@@ -89,7 +89,7 @@ export class ServerService {
     // }
 
     receiveMessage() {
-        //    alert('1'); 
+        //    alert('1');
 
         // this.afMessaging.messages.subscribe(
         //     (payload: any) => {
@@ -177,14 +177,14 @@ export class ServerService {
 
 
     receivePopup(Edata) {
-               
+
         console.log(Edata);
         let audioPlayer = <HTMLVideoElement>document.getElementById('beepaud');
         audioPlayer.play();
            // var fb_id = Edata.unique_id;
             var unique_id = btoa(Edata.unique_id);
             // alert(Edata.wp_id)
-            var  wp_id1 = Edata.wp_id; 
+            var  wp_id1 = Edata.wp_id;
             var  wp_id = btoa(Edata.wp_id); // Base64 encode the String
                 // var decodedString = atob(encodedString);
                 // alert('emailed');
@@ -226,10 +226,10 @@ export class ServerService {
                     }
                   //  let Edatas: any = '{"pagefor":"'+Edata.notification_for+'","id":"'+Edata.unique_id+'","wp_id":"'+Edata.wp_id+'"}';
                     //this.changeDetectionEmitter.emit(Edatas);
-                    
+
                     // let Mdata: any = '{"pagefor":"' + Edata.notification_for + '","id":"' + unique_id + '"}';
                     // this.changeDetectionEmitter.emit(Mdata);
-    
+
 
 
                 if (Edata.notification_for != "chat" && Edata.notification_for != "Call") {
@@ -332,7 +332,7 @@ export class ServerService {
             else{
                 pagination.backtab = "hide";
             }
-        
+
             btn_length = 1;
             pagination.data = []
             for(var offset_count = 0;offset_count < total_count;offset_count=offset_count+limit){
@@ -345,7 +345,7 @@ export class ServerService {
                     else{
                         pagination.data.push({"btn_length":btn_length,"offset_count":offset_count,"load":false});
                     }
-                
+
                 }
                  btn_length=btn_length+1;
 
@@ -373,7 +373,7 @@ export class ServerService {
         let Body = postData.title;
         let clicks = postData.click_action;
 
-   
+
 
 
         let imgs;
@@ -430,10 +430,10 @@ export class ServerService {
             //     window.open(clicks);
             // };
             notification.onclick = () => {
-                if(notify == 'incomming_call') {     
-                   window.focus();                
-                }else{                    
-                    window.open(clicks); 
+                if(notify == 'incomming_call') {
+                   window.focus();
+                }else{
+                    window.open(clicks);
                 }
                 // this.zone.run(() => {
                 //     console.log('onclick');

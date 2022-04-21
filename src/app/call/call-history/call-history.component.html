@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4>Wrap Up code Report</h4>
-                  
+
                 </div>
                 <div class="card-body p-30">
                 <form [formGroup]="getRep" (ngSubmit)="getReports()">
@@ -13,17 +13,18 @@
 							<div class="form-group">
 								<label for="department">Wrap Up Category</label>
 								<select (change)="getAuxCode()" name="auxcodes" id="auxcodes_pop2" class="form-control" formControlName="cat_ids">
-									<option value='0'> Select Category </option>
+									<option value=null> All</option>
 									<option *ngFor="let auxcode of auxcode_catagory" value="{{auxcode.id}}">
 										{{auxcode.category_name}}</option>
 								</select>
 							</div>
 						</div>
+
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="department">Wrap Up Code</label>
 								<select name="auxcodes" class="form-control" formControlName="auxcode_name">
-									<option value="" selected>Select code</option>
+									<option value=null >All</option>
 									<option *ngFor="let auxcode of auxcodes" value="{{auxcode.auxcode_name}}">
 										{{auxcode.auxcode_name}}</option>
 								</select>
@@ -31,19 +32,20 @@
 						</div>
 
 
-                        <!-- <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="auxcode_name">Select Wrap Up code</label>
-                                <select name="auxcode_name"  id="auxcode_name" class="form-control " formControlName="auxcode_name">
-                                    <option value="" selected>All</option>
-                                    <option *ngFor="let auxcode of auxcodes" value="{{auxcode.auxcode_name}}">{{auxcode.auxcode_name}}</option>
-                                </select>
-                            </div>
-                        </div> -->
+            <div class="col-md-6">
+              <div class="form-group">
+                  <label for="aget_ids">Select Agent</label>
+                  <select name="auxcodes" class="form-control" formControlName="aget_ids">
+                    <option value=null>All</option>
+                    <option *ngFor="let user of usersL" value="{{user.user_id}}">
+                      {{user.agent_name}}</option>
 
+                  </select>
+              </div>
+          </div>
                     </div>
                     <div class="row">
-                        
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="from_date">From Date</label>
@@ -66,13 +68,13 @@
                             </div>
                         </div>
                         </div>
-                    
+
                 </form>
                 </div>
             </div>
-            
+
         </div>
-    </div> 
+    </div>
     <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
             <div class="card">
@@ -115,12 +117,12 @@
                                 <th>Action</th>
                                 <!-- <button class="btn btn-primary"(click)="generate_ticket(this.email_id)"style="float: right;">Generate Ticket</button> -->
                                 <!-- <th>Queue Name</th> -->
-                                
+
                                 <!-- <th>Call Unique ID</th> -->
                             </tr>
                             <tr *ngFor="let history of call_history_list;let i=index" >
                                 <td>{{offset_count+i+1}}</td>
-                                <td>{{history.call_start_dt| date: 'dd/MM/yyyy'}}</td>  
+                                <td>{{history.call_start_dt| date: 'dd/MM/yyyy'}}</td>
                                 <td>{{history.agence}}</td>
                                 <td>{{history.call_start_dt| date: 'h:MM:ss'}}</td>
                                 <td>{{history.agent_name}}</td>
@@ -130,9 +132,9 @@
                                 <td>{{history.other_phone}}</td>
                                 <td><span class="callType"> <img src="assets/images/incoming-call.svg" *ngIf="history.call_type == 'incoming'"><img src="assets/images/outgoing-call.svg" *ngIf="history.call_type == 'outgoing'"><img src="assets/images/outgoing-call.svg" *ngIf="history.call_type == 'outbound'"></span>{{history.call_type}}</td>
                                 <td>
-                                    <ul [ngClass]="{'has-tooltip': history.call_note.length >= '20'}"> 
+                                    <ul [ngClass]="{'has-tooltip': history.call_note.length >= '20'}">
                                             <ul style="padding-left: 0px;" class="has-tooltip">
-                                        
+
                                          <span class="tooltip-modal" style="left: -255px;
                                          right: -369px;" >{{history.call_note}}</span>
                                          <div id="chat-message">{{history.call_note}}</div>
@@ -149,7 +151,7 @@
                                 <td>{{history.status_name}}</td>
                                 <!-- <td *ngIf="history.ext_ticket_id !='null'">{{this.ticket_status.status_name}}</td> -->
                                 <!-- <td>{{history.queue_names}}</td>                                -->
-                                                               
+
                                 <!-- <td>{{history.call_id_3cx}}</td> -->
                                 <td>
     <span class="user-icon" style="cursor: pointer;"><i class="fas fa-ticket-alt"
@@ -159,7 +161,7 @@
                             <tr *ngIf="recordNotFound == true">
                                <td colspan="12">Data not found</td>
                             </tr>
-                            
+
                         </table>
                     </div>
                 </div>

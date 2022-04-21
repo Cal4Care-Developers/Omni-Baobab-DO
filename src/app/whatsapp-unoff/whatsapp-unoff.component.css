@@ -19,6 +19,44 @@ i.agent_inactive.fa-circle.fas {
     overflow-x: hidden;
     flex: none;
   }
+
+   .blurClass{
+    font-size: 15px;
+    color: transparent;
+    text-shadow: 0 0 8px #000;
+
+}
+/* .background {
+  background-image: url(https://baobabgroup.mconnectapps.com/api/v1.0/whatsapp_image/9cb070d62dc738a0c3a1a408d68e4af5.jpg);
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 130vh;
+  width: 100%;
+  filter: blur(22px);
+} */
+.delete {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+/* .blurBg {
+  opacity: 0.5;
+} */
+/* .delete {
+  position: absolute;
+  right: 15px;
+  display: none;
+} */
+/* .delete{
+  color: red;
+  display: none;
+}
+
+.far fa-trash-alt:hover .delete {
+ display:block
+} */
+/* .blurClass {background-color:#000;} */
   /* .card.fullHeightCard {
     height: calc(100vh - 150px);
     overflow-y: hidden;

@@ -24,15 +24,17 @@ export class CallHistoryComponent implements OnInit {
 	uadmin_id;
 	auxcode_catagory;
 	res;
-	
+  aget_ids;
+
 	call_id: any;
 	email_id: any;
 	route: any;
 	ticket_status: any;
 	call_history_list_id: any;
 	ticket_status_id: any;
-	constructor(private serverService: ServerService,private router:Router) { 
-		
+  usersL: any;
+	constructor(private serverService: ServerService,private router:Router) {
+
 	}
 
 	ngOnInit() {
@@ -42,6 +44,7 @@ export class CallHistoryComponent implements OnInit {
 			'from_date': new FormControl(null),
 			'to_date': new FormControl(null),
 			'cat_ids': new FormControl(null),
+      'aget_ids': new FormControl(null),
 		});
 
 
@@ -51,9 +54,9 @@ export class CallHistoryComponent implements OnInit {
 		} else {
 			this.uadmin_id = localStorage.getItem('userId');
 		}
-		// this.getAuxCode();
+	 //this.getAuxCode();
 		this.getAuxCatogory();
-
+    this.getUsers();
 	}
 
 
@@ -62,11 +65,11 @@ export class CallHistoryComponent implements OnInit {
 
 		if (this.auxcode_catagory != null)
 		  return false;
-	
+
 		let access_token: any = localStorage.getItem('access_token');
 		let admin_id: any = localStorage.getItem('admin_id');
 		let api_req: any = '{"operation":"getAuxcode", "moduleType":"contact", "api_type": "web", "access_token":"' + access_token + '", "element_data":{"action":"get_aux_code_category","admin_id":"' + admin_id + '","user_id":"' + this.uadmin_id + '"}}';
-	
+
 		this.serverService.sendServer(api_req).subscribe((response: any) => {
 		  if (response.result.status == true) {
 			this.auxcode_catagory = response.result.data;
@@ -77,18 +80,24 @@ export class CallHistoryComponent implements OnInit {
 			console.log(error);
 		  });
 	  }
-	
+
 
 	  getAuxCode() {
 		// if(this.auxcodes!=null)
-		//  return false;
+		//   return false;
 		let cat_id = $('#auxcodes_pop2').val();
 		// this.getCatname(cat_id);
+    if(cat_id==null || cat_id=='0'|| cat_id=='null'||cat_id==0){
+      this.auxcodes=[];
+      this.getRep.value.auxcode_name=null;
+      return false;
+
+    }
 		let access_token: any = localStorage.getItem('access_token');
 		let admin_id: any = localStorage.getItem('admin_id');
-	
+
 		let api_req: any = '{"operation":"getAuxcode", "moduleType":"contact", "api_type": "web", "access_token":"' + access_token + '", "element_data":{"action":"getuax_by_cat","cat_id":"' + cat_id + '","admin_id":"' + admin_id + '"}}';
-	
+
 		this.serverService.sendServer(api_req).subscribe((response: any) => {
 		  if (response.result.status == true) {
 			this.auxcodes = response.result.data;
@@ -100,29 +109,54 @@ export class CallHistoryComponent implements OnInit {
 		  });
 	  }
 
-
+    getUsers(){
+      // if(this.aget_ids==null || this.aget_ids=='0'||this.aget_ids==0)
+      // return false;
+      let api_req:any = new Object();
+      let agents_req:any = new Object();
+      agents_req.action="get_user_admin";
+      agents_req.user_id=localStorage.getItem('userId');
+      agents_req.admin_id=localStorage.getItem('userId');
+    //  alert(agents_req.admin_id)
+      api_req.operation="contact";
+      api_req.moduleType="contact";
+      api_req.api_type="web";
+      api_req.access_token=localStorage.getItem('access_token');
+      api_req.element_data = agents_req;
+      console.log(api_req);
+          this.serverService.sendServer(api_req).subscribe((response:any) => {
+            console.log(response.result.data);
+            if(response.result.status==true){
+              this.usersL = response.result.data;
+              //console.log
+            }
+          },
+          (error)=>{
+              console.log(error);
+          });
+    }
 	//   getCatname(id) {
 	// 	let access_token: any = localStorage.getItem('access_token');
 	// 	let api_req: any = '{"operation":"getAuxcode_data", "moduleType": "contact", "api_type": "web", "access_token":"' + access_token + '", "element_data":{"action":"edit_aux_code_category","cat_id":"' + id + '","admin_id":"' + this.admin_id + '"}}';
-	
+
 	// 	this.serverService.sendServer(api_req).subscribe((response: any) => {
 	// 	  if (response.result.status == true) {
 	// 		var agent_data = response.result.data;
 	// 		this.category_name = agent_data.category_name;
-	
+
 	// 	  } else {
 	// 		iziToast.warning({
 	// 		  message: "Wrap Up codes not retrive. Please try again",
 	// 		  position: 'topRight'
 	// 		});
-	
+
 	// 	  }
 	// 	},
 	// 	  (error) => {
 	// 		console.log(error);
 	// 	  });
 	//   }
-	
+
 
 
 	// getAuxCode() {
@@ -141,7 +175,7 @@ export class CallHistoryComponent implements OnInit {
 	// 		});
 	// }
 
-	
+
 	listDataInfo(list_data) {
 
 		list_data.search_text = list_data.search_text == undefined ? "" : list_data.search_text;
@@ -238,6 +272,12 @@ export class CallHistoryComponent implements OnInit {
 			return false;
 		}
 
+   if( this.getRep.value.aget_ids == 'null')
+   this.getRep.value.aget_ids=null;
+   if( this.getRep.value.cat_ids == 'null')
+   this.getRep.value.cat_ids=null;
+   if( this.getRep.value.auxcode_name == 'null')
+   this.getRep.value.auxcode_name=null;
 
 
 		console.log(this.getRep.value);
@@ -247,11 +287,10 @@ export class CallHistoryComponent implements OnInit {
 		agents_req.user_id =  new_user_id;
 		agents_req.auxcode_name = this.getRep.value.auxcode_name;
 		agents_req.cat_ids = this.getRep.value.cat_ids;
-	//	alert(agents_req.cat_ids)
-		agents_req.fromDate = this.getRep.value.from_date;
+    agents_req.fromDate = this.getRep.value.from_date;
 		agents_req.toDate = this.getRep.value.to_date;
-		//agents_req.first_name = this.getRep.value.first_name;
-		api_req.operation = "auxcodeReport";
+    agents_req.aget_ids = this.getRep.value.aget_ids;
+	  api_req.operation = "auxcodeReport";
 		api_req.moduleType = "call";
 		api_req.api_type = "web";
 		api_req.access_token = localStorage.getItem('access_token');
@@ -295,25 +334,25 @@ Swal.close();
 			});
 	}
 
-	generate_ticket(c_id,email,note){  
-	
+	generate_ticket(c_id,email,note){
+
 	//	alert(c_id)
 	// var ca_id = btoa(c_id);
 	if(email == '' || email == null || email == undefined){
 			 iziToast.warning({
 			   message: "Email address is empty",
 			   position: 'topRight'
-			  
+
 			 });
 			 return false;
 		   }else{
 			this.router.navigate(['/ticket-create-new'], { queryParams: { call_id:c_id,email :email,note : note} });
 		   }
-	
+
 	}
 		// let email: any= $('#email').val();
 		 //alert(email)
-		
+
 	   // if(email == ''){
 	   //   iziToast.warning({
 	   //     message: "Email address is empty",
@@ -325,7 +364,7 @@ Swal.close();
 	// 	 iziToast.warning({
 	// 	   message: "Email address is empty",
 	// 	   position: 'topRight'
-		  
+
 	// 	 });
 	// 	 return false;
 	//    }else{
@@ -334,18 +373,18 @@ Swal.close();
 	// 	   console.log(api_req)
 	// 		   this.serverService.sendServer(api_req).subscribe((response: any) => {
 	// 		   if (response.result.status == true) {
-				    
-					   
+
+
 	// 		   }else {
-				   
+
 	// 				   iziToast.warning({
 	// 					 message: "Email address is empty",
 	// 					 position: 'topRight'
-						
+
 	// 				   });
-	// 				   return false;  
+	// 				   return false;
 	// 		   }
-		 
+
 	// 	   },
 	// 	   (error) => {
 	// 			iziToast.error({

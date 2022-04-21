@@ -12,13 +12,13 @@
               <!-- </div>  -->
               <div class="row">
                 <div class="col-md-10">
-                
+
                 <button   class="btn btn-primary" (click)="composenew()">Compose New</button>
                 </div>
                   <div class="col-md-2" style="padding-left: 0px;">
 
                   <button  (click)="refereshInstance2()" class="btn btn-secondary">  <i class="fa fa-redo"></i></button>
-                    
+
                   </div>
               </div>
             </div>
@@ -35,10 +35,10 @@
 
          </div>
          <div class="m-b-20">
-          
-          
+
+
           <div id="chat-scroll">
-            <!-- <div infiniteScroll [infiniteScrollDistance]="12" [infiniteScrollThrottle]="10" [scrollWindow]="false" 
+            <!-- <div infiniteScroll [infiniteScrollDistance]="12" [infiniteScrollThrottle]="10" [scrollWindow]="false"
           (scrolled)="onScroll()"> -->
             <ul class="chat-list list-unstyled m-b-0 chat_list_data">
               <div id="infinitescrool"  class="search-results"
@@ -49,20 +49,20 @@
                               [scrollWindow]="false">
              <li id="{{chat_list.chat_id}}" (click)="changestatus(chat_list.chat_id)" style="display:flex;" class="clearfix" *ngFor="let chat_list of chat_panel_list;let i=index" (click)="chatPanelDetail(chat_list.chat_id)">
               <img  *ngIf="chat_list.group_msg == 0" class="thumbnail-image" src="{{chat_list.prof_image}}"
-                onerror="this.src='assets/images/user.jpg'" style="width: 60px;" alt="avatar" /> 
+                onerror="this.src='assets/images/user.jpg'" style="width: 60px;" alt="avatar" />
                 <img  *ngIf="chat_list.group_msg == 1" class="thumbnail-image" style="width:60px;" src="{{chat_list.group_icon}}"
                 onerror="this.src='assets/images/user.jpg'"  alt="avatar" />
               <div  class="about" >
-               
+
                 <div  class="name" *ngIf="chat_list.group_msg == 0" > {{ chat_list.customer_name }} <span *ngIf="!chat_list.customer_name">Unknown</span>
                 <i [class]="chat_list.read_status == 0 ? 'fas fa-circle agent_active' : ''" aria-hidden="true" style="font-size: 10px; float: right;"></i>
-                 
-                </div> 
 
-                <div class="name" *ngIf="chat_list.group_msg == 1" >{{chat_list.group_name}}  <i class="fa fa-users" aria-hidden="true"></i> 
-                  
+                </div>
+
+                <div class="name" *ngIf="chat_list.group_msg == 1" >{{chat_list.group_name}}  <i class="fa fa-users" aria-hidden="true"></i>
+
                 <i [class]="chat_list.read_status == 0 ? 'fas fa-circle agent_active' : ''" aria-hidden="true" style="font-size: 10px;float: right;"></i>
-                
+
                 </div>
                 <div class="text-small text-muted" id="chat-message"> {{chat_list.chat_message}}</div>
                 <div class="text-small text-muted" id="chat-message"> <div class="bullet"></div> {{chat_list.chat_dt}}</div>
@@ -92,21 +92,21 @@
         <h3>Keep your device connected.</h3>
         <p>To reduce the data usage,<br>connect your phone to Wi-Fi.</p>
       </div>
-    </div> 
+    </div>
   </div>
 
   <div class="card" *ngIf="chat_panel_detail_type=='chat_detail'">
    <div class="chat">
      <div class="chat-header clearfix">
-    
-     <a *ngIf="isthisgroup" target="_blank" href="{{group_icon}}"><img src="{{group_icon}}" href="{{group_icon}}" onerror="this.src='assets/images/user.jpg'" alt="avatar"></a> 
-    <a *ngIf="isthisgroup==false" target="_blank" href="{{prof_image}}"> <img src="{{prof_image}}" href="{{prof_image}}" onerror="this.src='assets/images/user.jpg'" alt="avatar"></a> 
+
+     <a *ngIf="isthisgroup" target="_blank" href="{{group_icon}}"><img src="{{group_icon}}" href="{{group_icon}}" onerror="this.src='assets/images/user.jpg'" alt="avatar"></a>
+    <a *ngIf="isthisgroup==false" target="_blank" href="{{prof_image}}"> <img src="{{prof_image}}" href="{{prof_image}}" onerror="this.src='assets/images/user.jpg'" alt="avatar"></a>
        <div class="chat-about">
          <div class="chat-with">{{customer_name}}</div>
          <div *ngIf="isthisgroup==false" class="chat-num-messages">{{customer_number}}</div>
     <button  *ngIf="transfered==false && isthisgroup==false" type="button" class="btn btn-primary"  style="background-color: green;"(click)="modeltrans()"> <i class="fa fa-forward"></i>Transfer To Agent </button>
        <div class="chat-num-messages"  *ngIf="transfered==true && transferedforMe==false">
-          <h5>This Specific  Chat Was Transfered to the Agent  
+          <h5>This Specific  Chat Was Transfered to the Agent
             <!-- <b>"{{ this.forworduser }}"</b> -->
             <b>"{{ this.forworduser_name }}"</b>
           </h5>
@@ -127,21 +127,24 @@
      [infiniteScrollThrottle]="50"
      (scrolledUp)="onUp()"
      [scrollWindow]="false" >
-       <div *ngFor="let chat_details of chat_panel_details;let i=index"> 
+       <div *ngFor="let chat_details of chat_panel_details;let i=index">
          <div class="chat-item chat-left" *ngIf="chat_details.msg_user_type == 'customer'"><img src="{{chat_details.customer_image}}"  onerror="this.src='assets/images/user.jpg'" alt="avatar">
-           <div class="chat-details">
-            <div *ngIf="isthisgroup">{{chat_details.group_sender_name}}</div>  
-             
-            <div class="chat-text" style="white-space: pre-line;"*ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)==''"> <div style="max-width: 650px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img  href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" ></a></div>{{chat_details.chat_msg}}</div>
-            <div class="chat-text" style="white-space: pre-line;"  *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='webm'" > <div style="max-width: 650px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><audio controls><source src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></audio></a></div></div>
-            <div class="chat-text {{chat_details.msg_status}}" style="white-space: pre-line;" *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='csv'"> <div style="max-width: 650px;" > <a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 450px; max-height: 450px;"href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></a></div>{{chat_details.chat_msg}}</div>  
-            <div class="chat-text {{chat_details.msg_status}}" style="white-space: pre-line;" *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='png'"> <div style="max-width: 650px;" > <a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 450px; max-height: 450px;"href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></a></div>{{chat_details.chat_msg}}</div>  
-            <div class="chat-text" style="white-space: pre-line;" *ngIf="this.getFileExtension(chat_details.whatsapp_media_url)=='jpeg'"> <div  style="max-width: 450px; max-height: 450px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 450px; max-height: 450px;"  href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/Whatsappvoice.png'"></a></div>{{chat_details.chat_msg}}</div>
-            <div class="chat-text" style="white-space: pre-line;" *ngIf="this.getFileExtension(chat_details.whatsapp_media_url)=='jpg'"> <div  style="max-width: 450px; max-height: 450px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 450px; max-height: 450px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/Whatsappvoice.png'"></a></div>{{chat_details.chat_msg}}</div> 
-            <div class="chat-text" style="white-space: pre-line;"  *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='docx'" > <div style="max-width: 650px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 450px; max-height: 450px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></a></div>{{chat_details.chat_msg}}</div>
-            <div class="chat-text" style="white-space: pre-line;"  *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='pdf'" > <div style="max-width: 650px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 450px; max-height: 450px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></a></div>{{chat_details.chat_msg}}</div>
-            <div class="chat-text" style="white-space: pre-line;"  *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='xlsx'" > <div style="max-width: 650px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 450px; max-height: 450px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></a></div>{{chat_details.chat_msg}}</div>
-            <div class="chat-text" style="white-space: pre-line;"  *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='mp3'" > <div style="max-width: 650px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 450px; max-height: 450px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></a></div>{{chat_details.chat_msg}}</div>
+          <div class="chat-details" *ngIf='chat_details.delete_status== 1'>
+            <div class="chat-text" style="background: grey;color:white;"> This message has been deleted</div>
+          </div>
+          <div class="chat-details"  *ngIf='chat_details.delete_status!= 1'>
+            <div *ngIf="isthisgroup">{{chat_details.group_sender_name}}</div>
+               <!-- <div class="chat-text" style="white-space: pre-line;"> <a [ngClass]="{'class1':chat_details.delete_status ==='1'}"></a><div style="max-width: 50px;"></div><div id="blur">{{chat_details.chat_msg}}</div></div> -->
+            <div class="chat-text" style="white-space: pre-line;"*ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)==''"><div style="max-width: 650px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img  href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" ></a></div>{{chat_details.chat_msg}}</div>
+            <div class="chat-text" style="white-space: pre-line;"  *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='webm'" > <div style="max-width: 650px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><a [ngClass]="(chat_details.delete_status == '1')? 'background':''"><audio controls><source src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></audio></a></a></div></div>
+            <div class="chat-text" style="white-space: pre-line;" *ngIf="this.getFileExtension(chat_details.whatsapp_media_url)=='csv'"> <div  style="max-width: 450px; max-height: 450px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><a [ngClass]="(chat_details.delete_status == '1')? 'background':''"><img style="max-width: 450px; max-height: 450px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/Whatsappvoice.png'"></a></a></div>{{chat_details.chat_msg}}</div>
+            <div class="chat-text" style="white-space: pre-line;" *ngIf="this.getFileExtension(chat_details.whatsapp_media_url)=='png'"> <div  style="max-width: 450px; max-height: 450px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><a [ngClass]="(chat_details.delete_status == '1')? 'background':''"><img style="max-width: 450px; max-height: 450px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/Whatsappvoice.png'"></a></a></div>{{chat_details.chat_msg}}</div>
+            <div class="chat-text" style="white-space: pre-line;" *ngIf="this.getFileExtension(chat_details.whatsapp_media_url)=='jpeg'"> <div  style="max-width: 450px; max-height: 450px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><a [ngClass]="(chat_details.delete_status == '1')? 'background':''"><img style="max-width: 450px; max-height: 450px;"  href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/Whatsappvoice.png'"></a></a></div>{{chat_details.chat_msg}}</div>
+            <div class="chat-text" style="white-space: pre-line;" *ngIf="this.getFileExtension(chat_details.whatsapp_media_url)=='jpg'"> <div  style="max-width: 450px; max-height: 450px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><a [ngClass]="(chat_details.delete_status == '1')? 'background':''"><img style="max-width: 450px; max-height: 450px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/Whatsappvoice.png'"></a></a></div>{{chat_details.chat_msg}}</div>
+            <div class="chat-text" style="white-space: pre-line;" *ngIf="this.getFileExtension(chat_details.whatsapp_media_url)=='docx'"> <div  style="max-width: 450px; max-height: 450px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><a [ngClass]="(chat_details.delete_status == '1')? 'background':''"><img style="max-width: 450px; max-height: 450px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/Whatsappvoice.png'"></a></a></div>{{chat_details.chat_msg}}</div>
+            <div class="chat-text" style="white-space: pre-line;" *ngIf="this.getFileExtension(chat_details.whatsapp_media_url)=='pdf'"> <div  style="max-width: 450px; max-height: 450px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><a [ngClass]="(chat_details.delete_status == '1')? 'background':''"><img style="max-width: 450px; max-height: 450px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/Whatsappvoice.png'"></a></a></div>{{chat_details.chat_msg}}</div>
+            <div class="chat-text" style="white-space: pre-line;" *ngIf="this.getFileExtension(chat_details.whatsapp_media_url)=='xlxs'"> <div  style="max-width: 450px; max-height: 450px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><a [ngClass]="(chat_details.delete_status == '1')? 'background':''"><img style="max-width: 450px; max-height: 450px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/Whatsappvoice.png'"></a></a></div>{{chat_details.chat_msg}}</div>
+            <div class="chat-text" style="white-space: pre-line;" *ngIf="this.getFileExtension(chat_details.whatsapp_media_url)=='mp3'"> <div  style="max-width: 450px; max-height: 450px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><a [ngClass]="(chat_details.delete_status == '1')? 'background':''"><img style="max-width: 450px; max-height: 450px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/Whatsappvoice.png'"></a></a></div>{{chat_details.chat_msg}}</div>
 
              <div class="chat-time">{{chat_details.chat_dt}}   {{chat_details.chat_time}}</div>
              <!-- <div class="chat-time">{{chat_details.chat_dt}}</div> -->
@@ -149,22 +152,25 @@
          </div>
 
 
-         <div class="chat-item chat-right" *ngIf="chat_details.msg_user_type == 'agent' && chat_details.msg_user_id == loginUser || (chat_details.msg_user_type == 'agent' && chat_details.msg_user_id != loginUser)"><img src="{{profile_image}}"  onerror="this.src='assets/images/user.jpg'" alt="avatar"> 
-           <div class="chat-details">
-            <div class="chat-text" style="white-space: pre-line;"*ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)==''"> <div style="max-width: 650px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img  href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" ></a></div>{{chat_details.chat_msg}}</div>
-            <div class="chat-text" style="white-space: pre-line;"  *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='webm'" > <div style="max-width: 650px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><audio controls><source src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></audio></a></div></div>
-            <div class="chat-text {{chat_details.msg_status}}" style="white-space: pre-line;" *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='csv'"> <div style="max-width: 650px;" > <a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 450px; max-height: 450px;"   href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></a></div>{{chat_details.chat_msg}}</div>  
-            <div class="chat-text {{chat_details.msg_status}}" style="white-space: pre-line;" *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='png'"> <div style="max-width: 650px;" > <a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 450px; max-height: 450px;"   href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></a></div>{{chat_details.chat_msg}}</div>  
-           <div class="chat-text" style="white-space: pre-line;" *ngIf="this.getFileExtension(chat_details.whatsapp_media_url)=='jpeg'"> <div  style="max-width: 450px; max-height: 450px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 450px; max-height: 450px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/Whatsappvoice.png'"></a></div>{{chat_details.chat_msg}}</div>
-          <div class="chat-text" style="white-space: pre-line;" *ngIf="this.getFileExtension(chat_details.whatsapp_media_url)=='jpg'"> <div  style="max-width: 450px; max-height: 450px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 450px; max-height: 450px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/Whatsappvoice.png'"></a></div>{{chat_details.chat_msg}}</div> 
-          <div class="chat-text" style="white-space: pre-line;"  *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='docx'" > <div style="max-width: 650px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 450px; max-height: 450px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></a></div>{{chat_details.chat_msg}}</div>
-          <div class="chat-text" style="white-space: pre-line;"  *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='pdf'" > <div style="max-width: 650px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 450px; max-height: 450px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></a></div>{{chat_details.chat_msg}}</div>
-          <div class="chat-text" style="white-space: pre-line;"  *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='xlsx'" > <div style="max-width: 650px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 450px; max-height: 450px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></a></div>{{chat_details.chat_msg}}</div>
-          <div class="chat-text" style="white-space: pre-line;"  *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='mp3'" > <div style="max-width: 650px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 450px; max-height: 450px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></a></div>{{chat_details.chat_msg}}</div>   
-             
+         <div class="chat-item chat-right" *ngIf="chat_details.msg_user_type == 'agent' && chat_details.msg_user_id == loginUser || (chat_details.msg_user_type == 'agent' && chat_details.msg_user_id != loginUser)"><img src="{{profile_image}}"  onerror="this.src='assets/images/user.jpg'" alt="avatar">
+          <div class="chat-details" *ngIf='chat_details.delete_status== 1'>
+            <div class="chat-text" style="background: grey;"> This message has been deleted</div>
+          </div>
+          <div class="chat-details" *ngIf='chat_details.delete_status!= 1'>
+
+            <div class="chat-text" style="white-space: pre-line;"*ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)==''"> <div style="max-width: 650px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img  href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" ></a></div><div class="delete" style="cursor: pointer;"><i class="far fa-trash-alt" style="font-size:10px;" (click)="delete(chat_details)"></i></div>{{chat_details.chat_msg}}</div>
+            <div class="chat-text" style="white-space: pre-line;"  *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='webm'" > <a style="max-width: 650px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><audio controls><source src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></audio></a></a><div class="delete" style="cursor: pointer;"><i class="far fa-trash-alt" style="font-size:12px;"  (click)="delete(chat_details)"></i></div></div>
+            <div class="chat-text" style="white-space: pre-line;"  *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='csv'" > <div style="max-width: 450px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 350px; max-height: 350px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></a></div><div class="delete"  style="cursor: pointer;"><i class="far fa-trash-alt" style="font-size:12px;" (click)="delete(chat_details)"></i></div>{{chat_details.chat_msg}}</div>
+             <div class="chat-text" style="white-space: pre-line;"  *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='png'" > <div style="max-width: 450px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 350px; max-height: 350px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></a></div><div class="delete"  style="cursor: pointer;"><i class="far fa-trash-alt" style="font-size:12px;" (click)="delete(chat_details)"></i></div>{{chat_details.chat_msg}}</div>
+          <div class="chat-text" style="white-space: pre-line;" *ngIf="this.getFileExtension(chat_details.whatsapp_media_url)=='jpg'"> <div  style="max-width: 450px; max-height: 450px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 350px; max-height: 350px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/Whatsappvoice.png'"></a></div><div class="delete"  style="cursor: pointer;"><i class="far fa-trash-alt" style="font-size:12px;" (click)="delete(chat_details)"></i></div>{{chat_details.chat_msg}}</div>
+           <div class="chat-text" style="white-space: pre-line;"  *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='docx'" > <div style="max-width: 450px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 350px; max-height: 350px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></a></div><div class="delete"  style="cursor: pointer;"><i class="far fa-trash-alt" style="font-size:12px;" (click)="delete(chat_details)"></i></div>{{chat_details.chat_msg}}</div>
+           <div class="chat-text" style="white-space: pre-line;"  *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='pdf'" > <div style="max-width: 450px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 350px; max-height: 350px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></a></div><div class="delete"   style="cursor: pointer;"><i class="far fa-trash-alt" style="font-size:12px;" (click)="delete(chat_details)"></i></div>{{chat_details.chat_msg}}</div>
+           <div class="chat-text" style="white-space: pre-line;"  *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='xlsx'" > <div style="max-width: 450px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 350px; max-height: 350px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></a></div><div class="delete"   style="cursor: pointer;"><i class="far fa-trash-alt" style="font-size:12px;" (click)="delete(chat_details)"></i></div>{{chat_details.chat_msg}}</div>
+           <div class="chat-text" style="white-space: pre-line;"  *ngIf= "this.getFileExtension(chat_details.whatsapp_media_url)=='mp3'" > <div style="max-width: 450px;"><a target="_blank" href="{{chat_details.whatsapp_media_url}}"><img style="max-width: 350px; max-height: 350px;" href="{{chat_details.whatsapp_media_url}}" src="{{chat_details.whatsapp_media_url}}" onerror=" this.src='assets/images/icons/quickView.png'"></a></div><div class="delete"   style="cursor: pointer;"><i class="far fa-trash-alt" style="font-size:12px;" (click)="delete(chat_details)"></i></div>{{chat_details.chat_msg}}</div>
+
              <div class="message-status-img">
               <img *ngIf="chat_details.msg_status == 'DELIVERED'" src="assets/images/whatsapp-double-grey.svg" height="20">
-              <img *ngIf="chat_details.msg_status == 'READ'"  src="assets/images/whatsapp-double-blue.svg" height="20"> 
+              <img *ngIf="chat_details.msg_status == 'READ'"  src="assets/images/whatsapp-double-blue.svg" height="20">
               <img *ngIf="chat_details.msg_status == 'SENT'"  src="assets/images/whatsapp-single-grey.svg" height="15">
 
             </div>
@@ -177,9 +183,9 @@
 
       </div>
 
- 
+
     </div>
-    <div class="card-footer chat-form"> 
+    <div class="card-footer chat-form">
      <!-- <form id="chat-form"> -->
        <textarea class="form-control" id="chat_msg" placeholder="Press 'Shift+Enter' to next line and 'Enter' to send" style="height: 50px;" (keydown)="onMessageSend($event)"  #chat_message></textarea>
        <input type="hidden" name="chat_id" id="chat_detail_id" value="{{chat_detail_key}}" #chat_detail_id>
@@ -204,7 +210,7 @@
       </button>
     <!-- <button> -->
       <!-- <button id="action" class="btn btn-primary" data-toggle="modal" data-target="#VoiceModel"  (click)="action()">Start recording...</button> -->
-      
+
      </div>
    </div>
  </div>
@@ -233,19 +239,19 @@ Add New Widget Modal
                                 <div class="form-group">
                                     <input type="file" class="form-control" name="whatsapp_media" id="whatsapp_media">
                                 </div>
-                              </div> 
+                              </div>
                                 <div class="col-md-12 col-12">
                                   <div class="form-group">
                                       <textarea class="form-control" name="whatsapp_media_with_text" placeholder="Enter text here..." id="whatsapp_media_with_text"></textarea>
                                   </div>
                                 </div>
-                           
+
 
 
                         </div>
                     </div>
 
-                </div>	
+                </div>
             </div>
 
             <div class="modal-footer">
@@ -269,7 +275,7 @@ Add New Widget Modal
                   <span aria-hidden="true">&times;</span>
               </button>
           </div>
-          
+
           <!-- <iframe width="100%" height="100%" frameBorder="0" href="https://whatsapp.mconnectapps.com/83430/qrCode"></iframe> -->
           <div class="modal-body">
             <form [formGroup]="getWp" id="scan_qr" class="question-panel fl" (ngSubmit)="get_wp_number()">
@@ -293,10 +299,10 @@ Add New Widget Modal
                          <input type="submit" class="btn btn-success" value="Update" [disabled]="!getWp.valid">
                     </div>
                 </div>
-                
+
             </form>
         </div>
-        
+
    </div>
  </div>
 </div>
@@ -331,7 +337,7 @@ Add New Widget Modal
           </div>
         </div>
 
-      </div>	
+      </div>
     </div>
 
     <div class="modal-footer">
@@ -357,7 +363,7 @@ Add New Widget Modal
               <iframe  class="myvideo" [src]="this.doc_link | safe"  width="100%" style="height: 575px;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               <!-- style="margin-bottom: -6px;" width="100%" height="325"  -->
             <!-- <embed [src]="this.video_link | safe"  width="100%" style="height: 575px;" /> -->
-    </div>     
+    </div>
     <div class="modal-footer" >
         <div class="buttons">
             <input type="button" data-dismiss="modal"  (click)="stop()" class="btn btn-outline-secondary" value="close">
@@ -366,7 +372,7 @@ Add New Widget Modal
 
   </div>
 </div>
-</div>  
+</div>
 
 <div class="modal fade" id="VoiceModel">
   <div class="modal-dialog modal-md">
@@ -385,13 +391,13 @@ Add New Widget Modal
               <div class="col-md-12 col-12">
                 <div class="form-group">
                   <label for="audio-playback">Are you sure want to send the message</label>
-                  <!-- <audio id="audio-playback" controls> 
-              
-                    <source src= 
+                  <!-- <audio id="audio-playback" controls>
+
+                    <source src=
             "https://media.geeksforgeeks.org/wp-content/uploads/20190531165842/Recording1514.ogg"
-                            type="audio/ogg"> 
-              
-                   
+                            type="audio/ogg">
+
+
                 </audio> -->
                   <!-- <audio src="https://baobabgroup.mconnectapps.com/api/v1.0/whatsapp_voice/70d806cd-d2de-4234-b209-c88d945fd286.weba" id="audio-playback" name="audiofile" type="audio_file_type"controls></audio> -->
                   <audio id="audio-playback"  type="audio/mp3"
@@ -406,11 +412,11 @@ Add New Widget Modal
             </div>
           </div>
 
-        </div>	
+        </div>
       </div>
       <div class="modal-footer">
         <div class="buttons">
-          
+
 
           <input type="button" class="btn btn-primary update_agent " value="Send" (click)="addWhatsappVoice()" >
         </div>
