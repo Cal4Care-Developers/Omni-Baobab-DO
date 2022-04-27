@@ -66,7 +66,7 @@ has_round_robin = false;
     this.admin_id_enc=btoa(this.admin_id);
     // this.customHtml = 'https://'+window.location.hostname+'/webchat/?aid='+btoa(this.admin_id);
     this.customHtml = 'https://baobabgroup.mconnectapps.com/webchat/?aid='+this.admin_id_enc;
-   
+
     this.listConsentFormms();
     this.get_timezone();
     this.get_sounds();
@@ -101,7 +101,7 @@ listChatWidget(){
       console.log(response);
       Swal.close();
       if(response.status==true){
- 
+
 
       // this.customHtml = 'https://'+window.location.hostname+'/webchat/?aid='+btoa(this.admin_id)+'&wid='+btoa(response.result.data[0].widget_name);
       this.customHtml = 'https://baobabgroup.mconnectapps.com/webchat/?aid='+this.admin_id_enc+'&wid='+btoa(response.result.data[0].widget_name);
@@ -133,7 +133,7 @@ listChatWidget(){
 
         this.widget_appearance = response.result.data[0].widget_appearance;
 
-     
+
       $("#window-round-chat .widget-appearance-round").css("background", response.result.data[0].color +'!important');
 
        $('#privacy-policy-link').val(response.result.data[0].privacy_policy_link);
@@ -142,14 +142,14 @@ listChatWidget(){
        $('#opt-out-button').val(response.result.data[0].opt_out_button);
        $('#consent-mesage').val(response.result.data[0].consent_message);
        $('#required-consents-options').val(response.result.data[0].consent_form);
-       
+
        $('#main_timeZone').val(response.result.data[0].main_timeZone);
        $('#schedule_timeZone').val(response.result.data[0].schedule_timeZone);
        $('#offline_email').val(response.result.data[0].offline_email);
 
 
 
-       
+
        $('#day1_opening_time').val(response.result.data[0].day1_opening_time);
        $('#day1_close_time').val(response.result.data[0].day1_close_time);
        $('#day2_opening_time').val(response.result.data[0].day2_opening_time);
@@ -204,7 +204,7 @@ listChatWidget(){
       } else {
         $('#chat_agent_name').prop('checked', false);
       }
-       
+
 
       if(response.result.data[0].has_department =='1' ){
         $('#has_department').prop('checked', true);
@@ -233,7 +233,7 @@ listChatWidget(){
         this.ageChecked = response.result.data[0].agents.split(",");
       }
 
-     
+
 
         if(response.result.data[0].attention_grabber =='1' ){
           $('#attention_grabber').prop('checked', true);
@@ -244,14 +244,14 @@ listChatWidget(){
         }
 
 
-        
+
       } else {
         iziToast.error({
           message: "Some Error Occured.",
           position: 'topRight'
       });
       }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -281,7 +281,7 @@ listChatWidget(){
     let user_id: any=localStorage.getItem('admin_id');
     let widget_name: any =$('#widget_name').val();
     let api_req:any = '{"operation":"chat_widget", "moduleType":"chat_widget", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"add_chat_widget","user_id":"'+this.user_id +'","widget_name":"'+widget_name+'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.data==1){
         iziToast.success({
@@ -297,7 +297,7 @@ listChatWidget(){
            position: 'topRight'
        });
        }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -310,14 +310,14 @@ listChatWidget(){
     let widget_name: any =$('#widget_edit_name').val();
     let widget_color: any =$('#widgetColor').val();
     let api_req:any = '{"operation":"chat_widget", "moduleType":"chat_widget", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"edit_chat_widget","user_id":"'+this.user_id +'","widget_id":"'+id+'","widget_name":"'+widget_name+'","color":"'+widget_color+'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.data==1){
         iziToast.success({
           message: "Data Added Successfully",
           position: 'topRight'
         });
-       
+
       this.get_timezones(id);
        } else {
          iziToast.error({
@@ -325,7 +325,7 @@ listChatWidget(){
            position: 'topRight'
        });
        }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -339,7 +339,7 @@ listChatWidget(){
     let api_req:any = '{"operation":"chat_widget", "moduleType":"chat_widget", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"get_widget_data","user_id":"'+this.user_id +'","widget_id":"'+id+'"}}';
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       console.log(response);
-   
+
       if(response.status==true){
 
       // this.customHtml = 'https://'+window.location.hostname+'/webchat/?aid='+btoa(this.admin_id)+'&wid='+btoa(response.result.data.widget_name);
@@ -399,7 +399,7 @@ listChatWidget(){
         this.image_url = response.result.data.image_url;
         this.wid_color = response.result.data.color;
         this.widget_appearance = response.result.data.widget_appearance;
-    
+
       $('#schedule_timeZone').val(response.result.data.schedule_timeZone);
       $('#offline_email').val(response.result.data.offline_email);
       //  $('#office_in_time').val(response.result.data.office_in_time);
@@ -459,7 +459,7 @@ listChatWidget(){
           position: 'topRight'
       });
       }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -474,7 +474,7 @@ listChatWidget(){
     let user_id: any=localStorage.getItem('userId');
     let widget_name: any =$('#widget_edit_name').val();
     let api_req:any = '{"operation":"chat_widget", "moduleType":"chat_widget", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"widget_behaviour","user_id":"'+this.user_id +'","widget_id":"'+id+'","keyword":"'+keyword+'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.data==1){
         iziToast.success({
@@ -489,7 +489,7 @@ listChatWidget(){
            position: 'topRight'
        });
        }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -501,7 +501,7 @@ listChatWidget(){
     let user_id: any=localStorage.getItem('userId');
     let behaviour: any =$('#behaviour').val();
     let api_req:any = '{"operation":"chat_widget", "moduleType":"chat_widget", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"widget_onclick_behaviour","user_id":"'+this.user_id +'","widget_id":"'+id+'","behaviour":"'+behaviour+'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.status==true){
         iziToast.success({
@@ -515,7 +515,7 @@ listChatWidget(){
            position: 'topRight'
        });
        }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -527,7 +527,7 @@ listChatWidget(){
     if($('#attention_grabber').is(':checked') == true ){
       this.ag_enabled = true;
     } else {
-      
+
       this.ag_enabled = false;
     }
   }
@@ -549,7 +549,7 @@ listChatWidget(){
     // return false;
     let mobile_widget: any =$("input[name='widget_appearance_m_type']:checked").val();
     let api_req:any = '{"operation":"chat_widget", "moduleType":"chat_widget", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"widget_advanced_settings","user_id":"'+this.user_id+'","widget_id":"'+id+'","widget_position":"'+widget_position+'","attention_grabber":"'+attention_grabber+'","mobile_widget":"'+mobile_widget+'","widget_appearance":"'+widget_appearance+'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.status==true){
         iziToast.success({
@@ -564,7 +564,7 @@ listChatWidget(){
            position: 'topRight'
        });
        }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -579,15 +579,15 @@ listChatWidget(){
 
 
   uploadImageChat(widget_id){
- 
-    let access_token: any=localStorage.getItem('access_token');
-    let user_id: any =  localStorage.getItem('admin_id'); 
 
-  
+    let access_token: any=localStorage.getItem('access_token');
+    let user_id: any =  localStorage.getItem('admin_id');
+
+
       var formData = new FormData();
-     
+
       let image_id: any = $("input[name='attension_grabber_img']:checked").val();
-  
+
       formData.append('operation', 'chat_widget');
       formData.append('moduleType', 'chat_widget');
       formData.append('api_type', 'web');
@@ -597,19 +597,19 @@ listChatWidget(){
       formData.append('user_id', user_id);
       formData.append('widget_id', widget_id);
       formData.append('image_id', image_id);
-  
+
       console.log(formData);
-    
-    $.ajax({  
-      url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",  
+
+    $.ajax({
+      url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",
       type : 'POST',
       data : formData,
       processData: false,  // tell jQuery not to process the data
-      contentType: false, 
-      success:function(data){ 
+      contentType: false,
+      success:function(data){
         this.parsed_data = JSON.parse(data);
         console.log(this.parsed_data );
-        if(this.parsed_data.status == 'true'){    
+        if(this.parsed_data.status == 'true'){
           iziToast.success({
             message: "Data updated successfully",
             position: 'topRight'
@@ -622,8 +622,8 @@ listChatWidget(){
             position: 'topRight'
         });
         }
-      }  
-  });  
+      }
+  });
 }
 
 
@@ -647,7 +647,7 @@ listConsentImages(){
          position: 'topRight'
      });
      }
-  }, 
+  },
   (error)=>{
       console.log(error);
   });
@@ -669,7 +669,7 @@ listConsentImagess(widget_id){
          position: 'topRight'
      });
      }
-  }, 
+  },
   (error)=>{
       console.log(error);
   });
@@ -691,7 +691,7 @@ listConsentFormms(){
          position: 'topRight'
      });
      }
-  }, 
+  },
   (error)=>{
       console.log(error);
   });
@@ -705,7 +705,7 @@ addConsentForn(widget_id){
     let user_id: any=localStorage.getItem('userId');
     let option_name: any =$('#option_name').val();
     let api_req:any = '{"operation":"chat_widget", "moduleType":"chat_widget", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"add_consent_form_option","user_id":"'+this.user_id +'","display_option_value":"'+option_name+'","widget_id":"'+widget_id+'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.data==1){
         iziToast.success({
@@ -721,7 +721,7 @@ addConsentForn(widget_id){
            position: 'topRight'
        });
        }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -742,12 +742,12 @@ addConsentForn(widget_id){
       background: 'transparent',
     });
     let api_req:any = '{"operation":"chat_widget", "moduleType":"chat_widget", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"edit_consent_form_option","user_id":"'+this.user_id +'","id":"'+display_options+'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       Swal.close();
       if(response.result.status==true){
        $('#editconsentformss').modal('show');
-        
+
         $('#edit_option_name').val(response.result.data.display_option_value);
 
         this.listConsentFormms();
@@ -757,7 +757,7 @@ addConsentForn(widget_id){
            position: 'topRight'
          });
        }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -772,7 +772,7 @@ addConsentForn(widget_id){
     let display_options: any =$('#display_options').val();
     let option_name: any =$('#edit_option_name').val();
     let api_req:any = '{"operation":"chat_widget", "moduleType":"chat_widget", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"update_consent_form_option","user_id":"'+this.user_id +'","display_option_value":"'+option_name+'","id":"'+display_options+'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.data==1){
         iziToast.success({
@@ -787,7 +787,7 @@ addConsentForn(widget_id){
            position: 'topRight'
        });
        }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -809,7 +809,7 @@ deleteConsentForn(widget_id){
     }).then((result) => {
       if (result.value) {
     let api_req:any = '{"operation":"chat_widget", "moduleType":"chat_widget", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"delete_consent_form_option","user_id":"'+this.user_id +'","id":"'+widget_id+'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.data==1){
         iziToast.success({
@@ -824,7 +824,7 @@ deleteConsentForn(widget_id){
            position: 'topRight'
        });
        }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -856,10 +856,10 @@ deleteConsentForn(widget_id){
     let user_id: any=localStorage.getItem('userId');
     let wid_show_dd: any =$('#wid_show_dd').val();
     let country_name: any =$('#country_name').val().join();
-    
+
     let has_restriction: any =$('#country-restriction').is(':checked');
     let api_req:any = '{"operation":"chat_widget", "moduleType":"chat_widget", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"country_restriction","user_id":"'+this.user_id +'","widget_id":"'+id+'","has_restriction":"'+has_restriction+'","option_value":"'+wid_show_dd+'","countries":"'+country_name+'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.data==1){
         iziToast.success({
@@ -876,7 +876,7 @@ deleteConsentForn(widget_id){
            position: 'topRight'
        });
        }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -896,9 +896,9 @@ deleteConsentForn(widget_id){
     let privacy_policy_text: any =$('#privacy-policy-text').val();
     let opt_in_button: any =$('#opt-in-button').val();
     let opt_out_button: any =$('#opt-out-button').val();
- 
+
     let api_req:any = '{"operation":"chat_widget", "moduleType":"chat_widget", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"update_consent_form_data","user_id":"'+this.user_id +'","id":"'+requiredConsentsOptions+'","consent_message":"'+consent_message+'","privacy_policy_link":"'+privacy_policy_link+'","privacy_policy_text":"'+privacy_policy_text+'","opt_in_button":"'+opt_in_button+'","opt_out_button":"'+opt_out_button+'","widget_id":"'+widget_id+'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.data==1){
         iziToast.success({
@@ -915,7 +915,7 @@ deleteConsentForn(widget_id){
            position: 'topRight'
        });
        }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -924,7 +924,7 @@ deleteConsentForn(widget_id){
 
 
 
-  
+
   updateChatSett(widget_id){
 
     let access_token: any=localStorage.getItem('access_token');
@@ -939,7 +939,7 @@ deleteConsentForn(widget_id){
     let schedule_timeZone = $('#schedule_timeZone').val();
     let main_timeZone = $('#main_timeZone').val();
     let api_req:any = '{"operation":"chat_widget", "moduleType": "chat_widget", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"chat_timezone","main_timeZone":"'+main_timeZone+'","schedule_timeZone":"'+schedule_timeZone+'","chat_aviator":'+chat_aviator+',"chat_agent_name":"'+chat_agent_name+'","offline_email":"'+offline_email+'","has_department":'+has_department+',"user_id":"'+this.user_id+'","widget_id":"'+widget_id+'"}}';
-   
+
           this.serverService.sendServer(api_req).subscribe((response: any) => {
           if (response.result.data == 1) {
                   $('#add_deptform').modal('hide');
@@ -949,15 +949,15 @@ deleteConsentForn(widget_id){
                   });
                   this.get_timezones(widget_id);
               }
-              
+
           else{
-              
+
                   iziToast.error({
                       message: " Please try again",
                       position: 'topRight'
                   });
           }
-    
+
       },
       (error) => {
            iziToast.error({
@@ -979,9 +979,9 @@ deleteConsentForn(widget_id){
         this.getAgentsList();
         console.log(this.time_list);
       } else {
-       
+
       }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -990,7 +990,7 @@ deleteConsentForn(widget_id){
 
 
 
-  get_timezones(widget_id){    
+  get_timezones(widget_id){
     this.getAgentsList();
     this.listConsentImagess(widget_id)
   }
@@ -1005,9 +1005,9 @@ deleteConsentForn(widget_id){
       if(response.status==true){
         this.countryCodes = response.result.data;
       } else {
-       
+
       }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -1039,7 +1039,7 @@ deleteConsentForn(widget_id){
       this.get_timezone();
     }
 
-  }, 
+  },
   (error)=>{
       console.log(error);
   });
@@ -1057,8 +1057,8 @@ deleteConsentForn(widget_id){
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.status==true){
         this.chatSounds = response.result.data;
-      } 
-    }, 
+      }
+    },
     (error)=>{
         console.log(error);
     });
@@ -1074,9 +1074,9 @@ deleteConsentForn(widget_id){
         this.agent_list = response.result.data.agent_list;
         this.department_list = response.result.data.department_list;
       } else {
-       
+
       }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -1102,18 +1102,18 @@ deleteConsentForn(widget_id){
       });
         this.get_timezones(widget_id);
       } else {
-       
+
       }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
   }
 
 
-  
 
-  
+
+
 
   update_wigdet_usrs(widget_id){
     let access_token: any=localStorage.getItem('access_token');
@@ -1122,12 +1122,12 @@ deleteConsentForn(widget_id){
     var departments = [];
     $('.departments:checked').each(function () {
       departments[i++] = $(this).val();
-    }); 
+    });
 
     var agents = [];
     $('.agent_list:checked').each(function () {
       agents[j++] = $(this).val();
-    }); 
+    });
     let api_req:any = '{"operation":"chat_widget", "moduleType":"chat_widget", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"user_restriction","widget_id":"'+widget_id+'","user_id":"'+this.user_id+'","departments":"'+departments+'","agents":"'+agents+'"}}';
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.status==true){
@@ -1142,9 +1142,9 @@ deleteConsentForn(widget_id){
       $('#userDepartmentManagement').modal('hide');
         this.get_timezones(widget_id);
       } else {
-       
+
       }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -1157,7 +1157,7 @@ deleteConsentForn(widget_id){
     let user_id: any=localStorage.getItem('userId');
     let widget_activity_time: any =$('#widget_activity_time').val();
     let api_req:any = '{"operation":"chat_widget", "moduleType":"chat_widget", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"update_activity_time","user_id":"'+this.user_id +'","widget_id":"'+id+'","widget_activity_time":"'+widget_activity_time+'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.status==true){
         iziToast.success({
@@ -1171,7 +1171,7 @@ deleteConsentForn(widget_id){
            position: 'topRight'
        });
        }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -1212,7 +1212,7 @@ deleteConsentForn(widget_id){
        });
        $('#advancedScedule').modal('hide');
        }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -1231,7 +1231,7 @@ deleteConsentForn(widget_id){
       let day3_opening_time_s = $('#day3_opening_time_s').val();
       let day3_close_time_s = $('#day3_close_time_s').val();
       let day4_opening_time_s = $('#day4_opening_time_s').val();
-      let day4_close_time_s = $('#day4_close_time_s').val(); 
+      let day4_close_time_s = $('#day4_close_time_s').val();
       let day5_opening_time_s = $('#day5_opening_time_s').val();
       let day5_close_time_s = $('#day5_close_time_s').val();
       let day6_opening_time_s = $('#day6_opening_time_s').val();
@@ -1254,7 +1254,7 @@ deleteConsentForn(widget_id){
        });
        $('#advancedwidgetScedule').modal('hide');
        }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -1262,7 +1262,7 @@ deleteConsentForn(widget_id){
   }
 
   getOverAllSettings(){
-    // {"operation":"chat","moduleType":"chat","api_type":"web","access_token":"","element_data":{"action":"overallChatSettings","admin_id":"1203"}}  
+    // {"operation":"chat","moduleType":"chat","api_type":"web","access_token":"","element_data":{"action":"overallChatSettings","admin_id":"1203"}}
     let api_req: any = new Object();
     let chat_req: any = new Object();
     chat_req.action = "overallChatSettings";
@@ -1305,7 +1305,7 @@ deleteConsentForn(widget_id){
     var limit='0';
     var text="Would you Need to Assign incoming Chat to all agents in the department?";
       if($('#round_rob_set').prop('checked')){ rob = '1';limit=this.limit_count; text="Do you want to change, and be assigned a round-robin system for incoming email to Department agents?"; }
-   
+
     Swal.fire({
       title: 'Are you sure?',
       text: text ,
@@ -1321,7 +1321,7 @@ deleteConsentForn(widget_id){
         chat_req.action = "overallChatSettingsUpdate";
         chat_req.admin_id = this.admin_id;
         chat_req.round_robin = checkedstatus;
-        chat_req.chat_limit = limit;        
+        chat_req.chat_limit = limit;
         api_req.operation = "chat";
         api_req.moduleType = "chat";
         api_req.api_type = "web";
@@ -1335,7 +1335,7 @@ deleteConsentForn(widget_id){
           showConfirmButton: false,
           focusConfirm: false,
           background: 'transparent',
-      
+
         });
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           Swal.close();
@@ -1353,7 +1353,7 @@ deleteConsentForn(widget_id){
               message: "Changed Incomming Chat strategy successfully",
               position: 'topRight'
             });
-  
+
           } else {
           if(this.checks)
             this.checks=false;
@@ -1364,13 +1364,13 @@ deleteConsentForn(widget_id){
               position: 'topRight'
             });
           }
-  
-  
+
+
         },
           (error) => {
             console.log(error);
           });
-  
+
       }
   else{
    if(this.checks)
@@ -1379,7 +1379,7 @@ deleteConsentForn(widget_id){
    this.checks=true;
   }
     });
-     
+
   }
 
   robin_update(){
@@ -1421,7 +1421,7 @@ deleteConsentForn(widget_id){
         }
 
         this.limit_count = response.result.data[0].chat_limit;
-        
+
         iziToast.success({
           message: "Update Successfully",
           position: 'topRight'
@@ -1438,5 +1438,5 @@ deleteConsentForn(widget_id){
     });``
   }
 }
- 
+
 }

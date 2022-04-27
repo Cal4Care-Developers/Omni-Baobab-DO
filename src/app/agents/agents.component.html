@@ -23,7 +23,7 @@
                                     </div>
                                 </td>
                             </tr>
-                           
+
 
                             <tr>
                                 <th>S.no</th>
@@ -33,7 +33,7 @@
                                 <th>Action</th>
                             </tr>
 
-                            
+
                         <tbody>
                             <tr *ngFor="let queue of agents_list;let i=index">
                                 <td>{{i+1}}</td>
@@ -41,13 +41,13 @@
                                 <td>{{queue.sip_login}}</td>
                                 <td><div class="form-check form-check-inline">
                                     <div class="pretty p-switch p-fill">
-                                        <input type="checkbox"   checked="{{queue.user_status == 1 ? 'checked' : ''}}" (click)="actCamp('admin_status',queue.user_id)"> 
+                                        <input type="checkbox"   checked="{{queue.user_status == 1 ? 'checked' : ''}}" (click)="actCamp('admin_status',queue.user_id)">
                                         <div class="state p-success">
                                             <label for="has_status"></label>
                                         </div>
                                     </div>
                                 </div></td>
-                                    
+
                                     <td>
                                         <span class="user-icon" style="cursor: pointer;"><i class="far fa-edit" (click)="editAgent(queue.user_id)"></i></span>
                                         <span class="user-icon" style="cursor: pointer;"><i class="far fa-trash-alt" (click)="deletedata(queue.user_id)"></i></span>

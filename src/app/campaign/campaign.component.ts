@@ -19,7 +19,7 @@ export class CampaignComponent implements OnInit {
   old_sip_url;
   uadmin_id;
   pbx_count;
-  dep_status; 
+  dep_status;
   dep_id;
   agents_list;
   userchecked;
@@ -88,27 +88,27 @@ export class CampaignComponent implements OnInit {
   }
   dept_settings(){
     let access_token: any=localStorage.getItem('access_token');
-  
+
     let api_req:any = '{"operation":"campaign", "moduleType":"campaign", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"camp_list","user_id":"'+this.uadmin_id+'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.status==true){
-       
+
         this.queue_list = response.result.data;
         console.log(this.queue_list);
       } else {
         this.recordNotFound = true;
       }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
   }
-  
+
   editDepartmentSettings(id){
     let access_token: any=localStorage.getItem('access_token');
     let api_req:any = '{"operation":"campaign", "moduleType": "campaign", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"edit_camp","id":"'+id+'","admin_id":"'+this.uadmin_id+'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.status==true){
         var agent_data = response.result.data;
@@ -121,24 +121,24 @@ export class CampaignComponent implements OnInit {
        });
        $('#dialer_type').val(agent_data.camp_type);
        $('#redial_upd').val(agent_data.redial);
-  
+
        this.rak_freq=agent_data.frequency;
        this.rak_parallel=agent_data.parallel;
        if(this.isRAK==true){
-        
+
          $('#parallel_upd').val(this.rak_parallel);
          $('#frequency_upd').val(this.rak_freq);
        }
-  
+
        if(agent_data.camp_type == 'Broadcast_Dialler' || agent_data.camp_type == 'Broadcast_Survey_Dialler' ){
             this.audiaFile =agent_data.broadcast_audio;
             this.showbro_file_upload = true;
        } else {
         this.showbro_file_upload = false;
        }
-  
+
   var dialer_t = agent_data.camp_type;
-  
+
        if(dialer_t == 'Broadcast_Dialler' || dialer_t == 'Broadcast_Survey_Dialler'){
         this.BrocalsDiallerU = true;
         this.pDiallerU = false;
@@ -160,59 +160,59 @@ export class CampaignComponent implements OnInit {
         this.proDiallerU  = false;
         this.norDiallerU  = true;
       }
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
        this.dep_id = id;
-  
+
        $('#edit_deptform').modal('show');
        this.dept_settings();
       }   else{
-              
+
         iziToast.warning({
             message: "Content not retrive. Please try again",
             position: 'topRight'
         });
-    
+
   }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
   }
-  
+
   addDepartment(){
     // alert(this.admin_id);
     // if(this.admin_id==564)
     // $('#add_deptform_for_RAK').modal('show');
-  
+
     // else
     $('#add_deptform').modal('show');
-  
-    
+
+
   }
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
   editDepartment(id){
     let agent_req:any = this.editDept.value;
     let access_token: any=localStorage.getItem('access_token');
     if(agent_req.status == true){  this.dep_status = 1 } else { this.dep_status  = 0 }
-    let user_id: any =  localStorage.getItem('userId'); 
+    let user_id: any =  localStorage.getItem('userId');
       var formData = new FormData();
         this.rak_parallel=$('#parallel_upd').val();
         this.rak_freq=$('#frequency_upd').val();
         let redial_sec=$('#redial_upd').val();
-  
+
         this.dialer_type=$('#dialer_type').val();
         // alert(this.dialer_type);
-  
+
         formData.append('operation', 'campaign');
         formData.append('moduleType', 'campaign');
         formData.append('api_type', 'web');
@@ -231,10 +231,10 @@ export class CampaignComponent implements OnInit {
         formData.append('frequency', this.rak_freq);
         formData.append('redial', redial_sec);
         formData.append('id', id);
-        
-      
-     
-  
+
+
+
+
       if(this.dialer_type == 'Broadcast_Dialler' || this.dialer_type == 'Broadcast_Survey_Dialler' ){
         if($('#audio_file')[0].files[0] == 'undefined' || $('#audio_file')[0].files[0] == undefined){
           iziToast.error({
@@ -245,16 +245,16 @@ export class CampaignComponent implements OnInit {
         } else {
           formData.append('audio_file', $('#audio_file')[0].files[0]);
         }
-      } 
-  
-  
-    $.ajax({  
-      url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",  
+      }
+
+
+    $.ajax({
+      url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",
       type : 'POST',
       data : formData,
       processData: false,  // tell jQuery not to process the data
-      contentType: false, 
-      success:function(data){ 
+      contentType: false,
+      success:function(data){
         this.parsed_data = JSON.parse(data);
         if(this.parsed_data.status == "true"){
           $('#reload').click();
@@ -271,18 +271,18 @@ export class CampaignComponent implements OnInit {
             position: 'topRight'
         });
         }
-      }  
-  });  
+      }
+  });
   }
-  
-  
-  
-  
-  
-  
-  
-  
-   
+
+
+
+
+
+
+
+
+
   dialerType(){
     var dialer_t = $('#dialer_type').val();
     this.dialer_type = dialer_t;
@@ -291,7 +291,7 @@ export class CampaignComponent implements OnInit {
     } else {
       this.showbro_file_upload = false;
     }
-  
+
     if(dialer_t == 'Broadcast_Dialler' || dialer_t == 'Broadcast_Survey_Dialler'){
       this.BrocalsDiallerU = true;
       this.pDiallerU = false;
@@ -313,11 +313,11 @@ export class CampaignComponent implements OnInit {
       this.proDiallerU  = false;
       this.norDiallerU  = true;
     }
-  
-  
+
+
   }
-  
-  
+
+
   dialerTypeAdd(){
     var dialer_t = $('#dialer_type_add').val();
     this.dialer_type = dialer_t;
@@ -325,13 +325,13 @@ export class CampaignComponent implements OnInit {
       this.showbro_file_upload_add = true;
     } else {
       this.showbro_file_upload_add = false;
-    } 
-  
-  
+    }
+
+
     if(dialer_t == 'Broadcast_Dialler' || dialer_t == 'Broadcast_Survey_Dialler'){
       this.BrocalsDialler = true;
       this.pDialler = false;
-      this.proDialler = false; 
+      this.proDialler = false;
       this.norDialler = false;
     } else if(dialer_t == 'Predictive_Dialler'){
       this.BrocalsDialler = false;
@@ -349,29 +349,29 @@ export class CampaignComponent implements OnInit {
       this.proDialler = false;
       this.norDialler = true;
     }
-    
-  
-  
-  
-  
+
+
+
+
+
   }
-  
-  
-  
-  
+
+
+
+
     addDeptData(){
       let access_token: any=localStorage.getItem('access_token');
-      let user_id: any =  localStorage.getItem('userId'); 
+      let user_id: any =  localStorage.getItem('userId');
       let agent_req:any = this.addDept.value;
       if(agent_req.status == true){  this.dep_status = 1 } else { this.dep_status  = 0 }
-  
+
       this.parallel=$('#parallel').val();
      this.frequency=$('#frequency').val();
      let redial=$('#re_delay').val();
     // alert(this.parallel);
-    
+
         var formData = new FormData();
-        
+
         formData.append('operation', 'campaign');
         formData.append('moduleType', 'campaign');
         formData.append('api_type', 'web');
@@ -400,15 +400,15 @@ export class CampaignComponent implements OnInit {
             formData.append('audio_file', $('#audio_file_add')[0].files[0]);
           }
         } else {
-  
+
         }
-      $.ajax({  
-        url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",  
+      $.ajax({
+        url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",
         type : 'POST',
         data : formData,
         processData: false,  // tell jQuery not to process the data
-        contentType: false, 
-        success:function(data){ 
+        contentType: false,
+        success:function(data){
           this.parsed_data = JSON.parse(data);
           if(this.parsed_data.status == "true"){
             $('#reload').click();
@@ -424,13 +424,13 @@ export class CampaignComponent implements OnInit {
               position: 'topRight'
           });
           }
-        }  
-    });  
+        }
+    });
   }
-  
+
   // addDeptData_for_RAK(){
   //   let access_token: any=localStorage.getItem('access_token');
-  //   let user_id: any =  localStorage.getItem('userId'); 
+  //   let user_id: any =  localStorage.getItem('userId');
   //   let agent_req:any = this.addDept_RAK.value;
   //   this.parallel=$('#parallel').val();
   //   this.frequency=$('#frequency').val();
@@ -466,15 +466,15 @@ export class CampaignComponent implements OnInit {
   //         formData.append('audio_file', $('#audio_file_add')[0].files[0]);
   //       }
   //     } else {
-  
+
   //     }
-  //   $.ajax({  
-  //     url:"https://omni.mconnectapps.com/api/v1.0/index_new.php",  
+  //   $.ajax({
+  //     url:"https://omni.mconnectapps.com/api/v1.0/index_new.php",
   //     type : 'POST',
   //     data : formData,
   //     processData: false,  // tell jQuery not to process the data
-  //     contentType: false, 
-  //     success:function(data){ 
+  //     contentType: false,
+  //     success:function(data){
   //       this.parsed_data = JSON.parse(data);
   //       if(this.parsed_data.status == "true"){
   //         $('#reload').click();
@@ -490,21 +490,21 @@ export class CampaignComponent implements OnInit {
   //           position: 'topRight'
   //       });
   //       }
-  //     }  
-  // });  
+  //     }
+  // });
   // }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
+
+
+
   deleteCamp(id){
-  
+
     let access_token: any=localStorage.getItem('access_token');
     Swal.fire({
       title: 'Are you sure?',
@@ -525,47 +525,47 @@ export class CampaignComponent implements OnInit {
           });
           this.dept_settings();
           }
-        }, 
+        },
         (error)=>{
             console.log(error);
         });
       }
     })
-      
+
     }
-  
-  
+
+
     actCamp(id,vid){
       this.show_caller_id = localStorage.getItem('show_caller_id');
       // if($('#statu_'+id).is(':checked')){
       //   let api_reqs:any = '{"type": "makecall", "number": "'+vid+'","show_caller_id":"'+this.show_caller_id+'"}';
       //   this.serverService.show.next(api_reqs);
       // } else {
-  
+
       // }
       let access_token: any = localStorage.getItem('access_token');
       let api_req:any = '{"operation":"campaign", "moduleType":"campaign", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"toggle_status","id":"'+id+'"}}';
       this.serverService.sendServer(api_req).subscribe((response:any) => {
-        
-      }, 
+
+      },
       (error)=>{
           console.log(error);
       });
     }
-  
-    showdoc(link){   
+
+    showdoc(link){
       //   this.doc_link=link;
-      //  $("#document_model").modal('show');   
+      //  $("#document_model").modal('show');
       var url= link.split('/');
       // alert(url)
       this.doc_link="https://www.youtube.com/embed/"+url[3];
       // alert(this.doc_link)
-    
+
       $("#video_play").modal('show');
-    
+
      }stop(){
       var el_src = $('.myvideo').attr("src");
             $('.myvideo').attr("src",el_src);
       }
-    
+
 }

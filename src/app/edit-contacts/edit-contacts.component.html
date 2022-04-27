@@ -4,13 +4,13 @@
 			<div class="card-header">
 				<h4><i class="fa fa-address-book" aria-hidden="true"></i>
 					Edit Contacts</h4>
-				<div class="addBtn">
-					 <button class="btn btn-primary" (click)="addNotes(this.contact_id)"  style="float: right;"> Activities</button>
-				 </div> 
+          <div class="addBtn" >
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+          </div>
 			</div>
 			</div>
 			<form [formGroup]="editContact" (ngSubmit)="updateContact(this.contact_id)" *ngIf="alladmin">
-	
+
 			<!-- <div class="row">
 				<div class="col-12 col-md-7">
 					<div class="card">
@@ -44,16 +44,16 @@
 											<input type="text" id="title"  class="form-control" formControlName="mobile" >
 										</div>
 									</div> -->
-	
-	
+
+
 								<!-- </div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>  -->
-	
-	
+
+
 			<div class="row call-contact-inner">
 				<div class="col-12 col-md-12 ">
 					<div class="card">
@@ -69,15 +69,15 @@
 											<input type="text"  id="contact_owner" value="{{contact_owner}}" class="form-control" formControlName="contact_owner" >
 										</div>
 									</div>
-	
+
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="lead_source">Civility</label>
-	
+
 											<input type="text"  id="lead_source" class="form-control" formControlName="lead_source" >
 										</div>
 									</div>
-	
+
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="contact_owner">First Name</label>
@@ -93,14 +93,14 @@
 											</div>
 										</div>
 									</div>
-									
+
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="last_name">Last Name</label>
 											<input type="text"  id="mailing_province" class="form-control" formControlName="mailing_province" >
 										</div>
 									</div>
-	
+
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="email">Email Address</label>
@@ -125,9 +125,9 @@
 											<label for="department">Gender</label>
 											<select name="departments"  id="departments" class="form-control">
 												<option value='0'> Select Gender </option>
-												<option value="Male">Male</option> 
-												<option value="Female">Female</option> 
-												<option value=" ">Other </option> 
+												<option value="Male">Male</option>
+												<option value="Female">Female</option>
+												<option value=" ">Other </option>
 												<!-- <option *ngFor="let dept of departments" value="{{dept.dept_id}}">{{dept.department_name}}</option> -->
 											</select>
 										</div>
@@ -138,7 +138,7 @@
 											<input type="text" id="phone"  class="form-control" formControlName="phone" >
 										</div>
 									</div>
-									
+
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="mobile">Other Phone #</label>
@@ -146,9 +146,9 @@
 											<label class="error-message message-small" *ngIf="!editContact.get('mobile').valid && editContact.get('mobile').touched ">Please enter the number</label>
 										</div>
 									</div>
-	
-									
-	
+
+
+
 									<div class="col-md-6" >
 										<div class="form-group">
 											<label for="department">Nationality</label>
@@ -383,67 +383,67 @@
 											</select>
 										</div>
 									</div>
-	
+
 									<div class="col-md-6">
 										<div class="form-group">
 											<div class="input-group">
-												
-	
+
+
 											<label for="phone">staff</label>
 											<input type="text" id="home_phone"  class="form-control" formControlName="home_phone" >
 												<!-- <span class="input-group-addon">
 														<input type="text" id="country_code"  class="form-control" formControlName="country_code" >
 												</span>
 											<input type="text" id="phone"  class="form-control" formControlName="phone" > -->
-	
+
 											 </div>
 											<!-- <p>When adding an extension, the country code is not important</p> -->
-											 
-												 
+
+
 										</div>
 									</div>
-	
+
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="home_phone">Customer Type</label>
 											<input type="text" id="home_phone"  class="form-control" formControlName="home_phone" >
 										</div>
 									</div>
-	
-									
-	
+
+
+
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="fax">Account Officer</label>
 											<input type="text" id="fax"  class="form-control" formControlName="fax" >
 										</div>
 									</div>
-	
+
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="assistant">Branch ID</label>
 											<input type="text"  id="assistant" class="form-control" formControlName="assistant" >
 										</div>
 									</div>
-	
-	
-									
-	
-	
+
+
+
+
+
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="reports_to">Bio status</label>
 											<input type="text"  id="reports_to" class="form-control" formControlName="reports_to" >
 										</div>
 									</div>
-	
+
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="assitant_phone">Bio flag</label>
 											<input type="text"  id="assitant_phone" class="form-control" formControlName="assitant_phone" >
 										</div>
 									</div>
-	
+
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="created_by">WOF</label>
@@ -451,14 +451,14 @@
 											<!-- <div class="small">{{ this.created_time }}</div> -->
 										</div>
 									</div>
-	
+
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="email_opt">Blacklisted</label>
 											<input type="text"  id="mailing_city" class="form-control" formControlName="mailing_city" >
 										</div>
 									</div>
-	
+
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="modified_by">BVN</label>
@@ -466,28 +466,28 @@
 											<!-- <div class="small">{{ this.modified_time }}</div> -->
 										</div>
 									</div>
-	
+
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="skype">Legal Info</label>
 											<input type="text" id="skype"  class="form-control" formControlName="skype" >
 										</div>
 									</div>
-	
+
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="secondary_email">Legal ID Type</label>
 											<input type="text" id="secondary_email"  class="form-control" formControlName="secondary_email" >
 										</div>
 									</div>
-	
+
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="twitter">Legal ID Number</label>
 											<input type="text" id="twitter"  class="form-control" formControlName="twitter" >
 										</div>
 									</div>
-	
+
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="twitter">Expiry Date</label>
@@ -498,7 +498,7 @@
 										<div class="form-group">
 											<label for="twitter">Agence</label>
 											<input type="text" id="twitter"  class="form-control" formControlName="twitter" >
-	
+
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -516,8 +516,8 @@
 					</div>
 				</div>
 			</div>
-	
-	
+
+
 			<!-- <div class="row">
 				<div class="col-12 col-md-12 col-lg-12">
 					<div class="card">
@@ -604,8 +604,8 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											
-											
+
+
 											<label for="whatsapp_number"> <img class="mb-1 float-left" style="margin-right: 5px; width: 25px;" src="assets/img/mc-dashboard/whatsapp.webp" alt="WhatsApp"> Whatsapp Number</label>
 											<input type="text"  id="whatsapp_number" class="form-control" formControlName="whatsapp_number" >
 										</div>
@@ -686,7 +686,7 @@
 											color: #34395e;">Call Recording</h5>
 											<div class="row">
 												<div class="col-md-6 contact-play-div">
-													<a class="play-record"><i class="fa fa-play-circle"></i></a> 
+													<a class="play-record"><i class="fa fa-play-circle"></i></a>
 													<p>call-rec-001.mp3</p>
 												</div>
 											</div>
@@ -694,7 +694,7 @@
 									</div>
 								</div> -->
 								<!-- <br /> -->
-							
+
 							<!-- </div>
 						</div>
 					</div>
@@ -702,168 +702,228 @@
 			</div> -->
 	</form>
 		</div>
-	
-	
-	
+
+
+
 	<div class="card" *ngIf="dailyfood">
 		<div class="card-header" *ngIf="this.has_external_contact == '0'">
 			<h4>Has DSK Access</h4>
-		</div>  
+		</div>
 		<div class="card-header" *ngIf="this.has_external_contact == '1'">
 			<h4>Contact</h4>
-		</div> 
-		<div class="card-body p-0" *ngIf="this.has_external_contact == '0'"> 
+		</div>
+		<div class="card-body p-0" *ngIf="this.has_external_contact == '0'">
 			<iframe [src]="this.dailyfoodurl | safe" id="dailyfIframe" class="dailyfIfram" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
 		</div>
-		<div class="card-body p-0" *ngIf="this.has_external_contact == '1'"> 
+		<div class="card-body p-0" *ngIf="this.has_external_contact == '1'">
 			<div id="dailyfIframes">
-				
+
 			</div>
 		</div>
 	</div>
-	
-	<div class="settingSidebar">
-		<a href="javascript:void(0)" class="settingPanelToggle" (click)="toggleClass()">
-			<span title="Add Wrapup Code" class="plus-icon"><i class="fas fa-plus" style="margin: 0px;"></i></span>
-			<span class="minus-icon"><i class="fas fa-minus" style="margin: 0px;"></i></span>
-		</a>
-	
-		<div class="settingSidebar-body ps-container ps-theme-default">
-			<form>
-				<div class=" fade show active">
-					<button *ngIf="this.no_contact==true" class="btn btn-primary" (click)="AddContact()"
-						style="float: right;margin: 9px 20px 0px 0px;"> Add Contact</button>
-	
-					<div class="setting-panel-header">Wrapup Code
-	
-	
-					</div>
-					<div class="p-15">
-	
-						<div class="row">
-							<!-- <div class="col-md-12" *ngFor="let item of questions">
-							   <div class="form-group">
-								   <label for="department">Question</label>
-								   <p>{{item.question}}</p>
-							   </div>	
-						   </div> -->
-						   <div class="col-md-12">
-						   <div class="form-group">
-							<label for="type applicant">TYPE APPELLANT</label>
-							<select name="type_applicant"  id="type_applicant" class="form-control">
-								<option value='0'> Select APPELLANT </option>
-								<option value="client">client</option> 
-								<option value="Correspondant">Correspondant</option> 
-								<option value="Prospect">Prospect</option> 
-								<option value="Autres">Autres</option> 
-								<!-- <option *ngFor="let dept of departments" value="{{dept.dept_id}}">{{dept.department_name}}</option> -->
-							</select>
-						</div>
-						</div>
-							<div class="col-md-12">
-								<div class="form-group">
-									<label for="department">TYPE</label>
-									<select (change)="getAuxCode()" name="auxcodes" id="auxcodes_pop" class="form-control">
-										<option value='0'> Select Type </option>
-										<option *ngFor="let auxcode of auxcode_catagory" value="{{auxcode.id}}">
-											{{auxcode.category_name}}</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-md-12">
-								<div class="form-group">
-									<label for="department">Code</label>
-									<select name="auxcodes" id="auxcodes_subcat" class="form-control">
-										<option value='0'> Select Wrapup Code </option>
-										<option *ngFor="let auxcode of auxcodes" value="{{auxcode.auxcode_name}}">
-											{{auxcode.auxcode_name}}</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-md-12">
-								<div class="form-group">
-									<label for="notes">Notes <i class="far fa-edit"></i></label>
-									<textarea id="notes" class="form-control"></textarea>
-								</div>
-							</div>
-							<div class="col-md-12">
-								<div class="buttons form-group">
-									<input type="button" class="btn btn-secondary" (click)="toggleClass()" value="Close"
-										type="button">
-									<input type="button" class="btn btn-primary" value="Update Wrapup"
-										(click)="addWrapupcode()">
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</form>
-	
-			<div class="dialer-call-action">
-				<div class="row">
-					<!-- <div class="col-md-12" *ngIf="show_ans">
-						<div class="pulse call-attend-btn" (click)="acceptIncomeCall()">
-							<a href="javascript:;" class="btn btn-success">
-								<img src="assets/images/custom-wallboard/call-answered.svg" height="18"
-									class="mr-2 shake-animation"> Answer Call from {{get_dailer_value}}</a>
-						</div>
-					</div>
-					<div class="col-md-6" (click)="closeModelPopup()" *ngIf="show_mini_butons">
-						<a href="javascript:;" class="btn btn-warning fl"><i class="far fa-window-maximize"></i>
-							Minimize</a>
-					</div>
-					<div class="col-md-6" (click)="declineIncomeCall()" *ngIf="show_del">
-						<a href="javascript:;" class="btn btn-danger fl"><i class="fas fa-phone-slash"></i> Decline</a> -->
-					<div class="col-md-12 d-flex justify-content-center" *ngIf="show_ans">
-						<h6>Incoming Call from {{get_dailer_value}}</h6>
-					</div>
-				</div>
-				<br />
-				<div class="row">
-					<div class="col-md-4 d-flex justify-content-center" *ngIf="show_ans">
-						<div class="call-attend-btn" (click)="acceptIncomeCall()">
-							<a href="javascript:;" class="pulse btn btn-success">
-								<i class="fas fa-phone shake-animation"></i>
-								<span class="btn-action-text">Answer</span></a>
-							<!-- <span class="btn-action-text">Answer Call from {{get_dailer_value}}</span></a> -->
-						</div>
-					</div>
-					<div class="col-md-4 d-flex justify-content-center" (click)="declineIncomeCall()" *ngIf="show_del">
-						<a href="javascript:;" class="btn btn-danger fl"><i class="fas fa-phone-slash"></i>
-							<span class="btn-action-text">Decline</span> </a>
-					</div>
-					<div class="col-md-4 d-flex justify-content-center" (click)="closeModelPopup()"
-						*ngIf="show_mini_butons">
-						<a href="javascript:;" class="btn btn-warning fl"><i class="far fa-window-maximize"></i>
-							<span class="btn-action-text">Minimize </span></a>
-					</div>
-				</div>
-			</div>
-	
-	
-		</div>
-	
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<!-- 
+
+  <div class="settingSidebar">
+    <a href="javascript:void(0)" class="settingPanelToggle" (click)="toggleClass()">
+      <span title="Add Wrap Up Code" class="plus-icon"><i class="fas fa-plus" style="margin: 0px;"></i></span>
+      <span class="minus-icon"><i class="fas fa-minus" style="margin: 0px;"></i></span>
+    </a>
+
+    <div class="settingSidebar-body ps-container ps-theme-default" *ngIf="showrap == true">
+      <form>
+        <div class=" fade show active">
+          <!-- <button *ngIf="this.no_contact==true" class="btn btn-primary" (click)="AddContact()"
+            style="float: right;margin: 9px 20px 0px 0px;"> Add Contact</button> -->
+
+          <div class="setting-panel-header">Wrap Up Code
+            <button type="button" class="btn btn-primary float-right" (click)="toggleClassActivities()">Activities</button>
+
+          </div>
+          <div class="p-15">
+
+            <div class="row">
+                <!-- <div class="col-md-12" *ngFor="let item of questions">
+                   <div class="form-group">
+                       <label for="department">Question</label>
+                       <p>{{item.question}}</p>
+                   </div>
+               </div> -->
+               <div  class="col-md-12">
+               <div class="form-group">
+                <label for="type applicant">TYPE APPELLANT</label>
+                <select name="type_applicant"  id="type_applicant" class="form-control">
+                    <option value='0'> Select APPELLANT </option>
+                    <option value="client">client</option>
+                    <option value="Correspondant">Correspondant</option>
+                    <option value="Prospect">Prospect</option>
+                    <option value="Autres">Autres</option>
+                    <!-- <option *ngFor="let dept of departments" value="{{dept.dept_id}}">{{dept.department_name}}</option> -->
+                </select>
+            </div>
+            </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="department">TYPE</label>
+                        <select (change)="getAuxCode()" name="auxcodes" id="auxcodes_pop" class="form-control">
+                            <option value='0'> Select Type </option>
+                            <option *ngFor="let auxcode of auxcode_catagory" value="{{auxcode.id}}">
+                                {{auxcode.category_name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="department">Code</label>
+                        <select name="auxcodes" id="auxcodes_subcat" class="form-control">
+                            <option value='0'> Select Wrapup Code </option>
+                            <option *ngFor="let auxcode of auxcodes" value="{{auxcode.auxcode_name}}">
+                                {{auxcode.auxcode_name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="notes">Notes <i class="far fa-edit"></i></label>
+                        <textarea id="notes" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="buttons form-group">
+                        <input type="button" class="btn btn-secondary" (click)="toggleClass()" value="Close"
+                            type="button">
+                        <input type="button" class="btn btn-primary" value="Update Wrapup"
+                            (click)="addWrapupcode()">
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+
+      <div class="dialer-call-action">
+        <div class="row">
+          <!-- <div class="col-md-12" *ngIf="show_ans">
+            <div class="pulse call-attend-btn" (click)="acceptIncomeCall()">
+              <a href="javascript:;" class="btn btn-success">
+                <img src="assets/images/custom-wallboard/call-answered.svg" height="18"
+                  class="mr-2 shake-animation"> Answer Call from {{get_dailer_value}}</a>
+            </div>
+          </div>
+          <div class="col-md-12" (click)="closeModelPopup()" *ngIf="show_mini_butons">
+            <a href="javascript:;" class="btn btn-warning fl"><i class="far fa-window-maximize"></i>
+              Minimize</a>
+          </div>
+          <div class="col-md-12" (click)="declineIncomeCall()" *ngIf="show_del">
+            <a href="javascript:;" class="btn btn-danger fl"><i class="fas fa-phone-slash"></i> Decline</a> -->
+          <div class="col-md-12 d-flex justify-content-center" *ngIf="show_ans">
+            <h6>Incoming Call from {{get_dailer_value}}</h6>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-md-4 d-flex justify-content-center" *ngIf="show_ans">
+            <div class="call-attend-btn" (click)="acceptIncomeCall()">
+              <a href="javascript:;" class="pulse btn btn-success">
+                <i class="fas fa-phone shake-animation"></i>
+                <span class="btn-action-text">Answer</span></a>
+              <!-- <span class="btn-action-text">Answer Call from {{get_dailer_value}}</span></a> -->
+            </div>
+          </div>
+          <div class="col-md-4 d-flex justify-content-center" (click)="declineIncomeCall()" *ngIf="show_del">
+            <a href="javascript:;" class="btn btn-danger fl"><i class="fas fa-phone-slash"></i>
+              <span class="btn-action-text">Decline</span> </a>
+          </div>
+          <div class="col-md-4 d-flex justify-content-center" (click)="closeModelPopup()"
+            *ngIf="show_mini_butons">
+            <a href="javascript:;" class="btn btn-warning fl"><i class="far fa-window-maximize"></i>
+              <span class="btn-action-text">Minimize </span></a>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="settingSidebar-body ps-container ps-theme-default scrolling" *ngIf="showactivities == true">
+      <form>
+        <div class=" fade show active">
+          <!-- <button *ngIf="this.no_contact==true" class="btn btn-primary" (click)="AddContact()"
+            style="float: right;margin: 9px 20px 0px 0px;"> Add Contact</button> -->
+
+          <div class="setting-panel-header font-weight-bold sticky-top">Activities
+            <button type="button" class="btn btn-primary float-right" (click)="toggleClassWrap()">Wrap Code</button>
+          </div>
+          <div class="p-15">
+
+            <div class="has-color-bg">
+              <div class="row" *ngFor="let note of oldNotes;let i=index">
+                <div class="col-12 col-md-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h4><i class="fas fa-edit"></i> Note</h4>
+                      <div class="addBtn call-date-details">
+                        <small><strong>{{note.created_dt}}</strong></small>
+                      </div>
+                    </div>
+                    <div class="card-body p-0">
+                      <div class="call-detail-panel">
+                        <h6>TYPE : {{note.auxcode_name}}</h6>
+                        <p>{{note.call_note}}</p>
+                        <div class="note-detais">
+                          <h6><span class="user-icon"><i class="far fa-user-circle"></i></span> &nbsp;&nbsp;{{note.creater}} left a Note</h6>
+                          <div class="audio-file" *ngIf="note.call_rec != null ">
+
+                            <h6>Call Recording</h6>
+                                <div class="play-audio" *ngIf="note.call_rec != ''" style="text-align: left; margin: 15px 0px;">
+                                  <a href="{{note.call_rec}}" target="_blank" download="rec.wav">
+                                  <i class="fas fa-play-circle" ></i>
+                                </a>
+                                </div>
+
+
+                              <div class="fl">
+                                <button type="button" class="btn btn-primary" (click)="genTicket(note.call_note)">Generate Ticket</button>
+                              </div>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+            </div>
+              </div>
+
+
+          </div>
+        </div>
+
+      </form>
+
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!--
 	<div class="modal fade bd-example-modal-md" id="add_pbxform">
 		<div class="modal-dialog modal-md">
 			<div class="modal-content">
@@ -880,7 +940,7 @@
 								<div class="form-group">
 									<label for="department">Question</label>
 									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-								</div>	
+								</div>
 							</div>
 							<div class="col-md-12">
 								<div class="form-group">
@@ -889,7 +949,7 @@
 										<option value='0'> Select Wrap Up Code </option>
 										<option *ngFor="let auxcode of auxcodes" value="{{auxcode.auxcode_name}}">{{auxcode.auxcode_name}}</option>
 									  </select>
-								</div>	
+								</div>
 							</div>
 							<div class="col-md-12">
 								<div class="form-group">

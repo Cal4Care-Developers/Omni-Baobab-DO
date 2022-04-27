@@ -8,7 +8,7 @@
 				</div>
 				<div class="card-body p-30">
 					<div class="settingSidebar">
-						
+
 						<div class="p-15 border-bottom">
 							<h6 class="font-medium m-b-10">Select Layout</h6>
 							<div class="selectgroup layout-color w-50" >
@@ -60,12 +60,12 @@
 								<button class="btn btn-secondary btn-restore-theme" type="submit">
 									Reset
 								</button>
-								
+
 								<button class="btn btn-primary" type="button" (click)="appsettings()">
 									<i class="fa fa-spin fa-cog"></i> Apply Changes
 								</button>
 							</div>
-							
+
 						</div>
 					</div>
 
@@ -74,7 +74,7 @@
 
 			</div>
 		</div>
-	
+
 		<div class="col-12 col-lg-8" *ngIf="this.showchat">
 			<div class="card">
 				<div class="card-header">
@@ -85,14 +85,14 @@
 						<h4>Click the url to start chat</h4>
 						<div class="widget-copy">
 							<a  target="_blank" href="{{ this.chatBot}}">{{ this.chatBot}}</a>
-		
+
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-	
+
 		<div class="col-12 col-lg-8" *ngIf="this.h_webinar && this.user_type == 'Admin'">
 			<div class="card">
 				<div class="card-header">
@@ -115,17 +115,17 @@
 							<pre>&lt;iframe src="{{this.webinar_url}}" title="Upcoming Webinar's"&gt;
 &lt;/iframe&gt;
 							</pre>
-	
+
 						</div>
 					</div>
-	
+
 				</div>
 			</div>
-			
+
 		</div>
-		
-	
-		
+
+
+
 <div class="col-12 col-lg-8" *ngIf="this.showfb">
 	<div class="card">
 		<div class="card-header">
@@ -164,13 +164,13 @@
 							  <h6>Your Facebook Page is</h6>
 							    <div *ngFor="let item of fb_page_name" class="widget-copy">
 								      {{item}}
-								 </div> 
+								 </div>
 							 <p>Please, Click here to get detailed documentation for live integration</p>
 
 							 <div class="download-btn-panel">
 								<a href="https://baobabgroup.mconnectapps.com/api/v1.0/Facebook_doc.pdf" target="_blank" class="btn btn-info" download><i class="fas fa-eye"></i> Download</a>
 							</div>
-						  </div>  
+						  </div>
                           <div *ngIf="!this.has_fb_page ">
 									<p>Sorry,we does not integrated your Facebook page for LIVE </p>
 									<p>Please, Click here to get detailed documentation for live integration</p>
@@ -244,7 +244,7 @@
 				<!-- <p>mConnect WhatsApp solutions provide multiple instances for the convenience of our
 					clients.</p> -->
 				<h6>Click to get detailed document</h6>
-				
+
 				<div class="download-btn-panel">
 					<a href="https://baobabgroup.mconnectapps.com/api/v1.0/Help_manuals/others/Omni%20WhatsApp%20unoff.pdf" download class="btn btn-info" target="_blank"><i class="fas fa-eye"></i> View</a>
 				</div>
@@ -265,7 +265,7 @@
 			<div class="code-to-copy">
 				<h4>To Start chat</h4>
 				<div class="widget-copy">
-				
+
 					<p>Use this ID for Add us as your friend in your LINE Messenger to start chat.</p>
 					<div class="widget-copy">
 						<b>@671qwxdc</b>
@@ -310,22 +310,22 @@
 									</div>
 							</div>
 						</div>
-						
+
 						<div class="toggle-content-2"  *ngIf="lineliveContent">
 							<div class="widget-inner-content" >
 								<h6>Click to get detailed document</h6>
-								<div class="download-btn-panel">  
+								<div class="download-btn-panel">
 							        <!-- <a href="https://baobabgroup.mconnectapps.com/api/v1.0/LINE_doc.pdf" download class="btn btn-info" target="_blank"><i class="fas fa-eye"></i> Download</a> -->
 							        <a href="https://baobabgroup.mconnectapps.com/api/v1.0/pro_contents/line.pdf" download class="btn btn-info" target="_blank"><i class="fas fa-eye"></i> Download</a>
 								</div>
 							</div>
-						
+
 						</div>
 
-					
+
 				</div>
-					
-					
+
+
 				</div>
 			</div>
 
@@ -342,7 +342,7 @@
 		</div>
 		<div class="card-body p-30">
 			<div class="code-to-copy">
-			
+
 				<div class="widget-copy">
 					<p>Send <b>join cross-zebra</b> to <b>+1 415 523 8886</b> from your WhatsApp</p>
 				</div>
@@ -363,7 +363,7 @@
 			<div class="code-to-copy">
 				<h4>To Start chat</h4>
 				<div class="widget-copy">
-				
+
 					<p>This is our Telegram account ID.You can message to this ID.</p>
 					<div class="widget-copy">
 						<b>Cal4care Telegram</b>
@@ -387,7 +387,7 @@
 			<div class="code-to-copy">
 				<h4>To Start chat</h4>
 				<div class="widget-copy">
-				
+
 					<div class="widget-inner-content" >
 						<h6>Click to get detailed document</h6>
 						<div class="download-btn-panel">
@@ -408,12 +408,12 @@
 			<h4>Dialer Widget Code</h4>
 		</div>
 		<div class="card-body p-30">
-		
+
 		<div class="code-to-copy">
 			<h6>Implement the following code to start chat</h6>
 			<pre id="copyClipboard" class="widget-copy">&lt;script&gt;
 function receiveMessage(e)&#123;var t=JSON.parse(e.data),i=t.status_style;"openChat"!=t.operation_type?document.getElementById("ChatFrame").setAttribute("style","position: fixed; right: 0px; bottom: 0px; border: none;height:200px;width:200px;"):document.getElementById("ChatFrame").setAttribute("style",i)&#125;$(document).ready(function()&#123;$("body").append("&lt;iframe allow='geolocation ; microphone ; camera *'  src='{{this.dialer_widget}}' id='ChatFrame' style='position: fixed; right: 0px; bottom: 0px; border: none;height:200px;width:200px;'&gt;&lt;/iframe&gt;")&#125;),window.addEventListener("message",receiveMessage,!1);
-&lt;/script&gt;</pre>	
+&lt;/script&gt;</pre>
 
 		</div>
 	</div>
@@ -426,12 +426,12 @@ function receiveMessage(e)&#123;var t=JSON.parse(e.data),i=t.status_style;"openC
 			<h4>SMS Chat Widget Code</h4>
 		</div>
 		<div class="card-body p-30">
-		
+
 		<div class="code-to-copy">
 			<h6>Implement the following code to start chat</h6>
 			<pre id="copyClipboard" class="widget-copy">&lt;script&gt;
 function receiveMessage(e)&#123;var t=JSON.parse(e.data),i=t.status_style;"openChat1"!=t.operation_type?document.getElementById("ChatFrame").setAttribute("style","position: fixed; right: 0px; bottom: 0px; border: none;height:200px;width:200px;"):document.getElementById("ChatFrame").setAttribute("style",i)&#125;$(document).ready(function()&#123;$("body").append("&lt;iframe allow='geolocation ; microphone ; camera *' src='{{this.sms_widget}}' id='ChatFrame' style='position: fixed; right: 0px; bottom: 0px; border: none;height:200px;width:200px;'&gt;&lt;/iframe&gt;")&#125;),window.addEventListener("message",receiveMessage,!1);
-&lt;/script&gt;</pre>	
+&lt;/script&gt;</pre>
 
 		</div>
 	</div>
@@ -444,12 +444,12 @@ function receiveMessage(e)&#123;var t=JSON.parse(e.data),i=t.status_style;"openC
 			<h4>Internal Chat Widget Code</h4>
 		</div>
 		<div class="card-body p-30">
-		
+
 		<div class="code-to-copy">
 			<h6>Implement the following code to start chat</h6>
 			<pre id="copyClipboard" class="widget-copy">&lt;script&gt;
 function receiveMessage(e)&#123;var t=JSON.parse(e.data),i=t.status_style;"openChat3"!=t.operation_type?document.getElementById("ChatFrame").setAttribute("style","position: fixed; right: 0px; bottom: 0px; border: none;height:200px;width:200px;"):document.getElementById("ChatFrame").setAttribute("style",i)&#125;$(document).ready(function()&#123;$("body").append("&lt;iframe allow='geolocation ; microphone ; camera *' src='{{this.int_chat_widget}}' id='ChatFrame' style='position: fixed; right: 0px; bottom: 0px; border: none;height:200px;width:200px;'&gt;&lt;/iframe&gt;")&#125;),window.addEventListener("message",receiveMessage,!1);
-&lt;/script&gt;</pre>	
+&lt;/script&gt;</pre>
 
 		</div>
 	</div>
@@ -466,7 +466,7 @@ function receiveMessage(e)&#123;var t=JSON.parse(e.data),i=t.status_style;"openC
 			<h6>Use below iframe for getting nested iframe</h6>
 			<pre id="copyClipboard" class="widget-copy">&lt;script&gt;
 function receiveMessage(e)&#123;var t=JSON.parse(e.data),i=t.status_style;"openChat"!=t.operation_type?document.getElementById("ChatFrame").setAttribute("style","position: fixed; right: 0px; bottom: 0px; border: none;height:55px;width:80px;"):document.getElementById("ChatFrame").setAttribute("style",i)&#125;$(document).ready(function()&#123;$("body").append("&lt;iframe allow='geolocation ; microphone ; camera *' src='{{this.allwidgets}}' id='ChatFrame' style='position: fixed; right: 0px; bottom: 0px; border: none;height:55px;width:80px;'&gt;&lt;/iframe&gt;")&#125;),window.addEventListener("message",receiveMessage,!1);
-&lt;/script&gt;</pre>	
+&lt;/script&gt;</pre>
 		</div>
 	</div>
 </div>
@@ -506,7 +506,7 @@ function receiveMessage(e)&#123;var t=JSON.parse(e.data),i=t.status_style;"openC
 					&#125;
 					&#125;
 
-				</pre>	
+				</pre>
 
 
 
@@ -531,7 +531,7 @@ function receiveMessage(e)&#123;var t=JSON.parse(e.data),i=t.status_style;"openC
 <!--------------------------
 	Help Manual
 	---------------------------->
-	
+
 <!--------------------------
 	Help Manual End
 	---------------------------->

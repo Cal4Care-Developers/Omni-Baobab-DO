@@ -21,11 +21,7 @@ import Swal from 'sweetalert2'
   name: 'safe'
 })
 export class EditContactsComponent implements OnInit {
-
-
-
-
-  param1: string;
+param1: string;
   created_time;
   addRefined: FormGroup;
   modified_time;
@@ -49,6 +45,8 @@ export class EditContactsComponent implements OnInit {
   public startrec = false;
   dailyfoodurl;
   has_external_contact;
+  showactivities = false;
+  showrap = true;
   IFlink;
   show_caller_id;
   hide_cal1er = '0';
@@ -78,10 +76,12 @@ export class EditContactsComponent implements OnInit {
   show_del = false;
   param3;
   websocket;
+  oldNotes;
   email_id: string;
   type_appellant: any;
-  constructor(private serverService: ServerService, private router:Router,private route: ActivatedRoute, private sanitizer: DomSanitizer,public modalService: NgbModal) { 
-    
+
+  constructor(private serverService: ServerService, private router:Router,private route: ActivatedRoute, private sanitizer: DomSanitizer,public modalService: NgbModal) {
+
     this.addRefined = new FormGroup({
       'add_group_name': new FormControl(null, Validators.required),
     });
@@ -90,7 +90,7 @@ export class EditContactsComponent implements OnInit {
     this.param3 = this.route.snapshot.queryParamMap.get('ids');
     this.paramCall = this.route.snapshot.queryParamMap.get('calltype');
     this.email_id = this.route.snapshot.queryParamMap.get('email');
-
+    //this.contact_id = this.route.snapshot.queryParamMap.get('contact_id');
    //alert(this.paramCall)
     var decodedString = atob(this.param1);
     this.param1 = decodedString;
@@ -116,7 +116,7 @@ export class EditContactsComponent implements OnInit {
           this.show_del = false;
         }
         console.log(this.param1);
-        //  this.editConatcts();        
+        //  this.editConatcts();
       }
       if (dpContent.type == "call_ended") {
         this.show_ans = false;
@@ -124,9 +124,9 @@ export class EditContactsComponent implements OnInit {
       }
 
     });
-    
+
   }
-  
+
   ngOnInit() {
     this.editContact = new FormGroup({
       'contact_owner' :new FormControl(null,Validators.required),
@@ -178,7 +178,7 @@ export class EditContactsComponent implements OnInit {
      });
      this.uadmin_id = localStorage.getItem('userId');
      this.show_caller_id = localStorage.getItem('show_caller_id');
-     
+
     this.extension = localStorage.getItem('ext_num');
     this.has_hard_id = localStorage.getItem('hardware_id');
     // let user_id: any=localStorage.getItem('userId');
@@ -215,7 +215,7 @@ export class EditContactsComponent implements OnInit {
         $('#email').val('');
         $('#title').val('');
         $('#phone').val('');
-        $('#mobile').val('');       
+        $('#mobile').val('');
         this.no_contact=true;
         Swal.fire({
           title: 'Contact Unknown',
@@ -232,7 +232,7 @@ export class EditContactsComponent implements OnInit {
      this.editConatcts();
      //this.getAuxCatogory();
     // if(this.fromEdit){
-     
+
     // } else {
     //   this.getquestionnaire();
     // }
@@ -242,16 +242,16 @@ export class EditContactsComponent implements OnInit {
     this.has_external_contact = localStorage.getItem('has_external_contact');
     this.user_type = localStorage.getItem('user_type');
     this.admin_permission = localStorage.getItem('admin_permision');
-	
+
 
 		if (this.user_type == 'Super Admin') {
 			this.user_type = 1;
 		}
 		else if (this.user_type == 'Admin' || this.admin_permission =='1') {
-			this.user_type = 2;	 
+			this.user_type = 2;
 		}
 		else {
-			this.user_type = 3;		 
+			this.user_type = 3;
 		}
     if ($("body").hasClass("sidebar-mini")) {
       $("body").removeClass("sidebar-mini");
@@ -266,13 +266,13 @@ export class EditContactsComponent implements OnInit {
     // if(this.crm_type == 'SalesForce' ){
     //   this.dailyfoodurl = this.external_contact_url;
     // } else if(this.crm_type == 'HubSpot'){
-     
+
     // }
 
 
     if(this.crm_type == 'SalesForce' ){
       this.dailyfoodurl = this.external_contact_url;
-      $('<iframe is="x-frame-bypass" class="dailyfIfram" width="100%" height="800px" frameborder="0" allowfullscreen ></iframe>').attr('src', this.dailyfoodurl).appendTo('#dailyfIframes'); 
+      $('<iframe is="x-frame-bypass" class="dailyfIfram" width="100%" height="800px" frameborder="0" allowfullscreen ></iframe>').attr('src', this.dailyfoodurl).appendTo('#dailyfIframes');
 
     } else if(this.crm_type == 'HubSpot'){
       this.dailyfoodurl = this.external_contact_url;
@@ -283,7 +283,7 @@ export class EditContactsComponent implements OnInit {
       } else {
         this.dailyfoodurl = 'https://api.hubapi.com/contacts/v1/search/query?q='+this.paramq+'&hapikey='+this.hapikey;
       }
-      
+
 
       let api_req:any = '{"operation":"agents", "moduleType":"agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"curl_response","url":"'+this.dailyfoodurl+'"}}';
 
@@ -291,11 +291,11 @@ export class EditContactsComponent implements OnInit {
       //  console.log(response.contacts[0]);
         this.dailyfoodurlhub = response.contacts[0]['profile-url'];
        // alert(this.dailyfoodurlhub);
-        $('<iframe  class="dailyfIfram" width="100%" height="800px" frameborder="0" allowfullscreen ></iframe>').attr('src', this.dailyfoodurlhub).appendTo('#dailyfIframes'); 
-      }, 
+        $('<iframe  class="dailyfIfram" width="100%" height="800px" frameborder="0" allowfullscreen ></iframe>').attr('src', this.dailyfoodurlhub).appendTo('#dailyfIframes');
+      },
       (error)=>{
           console.log(error);
-      });  
+      });
     }  else if(this.crm_type == 'ZohoDesk'){
       this.dailyfoodurl = this.external_contact_url;
       let access_token: any=localStorage.getItem('access_token');
@@ -309,18 +309,18 @@ export class EditContactsComponent implements OnInit {
       } else {
         this.dailyfoodurl = 'https://desk.zoho.com/api/v1/search?module=contacts&searchStr='+this.paramq;
       }
-      
+
 
       let api_req:any = '{"operation":"agents", "moduleType":"agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"curl_response_zoho_desk","url":"'+this.dailyfoodurl+'","authkey":"'+this.z_authId+'","orgID":"'+this.z_orgId+'","number":"'+number+'"}}';
 
       this.serverService.sendServer(api_req).subscribe((response:any) => {
         this.dailyfoodurlhub = response.result.data;
      // alert(this.dailyfoodurlhub);
-        $('<iframe is="x-frame-bypass" class="dailyfIfram" width="100%" height="800px" frameborder="0" allowfullscreen ></iframe>').attr('src', this.dailyfoodurlhub).appendTo('#dailyfIframes'); 
-      }, 
+        $('<iframe is="x-frame-bypass" class="dailyfIfram" width="100%" height="800px" frameborder="0" allowfullscreen ></iframe>').attr('src', this.dailyfoodurlhub).appendTo('#dailyfIframes');
+      },
       (error)=>{
           console.log(error);
-      });  
+      });
     }
 
 
@@ -339,16 +339,16 @@ initSocket() {
       } else {
         this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4023");
       }
-  
-  
+
+
       this.websocket.onopen = function (event) {
         console.log('Dialpad socket connected');
       }
-  
+
       this.websocket.onmessage = function (event) {
         // console.log(event.data);
         var result_message = JSON.parse(event.data);
-        //    console.log(result_message);  
+        //    console.log(result_message);
         //    console.log($('#user_number').val());
         this.has_hard_id = localStorage.getItem('hardware_id');
         if (result_message[0].cust_id == this.has_hard_id) {
@@ -357,7 +357,7 @@ initSocket() {
           // console.log('not matched');
           return false;
         }
-  
+
         if (result_message[0].data[0].wrapuptype == "wrapupcall_id" && result_message[0].data[0].extno == $('#user_number').val()) {
           $('#wrapup_callID').val(result_message[0].data[0].callid);
          // alert(result_message[0].data[0].callid)
@@ -371,14 +371,14 @@ initSocket() {
         //   iziToast.info({
         //     title:""+result_message[0].data[0].q_no+"",
         //     message: "Queue No is '"+result_message[0].data[0].q_no+"'",
-        //     position: 'topRight',                
+        //     position: 'topRight',
         //     timeout: 1000,
         // });
         }
-  
-  
+
+
       }
-  
+
       this.websocket.onerror = function (event) {
         console.log('error');
       }
@@ -387,10 +387,10 @@ initSocket() {
         $('#reconnect_socket').click();
 
       }
-  
-  
-  
-  
+
+
+
+
     }
 
 getquestionnaire(){
@@ -407,7 +407,7 @@ return false;
       this.questions= response.result.data;
     } else {
     }
-  }, 
+  },
   (error)=>{
       console.log(error);
   });
@@ -422,11 +422,11 @@ toggleClass(){
   //this.getAuxCode();
   this.getAuxCatogory();
   if(this.fromEdit){
-     
+
   } else {
     this.getquestionnaire();
   }
-  
+
   $('.settingSidebar').toggleClass('showSettingPanel');
 }
 getCatname(id) {
@@ -477,15 +477,15 @@ getAuxCatogory() {
        return false;
 
     let access_token: any=localStorage.getItem('access_token');
-  
+
     let api_req:any = '{"operation":"ticket", "moduleType":"ticket", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"get_dept_settings","user_id":"'+this.admin_id+'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.status==true){
         this.departments = response.result.data;
       } else {
       }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -523,7 +523,7 @@ editConatcts(){
     conct_req.contact_phone = this.paramq;
     conct_req.screenPoupus = 'true';
   }
-  
+
   // else if(this.paramCall == null && this.paramq != null){
   //   alert('sdsdsd')
   //   conct_req.contact_phone=this.paramq;
@@ -544,10 +544,10 @@ editConatcts(){
   api_req.access_token=localStorage.getItem('access_token');
   api_req.element_data = conct_req;
 
-    this.serverService.sendServer(api_req).subscribe((response:any) => {      
+    this.serverService.sendServer(api_req).subscribe((response:any) => {
 
         if(response.result.data==false){
-          
+
           // if(this.call_record_id !='' && this.show_caller_id == '0')
             if(this.show_caller_id == '0')
             {
@@ -559,7 +559,7 @@ editConatcts(){
 
             //  alert('hided'+this.click_to_call_number)
 
-          } 
+          }
           else if(this.call_record_id == null && this.fromEdit == null&& this.paramq != null){
           this.hide_cal1er = this.paramq;
           this.click_to_call_number = this.paramq;
@@ -618,14 +618,14 @@ editConatcts(){
 
 
 
-         
+
         } else {
 
 
           var home_phone = '';
           var office_phone = '';
           var mobile='';
-          
+
           // if(this.call_record_id !='' &&this.show_caller_id == '0')
           if(this.show_caller_id == '0')
           {
@@ -647,7 +647,7 @@ editConatcts(){
             office_phone = response.result.data.office_phone
             mobile= response.result.data.mobile;
           }
-        
+
           this.editContact.setValue({
             'contact_owner' : response.result.data.contact_owner,
             'first_name' : response.result.data.first_name,
@@ -695,15 +695,15 @@ editConatcts(){
             'country_code' : response.result.data.country_code
           });
           this.contact_id = response.result.data.contact_id;
-          
+
           $('#departments').val(response.result.data.department).prop('selected', true);
           $('#res_departments').val(response.result.data.res_dept).prop('selected', true);
           this.created_time = response.result.data.created_at;
           this.modified_time = response.result.data.updated_at;
 
         }
-        
-    }, 
+
+    },
     (error)=>{
         console.log(error);
     });
@@ -715,19 +715,19 @@ editConatcts(){
 
 clictToCall(to){
   // if(to == 'phone'){  this.to_num = $('#phone').val(); } else {  this.to_num = $('#mobile').val(); }
- 
+
   if(to == 'phone'){  this.to_num = this.click_to_call_number; } else {  this.to_num = this.click_to_call_mobile_number; }
-  
+
    if(this.to_num == ''){
        iziToast.warning({
          message: "No Number To Call",
          position: 'topRight'
        });
    } else {
- 
- 
+
+
      let access_token: any=localStorage.getItem('access_token');
-   
+
      var extention = localStorage.getItem('ext_int_status');
      //alert(extention);
      if(extention == '2'){
@@ -737,7 +737,7 @@ clictToCall(to){
       let api_reqs:any = '{"type": "makecallauto", "number": "'+this.to_num+'"}';
       this.serverService.show.next(api_reqs);
      }
- 
+
    }
    console.log(this.to_num);
  }
@@ -758,7 +758,7 @@ console.log(assigned_department_id);
 let auxcodes: any= $('#auxcodes').val();
 if(auxcodes == '0') {
   auxcodes = $('#auxcodes_pop').val();
-} 
+}
 console.log(auxcodes);
 
 let api_req:any = new Object();
@@ -776,13 +776,13 @@ if(contact_id == '' || contact_id == undefined){
     api_req.element_data = this.editContact.value;
     if(this.editContact.value.home_phone == "xxxxxxxxx")
     api_req.element_data.home_phone = this.click_to_call_home_phone;
- 
+
    if(this.editContact.value.mobile == "xxxxxxxxx")
     api_req.element_data.mobile =   this.click_to_call_mobile_number;
- 
+
    if(this.editContact.value.office_phone == "xxxxxxxxx")
     api_req.element_data.office_phone = this.click_to_call_office_phone;
- 
+
    if(this.editContact.value.phone == "xxxxxxxxx")
     api_req.element_data.phone = this.click_to_call_number;
   } else {
@@ -803,7 +803,7 @@ if(contact_id == '' || contact_id == undefined){
   api_req.moduleType="contact";
   api_req.api_type="web";
   api_req.access_token=localStorage.getItem('access_token');
-  
+
 
 if(this.admin_id == this.uadmin_id){
   api_req.element_data = this.editContact.value;
@@ -826,7 +826,7 @@ if(this.admin_id == this.uadmin_id){
   api_req.element_data.phone = this.click_to_call_number;
 }
 
- 
+
   api_req.element_data.action='update_contact';
   api_req.element_data.modified_by = localStorage.getItem('userId');
   api_req.element_data.contact_id=contact_id;
@@ -848,12 +848,12 @@ if(this.admin_id == this.uadmin_id){
               this.router.navigate(['/contacts']);
           }
       else{
-          
+
               iziToast.warning({
                   message: "Contact not updated. Please try again",
                   position: 'topRight'
               });
-          
+
       }
 
   },
@@ -875,7 +875,8 @@ addWrapupcode() {
  // alert('hii')
   let wrapcall_id = $('#wrapup_callID').val();
   let cat_id = $('#auxcodes_pop').val();
-  let wraupcode = $('#auxcodes_subcat').val();
+  var wraupcode = $('#auxcodes_subcat').val();
+  console.log(cat_id);
   let notes = $('#notes').val();
   //alert(notes)
   let access_token: any = localStorage.getItem('access_token');
@@ -884,6 +885,27 @@ addWrapupcode() {
   let queue_ids = $('#queue_ids2').val();
 //alert(queue_ids)
 // alert(this.Queue_number);
+if(wraupcode=='0'){
+  iziToast.warning({
+    message:"Please choose wrapupCode",
+    position:"topRight"
+  })
+//  return false
+      }
+      if(cat_id=='0'){
+        iziToast.warning({
+          message:"Please choose Code",
+          position:"topRight"
+        })
+ //       return false
+            }
+            if(notes==''){
+              iziToast.warning({
+                message:"Please choose notes",
+                position:"topRight"
+              })
+              return false
+                  }
   var wrap = this.category_name + ' -> ' + wraupcode;
   var contact_id=this.contact_id;
   //var callid=this.call
@@ -910,8 +932,8 @@ addWrapupcode() {
 
   let api_reqs: any = '{"type": "updatewrapupCode","call_type":"'+this.paramCall+'","aux_code": "'+wraupcode+'","cat_id": "'+cat_id+'","call_note": "'+notes+'","from_no": "'+from_no+'","to_no": "'+to_no+'","wrapCode": "'+wrap+'","contact_id": "'+contact_id+'","type_appellant": "'+type_appellant+'"}';
   this.serverService.minimize.next(api_reqs);
-return false;  
-  
+return false;
+
   let api_req: any = new Object;
   let conct_req: any = new Object();
 
@@ -934,7 +956,7 @@ return false;
   api_req.element_data.admin_id = this.admin_id;
   api_req.element_data.action = "add_auxcode_wall";
   this.serverService.sendServer(api_req).subscribe((response: any) => {
-   
+
     if (response.status == false) {
 
     }
@@ -975,6 +997,56 @@ closeModelPopup(link) {
   const modalRef = this.modalService.dismissAll(EditContactsComponent);
   let api_reqs: any = '{"type": "minimize"}';
   this.serverService.minimize.next(api_reqs);
+}
+closeModal(){
+  const modalRef = this.modalService.dismissAll(EditContactsComponent);
+
+}
+get_activity(contact_id){
+  let conct_req:any = new Object();
+  let api_req:any = new Object();
+  conct_req.user_id=localStorage.getItem('userId');
+  conct_req.action="get_activity";
+  conct_req.contact_id=contact_id;
+  //conct_req.auxcode_name= auxcode_name;
+  //conct_req.call_note=this.call_note;
+  //alert(this.call_note)
+  api_req.operation="contact";
+  api_req.moduleType="contact";
+  api_req.api_type="web";
+  api_req.access_token=localStorage.getItem('access_token');
+  api_req.element_data = conct_req;
+
+    this.serverService.sendServer(api_req).subscribe((response:any) => {
+
+      if(response.result.status==true){
+        this.oldNotes=response.result.data;
+        console.log(this.oldNotes)
+        //alert( this.oldNotes)
+      }
+  },
+  (error)=>{
+      console.log(error);
+  });
+}
+toggleClassActivities() {
+  // this.getAuxCode();
+  // if (this.fromEdit) {
+   this.get_activity(this.contact_id);
+
+  // } else {
+  //   this.getquestionnaire();
+  // }
+  this.showactivities = true;
+  this.showrap = false;
+
+  // $('.settingSidebar').toggleClass('showSettingPanel');
+}
+
+
+toggleClassWrap(){
+  this.showactivities = false;
+  this.showrap = true;
 }
 
 }

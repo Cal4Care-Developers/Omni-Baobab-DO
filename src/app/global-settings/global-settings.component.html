@@ -5,15 +5,15 @@
                 <div class="card-header">
                     <h4>Global Settings</h4>
                     <div id="google_translate_element"></div>
-                    
+
                     <input type="hidden" id="checkring" (click)="checkring()">
                     <input type="hidden" id="refresh_page" (click)="dept_settings()">
                 </div>
                 <div class="card-body p-30">
                     <div class="row">
-                        
+
                         <div class="col-md-4">
-                            
+
 
                             <div class="form-group">
                                 <label for="timezone">Default TimeZone</label>
@@ -38,7 +38,7 @@
 
 
                         <div class="col-md-2" *ngIf="has_voice">
-                                   
+
                                         <p>Show Caller Id</p>
                                         <div class="form-check form-check-inline">
                                             <div class="pretty p-switch p-fill">
@@ -48,8 +48,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    
-                         </div> 
+
+                         </div>
 
                          <div class="col-md-2" *ngIf="has_predict">
                             <p>Predictive Dialer Behaviour</p>
@@ -60,7 +60,7 @@
                                         <label for="Predict"></label>
                                     </div>
                                 </div>
-                            </div>     
+                            </div>
                         </div>
                                      <!-- <div class="col-md-2" *ngIf="has_voice">
                                                     <p>Video Dialer</p>
@@ -71,10 +71,10 @@
                                                                 <label for="video_call"></label>
                                                             </div>
                                                         </div>
-                                                    </div>     
+                                                    </div>
                                      </div>  -->
 
-                        
+
 
                         <div class="col-md-4" *ngIf="show_admin_sett">
                             <div class="form-panel">
@@ -89,7 +89,7 @@
 
                                 </div>
                             </div>
-                        </div> 
+                        </div>
 
                         <div class="col-md-4" *ngIf="show_admin_sett">
                             <div class="form-panel">
@@ -104,7 +104,7 @@
 
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                         <div class="col-md-4"  *ngIf="has_voice">
                             <div class="form-panel">
                                 <label for="Webrtc">Select WEBRTC Server</label>
@@ -113,7 +113,7 @@
                                     <option *ngFor="let time of server_list" value="{{time.server_id}}"  [selected]="time.server_id == this.server_ID">{{time.server_name}}</option>
                                 </select>
                             </div>
-                        </div> 
+                        </div>
                         <div class="col-md-12" *ngIf="has_voice">
                             <div class="form-panel">
                                 <div class="row">
@@ -122,7 +122,7 @@
                                             <label for="contact_owner">Custom Ringtone (Beep alert)</label>
                                             <div class="slidecontainer">
                                                 <input type="range" min="1" max="4" value="{{dialer_ring_upt}}" (click)="setval()" class="slider" id="volume_step">
-                                            
+
                                             </div>
                                             <label>{{this.valume}}</label>
                                             <audio id='incommingCalltone6' src='assets/images/incomingcall.mp3' ></audio>
@@ -141,8 +141,8 @@
                                                     <label for="ringer"></label>
                                                 </div>
                                             </div>
-                                        </div>     
-                                   </div> 
+                                        </div>
+                                   </div>
                                 </div>
                             </div>
                         </div>
@@ -150,16 +150,16 @@
 
 
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <input type="submit" class="btn btn-success update_agent" value="Update Settings" (click)="updateGlobalSet()">
-                                
+
                             </div>
                         </div>  </div>
                     </div>
-                    
+
                 </div>
 
 
@@ -169,7 +169,7 @@
                         <h4>CRM Settings</h4>
                         <input type="hidden" id="refresh_page" (click)="dept_settings()">
                     </div>
-                    
+
                     <div class="card-body p-30">
                         <div class="row">
                             <div class="col-xl-3 col-md-6 col-12" >
@@ -202,7 +202,7 @@
                                 <option value='Zoho'>Zoho</option>
                                 <option value='ZohoDesk'>ZohoDesk</option>
                             </select>
-                        </div>         
+                        </div>
                         <div class="form-group">
                             <label>External CRM URL</label>
                             <input type="text" class="form-control" value="{{this.external_contact_url}}" id="external_contact_url">
@@ -214,11 +214,11 @@
 
                         <div class="form-group" *ngIf="showForHubSpot">
                             <p>Replace "Hubspot api Key" with your hubspot api key and add below url as External CRM URL </p>
-                           <p>External CRM URL : https://{{this.host_name}}/#/edit-contacts?q=hubSpot&hapikey=Hubspot api Key</p> 
+                           <p>External CRM URL : https://{{this.host_name}}/#/s?q=hubSpot&hapikey=Hubspot api Key</p>
                          </div>
                         <div class="form-group" *ngIf="showForZDesk">
                            <a href="https://accounts.zoho.com/apiauthtoken/create?SCOPE=ZohoSupport/supportapi,ZohoSearch/SearchAPI" target="_blank">Click here to generate auth token and add below url as External CRM URL</a>
-                          <p>External CRM URL : https://{{this.host_name}}/#/edit-contacts?q=zohoDesk&authkey=Auth Key&orgId=orgId</p> 
+                          <p>External CRM URL : https://{{this.host_name}}/#/s?q=zohoDesk&authkey=Auth Key&orgId=orgId</p>
                         </div>
 
                         <div class="custom-logos fl" *ngIf="showurlsett">
@@ -270,13 +270,13 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="row" id="dailyfIframes">
 
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="settings-btn-group fl">
@@ -284,10 +284,10 @@
                                 <input type="button" class="btn btn-success update_agent" value="Update Settings" (click)="updateCRMSet()">
                             </div>
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
-        </div> 
+        </div>
     </div>
-</div> 
+</div>
 </div>
