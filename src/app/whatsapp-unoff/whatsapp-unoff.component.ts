@@ -66,14 +66,27 @@ export class WhatsappUnoffComponent implements OnInit {
 
   //     this.ngOnInit();
   // });
+  this.serverService.wp_chat.subscribe( ($event) =>
+  {
+     console.log($event);
+     var chatids = $event.unique_id;
+     //var chatids = this.param1;
+     //alert(this.chat_ids);
+     if(this.chat_ids==chatids){
+      this.chatPanelDetail2(chatids);
+      // alert('bhgu');
+     }
+    //  var dpContent = JSON.parse(val);
 
+   }
+  );
   this.serverService.changeDetectionEmitter.subscribe(
     ($event) => {
 
       let mData = JSON.parse($event);
       var pagefor = mData.pagefor;
       var pageid = mData.id;
-
+//alert(pageid)
 
       if(pagefor == 'whatsapp_unoff'){
 // alert(this.chat_detail_key)

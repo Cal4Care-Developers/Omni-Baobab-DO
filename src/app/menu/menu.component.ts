@@ -96,7 +96,7 @@ h_call_rec; wall_basic; h_que_manage;
   stop_interval;
   has_admin_permission=false;
   loginUser;
-  
+
   wp_unoff=false;
   instance_value;i_id;
   // listinstacne;
@@ -111,7 +111,7 @@ h_call_rec; wall_basic; h_que_manage;
     //     });
     this.serverService.receiveMessage()
 
-    this.serverService.showvedioDialer.subscribe( (val:any) => 
+    this.serverService.showvedioDialer.subscribe( (val:any) =>
     {
        console.log(val);
        var dpContent = JSON.parse(val);
@@ -149,7 +149,7 @@ h_call_rec; wall_basic; h_que_manage;
     // }, 30000);
   }
 
- 
+
   ngOnInit() {
     if (localStorage.getItem('access_token')) {
 
@@ -167,16 +167,16 @@ h_call_rec; wall_basic; h_que_manage;
       });
       if (localStorage.getItem('N_token') == "undefined" || localStorage.getItem('N_token') == "") {
         this.reqPermission = true;
-      
+
           // this.requestPermission();
-         
+
       } else {
         // alert()
         this.reqPermission = false;
 
-       
+
           // this.requestPermission();
-        
+
       }
       this.uadmin_id = localStorage.getItem('userId');
       this.admin_id = localStorage.getItem('admin_id');
@@ -190,7 +190,7 @@ h_call_rec; wall_basic; h_que_manage;
 
 
     // if( this.reseller_values== '' ||this.reseller_values==null){
-                    
+
     //   this.fax_admin= false;
     // }
     // else
@@ -203,16 +203,16 @@ this.reqPermission = true;
 } else {
   this.reqPermission = false;
 }
-    
-  
-    this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4004"); 
 
-    this.websocket.onopen = function(event) { 
+
+    this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4004");
+
+    this.websocket.onopen = function(event) {
         console.log('common socket connected');
     }
 
     this.websocket.onmessage = function(event) {
-    
+
       //console.log(event.data);
 
       this.socketData = JSON.parse(event.data);
@@ -244,7 +244,7 @@ console.log(this.socketData);
                 }).then(() => {
                   let audioPlayer = <HTMLVideoElement> document.getElementById('beepaud');
                   audioPlayer.play();
-      
+
                 });
             }
 
@@ -262,7 +262,7 @@ console.log(this.socketData);
               buttons: [
                   ['<button onclick="openUrl()";>Open Chat</button>', function (instance, toast) {
                     var url = 'https://'+window.location.hostname+'#/chat?c='+uni_id;
-                     
+
                       window.location.replace(url);
                   }, true], // true to focus
                   ['<button>Close</button>', function (instance, toast) {
@@ -423,11 +423,11 @@ console.log(this.socketData);
     }
     this.websocket.onclose = function(event){
       console.log('close');
-    } 
+    }
 
-    
+
     if (localStorage.getItem('access_token')) {
-        
+
         }
     else{
         this.router.navigate(['/login']);
@@ -436,20 +436,20 @@ console.log(this.socketData);
     this.user_name = localStorage.getItem('user_name');
     this.userID = localStorage.getItem('userId');
     this.encUser = localStorage.getItem('encUser');
-    
+
     this.layout = localStorage.getItem('layout');
     this.theme = localStorage.getItem('theme');
-  
-  
+
+
     let color_class = this.layout+' '+this.layout+'-sidebar theme-'+this.theme;
     if(this.layout == 'dark' || this.layout == 'light'){
       $("body").removeClass();
       $("body").addClass(color_class);
     } else {
-      
+
     }
-    
- 
+
+
 
     if(this.user_type == 'Super Admin'){
       this.show_sup_admin_sett = true;
@@ -461,7 +461,7 @@ console.log(this.socketData);
       this.show_user_sett = true;
     }
     this.profile_image = localStorage.getItem('profile_image');
-   
+
 
 if( this.profile_image == null || this.profile_image == 'null' || this.profile_image == 'undefined' || this.profile_image == undefined){
   this.profile_image  = 'assets/images/user.jpg';
@@ -470,7 +470,7 @@ if( this.profile_image == null || this.profile_image == 'null' || this.profile_i
 }
 
 
-this.logo_image = localStorage.getItem('logo_image');  
+this.logo_image = localStorage.getItem('logo_image');
 
       if (this.logo_image == null || this.logo_image == 'null' || this.logo_image == 'undefined') {
         this.logo_image = 'assets/images/omni-channels-logo.jpg';
@@ -490,7 +490,7 @@ this.logo_image = localStorage.getItem('logo_image');
 
 
     this.hasContactAccess();
- 
+
     this.getReports();
 
     // this.getinstance();//Moved to after hasContactAccess to get admin_permission
@@ -507,13 +507,13 @@ if(this.has_admin_permission){
   user_type='Admin';
 }
   let api_req:any = '{"operation":"wp_instance", "moduleType":"wp_instance", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"getInstanceDetailsForAdmin","user_id":"'+userID+'","admin_id":"'+this.admin_id+'","user_type":"'+user_type+'"}}';
- 
+
   this.serverService.sendServer(api_req).subscribe((response:any) => {
     if(response.status==true){
       this.list_wpinsts = response.result.data;
   //  if(response.status)
-    } 
-  }, 
+    }
+  },
   (error)=>{
       console.log(error);
   });
@@ -530,8 +530,8 @@ if(this.has_admin_permission){
       this.list_reports = response.result.data;
       console.log(this.list_reports);
       // console.log(response);
-    } 
-  }, 
+    }
+  },
   (error)=>{
       console.log(error);
   });
@@ -542,7 +542,7 @@ if(this.has_admin_permission){
     let access_token: any=localStorage.getItem('access_token');
     let user_id: any=localStorage.getItem('userId');
     let api_req:any = '{"operation":"agents", "moduleType":"agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"get_agent_data","user_id":"'+user_id+'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       var agent_data = response.result.data;
       this.profile_image = agent_data.profile_image;
@@ -563,7 +563,7 @@ if(this.has_admin_permission){
         this.small_logo_image = agent_data.small_logo_image;
       }
 
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -591,7 +591,7 @@ if(this.has_admin_permission){
     api_req.element_data = conct_req;
     // console.log(api_req);
           this.serverService.sendServer(api_req).subscribe((response:any) => {
-              
+
 
                   // this.h_con = response.result.data.has_contact;
                   // this.h_sms = response.result.data.has_sms;
@@ -609,7 +609,7 @@ if(this.has_admin_permission){
                   // this.wall_4 = response.result.data.wallboard_four;
 
 
- 
+
 
 
       localStorage.setItem('has_sms', response.result.data.has_sms);
@@ -648,7 +648,7 @@ if(this.has_admin_permission){
       if (localStorage.getItem('server_FQDN') && localStorage.getItem('server_FQDN') != 'undefined') {
         // this.loadScript('../assets/custom/js/mconnect-webrtc.js');
         this.loadScript('../assets/custom/js/webConnect.js');
-       
+
         let api_reqs: any = '{"type": "HookRegister"}';
         this.serverService.show.next(api_reqs);
       } else {
@@ -669,16 +669,16 @@ if(this.has_admin_permission){
       // this.e_tic = response.result.data.has_external_ticket;
       // this.i_tick = response.result.data.has_internal_ticket;
 
-                 // 
+                 //
                   // //  this.report_array=this.report_checked.split();
                     //  console.log(this.report_checked);
-              
+
                   if(response.result.status==true){
 
-                    if( this.admin_reports == null || this.admin_reports == ''){                     
+                    if( this.admin_reports == null || this.admin_reports == ''){
                       this.is_reports = 'null';
                     }
-                    else{                      
+                    else{
                      this.report_checked= this.admin_reports.split(',');
                     //alert(' menu'+this.report_checked);
                     }
@@ -690,7 +690,7 @@ if(this.has_admin_permission){
                   // if(this.predective_dialer_behave == '1'){
                   //   this.h_con= false;
                   // }
-                   
+
 
 
 
@@ -708,19 +708,19 @@ if(this.has_admin_permission){
                     if(response.result.data.has_sms == 1){
                       this.h_sms = true;
                     }
-                   
+
                     if(response.result.data.has_chat == 1){
                       this.h_chat = true;
                     }
                     if(response.result.data.has_internal_chat == 1){
                       this.h_int_chat = true;
                     }
-                    
+
                     if(response.result.data.has_fb == 1){
                       this.h_fb = true;
                     }
                     if(response.result.data.has_whatsapp == 1){
-                     
+
                       if(response.result.data.whatsapp_type == 0){
                         this.h_wp_unoff = true;
                       }
@@ -729,9 +729,9 @@ if(this.has_admin_permission){
                       }
 
                     }
-                   
+
                    if(response.result.data.voice_3cx == 1){
-                   
+
                     if(response.result.data.ext_int_status == 1){
                       this.cust_pbx = true;
                       this.showHideDialerS = false;
@@ -742,7 +742,7 @@ if(this.has_admin_permission){
                       this.cust_pbx = false;
                       this.showHideDialerS = true;
                       this.has_video_call = false;
-                     
+
 
                       if(response.result.data.has_video_call == 1){
                        localStorage.setItem('has_video_dialer', response.result.data.has_video_call);
@@ -757,7 +757,7 @@ if(this.has_admin_permission){
                   else{
                     this.showHideDialerS = false;
                       this.has_video_call = false;
-                      
+
                   }
 
                     if(response.result.data.ext_int_status == 0){
@@ -777,13 +777,13 @@ if(this.has_admin_permission){
                     }
                     // alert(response.result.data.voice_3cx);
                     // alert(this.show_admin_sett);
-                    if(response.result.data.voice_3cx == 1){ 
+                    if(response.result.data.voice_3cx == 1){
                       this.voice_3cx = true;
                     }
                     if(response.result.data.voice_3cx == 0){
                       this.voice = 'disabled';
                     }
-                    
+
 
                     if(response.result.data.close_all_menu == '1'){
                       this.close_all_menu = 'close';
@@ -828,7 +828,7 @@ if(this.has_admin_permission){
                     if(response.result.data.has_webinar == 1){
                       this.h_webinar = true;
                     }
-                
+
                     if(response.result.data.has_telegram == 1){
                       this.h_tele = true;
                     }
@@ -845,10 +845,10 @@ if(this.has_admin_permission){
                     }
                     if(response.result.data.queue == 1){
                       this.h_que_manage = true;
-                    } 
+                    }
                     this.reseller_values =localStorage.getItem('reseller');
                     if((this.reseller_values == '' ||this.reseller_values==null) && this.user_type != 'Super Admin'){
-                    
+
                       this.show_sup_admin_sett= false;
                     }
                     else
@@ -862,7 +862,7 @@ if(this.has_admin_permission){
 
                   }
 
-             
+
                   if (! localStorage.justOnce) {
                     localStorage.setItem("justOnce", "true");
                     window.location.reload();
@@ -875,21 +875,21 @@ if(this.has_admin_permission){
                 // else {
                 //     localStorage.removeItem("reload");
                 // }
-                }, 
+                },
                 (error)=>{
                     console.log(error);
                 });
-            
+
   }
 
   videowidget()
 {
 
 }
-  
+
 
   ngAfterViewInit(){
-    
+
   }
 
 mc(){
@@ -939,7 +939,7 @@ logout(){
 }
 composeSms(){
   this.router.navigate(['/compose-sms']);
-} 
+}
 auxCode(){
   this.router.navigate(['/aux-code']);
 }
@@ -955,10 +955,10 @@ fullScreenBtn(){
 
 
 dialPadOpens() {
-    
+
   this.uadmin_id = localStorage.getItem('userId');
   let access_token: any=localStorage.getItem('access_token');
-  let que: any =  $('#que').val();  
+  let que: any =  $('#que').val();
   let api_req:any = '{"operation":"call", "moduleType":"call", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"queue_login_logout","user_id":"'+this.uadmin_id+'"}}';
   this.serverService.sendServer(api_req).subscribe((response:any) => {
     if(response.result.data.status== "1"){
@@ -969,12 +969,12 @@ dialPadOpens() {
       this.queLogStatusNma = "Login";
       $('#onHookIndi').addClass('red')
     }
-  }, 
+  },
   (error)=>{
       console.log(error);
   });
 
- 
+
 }
 
 
@@ -1007,7 +1007,7 @@ ViewEventDetails(event_id){
 
     this.inst_id = btoa(event_id);
     this.router.navigate(['/wp-unoff'], { queryParams: { wp_id: this.inst_id} });
-   
+
 }
 
 ishasInstance(){
@@ -1034,7 +1034,7 @@ user_type='Admin';
         });
       }
 
-    } 
+    }
     else{
       Swal.fire({
         title:'Sorry, some error occured',
@@ -1046,7 +1046,7 @@ user_type='Admin';
         confirmButtonText: 'ok'
       });
     }
-  }, 
+  },
   (error)=>{
       console.log(error);
   });
@@ -1055,19 +1055,19 @@ user_type='Admin';
   // this.serverService.sendServer(api_req1).subscribe((response:any) => {
   //   if(response.status==true){
   //     if(response.result.data == "CONFLICT"){
-        
+
   //         iziToast.warning({
   //           message: "Instance was Conflicted. May your WhatsApp is opend on another Brower/Computer. Please refresh our page once and try again",
   //           position: 'topRight'
   //       });
-      
+
   //      }
 
-  //   } 
-  //   else{
-     
   //   }
-  // }, 
+  //   else{
+
+  //   }
+  // },
   // (error)=>{
   //     console.log(error);
   // });
@@ -1077,7 +1077,7 @@ checklogin(){
 //   let access_token: any=localStorage.getItem('access_token');
 
 //   let api_req:any = '{"operation":"agents", "moduleType":"agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"getUserActiveStatus","user_id":"'+this.uadmin_id+'"}}';
-  
+
 //   this.serverService.sendServer(api_req).subscribe((response:any) => {
 //     if(response.result.status== true){
 //      // alert("sdfsdfsd");
@@ -1087,8 +1087,8 @@ checklogin(){
 
 //       }
 //       else{
-       
-          
+
+
 //         localStorage.removeItem("access_token");
 //         localStorage.removeItem("user_name");
 //         localStorage.removeItem("user_type");
@@ -1099,9 +1099,9 @@ checklogin(){
 //           position: 'topRight'
 //       });
 //       }
-      
+
 //     }
-//   }, 
+//   },
 //   (error)=>{
 //       console.log(error);
 //   });
@@ -1126,10 +1126,10 @@ showVideofialers(){
 
   notificationscall() {
     this.reqPermission = false;
-     var socket = io.connect('wss://myscoket.mconnectapps.com:4032'); //Baobab.mconnectapps.com Senegal(API Baobabgroup.mconnectapps.com)
+    var socket = io.connect('wss://myscoket.mconnectapps.com:4032'); //Baobab.mconnectapps.com Senegal(API Baobabgroup.mconnectapps.com)
     //var socket = io.connect('wss://myscoket.mconnectapps.com:4052'); //Baobabgroup ML Notification wss://myscoket.mconnectapps.com:4052
-    // var socket = io.connect('wss://myscoket.mconnectapps.com:4053'); //Baobabgroup BF Notification wss://myscoket.mconnectapps.com:4053
-    // var socket = io.connect('wss://myscoket.mconnectapps.com:4054'); //Baobabgroup IC Notification wss://myscoket.mconnectapps.com:4054
+     //var socket = io.connect('wss://myscoket.mconnectapps.com:4053'); //Baobabgroup BF Notification wss://myscoket.mconnectapps.com:4053
+    //var socket = io.connect('wss://myscoket.mconnectapps.com:4054'); //Baobabgroup IC Notification wss://myscoket.mconnectapps.com:4054
     var self = this;
     socket.on('connect', function () {
       console.log('connected');
@@ -1137,20 +1137,36 @@ showVideofialers(){
       socket.on('broadcast', function (data) {
         console.log(data);
 //alert(data)
-        if (data.notification_for == 'SMS' || data.notification_for == 'fb' || data.notification_for == 'whatsapp_unoff') {
-          
+        if (data.notification_for == 'SMS' || data.notification_for == 'fb' ) {
+
           let nameArr = data.user_id;
           nameArr.push(localStorage.getItem('admin_id'));
           console.log(nameArr);
           nameArr.forEach(element => {
             if (element == localStorage.getItem('userId')) {
-              console.log(element); 
+              console.log(element);
               self.serverService.sendNotifications(data);
               self.serverService.receivePopup(data);
             }
 
           });
 
+        }else if( data.notify_type != 'own_message' && data.notification_for == 'whatsapp_unoff'){
+          let nameArr = data.user_id;
+          nameArr.push(localStorage.getItem('admin_id'));
+          console.log(nameArr);
+          nameArr.forEach(element => {
+            if (element == localStorage.getItem('userId')) {
+              console.log(element);
+              self.serverService.sendNotifications(data);
+              self.serverService.receivePopup(data);
+            }
+
+          });
+        }
+        else if(data.notify_type == 'own_message' && data.notification_for == 'whatsapp_unoff' ){
+ //let wp_id : any = '{"chat" : "'+data.unique_id+'"}';
+          self.serverService.wp_chat.next(data);
         } else {
           if (data.user_id == localStorage.getItem('userId')) {
             self.serverService.sendNotifications(data);
@@ -1184,18 +1200,18 @@ showVideofialers(){
     user_type='Admin';
     }
     let api_req:any = '{"operation":"wp_instance", "moduleType": "wp_instance", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"getInstanceDetailsForAdmin","user_id":"'+userID+'","user_type":"'+user_type+'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.status==true){
         if(response.result.data.length)
         this.instance_value = response.result.data[0].wp_inst_id;
-      
-     
-        // this.routedept=response.result.data.dept;
-        
 
-      } 
-    }, 
+
+        // this.routedept=response.result.data.dept;
+
+
+      }
+    },
     (error)=>{
         console.log(error);
     });
@@ -1256,7 +1272,7 @@ showVideofialers(){
       // this.mailPageView = false;
       // this.smsPageView = true;
       this.router.navigate(['/fb-chat']);
-    } 
+    }
     if(mc_block == "line_view"){
       // this.chatPageView = false;
       // this.mailPageView = false;

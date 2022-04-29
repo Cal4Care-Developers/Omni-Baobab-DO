@@ -21,6 +21,7 @@ export class ServerService {
     showvedioDialer:Subject<any> = new Subject();
     minimize: Subject<any> = new Subject();
     editContact:Subject<any> = new Subject();
+    wp_chat: Subject<any> = new Subject();
     // attendCall:Subject<any> = new Subject();
     currentMessage = new BehaviorSubject(null);
     changeDetectionEmitter: EventEmitter<any> = new EventEmitter<any>();
