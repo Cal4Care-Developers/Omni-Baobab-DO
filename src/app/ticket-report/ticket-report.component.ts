@@ -80,27 +80,27 @@ return false;
         this.serverService.sendServer(api_req).subscribe((response:any) => {
         console.log(response);
 
-  
+
           if(response.result.status==true){
           this.res = response;
           var arrStr = encodeURIComponent(JSON.stringify(this.res));
           // document.location.href = 'https://baobabgroup.mconnectapps.com/api/storage/contact/download.php?res='+arrStr;
-       
-        
+
+
           var url = 'https://baobabgroup.mconnectapps.com/api/storage/contact/ticket.php';
           var form = $('<form action="' + url + '" method="post">' +
             '<input type="text" name="res" value="' + arrStr + '" />' +
             '</form>');
           $('body').append(form);
           form.submit();
-        
+
         } else {
           iziToast.warning({
             message: "No Records Found. Please try again",
             position: 'topRight'
         });
         }
-        }, 
+        },
     (error)=>{
         console.log(error);
     });

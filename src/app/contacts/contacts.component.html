@@ -11,7 +11,7 @@
                     </div>
                     <a (click)="showdoc('https://baobabgroup.mconnectapps.com/api/v1.0/pro_contents/pro_contacts.pdf')"  target="_blank"><i style="font-size: 24px;
                         float: right;" class="fa fa-exclamation-circle"></i></a>
-        
+
 					<!-- <a href="https://baobabgroup.mconnectapps.com/api/v1.0/pro_contents/pro_contacts.pdf" target="_blank"><i style="font-size:24px;padding-left: 20px;" class="fa fa-exclamation-circle"></i></a> -->
 
                 </div>
@@ -28,7 +28,7 @@
                                 </div>
                             </td>
                         </tr>
-                        
+
                         <tr>
                      <!-- <th style="width: 20px;">
                              <div class="pretty p-icon p-smooth">
@@ -37,7 +37,7 @@
                                 <i class="icon material-icons">done</i>
                                 <label></label>
                             </div>
-                        </div>   
+                        </div>
                     </th> -->
                     <th>S.no</th>
                     <th>Name</th>
@@ -61,8 +61,8 @@
                         </td>
                     </tr>
                 </tbody>
-                
-                
+
+
             </table>
         </div>
     </div>
@@ -95,15 +95,15 @@
         </nav>
     </div>
 
-    
+
 </div>
 <div class="card" *ngIf="dailyfood">
     <div class="card-header" *ngIf="hasdsk">
         <h4>Has DSK Access</h4>
-    </div>  
+    </div>
     <div class="card-header" *ngIf="hasnodsk">
         <h4>Has No DSK Access</h4>
-    </div> 
+    </div>
 </div>
 </div>
 </div>
@@ -122,13 +122,13 @@
 				  <!-- <iframe [src]="this.doc_link | safe"  width="100%" style="height: 575px;" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
 				  <!-- style="margin-bottom: -6px;" width="100%" height="325"  -->
 				<embed [src]="this.doc_link | safe"  width="100%" style="height: 575px;" />
-		</div>     
+		</div>
 		<div class="modal-footer" >
 			<div class="buttons">
 				<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="close">
 			</div>
 		</div>
-  
+
 	  </div>
 	</div>
   </div>

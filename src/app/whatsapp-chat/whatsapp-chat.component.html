@@ -77,12 +77,12 @@
          </div>
 
 
-         <div class="chat-item chat-right" *ngIf="chat_details.msg_user_type == 'agent' && chat_details.msg_user_id == loginUser"><img src="assets/images/user.jpg" > 
+         <div class="chat-item chat-right" *ngIf="chat_details.msg_user_type == 'agent' && chat_details.msg_user_id == loginUser"><img src="assets/images/user.jpg" >
            <div class="chat-details">
-             <div class="chat-text {{chat_details.msg_status}}" >{{chat_details.chat_msg}}<img src="{{chat_details.whatsapp_media_url}}"></div>    
+             <div class="chat-text {{chat_details.msg_status}}" >{{chat_details.chat_msg}}<img src="{{chat_details.whatsapp_media_url}}"></div>
              <div class="message-status-img">
               <img *ngIf="chat_details.msg_status == 'DELIVERED'" src="assets/images/whatsapp-double-grey.svg" height="20">
-              <img *ngIf="chat_details.msg_status == 'READ'"  src="assets/images/whatsapp-double-blue.svg" height="20"> 
+              <img *ngIf="chat_details.msg_status == 'READ'"  src="assets/images/whatsapp-double-blue.svg" height="20">
               <img *ngIf="chat_details.msg_status == 'SENT'"  src="assets/images/whatsapp-single-grey.svg" height="15">
 
             </div>
@@ -94,9 +94,9 @@
 
       </div>
 
- 
+
     </div>
-    <div class="card-footer chat-form"> 
+    <div class="card-footer chat-form">
      <!-- <form id="chat-form"> -->
        <textarea class="form-control" id="chat_msg" placeholder="Type a message" style="height: 50px;" (keydown)="onMessageSend($event)" #chat_message></textarea>
        <input type="hidden" name="chat_id" id="chat_detail_id" value="{{chat_detail_key}}" #chat_detail_id>
@@ -108,7 +108,7 @@
        <button type="button" class="btn btn-primary" (click)="sendChatMessageData()">
          <i class="far fa-paper-plane"></i>
        </button>
-       
+
 
      </div>
    </div>
@@ -143,7 +143,7 @@ Add New Widget Modal
 						</div>
 					</div>
 
-				</div>	
+				</div>
 			</div>
 
 			<div class="modal-footer">

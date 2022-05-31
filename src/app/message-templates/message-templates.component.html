@@ -16,7 +16,7 @@
                 <div class="card-body p-0">
                     <div class="table-responsive">
                        <table class="table table-bordered table-striped table-md">
-                         
+
                         <tr>
                             <th>S.no </th>
                             <!-- <th>Depatment</th> -->
@@ -31,7 +31,7 @@
                                 <!-- <td>{{queue.dept}}</td> -->
                                 <td>{{queue.template_name}}</td>
                                 <td>{{queue.template_message}}</td>
-                                
+
                                     <td>
                                         <span class="user-icon" style="cursor: pointer;"><i class="far fa-edit" (click)="editDepartmentSettings(queue.template_id)"></i></span>
                                         <span class="user-icon" style="cursor: pointer;"><i class="far fa-trash-alt" (click)="deletedata(queue.template_id)"></i></span>
@@ -42,11 +42,11 @@
                              <td colspan="12">Data not found</td>
                          </tr>
                      </tbody>
-                     
+
                  </table>
              </div>
          </div>
-         
+
      </div>
  </div>
 </div>
@@ -66,7 +66,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    
+
                     <div class="row">
 
 
@@ -88,10 +88,10 @@
                             <div class="form-group">
                                 <label for="template">Template Content</label>
                                <!-- <textarea  class="form-control" id="template"  placeholder="Type a message" style="height: 50px;"   #message></textarea> -->
-                                <textarea id="template" class="form-control" ></textarea>   
+                                <textarea id="template" class="form-control" ></textarea>
                                                      </div>
                         </div>
-                        
+
                         <!-- <div class="col-md-12">
                             <div class="form-group">
                                 <label for="status">Status</label>
@@ -155,7 +155,7 @@
                             </div>
                         </div>
 
-                        
+
 
                         <!-- <div class="col-md-12">
                             <div class="form-group">
@@ -190,13 +190,13 @@
 				  <!-- <iframe [src]="this.doc_link | safe"  width="100%" style="height: 575px;" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
 				  <!-- style="margin-bottom: -6px;" width="100%" height="325"  -->
 				<embed [src]="this.doc_link | safe"  width="100%" style="height: 575px;" />
-		</div>     
+		</div>
 		<div class="modal-footer" >
 			<div class="buttons">
 				<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="close">
 			</div>
 		</div>
-  
+
 	  </div>
 	</div>
   </div>

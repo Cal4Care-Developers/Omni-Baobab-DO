@@ -4,12 +4,12 @@
             <div class="card">
                 <div class="card-header">
                     <h4>Customize Report</h4>
-                  
+
                 </div>
                 <div class="card-body p-30">
                 <form [formGroup]="getdate" (ngSubmit)="getcustom_report()">
                     <div class="row">
-                        
+
                         <!-- <div class="col-md-6">
                             <div class="form-group">
                                 <label for="auxcode_name">Select Wrap Up code</label>
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <!-- <div class="row">
-                        
+
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -57,13 +57,13 @@
                         </div>
                         </div>
                         </div>
-                    
+
                 </form>
                 </div>
             </div>
-            
+
         </div>
-    </div> 
+    </div>
     <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
             <div class="card">
@@ -88,8 +88,9 @@
                                 <th>Phone inbound </th>
                                 <th>Phone outbound</th>
                                 <th>Whatsapp </th>
-                                <!-- <th>Messenger </th> -->
                                 <th>Email</th>
+                                <th>Facebook</th>
+
                             </tr>
                             <tr *ngIf="show_table == false">
                                 <td></td>
@@ -100,9 +101,11 @@
                                 <td>Interactions received during opening hours</td>
                                 <td>{{this.customize}}</td>
                                 <td></td>
-                                <td>{{this.tot_office_wp}}</td>
+                                <!-- <td>{{this.tot_office_wp}}</td> -->
+                                <td>{{ this.total_wp_msg}}</td>
                                 <!-- <td></td> -->
                                 <td>{{this.total_tickets}}</td>
+                                <td>{{ this.total_fb_msg}}</td>
                             </tr>
 
                             <tr *ngIf="show_table">
@@ -110,8 +113,9 @@
                                 <td>{{this.off_time}}</td>
                                 <td></td>
                                 <td>{{this.tot_out_office_time_wp}}</td>
-                                <!-- <td></td> -->
+
                                 <td></td>
+                                <td>{{this.tot_office_wp}}</td>
                                 </tr>
 
                                 <tr *ngIf="show_table">
@@ -120,6 +124,7 @@
                                 <td></td>
                                 <td>{{this.total_wp_msg}}</td>
                                 <!-- <td></td> -->
+                                <td>{{this.incoming_tickets}}</td>
                                 <td>{{this.incoming_tickets}}</td>
                                 </tr>
 
@@ -131,7 +136,7 @@
                                 <!-- <td></td> -->
                                 <td></td>
                                    </tr>
-                                   
+
                                    <tr *ngIf="show_table">
                                 <td>Completed calls </td>
                                 <td></td>
@@ -248,9 +253,9 @@
                                 <td></td>
                                 <td></td>
                                 </tr> -->
-                               
+
                             <!-- </tr>   -->
-                      
+
                         </table>
                     </div>
                 </div>

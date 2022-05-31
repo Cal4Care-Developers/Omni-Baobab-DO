@@ -13,7 +13,7 @@ const stopButton = document.getElementById("stopButton");
 // set preview
 const preview = document.getElementById("audio-playback");
 // fetch("http://localhost:4200/audio-playback").then(response => response.blob())
-// .then(blob => { 
+// .then(blob => {
 //   const fd = new FormData();
 //  console.log(blob)
 //   fd.append('operation', 'wp_instance');
@@ -25,7 +25,7 @@ const preview = document.getElementById("audio-playback");
 //    // alert($('#audio-playback')[0])
 //    fd.append('user_id', user_id);
 //    fd.append('chat_id', chat_id);
-//   // where `.ext` matches file `MIME` type  
+//   // where `.ext` matches file `MIME` type
 //   return fetch("https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php", {method:"POST", body:fd})
 // })
 // .then(response => response.ok)
@@ -53,7 +53,7 @@ function startRecording() {
     // recordButton.disabled = true;
     // recordButton.innerText = "recording"
     $("#recordButton").addClass("button-animate");
-    
+
  $("#stopButton").removeClass("inactive");
 //  stopButton.disabled = false;
 
@@ -65,7 +65,7 @@ function startRecording() {
         .then(function(stream) {
             audio_stream = stream;
             audio_rec = new MediaRecorder(stream);
-           
+
             // when there is data, compile into object for preview src
             audio_rec.ondataavailable = function(e) {
                 const url = URL.createObjectURL(e.data);
@@ -75,7 +75,7 @@ function startRecording() {
                 // downloadAudio.href = url;
             };
             audio_rec.start();
-      
+
             timeout_status = setTimeout(function() {
                 console.log("5 min timeout");
                 stopRecording();
@@ -84,7 +84,7 @@ function startRecording() {
 }
 
 function stopRecording() {
-  
+
     // const recordButton = document.getElementById("recordButton");
     // const stopButton = document.getElementById("stopButton");
     // mediaRecorder.stop();
@@ -99,7 +99,7 @@ function stopRecording() {
 
     $("#stopButton").addClass("active");
     // stopButton.disabled = true;
-    
+
 
 
     // $("#downloadContainer").removeClass("hidden");

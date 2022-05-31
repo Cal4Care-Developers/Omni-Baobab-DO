@@ -62,7 +62,7 @@ export class AdminSettingsComponent implements OnInit {
     var reseller = localStorage.getItem('reseller');
     console.log(reseller);
     this.reseller_value=localStorage.getItem('reseller');
-   
+
     if(userId == '1'  || (reseller != '' || reseller != null|| reseller !=undefined) ){
 
     } else {
@@ -76,37 +76,37 @@ export class AdminSettingsComponent implements OnInit {
     }
 // Password Validation
     $("#add_admin_password").keydown(function (e) {
-  
-      console.log(e.which); 
+
+      console.log(e.which);
       if(e.which == 32){
               iziToast.warning({
                 message: "Sorry, Whitespace not allowed",
                 position: 'topRight'
-            }); 
+            });
             return false;
       }
       return e.which !== 32;
 });
 $("#user_name").keydown(function (e) {
-  
-  console.log(e.which); 
+
+  console.log(e.which);
   if(e.which == 32){
           iziToast.warning({
             message: "Sorry, Whitespace not allowed",
             position: 'topRight'
-        }); 
+        });
         return false;
   }
   return e.which !== 32;
 });
 
 $("#update_admin_password").keydown(function (e) {
-  
+
   if(e.which == 32){
           iziToast.warning({
             message: "Sorry, Whitespace not allowed",
             position: 'topRight'
-        }); 
+        });
         return false;
   }
   return e.which !== 32;
@@ -133,7 +133,7 @@ $("#update_admin_password").keydown(function (e) {
         'has_chatbot' : new FormControl(0),
         'has_fb' : new FormControl(0),
         'has_fax' : new FormControl(0),
-        'has_wechat' : new FormControl(0), 
+        'has_wechat' : new FormControl(0),
         'has_telegram' : new FormControl(0),
         'has_internal_ticket' : new FormControl(0),
         'has_external_ticket' : new FormControl(0),
@@ -154,8 +154,8 @@ $("#update_admin_password").keydown(function (e) {
         'has_queue' : new FormControl(0),
         'has_rec_manage' : new FormControl(0),
      });
-  
-  
+
+
       this.editAdmin= new FormGroup({
         'admin_name' : new FormControl(null,Validators.required),
 // for billing ---
@@ -201,8 +201,8 @@ $("#update_admin_password").keydown(function (e) {
 
            });
            this.listReports();
-           this.getwpinsts();   
-          
+           this.getwpinsts();
+
      this.admin_settings();
      this.getTariffsList();
      this.getalladmins();
@@ -218,23 +218,23 @@ $("#update_admin_password").keydown(function (e) {
       this.smsTariffs = response.result.data.plans;
       } else {
       }
-    }, 
+    },
     (error)=>{
       console.log(error);
     });
     }
- 
+
   listReports(){
     let access_token: any=localStorage.getItem('access_token');
     let uadmin_id: any=localStorage.getItem('userId');
-  
+
     let api_req:any = '{"operation":"agents", "moduleType": "agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"list_report","user_id":"'+uadmin_id+'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.status==true){
         this.list_report = response.result.data;
-      } 
-    }, 
+      }
+    },
     (error)=>{
         console.log(error);
     });
@@ -242,14 +242,14 @@ $("#update_admin_password").keydown(function (e) {
   getwpinsts(){
     let access_token: any=localStorage.getItem('access_token');
     let uadmin_id: any=localStorage.getItem('userId');
-  
+
     let api_req:any = '{"operation":"agents", "moduleType": "agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"getInstanceDetails"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.status==true){
         this.list_wpinst = response.result.data;
-      } 
-    }, 
+      }
+    },
     (error)=>{
         console.log(error);
     });
@@ -258,12 +258,12 @@ $("#update_admin_password").keydown(function (e) {
 
     let access_token: any=localStorage.getItem('access_token');
     let api_req:any = '{"operation":"agents", "moduleType": "agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"getallInstanceDetails","admin_id":"'+id+'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.status==true){
         this.list_allwpinst = response.result.data;
-      } 
-    }, 
+      }
+    },
     (error)=>{
         console.log(error);
     });
@@ -272,14 +272,14 @@ $("#update_admin_password").keydown(function (e) {
     let userId: any=localStorage.getItem('userId');
     let access_token: any=localStorage.getItem('access_token');
     let api_req:any = '{"operation":"agents", "moduleType":"agents", "api_type":"web", "access_token":"'+access_token+'", "element_data":{"action":"get_admin_settings","user_id":"'+userId+'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.status==true){
         this.admins= response.result.data;
       } else {
         this.recordNotFound = true;
       }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -289,13 +289,13 @@ $("#update_admin_password").keydown(function (e) {
    this.price_sms_postpaid=true;
    $('#a_has_sms_postpaid').prop('checked',false);
   }
- 
+
   getalladmins(){
     let access_token: any=localStorage.getItem('access_token');
     let api_req:any = '{"operation":"agents", "moduleType":"agents", "api_type":"web", "access_token":"'+access_token+'", "element_data":{"action":"getalladmins"}}';
     console.log(this.reseller_value);
     if( this.reseller_value!= '' ||this.reseller_value!=null){
-                    
+
       this.reseller_sets= true;
     }
     else
@@ -307,14 +307,14 @@ $("#update_admin_password").keydown(function (e) {
       if(response.status==true){
         this.adminlists= response.result.data;
         console.log(this.adminlists);
-      } 
+      }
       // else {
       //   this.recordNotFound = true;
       // }
-    }, 
+    },
     (error)=>{
         console.log(error);
-    }); 
+    });
 
   }
 
@@ -327,7 +327,7 @@ $("#update_admin_password").keydown(function (e) {
     $('#edit_agents_key').val(admin_id);
     let access_token: any=localStorage.getItem('access_token');
     let api_req:any = '{"operation":"agents", "moduleType": "agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"get_single_admin_settings","pbx_id":"'+id+'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.status==true){
         var agent_data = response.result.data.admin_data;
@@ -338,7 +338,7 @@ $("#update_admin_password").keydown(function (e) {
           nullcheck=agent_data.whatsapp_num;
         }
 
-        this.getallwpinsts(admin_id);   
+        this.getallwpinsts(admin_id);
         this.editAdmin.setValue({
            'admin_name' : agent_data.name,
 
@@ -378,9 +378,9 @@ $("#update_admin_password").keydown(function (e) {
         'whatsapp_num' : nullcheck,
         'notes':agent_data.notes,
         'a_has_sms_postpaid_upd':agent_data.sms_type,
-         'has_webinar' : agent_data.has_webinar,     
-         'has_rec_manage' : agent_data.voice_manage,     
-         'has_queue' : agent_data.queue,     
+         'has_webinar' : agent_data.has_webinar,
+         'has_rec_manage' : agent_data.voice_manage,
+         'has_queue' : agent_data.queue,
 
 
        });
@@ -439,7 +439,7 @@ $('#inst_type_upd option[value="'+this.wp_type_edit+'"]').attr("selected", "sele
         this.showCallTariffsDetEdit = false;
         $('#voice_3cx').prop('checked', false);
        }
-      
+
        if(agent_data.predective_dialer == 1){
         $('#predective_dialer').prop('checked', true);
        } else {
@@ -465,13 +465,13 @@ $('#inst_type_upd option[value="'+this.wp_type_edit+'"]').attr("selected", "sele
                     if($('#has_sms').prop('checked', false)){
                     this.price_sms_postpaid =true;
                     this.price_sms_upd=false;
-                    } 
+                    }
        if(agent_data.has_sms == 1){
         $('#has_sms').prop('checked', true);
         this.price_sms_upd = true;
         $('#price_sms_u').val(this.sms_price_edit);
         console.log(agent_data.price_sms);
-                    
+
                       if(agent_data.sms_type == 1){
                         $('#a_has_sms_postpaid_upd').prop('checked', true);
                         this.price_sms_postpaid =true;
@@ -492,23 +492,23 @@ $('#inst_type_upd option[value="'+this.wp_type_edit+'"]').attr("selected", "sele
        if(agent_data.has_whatsapp == 1){
         $('#has_whatsapp').prop('checked', true);
         this.inst_wp_upd = true;
-       
+
         if( this.inst_wp_upd_unoff == true ){
 
           this.wp_inst_edit=agent_data.wp_instance_count.split(",");
           this.wp_count=this.wp_inst_edit;
-        
-        
+
+
         }
         else{
             this.inst_wp_upd_unoff = false;
             this.wp_inst_edit='';
-            
+
         }
-       
+
         $('#inst_type_upd option[value="'+this.wp_type_edit+'"]').attr("selected", "selected");
         this.onChangeupd(this.wp_type_edit);
-       } 
+       }
        else {
          this.inst_wp_upd_unoff=false;
         this.inst_wp_upd = false;
@@ -534,7 +534,7 @@ $('#inst_type_upd option[value="'+this.wp_type_edit+'"]').attr("selected", "sele
         $('#has_chatbot').prop('checked', false);
        }
 
-     
+
 
        if(agent_data.has_fb == 1){
         $('#has_fb').prop('checked', true);
@@ -560,7 +560,7 @@ $('#inst_type_upd option[value="'+this.wp_type_edit+'"]').attr("selected", "sele
        } else {
         $('#has_telegram').prop('checked', false);
        }
-       
+
         if(agent_data.has_webinar == 1){
         $('#has_webinar').prop('checked', true);
        } else {
@@ -577,7 +577,7 @@ $('#inst_type_upd option[value="'+this.wp_type_edit+'"]').attr("selected", "sele
        } else {
         $('#has_queue').prop('checked', false);
        }
-       
+
        if(agent_data.has_internal_ticket == 1){
         $('#has_internal_ticket').prop('checked', true);
        } else {
@@ -629,7 +629,7 @@ $('#inst_type_upd option[value="'+this.wp_type_edit+'"]').attr("selected", "sele
             } else {
               $('#wallboard_five').prop('checked', false);
             }
-            
+
         if(agent_data.wallboard_six == 1){
               $('#wallboard_six').prop('checked', true);
             } else {
@@ -656,16 +656,16 @@ $('#inst_type_upd option[value="'+this.wp_type_edit+'"]').attr("selected", "sele
 
        this.admin_id = agent_data.id;
        $('#edit_adminform').modal('show');
-      }   
+      }
       else{
-              
+
         iziToast.warning({
             message: "Admin data could not retrive. Please try again",
             position: 'topRight'
         });
-    
+
   }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -674,8 +674,8 @@ $('#inst_type_upd option[value="'+this.wp_type_edit+'"]').attr("selected", "sele
 
 
 
-  dataAdminEdit(main_id){    
-    
+  dataAdminEdit(main_id){
+
       var ad_pass=$('#update_admin_password').val();
 
       let agent_req:any = this.editAdmin.value;
@@ -683,16 +683,16 @@ $('#inst_type_upd option[value="'+this.wp_type_edit+'"]').attr("selected", "sele
       var reports = $('#edit_reports').val().join();
       var get_user_type : any=localStorage.getItem('user_type');
       if((this.reseller_value != '' ||this.reseller_value !=null)&&  get_user_type == "Super Admin"){
-        var reseller = $('#edit_reseller').val().join();  
+        var reseller = $('#edit_reseller').val().join();
       }else{
           reseller = "";
         }
        //  add in API "reseller":"'+reseller+'"
       if(this.inst_wp_upd_unoff == true && $('#has_whatsapp').prop('checked')){
-     
+
           var wpinst_upd = this.wp_count;
     }
-     else{ 
+     else{
       this.inst_wp_upd_unoff == false;
         wpinst_upd = '';
      }
@@ -731,7 +731,7 @@ $('#inst_type_upd option[value="'+this.wp_type_edit+'"]').attr("selected", "sele
       var has_webinar = '0';  if($('#has_webinar').prop('checked')){ has_webinar = '1'; }
       var has_rec_manage = '0';  if($('#has_rec_manage').prop('checked')){ has_rec_manage = '1'; }
       var has_queue = '0';  if($('#has_queue').prop('checked')){ has_queue = '1'; }
-   
+
 
       var price_sms_upd = $('#price_sms_u').val();
       var MPlanName = $('#MPlanName').val();
@@ -745,7 +745,7 @@ $('#inst_type_upd option[value="'+this.wp_type_edit+'"]').attr("selected", "sele
      let tax_per=$('#e_tax_per').val();
      let upd_post_url=$('#upd_post_url').val();
 
-    
+
     if(has_whatsapp=='1')
       var wp_type_u = $('#inst_type_upd').val();
       else
@@ -758,7 +758,7 @@ $('#inst_type_upd option[value="'+this.wp_type_edit+'"]').attr("selected", "sele
             position: 'topRight'
         });return false;
       }
-        
+
         if( ad_pass.indexOf(" ") !== -1 )
         {
           iziToast.warning({
@@ -766,11 +766,11 @@ $('#inst_type_upd option[value="'+this.wp_type_edit+'"]').attr("selected", "sele
             position: 'topRight'
         }); return false;
         }
-        
+
        // alert(postpaid);
 
       let api_req:any = '{"operation":"agents", "moduleType": "agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"edit_single_adminsettings","admin_name":"'+agent_req.admin_name+'","company_name":"'+agent_req.company_name+'","reseller":"'+reseller+'","domain_name":"'+agent_req.domain_name+'","whatsapp_num":"'+agent_req.whatsapp_num+'","tarrif_id":"'+MPlanName+'","survey_vid":"'+agent_req.survey_vid+'","pbx_count":"'+agent_req.pbx_count+'","price_sms":"'+price_sms_upd+'","user_name":"'+user_name+'","password":"'+password+'","agent_count":"'+agent_req.agent_count+'","sip_password":"'+agent_req.sip_password+'","reports":"'+reports+'","id":"'+main_id+'","voice_3cx":'+voice_3cx+',"predective_dialer":'+predective_dialer+',"lead":'+lead+',"mr_voip":'+mrvoip+',"has_contact":'+has_contact+',"has_sms":'+has_sms+',"sms_type":"'+postpaid+'","has_chat":'+has_chat+',"has_chatbot":'+has_chatbot+',"has_whatsapp":'+has_whatsapp+',"has_fb":'+has_fb+',"has_fax":'+has_fax+',"has_wechat":'+has_wechat+',"has_telegram":'+has_telegram+',"has_webinar":'+has_webinar+',"voice_manage":'+has_rec_manage+',"queue":'+has_queue+',"has_internal_ticket":'+has_internal_ticket+',"has_external_ticket":'+has_external_ticket+',"has_internal_chat":'+has_internal_chat+',"baisc_wallboard":'+baisc_wallboard+',"wallboard_one":'+wallboard_one+',"wallboard_two":'+wallboard_two+',"wallboard_three":'+wallboard_three+',"wallboard_four":'+wallboard_four+',"wallboard_five":'+wallboard_five+',"wallboard_six":'+wallboard_six+',"wallboard_eight":'+wallboard_eight+',"two_factor":'+two_factor+',"admin_status":'+admin_status+',"wp_instance_count":"'+wpinst_upd+'","whatsapp_type":"'+wp_type_u+'","notes":"'+agent_req.notes+'","plan_id":"'+plan_id+'","call_rate":"'+call_rate+'","valid_from":"'+valid_from+'","valid_to":"'+valid_to+'","call_prefix":"'+call_prefix+'","tax_name":"'+tax_name+'","tax_per":"'+tax_per+'","post_url":"'+upd_post_url+'"}}';
-    
+
 
 
           this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -789,9 +789,9 @@ $('#inst_type_upd option[value="'+this.wp_type_edit+'"]').attr("selected", "sele
                       message: "Admin data  not updated. Please try again",
                       position: 'topRight'
                   });
-              
+
           }
-    
+
       },
       (error) => {
            iziToast.error({
@@ -810,21 +810,21 @@ $('#inst_type_upd option[value="'+this.wp_type_edit+'"]').attr("selected", "sele
       let agent_req:any = this.addAadmin.value;
       let access_token: any=localStorage.getItem('access_token');
       var reports = $('#add_reports').val().join();
-      
+
       let get_user_type : any=localStorage.getItem('user_type');
       if((this.reseller_value != '' ||this.reseller_value !=null) &&  get_user_type == "Super Admin" ){
-      var reseller = $('#add_reseller').val().join(); 
+      var reseller = $('#add_reseller').val().join();
       }else{
         reseller = "";
       }
       console.log(reports);
-    
-      if($('#a_has_whatsapp').prop('checked')){ 
+
+      if($('#a_has_whatsapp').prop('checked')){
        if(this.inst_wp_upd_unoff==true){
-       
+
           var wpinst = $('#add_mul_inst').val().join();
        }
-       } 
+       }
 else{
   this.inst_wp_upd_unoff==false;
 }
@@ -861,7 +861,7 @@ else{
       var has_webinar = '0';  if($('#a_has_webinar').prop('checked')){ has_webinar = '1'; }
       var has_rec_manage = '0';  if($('#a_has_rec_manage').prop('checked')){ has_rec_manage = '1'; }
       var has_queue = '0';  if($('#a_has_queue').prop('checked')){ has_queue = '1'; }
-      
+
       var price_sms_a = $('#price_sms_a').val();
       var add_pass= $('#add_admin_password').val();
       console.log(add_pass);
@@ -871,7 +871,7 @@ else{
 
       var  wp_inst_count_a = $('#inst_add').val();
       var  wp_inst_type_a  = $('#inst_type_a').val();
-      
+
 
 if( agent_req.user_name.indexOf(" ") !== -1 )
 {
@@ -899,7 +899,7 @@ return false;
       let tax_per=$('#a_tax_per').val();
       let add_post_url=$('#add_post_url').val();
 
-     let new_id : any=localStorage.getItem('admin_id'); 
+     let new_id : any=localStorage.getItem('admin_id');
       let api_req:any = '{"operation":"agents", "moduleType": "agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"add_single_admin","name":"'+agent_req.admin_name+'","user_id":"'+new_id+'","company_name":"'+agent_req.company_name+'","price_sms":"'+price_sms_a+'","wp_instance_count":"'+wpinst+'","whatsapp_type":"'+wp_inst_type_a+'","domain_name":"'+agent_req.domain_name+'","pbx_count":"'+agent_req.pbx_count+'","tarrif_id":"'+a_MPlanName+'","survey_vid":"'+agent_req.survey_vid+'","whatsapp_num":"'+agent_req.whatsapp_num+'","agent_counts":"'+agent_req.agent_count+'","reports":"'+reports+'","user_name":"'+agent_req.user_name+'","user_password":"'+add_pass+'","voice_3cx":"'+voice_3cx+'","predective_dialer":"'+predective_dialer+'","lead":"'+lead+'","mr_voip":"'+mrvoip+'","has_contact":"'+has_contact+'","has_sms":"'+has_sms+'","sms_type":"'+postpaid+'","has_chat":"'+has_chat+'","has_whatsapp":"'+has_whatsapp+'","has_fb":"'+has_fb+'","reseller":"'+reseller+'","has_fax":"'+has_fax+'","has_wechat":"'+has_wechat+'","has_telegram":"'+has_telegram+'","has_webinar":"'+has_webinar+'","voice_manage":"'+has_rec_manage+'","queue":"'+has_queue+'","has_internal_ticket":"'+has_internal_ticket+'","has_external_ticket":"'+has_external_ticket+'","has_internal_chat":"'+has_internal_chat+'","baisc_wallboard":"'+baisc_wallboard+'","wallboard_one":"'+wallboard_one+'","wallboard_two":"'+wallboard_two+'","wallboard_three":"'+wallboard_three+'","wallboard_four":"'+wallboard_four+'","wallboard_five":"'+wallboard_five+'","wallboard_six":"'+wallboard_six+'","wallboard_eight":"'+wallboard_eight+'","two_factor":"'+two_factor+'","admin_status":"'+admin_status+'","has_chatbot":"'+has_chatbot+'","notes":"'+agent_req.notes+'","plan_id":"'+plan_id+'","call_rate":"'+call_rate+'","valid_from":"'+valid_from+'","valid_to":"'+valid_to+'","call_prefix":"'+call_prefix+'","tax_name":"'+tax_name+'","tax_per":"'+tax_per+'","post_url":"'+add_post_url+'"}}';
 
 
@@ -917,16 +917,16 @@ return false;
                   message: "Admin name already in use",
                   position: 'topRight'
               });
-    
+
          } else{
-                
+
           iziToast.warning({
               message: "Admin data could not retrive. Please try again",
               position: 'topRight'
           });
-      
+
     }
-      }, 
+      },
       (error)=>{
           console.log(error);
       });
@@ -943,13 +943,13 @@ return false;
         if(response.result.data == 1){
           this.admin_settings();
        }
-      }, 
+      },
       (error)=>{
           console.log(error);
       });
     }
-    
-    
+
+
 
 
 
@@ -979,13 +979,13 @@ return false;
                 position: 'topRight'
             });
             this.admin_settings();            }
-          }, 
+          },
           (error)=>{
               console.log(error);
           });
         }
       })
-        
+
       }
 
       toggleClasss(){
@@ -998,30 +998,30 @@ return false;
           input.attr("type", "password");
         }
       };
-      
+
       priceSMS(data){
         //alert(data);
         if(data == 'update'){
-          if($('#has_sms').prop('checked')){ 
+          if($('#has_sms').prop('checked')){
           // $('#a_has_sms_postpaid_upd').prop('checked', false);
 
               if($('#a_has_sms_postpaid_upd').prop('checked')){this.price_sms_postpaid= true;} else {  $('#a_has_sms_postpaid_upd').prop('checked', false); this.price_sms_postpaid = false;}
             this.price_sms_upd = true;this.price_sms_postpaid = true;
-               
-          } 
+
+          }
           else {
             this.price_sms_upd = false; this.price_sms_postpaid = true;
           }
           // if($('#a_has_sms_postpaid_upd').prop('checked')){ this.price_sms_postpaid= true;  this.price_sms_upd = true; } else { this.price_sms_postpaid = false;}
 
-        } 
+        }
         else if(data == 'postpaid') {
-          
+
           if($('#a_has_sms_postpaid').prop('checked')){ this.price_sms_postpaid = true;  } else {this.price_sms_add = true; this.price_sms_postpaid = false;}
         }
 
         else if(data == 'postpaidupd') {
-          
+
           if($('#a_has_sms_postpaid_upd').prop('checked')){ this.price_sms_postpaid= true;  this.price_sms_upd = true; } else { this.price_sms_postpaid = false; this.price_sms_upd = true;}
         }
 
@@ -1036,11 +1036,11 @@ return false;
         console.log(data);
                 if(data == 'update'){
                   if($('#has_whatsapp').prop('checked')){ this.inst_wp_upd = true;} else {this.inst_wp_upd = false; this.inst_wp_upd_unoff = false;}
-                } 
+                }
                 else {
                   if($('#a_has_whatsapp').prop('checked')){ this.inst_wp_add = true; } else {this.inst_wp_add_unoff = false;this.inst_wp_add = false; }
                 }
-        
+
               }
 
 
@@ -1055,10 +1055,10 @@ return false;
                 //  this.inst_wp_upd_unoff = true;
 
                 if($('#a_has_whatsapp').prop('checked')){ this.inst_wp_add_unoff = true;} else {this.inst_wp_add_unoff = false;}
-                } 
+                }
                 else{
                    this.inst_wp_add_unoff = false;
-                } 
+                }
                 console.log(deviceValue);
             }
             onChangeupd(deviceValue) {
@@ -1066,11 +1066,11 @@ return false;
 
               if(deviceValue == 0){
                  this.inst_wp_upd_unoff = true;
-              } 
+              }
               else{
                  this.inst_wp_upd_unoff = false;
-              } 
-              
+              }
+
           }
               // test(){
               //   var target = $('#inst_type_a option:selected').val();
@@ -1095,7 +1095,7 @@ return false;
                   this.showCallTariffsDet = false;
                 }
             }
-            
+
             getCallTariffsListe(){
               if(this.editAdmin.value.voice_3cx == null || this.editAdmin.value.voice_3cx == false){
                 this.showCallTariffsDetEdit = true;
@@ -1103,7 +1103,7 @@ return false;
                 this.showCallTariffsDetEdit = false;
               }
             }
-            
+
             getcalltariffs(){
               let access_token: any=localStorage.getItem('access_token');
               let admin_id: any=localStorage.getItem('admin_id');
@@ -1114,17 +1114,17 @@ return false;
                 this.callTariffs = response.result.data.plans;
                 } else {
                 }
-              }, 
+              },
               (error)=>{
                 console.log(error);
               });
             }
- 
+
             edit_billing_address(){
 
               // $('#edit_billing_address').reset();
-             
-             
+
+
                var user_id = $('#edit_agents_key').val();
                //alert(user_id);
                let access_token: any=localStorage.getItem('access_token');
@@ -1135,11 +1135,11 @@ return false;
                    if(response.result.data !=""){
                     // alert(response.result.data);
                      var ab = response.result.data[0]
-             //alert(ab.edit_ship); 
+             //alert(ab.edit_ship);
                      if(ab.edit_ship == '1'){
                        $('#eedit_ship').prop('checked', true);
                        $('#editShippingAddresss').attr('style','display:flex');
-               
+
                        $('#econtact_person').val(ab.contact_person);
                        $('#eadd1').val(ab.add1);
                        $('#eadd2').val(ab.add2);
@@ -1158,7 +1158,7 @@ return false;
                        $('#eship_zip').val(ab.ship_zip);
                        $('#eship_country').val(ab.ship_country);
                      } else {
-               
+
                        $('#econtact_person').val(ab.contact_person);
                        $('#eadd1').val(ab.add1);
                        $('#eadd2').val(ab.add2);
@@ -1169,21 +1169,21 @@ return false;
                        $('#e_monthly_charges').val(ab.monthly_charges);
                        $('#e_discount_per').val(ab.discount);
                      }
-               
-               
-               
-                     
-                    
+
+
+
+
+
                      $('#edit_agents_form').modal('hide');
                      $('#edit_billing_address').modal('show');
-             
+
                    } else {
                    //alert('called');
 
 
                    $('#edit_agents_form').modal('hide');
-                   $('#edit_billing_address').modal('show');        
-                    
+                   $('#edit_billing_address').modal('show');
+
                    // temp for clean a id values
                      $('#econtact_person').val('');
                      $('#eadd1').val('');
@@ -1201,7 +1201,7 @@ return false;
                      $('#eship_city').val('');
                      $('#eship_state').val('');
                      $('#eship_zip').val('');
-                     $('#eship_country').val('');  
+                     $('#eship_country').val('');
                      $('#econtact_person').val('');
                      $('#eadd1').val('');
                      $('#eadd2').val('');
@@ -1211,24 +1211,24 @@ return false;
                      $('#ecountry').val('');
                      $('#e_monthly_charges').val('');
                      $('#e_discount_per').val('');
-                   
+
 
 
                      $('#edit_agents_form').modal('hide');
                      $('#edit_billing_address').modal('show');
                    }
-             
-                   
+
+
                  } else {
-                  
+
                  }
-               }, 
+               },
                (error)=>{
                    console.log(error);
                });
-             
-             
-             
+
+
+
              }
 
              editShippingAddress(){
@@ -1239,10 +1239,10 @@ return false;
                this.editShippingAddresss = false;
                $('#editShippingAddresss').attr('style','display:none');
               }
-              
+
              }
-             
-             
+
+
 editShippingAddressMain(){
   // var user_id = $('#edit_agents_key').val();
   // var contact_person =  $('#contact_person').val();
@@ -1280,13 +1280,13 @@ editShippingAddressMain(){
   var ship_country =  $('#eship_country').val();
   var monthly_charges =  $('#e_monthly_charges').val();
   var discount_per =  $('#e_discount_per').val();
- 
+
 
 if(contact_person == "" || add1 == "" || city == "" || state == "" || zip_code == "" || country == ""){
   iziToast.warning({
     message: "Please Fill The Required Field",
     position: 'topRight'
-  }); 
+  });
   return false;
 }
 
@@ -1301,7 +1301,7 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
     iziToast.warning({
       message: "Please Fill The Required Field",
       position: 'topRight'
-    }); 
+    });
     return false;
   }
   else{
@@ -1317,7 +1317,7 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
  }
   let access_token: any=localStorage.getItem('access_token');
   let api_req:any = '{"operation":"agents", "moduleType":"agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"update_agent_billing_det","admin_id": "1","user_id":"'+user_id+'","contact_person":"'+contact_person+'","add1":"'+add1+'","add2":"'+add2+'","city":"'+city+'","state":"'+state+'","zip_code":"'+zip_code+'","country":"'+country+'","edit_ship":"'+edit_ship+'","ship_contact":"'+ship_contact+'","ship_to":"'+ship_to+'","ship_add1":"'+ship_add1+'","ship_add2":"'+ship_add2+'","ship_city":"'+ship_city+'","ship_state":"'+ship_state+'","ship_zip":"'+ship_zip+'","ship_country":"'+ship_country+'","monthly_charges":"'+monthly_charges+'","discount_per":"'+discount_per+'"}}';
-  
+
  // console.log(api_req); return false;
   this.serverService.sendServer(api_req).subscribe((response:any) => {
     if(response.status == true){
@@ -1326,7 +1326,7 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
       this.editShippingAddresss = false;
     } else {
     }
-  }, 
+  },
   (error)=>{
     console.log(error);
   });
@@ -1349,12 +1349,12 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
       Swal.showLoading();
     }
   });
- 
+
   let api_req:any = '{"operation":"call_tarrif", "moduleType":"call_tarrif", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"gen_admin_invoice","user_id":"'+id+'","admin_id":"1"}}';
   this.serverService.sendServer(api_req).subscribe((response:any) => {
     console.log(response);
     Swal.close();
-    
+
     if(response.status==true){
 
       if(response.result.data == null){
@@ -1365,7 +1365,7 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
       } else if(response.result.data.data == '2'){
             this.pdfurl = response.result.data.url;
             $("#showGeneratedPdf").modal('show');
-        }              
+        }
 
       else if(response.result.data.data == '3'){
         iziToast.error({
@@ -1377,10 +1377,10 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
             text: "click the update user icon -> Update Billing Address",
             icon: 'info',
             showCancelButton: false,
-            confirmButtonColor: '#3085d6',   
+            confirmButtonColor: '#3085d6',
             confirmButtonText: 'Got it'
-          })  
-        
+          })
+
     }
     else if(response.result.data.data == '4'){
       iziToast.error({
@@ -1392,10 +1392,10 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
           text: "Go to profile(by clicking profile Icon)-> Update Billing Address",
           icon: 'info',
           showCancelButton: false,
-          confirmButtonColor: '#3085d6',          
+          confirmButtonColor: '#3085d6',
           confirmButtonText: 'Got it'
         })
-      
+
   }   else if(response.result.data.data == '5'){
           iziToast.error({
            message: "User does not have call plan",
@@ -1406,12 +1406,12 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
         text: "Update your user with voice3CX permission,you should provide plan details for specific user",
         icon: 'info',
         showCancelButton: false,
-        confirmButtonColor: '#3085d6',          
+        confirmButtonColor: '#3085d6',
         confirmButtonText: 'Got it'
       })
-    
+
 }
-        
+
         else  {
           var arrStr = encodeURIComponent(JSON.stringify(response));
 
@@ -1425,7 +1425,7 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
         }
 
     }
-  }, 
+  },
   (error)=>{
       console.log(error);
   });

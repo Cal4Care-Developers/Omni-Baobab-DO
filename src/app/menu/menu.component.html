@@ -10,7 +10,7 @@
         <!-- <li><a href="javascript:void(0)" class="nav-link nav-link-lg">
           <span class="available presence"></span>
         </a></li> -->
-        
+
 
       </ul>
     </div>
@@ -80,7 +80,7 @@
         <div class="sidebar-user-picture">
           <img alt="image" src="{{this.profile_image}}">
         </div>
-        
+
         <div class="sidebar-user-details">
           <div class="user-name">{{ user_name }}</div>
           <div *ngIf="user_type =='Admin'" class="user-role">{{ user_type }}</div>
@@ -157,7 +157,7 @@
 
        </ul>
      </li>
- 
+
    <li class="dropdown {{this.voice}}" *ngIf="this.close_all_menu !='close' && show_admin_sett && h_call_rec" (click)="openMe('call_rec')" >
       <a href="javascript:void(0)" class="nav-link has-dropdown"><i class="fas fa-users"></i><span>Call Recording</span></a>
       <ul id="call_rec" class="dropdown-menu menu-bg-clr-2">
@@ -193,7 +193,7 @@
         <li routerLinkActive="active" *ngIf="h_int_chat"><a href="javascript:void(0)" class="nav-link" routerLink="/internal-chat"  ><i class="fas fa-comment-dots"></i><span>Internal Chat</span></a></li>
         <li routerLinkActive="active" *ngIf="h_chat"><a href="javascript:void(0)" class="nav-link" routerLink="/chat-ratings"  ><i class="fas fa-comment-dots"></i><span>Chat Ratings</span></a></li>
         <li routerLinkActive="active" *ngIf="h_wp_off"><a href="javascript:void(0)" class="nav-link" routerLink="/wp-chat" ><i class="fab fa-whatsapp"></i><span>Whatsapp</span></a></li>
-        <li class="has-inner-dropdown" routerLinkActive="active" *ngIf="h_wp_unoff" (click)="ishasInstance()"><a href="javascript:void(0)" class="nav-link"><i class="fab fa-whatsapp"></i><span>WhatsApp</span></a>
+        <li class="has-inner-dropdown" routerLinkActive="active" *ngIf="h_wp_unoff" (click)="ishasInstance()"><a href="javascript:void(0)" class="nav-link"><i class="fab fa-whatsapp"></i><span>WhatsApps</span></a>
 
           <ul class="inner-dropdown-menu menu-bg-clr-2">
             <li routerLinkActive="active" *ngFor="let item of list_wpinsts; let i=index"(click)="ViewEventDetails(item.wp_inst_id)" ><a href="javascript:void(0)" class="nav-link" routerLink="/wp-unoff"><i class="fab fa-whatsapp"></i><span> {{item.instance_name}}</span></a></li>
@@ -241,7 +241,7 @@
 
     </ul>
   </li> -->
-  <li class="dropdown"  *ngIf="(this.close_all_menu != 'close') && this.h_webinar" (click)="openMe('openWebinar')"> 
+  <li class="dropdown"  *ngIf="(this.close_all_menu != 'close') && this.h_webinar" (click)="openMe('openWebinar')">
     <a href="javascript:void(0)" class="nav-link has-dropdown"><i class="fas fa-podcast"></i><span>Webinar</span></a>
     <ul class="dropdown-menu menu-bg-clr-2" id="openWebinar">
       <li routerLinkActive="active"><a href="javascript:void(0)" class="nav-link" routerLink="/webinar"><i class="fas fa-podcast"></i><span>Manage Webinar</span></a></li>
@@ -256,12 +256,12 @@
 
 
   <li class="dropdown"  *ngIf="this.is_reports != 'null' && (show_admin_sett  || show_user_sett) && this.close_all_menu != 'close'">
- 
+
    <a href="javascript:void(0)" class="nav-link has-dropdown"><i class="fas fa-file-alt"></i><span>Reports {{this.is_reports}}</span></a>
    <ul class="dropdown-menu menu-bg-clr-1">
     <div *ngFor="let items of list_reports; let i=index" >
       <!-- <div *ngIf="{{items.id == report_checked}}"> -->
-        <div *ngIf="report_checked && report_checked.indexOf(items.id) > -1; else notSelected"> 
+        <div *ngIf="report_checked && report_checked.indexOf(items.id) > -1; else notSelected">
           <!-- <div>  -->
           <li routerLinkActive="active"  ><a href="javascript:void(0)" class="nav-link" routerLink="/{{items.report_url}}" ><i class="fas fa-file-alt"></i><span>{{items.report_name}}</span></a></li>
           <li routerLinkActive="active"  ><a href="javascript:void(0)" class="nav-link" routerLink="/customize_reports" ><i class="fas fa-file-alt"></i><span>Customize Reports</span></a></li>
@@ -295,7 +295,7 @@
       <li routerLinkActive="active" *ngIf="show_sup_admin_sett"><a href="javascript:void(0)" class="nar-link" routerLink="/sms-tariff" ><i class="fas fa-cog"></i><span>SMS Tarrif</span></a></li>
       <li routerLinkActive="active" *ngIf="show_sup_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/omni-plans" ><i class="fas fa-cog"></i><span>Omni Plans</span></a></li>
       <li routerLinkActive="active" *ngIf="show_sup_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/admin-requests"><i class="fas fa-handshake"></i><span>Admin Requests</span></a></li>
-      
+
 
       <li routerLinkActive="active"  *ngIf="show_admin_sett || show_sup_admin_sett"><a href="javascript:void(0)" class="nav-link" routerLink="/global-settings"><i class="fas fa-cog"></i><span>Global Settings</span></a></li>
       <!-- <li routerLinkActive="active" ><a href="javascript:void(0)" class="nav-link" routerLink="/agent-permission"><i class="fas fa-cog"></i><span>Agent Permission</span></a></li> -->
@@ -329,12 +329,12 @@
   <li routerLinkActive="active" ><a href="javascript:void(0)" class="nav-link" routerLink="/cordlife-contact" ><i class="far fa-address-card"></i><span>Cordlife Contact</span></a></li>
 
   <li class="dropdown"  *ngIf="this.is_reports != 'null' && (show_admin_sett  || show_user_sett) && this.close_all_menu != 'close'">
- 
+
     <a href="javascript:void(0)" class="nav-link has-dropdown"><i class="fas fa-file-alt"></i><span>Reports {{this.is_reports}}</span></a>
     <ul class="dropdown-menu menu-bg-clr-1">
      <div *ngFor="let items of list_reports; let i=index" >
        <!-- <div *ngIf="{{items.id == report_checked}}"> -->
-         <div *ngIf="report_checked && report_checked.indexOf(items.id) > -1; else notSelected"> 
+         <div *ngIf="report_checked && report_checked.indexOf(items.id) > -1; else notSelected">
            <!-- <div>  -->
            <li routerLinkActive="active"  ><a href="javascript:void(0)" class="nav-link" routerLink="/{{items.report_url}}" ><i class="fas fa-file-alt"></i><span>{{items.report_name}}</span></a></li>
          </div>
@@ -387,11 +387,11 @@
   </div>
 </div>
 
-<app-dialpad *ngIf="showHideDialerS"></app-dialpad> 
+<app-dialpad *ngIf="showHideDialerS"></app-dialpad>
 <input type="hidden" id="video_widget" (click)="showVideofialers()">
 
 
-<app-q-login-logout></app-q-login-logout> 
+<app-q-login-logout></app-q-login-logout>
 
 
 

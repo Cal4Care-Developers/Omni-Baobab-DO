@@ -28,7 +28,7 @@ bulkSMS = false;
 groups_list;user_type;
 param1;
 chatid;
-constructor(private serverService: ServerService, private router:Router,private route: ActivatedRoute,) { 
+constructor(private serverService: ServerService, private router:Router,private route: ActivatedRoute,) {
 
   this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.param1 = this.route.snapshot.queryParamMap.get('wp_id');
@@ -47,7 +47,7 @@ constructor(private serverService: ServerService, private router:Router,private 
 ngOnInit() {
      this.param1=  atob(this.param1);
 
- 
+
   this.admin_id = localStorage.getItem('admin_id');
   this.uadmin_id = localStorage.getItem('userId');
   this.user_type=localStorage.getItem('user_type');
@@ -69,7 +69,7 @@ senders(){
 
   this.serverService.sendServer(api_req).subscribe((response:any) => {
     this.senders_list = response.result.data;
-  }, 
+  },
   (error)=>{
       console.log(error);
   });
@@ -78,7 +78,7 @@ senders(){
 
 
 sendSMS(){
-  
+
   console.log(this.compSMS.value);
 
   if(this.compSMS.value.country_code == null){
@@ -97,7 +97,7 @@ sendSMS(){
     return false;
   }
 
-  
+
 
   if(this.compSMS.value.message == null && $('#wp_media_file').val() == ''){
     iziToast.error({
@@ -119,7 +119,7 @@ sendSMS(){
   });
 
           let access_token: any=localStorage.getItem('access_token');
-          let user_id: any =  localStorage.getItem('userId'); 
+          let user_id: any =  localStorage.getItem('userId');
           let agent_req:any = this.compSMS.value;
 
             var formData = new FormData();
@@ -137,25 +137,25 @@ sendSMS(){
             formData.append('timezone_id', localStorage.getItem('timezone_id'));
             formData.append('admin_id', localStorage.getItem('admin_id'));
             formData.append('instance_id', this.param1);
-        
+
             console.log(formData);
 
-            
+
 
            // return false;
-         
-          $.ajax({  
-         
-            // url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",  
-            url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",  
+
+          $.ajax({
+
+            // url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",
+            url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",
             type : 'POST',
             data : formData,
             processData: false,  // tell jQuery not to process the data
-            contentType: false, 
-            success:function (data){ 
+            contentType: false,
+            success:function (data){
               this.parsed_data = JSON.parse(data);
               console.log(this.parsed_data );
-              if(this.parsed_data.status == 'true'){ 
+              if(this.parsed_data.status == 'true'){
                 Swal.close();
 
 
@@ -169,7 +169,7 @@ sendSMS(){
               $("#refresh_page").val(chat_id);
               // this.goToMain(chat_id);
               $("#refresh_page").click();
-          
+
               } else {
                 Swal.close();
 
@@ -178,7 +178,7 @@ sendSMS(){
                   message: this.parsed_data.data,
                   position: 'topRight'
               });
-            
+
               }
               Swal.close();
 
@@ -190,9 +190,9 @@ sendSMS(){
             });
             Swal.close();
           }
-            
+
         });
-       
+
 }
 closeLoading(){
   Swal.close();
@@ -227,11 +227,11 @@ let api_req:any = '{"operation":"contact", "moduleType":"contact", "api_type": "
 
 this.serverService.sendServer(api_req).subscribe((response:any) => {
   if(response.status==true){
-   
+
     this.groups_list = response.result.data;
     console.log(this.groups_list);
-  } 
-}, 
+  }
+},
 (error)=>{
     console.log(error);
 });
@@ -271,7 +271,7 @@ mes = '';
 //console.log(mes ); return false;
 
 let access_token: any=localStorage.getItem('access_token');
-let user_id: any =  localStorage.getItem('userId'); 
+let user_id: any =  localStorage.getItem('userId');
 
 
   var formData = new FormData();
@@ -292,30 +292,30 @@ let user_id: any =  localStorage.getItem('userId');
 
   console.log(formData);
 
-$.ajax({  
-  url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",  
+$.ajax({
+  url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",
   type : 'POST',
   data : formData,
   processData: false,  // tell jQuery not to process the data
-  contentType: false, 
-  success:function(data){ 
+  contentType: false,
+  success:function(data){
     this.parsed_data = JSON.parse(data);
     console.log(this.parsed_data );
-    if(this.parsed_data.status == 'true'){    
+    if(this.parsed_data.status == 'true'){
       iziToast.success({
         message: "Sent successfully",
         position: 'topRight'
       });
       $("#refresh_page").click();
-    
+
     } else {
       iziToast.error({
         message: "Sorry, Some Error Occured",
         position: 'topRight'
     });
     }
-  }  
-});  
+  }
+});
 }
 
 
@@ -327,11 +327,11 @@ $.ajax({
 
 //   this.serverService.sendServer(api_req).subscribe((response:any) => {
 //     if(response.status==true){
-   
+
 //       this.groups_list = response.result.data;
 //       console.log(this.groups_list);
-//     } 
-//   }, 
+//     }
+//   },
 //   (error)=>{
 //       console.log(error);
 //   });

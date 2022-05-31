@@ -48,7 +48,7 @@ export class TicketCreateNewComponent implements OnInit {
     const input = event.input;
 
     if (value) {
-      this.collobrators.push({email_name: value}); 
+      this.collobrators.push({email_name: value});
     }
     if (input) {
       input.value = '';
@@ -65,7 +65,7 @@ export class TicketCreateNewComponent implements OnInit {
   }
 
 //CC Collabrator End
-//TO Address 
+//TO Address
 
 addTo(event: MatChipInputEvent): void {
   const value = (event.value || '').trim();
@@ -73,7 +73,7 @@ addTo(event: MatChipInputEvent): void {
 
     // var filtered = this.EmailToAddress.filter(
     //   function(value) {
-    //     return 
+    //     return
     //   });
 
     let myItems = this.EmailToAddress.filter(item => item.email_to === value);
@@ -154,41 +154,41 @@ removeTo(EmailAddress: EmailAddress): void {
     this.email_id = this.route.snapshot.queryParamMap.get('email');
     this.call_id = this.route.snapshot.queryParamMap.get('call_id');
     this.notes = this.route.snapshot.queryParamMap.get('note');
-   
+
    if(this.notes!= ''&& this.notes != null && this.notes != undefined){
        //alert(this.notes)
-      
+
    // tinymce.get('.richTextArea').setContent(this.notes);
       //tinymce.get('richTextArea').getContent('this.notes')
   }
-    
+
   // if (this.email_id = ''&& this.email_id == null && this.email_id == undefined) {
   //     iziToast.warning({
   //       message: "Please choose from Email to send",
   //       position: 'topRight'
   //     });
-   
+
   //   }
     if(this.email_id != ''&& this.email_id != null && this.email_id != undefined){
       this.EmailToAddress.push({ email_to: this.email_id });
       this.getdescrp();
       }
-     
+
        //return false;
-    
-     
-    
+
+
+
    }
   userEmails = new FormGroup({
     primaryEmail: new FormControl('',[
       Validators.required
       // Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")
     ])
-    });  
+    });
   ngOnInit() {
     this.user_type_ = localStorage.getItem('user_type');
     if(this.user_type_ == 'Employee')
-      this.user_type =3;    
+      this.user_type =3;
     else if(this.user_type_ == 'Admin')
        this.user_type =2;
 
@@ -202,8 +202,8 @@ removeTo(EmailAddress: EmailAddress): void {
     this.getAlldetailsOfAgents();
   }
   get_email(){
-    
-        
+
+
   }
   getAlldetailsOfAgents(){
     let access_token: any=localStorage.getItem('access_token');
@@ -212,7 +212,7 @@ removeTo(EmailAddress: EmailAddress): void {
     // console.log(tinymce.activeEditor.getContent());
 
     let api_req:any = '{"operation":"ticket", "moduleType":"ticket", "api_type":"web", "access_token":"'+access_token+'", "element_data":{"action":"getAlldetailsOfAgents","user_type":"'+this.user_type+'","user_id":"'+this.user_id+'","admin_id":"'+this.admin_id+'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.status="true"){
       // this.agents_options=response.agents_options;
@@ -226,14 +226,14 @@ removeTo(EmailAddress: EmailAddress): void {
           position: 'topRight'
         })
       }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
   }
 
   initTiny(){
-    
+
     tinymce.init({
       selector : '.richTextArea',
       height: 500,
@@ -247,32 +247,32 @@ removeTo(EmailAddress: EmailAddress): void {
       textcolor_rows: "4",
       images_upload_handler : function(blobInfo, success, failure) {
         var xhr, formData;
-  
+
         xhr = new XMLHttpRequest();
         xhr.withCredentials = false;
         xhr.open('POST', 'upload.php');
-  
+
         xhr.onload = function() {
           var json;
-  
+
           if (xhr.status != 200) {
             failure('HTTP Error: ' + xhr.status);
             return;
           }
-  
+
           json = JSON.parse(xhr.responseText);
-  
+
           if (!json || typeof json.file_path != 'string') {
             failure('Invalid JSON: ' + xhr.responseText);
             return;
           }
-  
+
           success(json.file_path);
         };
-  
+
         formData = new FormData();
         formData.append('file', blobInfo.blob(), blobInfo.filename());
-  
+
         xhr.send(formData);
       },
     });
@@ -290,8 +290,8 @@ removeTo(EmailAddress: EmailAddress): void {
     // var EmailTo=$('#email_to').val();
     // var email_cc=$('#email_cc').val();
 
-    var email_cc = this.getFields(this.collobrators, "email_name"); 
-var EmailTo = this.getFields(this.EmailToAddress, "email_to"); 
+    var email_cc = this.getFields(this.collobrators, "email_name");
+var EmailTo = this.getFields(this.EmailToAddress, "email_to");
 
 
 
@@ -418,7 +418,7 @@ var json_arr = JSON.stringify(agent_req);
           position: 'topRight'
         });
         return false;
-      }    
+      }
       Swal.fire({
         title: 'Please Wait',
         allowEscapeKey: false,
@@ -442,7 +442,7 @@ var json_arr = JSON.stringify(agent_req);
           this.parsed_data = JSON.parse(data);
           console.log(this.parsed_data);
           Swal.close();
-          // if(this.parsed_data.result.status == "Message has been sent successfully"){   
+          // if(this.parsed_data.result.status == "Message has been sent successfully"){
           if (this.parsed_data.data == "Message has been sent successfully") {
 
         $("#refresh_profile").click();
@@ -458,10 +458,10 @@ var json_arr = JSON.stringify(agent_req);
           message: "Sorry, Some Error Occured,Please contact Admin",
           position: 'topRight'
       });
-    
+
       }
-    }  
-});  
+    }
+});
     }
 
   }
@@ -486,7 +486,7 @@ PickStatus(data,value){
   this.sel_status=value;
     $('#PickStatus').val(data);
     // alert( $('#PickStatus').val());
-    
+
 }
 PickPriority(data,value){
   this.sel_priority=value;
@@ -500,9 +500,9 @@ editDepartmentSettings(id){
   this.serverService.sendServer(api_req).subscribe((response:any) => {
     if(response.result.status==true){
       // console.log(response);
-      this.agents_options = response.result.data;  
+      this.agents_options = response.result.data;
 }
-  }, 
+  },
   (error)=>{
       console.log(error);
   });
@@ -556,22 +556,22 @@ let user_id=localStorage.getItem('userId');
     // this.status_options=response.status_options;
     var content='<p>DATE:'+this.datePipe.transform(response.result.data.call_start_dt,'yyyy-MM-dd') +'</p> <p>CONNAISSANCE BAOBOB:'+response.result.data.other_street+'</p> <p>HOUR:'+this.datePipe.transform(response.result.data.call_start_dt,'h:mm:ss') +'</p> <p>AGENT:'+response.result.data.agent_name+'</p> <p>NUM CILENT:'+response.result.data.other_phone+'</p> <p>NAME CILENT:'+response.result.data.first_name+'</p> <p>PHONE NUMBER:'+response.result.data.phone+'</p> <p>NUM TEL:'+response.result.data.mobile+'</p> <p>NOTES:'+response.result.data.call_note+'</p> <p>TYPE:'+response.result.data.category_name+'</p> <p>CODE:'+response.result.data.auxcode_name+'</p> <p>TYPE APPELLANT:'+response.result.data.type_appellant+'</p> <p>AGENCE:'+response.result.data.twitter+'</p>'
   //  var html='DATE:'+response.result.data.call_start_dt+'\\n,CONNAISSANCE BAOBOB:'+response.result.data.call_start_dt+'HOUR:'+response.result.data.created_dt+'AGENT:'+response.result.data.agent_name+'NUM CILENT:'+response.result.data.first_name+'NAME CILENT:'+response.result.data.call_data+'PHONE NUMBER:'+response.result.data.phone+
-   
+
    //alert(content)
     setTimeout(() => {
     tinymce.activeEditor.setContent(content);
-      
+
     }, 4000);
     // tinymce.activeEditor.setContent(this.edit_sign.sig_content);
   }
-    
+
     else{
       iziToast.warning({
         message: "Sorry not able to fetch Data.Please contact Admin",
         position: 'topRight'
       })
     }
-  }, 
+  },
   (error)=>{
       console.log(error);
   });

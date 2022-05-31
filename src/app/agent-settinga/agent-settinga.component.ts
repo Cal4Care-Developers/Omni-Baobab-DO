@@ -16,8 +16,8 @@ import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl
 export class AgentSettingaComponent implements OnInit {
   addAgent: FormGroup;
   editAgent: FormGroup;
-  
-  agents_list; 
+
+  agents_list;
   recordNotFound = false;
   pageLimit = 10;
   paginationData:any ={"info":"hide"};
@@ -91,16 +91,16 @@ export class AgentSettingaComponent implements OnInit {
   total_agent_count_t;
   able_to_add;
 // this
-  constructor(private serverService: ServerService,private sanitizer: DomSanitizer) { 
+  constructor(private serverService: ServerService,private sanitizer: DomSanitizer) {
 
-    this.serverService.showvedioDialer.subscribe( (val:any) => 
+    this.serverService.showvedioDialer.subscribe( (val:any) =>
     {
        console.log(val);
        var dpContent = JSON.parse(val);
           if(dpContent.type == "showDialer"){
-        
+
             this.showvideo = true;
-          } else {     
+          } else {
             this.showvideo = false;
           }
      }
@@ -109,39 +109,39 @@ export class AgentSettingaComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
     $("#agent_user_pwd").keydown(function (e) {
-  
-      console.log(e.which); 
+
+      console.log(e.which);
       if(e.which == 32){
               iziToast.warning({
                 message: "Sorry, Whitespace not allowed",
                 position: 'topRight'
-            }); 
+            });
             return false;
       }
       return e.which !== 32;
 });
 $("#agent_user_name").keydown(function (e) {
-  
-  console.log(e.which); 
+
+  console.log(e.which);
   if(e.which == 32){
           iziToast.warning({
             message: "Sorry, Whitespace not allowed",
             position: 'topRight'
-        }); 
+        });
         return false;
   }
   return e.which !== 32;
 });
 $("#update_user_pwd").keydown(function (e) {
-   
-  console.log(e.which); 
+
+  console.log(e.which);
   if(e.which == 32){
           iziToast.warning({
             message: "Sorry, Whitespace not allowed",
             position: 'topRight'
-        }); 
+        });
         return false;
   }
   return e.which !== 32;
@@ -178,7 +178,7 @@ $("#update_user_pwd").keydown(function (e) {
       'wallboard_three' : new FormControl(0),
       'wallboard_four' : new FormControl(0),
       // 'wallboard_five' : new FormControl(0),
-      // 'wallboard_six' : new FormControl(0), 
+      // 'wallboard_six' : new FormControl(0),
       'wallboard_eight' : new FormControl(0),
       // 'wallboard_nine' : new FormControl(0),
       'two_factor' : new FormControl(0),
@@ -225,7 +225,7 @@ $("#update_user_pwd").keydown(function (e) {
       'wallboard_three' : new FormControl(0),
       'wallboard_four' : new FormControl(0),
       // 'wallboard_five' : new FormControl(0),
-      // 'wallboard_six' : new FormControl(0), 
+      // 'wallboard_six' : new FormControl(0),
       'wallboard_eight' : new FormControl(0),
       // 'wallboard_nine' : new FormControl(0),
       'two_factor' : new FormControl(0),
@@ -241,7 +241,7 @@ $("#update_user_pwd").keydown(function (e) {
       this.pbc_details();
       // this.listReports();
       this.getReports();
-      // this.agentsList({}); 
+      // this.agentsList({});
 
       this.has_video= localStorage.getItem('has_video_dialer');
        this.admin_id =localStorage.getItem('admin_id');
@@ -266,7 +266,7 @@ $("#update_user_pwd").keydown(function (e) {
 
       // $.validator.addMethod("nowhitespace", function(value, element) {
       //   return this.optional(element) || /^S+$/i.test(value);
-      // }, "No white space please");  
+      // }, "No white space please");
       // this.getcalltariffs();
       // this.call_recording();
 
@@ -278,27 +278,27 @@ initsocket(){
 
   this.user_type = localStorage.getItem('user_type');
   // if(this.loginUser == '64'){
-  //   this.websocket = new WebSocket("wss://socket.mconnectapps.com:5013/"); 
+  //   this.websocket = new WebSocket("wss://socket.mconnectapps.com:5013/");
   // } else if(this.loginUser == '164'){
-  //   this.websocket = new WebSocket("wss://socket.mconnectapps.com:5014/"); 
+  //   this.websocket = new WebSocket("wss://socket.mconnectapps.com:5014/");
   // } else if(this.loginUser == '201'){
-  //   this.websocket = new WebSocket("wss://socket.mconnectapps.com:5014/"); 
+  //   this.websocket = new WebSocket("wss://socket.mconnectapps.com:5014/");
   // } else {
-  //   this.websocket = new WebSocket("wss://socket.mconnectapps.com:5012/"); 
+  //   this.websocket = new WebSocket("wss://socket.mconnectapps.com:5012/");
   // }
 
 
   if(this.admin_id == '64'){
-    this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4002"); 
+    this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4002");
   } else if(this.admin_id == '201'){
-    this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4003"); 
+    this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4003");
   } else if(this.admin_id == '1230'){
-    this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4015"); 
+    this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4015");
     } else {
-    this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4023"); 
+    this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4023");
   }
 
-  this.websocket.onopen = function(event) { 
+  this.websocket.onopen = function(event) {
     $('#sendonload').click();
     console.log('agent socket connected');
   }
@@ -310,12 +310,12 @@ initsocket(){
     if(result_message[0].cust_id == this.hardware_id){
      console.log('matched');
     //  console.log(result_message);
- 
+
       this.callonce = setTimeout(() => {
         // this.closeLoading();
           Swal.close();
       }, 15000);
-      
+
     } else {
       console.log('not matched');
       Swal.close();
@@ -323,7 +323,7 @@ initsocket(){
       return false;
     }
 
-     if(result_message[0].data[0].status=="false"){   
+     if(result_message[0].data[0].status=="false"){
       $('#datagetsfailed').click();
       Swal.close();
 
@@ -336,14 +336,14 @@ initsocket(){
       // $('#addAllAgentsFrom3cx').modal('show');
     }
     else if(result_message[0].data[0].sipdata=="getagentdet"){
-    
+
       $('#sip_username_add').val(result_message[0].data[0].sip_username);
       $('#sip_password_add').val(result_message[0].data[0].sip_password);
       $('#sip_username').val(result_message[0].data[0].sip_username);
       $('#u_sip_password').val(result_message[0].data[0].sip_password);
       Swal.close();
 
- 
+
     }
   }
   this.websocket.onerror = function(event){
@@ -355,7 +355,7 @@ initsocket(){
     Swal.close();
 
     console.log('close');
-  } 
+  }
 }
 
 call_recording(){
@@ -365,14 +365,14 @@ call_recording(){
 
   this.serverService.sendServer(api_req).subscribe((response:any) => {
     if(response.status==true){
-     
+
       this.agent_grp = response.result.data;
       console.log(this.agent_grp);
-      
+
     } else {
       this.recordNotFound = true;
     }
-  }, 
+  },
   (error)=>{
       console.log(error);
   });
@@ -380,7 +380,7 @@ call_recording(){
 
 openAgentsFrom(){
 
-  let socketData = $('#AgentsFrom3cx').val(); 
+  let socketData = $('#AgentsFrom3cx').val();
   let mData = JSON.parse(socketData);
   this.dynamicUsers = mData[0].data;
   this.closeLoading();
@@ -435,15 +435,15 @@ this.serverService.sendServer(api_req).subscribe((response:any) => {
     iziToast.error({
       message: "Sorry... You have a limits for "+this.agent_count+" users only",
       position: 'topRight'
-    });   
-  } 
-}, 
+    });
+  }
+},
 (error)=>{
     console.log(error);
 });
 
 
-if(this.hardware_id !=''){          
+if(this.hardware_id !=''){
   var socket_message  =  '[{"cust_id":"'+this.hardware_id+'","data":[{"Name":"omniagents","agents":"'+users+'"}]}]';
   console.log(socket_message)
   this.websocket.send(socket_message);
@@ -507,16 +507,16 @@ datagetsfailed(){
 
   getReports(){
     let access_token: any=localStorage.getItem('access_token');
-  
+
     let api_req:any = '{"operation":"agents", "moduleType":"agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"list_report"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.status==true){
         this.list_reports = response.result.data;
       // console.log(this.list_reports);
         // console.log(response);
-      } 
-    }, 
+      }
+    },
     (error)=>{
         console.log(error);
     });
@@ -526,14 +526,14 @@ datagetsfailed(){
 
   //   let access_token: any=localStorage.getItem('access_token');
   //   let uadmin_id: any=localStorage.getItem('userId');
-  
+
   //   let api_req:any = '{"operation":"chat", "moduleType": "chat", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"list_report","user_id":"'+uadmin_id+'"}}';
-  
+
   //   this.serverService.sendServer(api_req).subscribe((response:any) => {
   //     if(response.result.status==true){
   //       this.list_report = response.result.data[0].agent_counts;
-  //     } 
-  //   }, 
+  //     }
+  //   },
   //   (error)=>{
   //       console.log(error);
   //   });
@@ -551,8 +551,8 @@ pbc_details(){
       this.agent_count = response.result.data[0].agent_counts;
       this.agent_count_t = response.result.data[0].agent_counts;
       this.agentsList({});
-    } 
-  }, 
+    }
+  },
   (error)=>{
       console.log(error);
   });
@@ -566,7 +566,7 @@ listDataInfo(list_data){
   list_data.limit = list_data.limit == undefined ? this.pageLimit : list_data.limit;
   list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
   return list_data;
-}  
+}
 
 agentsList(data){
   var list_data= this.listDataInfo(data);
@@ -586,9 +586,9 @@ api_req.access_token=localStorage.getItem('access_token');
 api_req.element_data = agents_req;
 
   this.serverService.sendServer(api_req).subscribe((response:any) => {
-  
+
       if(response.result.status==1){
-  
+
         this.agents_list=response.result.data.list_data;
           this.offset_count = list_data.offset;
           this.total_agent_count = response.result.data.list_info.available_users;
@@ -598,18 +598,18 @@ api_req.element_data = agents_req;
 
 
 
-    
-           this.sip_logins_main = response.result.data.sip_logins;
-         
 
-         
+           this.sip_logins_main = response.result.data.sip_logins;
+
+
+
           if(response.result.data.user_permission.has_contact == '0'){
-      
+
             this.h_con = 'disabled';
         }
 
         if(response.result.data.user_permission.has_fb == '0'){
-     
+
           this.h_fb = 'disabled';
       }
         if(response.result.data.user_permission.has_sms == '0'){
@@ -697,7 +697,7 @@ api_req.element_data = agents_req;
 
         if( this.able_to_add < 1){
           this.hideAddButt = false;
-        } else {      
+        } else {
           this.hideAddButt = true;
         }
 
@@ -705,9 +705,9 @@ api_req.element_data = agents_req;
 
 
       }
-      
 
-  }, 
+
+  },
   (error)=>{
       console.log(error);
   });
@@ -717,10 +717,10 @@ api_req.element_data = agents_req;
 
     this.addAgent.reset();
     $('#add_agents_form').modal('show');
-    
+
   }
   editAgents(id){
-    
+
     $('#edit_agents_key').val(id);
     $('#edit_agents_button').click();
     $('#edit_agents_button').click();
@@ -733,11 +733,11 @@ api_req.element_data = agents_req;
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.result.data == 1){
      }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
-  } 
+  }
 
 
 
@@ -770,7 +770,7 @@ api_req.element_data = agents_req;
       this.agentsList({});
     }
 
-  }, 
+  },
   (error)=>{
       console.log(error);
   });
@@ -780,7 +780,7 @@ api_req.element_data = agents_req;
 
   editAgentForm(id){
     this.editAgent.reset();
-    
+
     $('#geteditonce').click();
 
       let api_req:any = new Object();
@@ -794,7 +794,7 @@ api_req.element_data = agents_req;
       api_req.element_data = get_agent_req;
           this.serverService.sendServer(api_req).subscribe((response: any) => {
           if (response.result.status == 1) {
-                 
+
                  var agent_data = response.result.data;
                    this.editAgent.setValue({
                       'user_name' : agent_data.user_name,
@@ -839,7 +839,7 @@ api_req.element_data = agents_req;
                    'has_webinar' : agent_data.has_webinar,
                    'dialer_auto_answer' : agent_data.dialer_auto_answer
 
-                   
+
                   });
 
                   var encodedString = btoa(agent_data.sip_login);
@@ -849,7 +849,7 @@ api_req.element_data = agents_req;
                   } else {
                     this.showCallTariffsDetEdit = false;
                   }
-                  
+
 
                 $('#eMPlanName').val(agent_data.call_plan);
                 $('#ecall_rate').val(agent_data.call_rate);
@@ -862,13 +862,13 @@ api_req.element_data = agents_req;
 
                 $('#upd_recording_grp').val(agent_data.ag_group);
 
-               // $('#eMPlanName option[value='+agent_data.plan_id+']').attr("selected",true); 
+               // $('#eMPlanName option[value='+agent_data.plan_id+']').attr("selected",true);
               // $('select[name^="eMPlanName"] option[value='+agent_data.plan_id+']').attr("selected","selected");
              if(this.has_video == '1'){  this.customHtmls = 'https://omni.mconnectapps.com/webDialer/?login='+response.result.encLogin;       }
              else{ this.customHtmls = 'https://omni.mconnectapps.com/WOV-dialer/?login='+response.result.encLogin;   }
                   this.smsChat = 'https://omni.mconnectapps.com/sms-widget/?login='+response.result.encLogin;
                   this.InternalChat = 'https://omni.mconnectapps.com/internal-chat-widget/?login='+response.result.encLogin;
-                 
+
                   if(agent_data.reports == null||agent_data.reports == ''){
                     ///alert('dasas')
                     this.upd_agent_3cx_rep = false;
@@ -883,7 +883,7 @@ api_req.element_data = agents_req;
                     }
                   }
         // alert(this.reportChecked);
-                  
+
 
                   $('#edit_reports').val(this.reportChecked);
                   if(agent_data.voice_3cx == 1){
@@ -908,9 +908,9 @@ api_req.element_data = agents_req;
                    } else {
                     $('#lead').prop('checked', false);
                    }
-            
-            
-            
+
+
+
                    if(agent_data.has_contact == 1){
                     $('#has_contact').prop('checked', true);
                    } else {
@@ -936,13 +936,13 @@ api_req.element_data = agents_req;
                    } else {
                     $('#has_chatbot').prop('checked', false);
                    }
-            
+
                    if(agent_data.has_whatsapp == 1){
                     $('#has_whatsapp').prop('checked', true);
                    } else {
                     $('#has_whatsapp').prop('checked', false);
                    }
-            
+
                    if(agent_data.has_fb == 1){
                     $('#has_fb').prop('checked', true);
                    } else {
@@ -987,7 +987,7 @@ api_req.element_data = agents_req;
                    } else {
                     $('#dialer_auto_answer').prop('checked', false);
                    }
-            
+
                    if(agent_data.wallboard_one == 1){
                     $('#wallboard_one').prop('checked', true);
                    } else {
@@ -1033,14 +1033,14 @@ api_req.element_data = agents_req;
                    } else {
                     $('#admin_permisions').prop('checked', false);
                    }
-            
+
                    if(agent_data.two_factor == 1){
                     $('#two_factor').prop('checked', true);
                    } else {
                     $('#two_factor').prop('checked', false);
                    }
-            
-            
+
+
                    if(agent_data.user_status == 1){
                     $('#user_status').prop('checked', true);
                    } else {
@@ -1054,25 +1054,25 @@ api_req.element_data = agents_req;
 
                    if(agent_data.dsk_access == 1){
                     this.dsk_access = 'disableds';
-                   } 
+                   }
 
-                   
+
 
                   this.a_pass = agent_data.password;
                   this.sip_pass = agent_data.sip_password;
 
-                 
+
                   $('#edit_agents_form').modal('show');
               }
           else{
-              
+
                   iziToast.warning({
                       message: "Agent data could not retrive. Please try again",
                       position: 'topRight'
                   });
-              
+
           }
-  
+
       },
       (error) => {
           iziToast.error({
@@ -1081,22 +1081,22 @@ api_req.element_data = agents_req;
           });
           console.log(error);
       });
-  
+
   }
-  
+
 
 
 
 
 addAgentData(){
-  
+
   if(this.addAgent.value.user_name == '' || this.addAgent.value.user_name=='null' ){
       iziToast.warning({
           message: "Please Enter Username",
           position: 'topRight'
       });
   }
- 
+
   if(this.addAgent.value.dsk_access == true ){
 
     if(this.addAgent.value.dsk_username == '' || this.addAgent.value.dsk_username=='null' || this.addAgent.value.dsk_username=='0'){
@@ -1118,7 +1118,7 @@ addAgentData(){
 
 }
 // if(this.addAgent.value.dsk_password == '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'){
-  
+
 // }
 
 
@@ -1146,13 +1146,13 @@ addAgentData(){
     // alert(this.addAgent.value.emailid);
   //    else{
   //       $("#agent_user_pwd").keydown(function (e) {
-  
-  //         console.log(e.which); 
+
+  //         console.log(e.which);
   //         if(e.which == 32){
   //                 iziToast.warning({
   //                   message: "Please No Whitespace",
   //                   position: 'topRight'
-  //               }); 
+  //               });
   //               return false;
   //         }
   //         return e.which !== 32;
@@ -1247,7 +1247,7 @@ var sip_pass=$('#sip_password_add').val();
                   this.addAgent.reset();
                   this.dsk_access = '';
                 }
-              } 
+              }
               else if(response.result.status == false){
                     iziToast.warning({
                       message: "Username already excites",
@@ -1255,14 +1255,14 @@ var sip_pass=$('#sip_password_add').val();
                   });
               }
           else{
-              
+
                   iziToast.warning({
                       message: "Agent not added. Please try again",
                       position: 'topRight'
                   });
-              
+
           }
-   
+
       },
       (error) => {
            iziToast.error({
@@ -1271,14 +1271,14 @@ var sip_pass=$('#sip_password_add').val();
           });
           console.log(error);
       });
-  
-  
+
+
     }
-  
-  
-   
+
+
+
       editAgentData(){
-  
+
       let api_req:any = new Object();
       let agent_req:any = this.editAgent.value;
 
@@ -1295,7 +1295,7 @@ var sip_pass=$('#sip_password_add').val();
           });
           return false;
       }
-    
+
       if(this.editAgent.value.dsk_password == '' ){
         iziToast.warning({
             message: "Please Enter DKB Password",
@@ -1303,7 +1303,7 @@ var sip_pass=$('#sip_password_add').val();
         });
         return false;
     }
-    
+
     }
 
   //   if(this.editAgent.value.email_id == '' ){
@@ -1323,7 +1323,7 @@ var sip_pass=$('#sip_password_add').val();
    }
 
   //   $('#update_user_pwd').keypress(function( e ) {
-  //     if(e.which === 32) 
+  //     if(e.which === 32)
   //     console.log('ejief');
   //       return false;
   //  });
@@ -1332,7 +1332,7 @@ var sip_pass=$('#sip_password_add').val();
   //         message: "Please Enter Password",
   //         position: 'topRight'
   //     });
-      
+
   // }
 // alert(this.editAgent.value.has_webinar);
 
@@ -1341,7 +1341,7 @@ var sip_pass=$('#sip_password_add').val();
 
 if(!this.no_report){
       var reports = $('#edit_reports').val().join();
-if(this.upd_agent_3cx_rep){      
+if(this.upd_agent_3cx_rep){
       agent_req.ag_group=$('#upd_recording_grp').val();
 }
 }
@@ -1372,7 +1372,7 @@ agent_req.sip_password=$('#u_sip_password').val();
 
 
           this.serverService.sendServer(api_req).subscribe((response: any) => {
-            
+
            if (response.result.data == 0) {
                 $('#edit_agents_form').modal('hide');
                 iziToast.warning({
@@ -1391,14 +1391,14 @@ agent_req.sip_password=$('#u_sip_password').val();
               $('#agentsList').click();
           }
           else{
-              
+
                   iziToast.warning({
                       message: "Agent data not updated. Please try again",
                       position: 'topRight'
                   });
-              
+
           }
-  
+
       },
       (error) => {
            iziToast.error({
@@ -1413,17 +1413,17 @@ agent_req.sip_password=$('#u_sip_password').val();
 
 
     dskAccess(event){
-     
+
     if(event == 'add'){
-      
+
       if(this.addAgent.value.dsk_access == true){
         this.dsk_access = 'disableds';
       } else {
         this.dsk_access = '';
       }
-      
+
     } else {
-     
+
       if(this.editAgent.value.dsk_access == true){
         this.dsk_access = 'disableds';
       } else {
@@ -1445,7 +1445,7 @@ agent_req.sip_password=$('#u_sip_password').val();
         input.attr("type", "password");
       }
     };
-    
+
     retriveFrom3cx(dev){
       if(dev == ''){
         iziToast.warning({
@@ -1475,7 +1475,7 @@ agent_req.sip_password=$('#u_sip_password').val();
             Swal.showLoading();
         }
       });
-   
+
       this.sendingmail=true;
       let access_token: any=localStorage.getItem('access_token');
 
@@ -1487,11 +1487,11 @@ agent_req.sip_password=$('#u_sip_password').val();
       });
       return false;
       }
-    
+
       let api_req:any = '{"operation":"agents", "moduleType":"agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"welcome_email","user_id":"'+id+'","email":"'+email+'"}}';
-    
+
       this.serverService.sendServer(api_req).subscribe((response:any) => {
-        
+
         if(response.status==true){
           this.sendingmail=false;
           this.closeLoading();
@@ -1500,7 +1500,7 @@ agent_req.sip_password=$('#u_sip_password').val();
             position: 'topRight'
         });
         } else {
-          this.closeLoading(); 
+          this.closeLoading();
           iziToast.warning({
             message: "Sorry,Mail not sent",
             position: 'topRight'
@@ -1508,7 +1508,7 @@ agent_req.sip_password=$('#u_sip_password').val();
           this.sendingmail=false;
 
         }
-      }, 
+      },
       (error)=>{
         this.closeLoading();
           console.log(error);
@@ -1520,25 +1520,25 @@ agent_req.sip_password=$('#u_sip_password').val();
   }
 
   logoutagent(id){
-   
+
       let access_token: any=localStorage.getItem('access_token');
       let user_id: any=localStorage.getItem('userId');
 
       let api_req:any = '{"operation":"agents", "moduleType":"agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"user_log_out","user_id":"'+id+'"}}';
-    
+
       this.serverService.sendServer(api_req).subscribe((response:any) => {
         if(response.result.data==1){
 
          } else {
-          
+
          }
-      }, 
+      },
       (error)=>{
           console.log(error);
       });
-    
+
   }
- 
+
   getCallTariffsList(){
      // alert(this.agent_3cx_rep)
     if(this.addAgent.value.voice_3cx == null || this.addAgent.value.voice_3cx == false){
@@ -1568,7 +1568,7 @@ getcalltariffs(){
     this.callTariffs = response.result.data.plans;
     } else {
     }
-  }, 
+  },
   (error)=>{
     console.log(error);
   });
@@ -1590,10 +1590,10 @@ edit_billing_address(){
       if(response.result.data !=""){
       // alert(response.result.data);
         var ab = response.result.data[0]
-//alert(ab.edit_ship); 
+//alert(ab.edit_ship);
         if(ab.edit_ship == '1'){
           $('#eedit_ship').prop('checked', true);
-          $('#editShippingAddresss').attr('style','display:flex');  
+          $('#editShippingAddresss').attr('style','display:flex');
           $('#econtact_person').val(ab.contact_person);
           $('#eadd1').val(ab.add1);
           $('#eadd2').val(ab.add2);
@@ -1612,7 +1612,7 @@ edit_billing_address(){
           $('#eship_zip').val(ab.ship_zip);
           $('#eship_country').val(ab.ship_country);
         } else {
-  
+
           $('#econtact_person').val(ab.contact_person);
           $('#eadd1').val(ab.add1);
           $('#eadd2').val(ab.add2);
@@ -1623,19 +1623,19 @@ edit_billing_address(){
           $('#e_monthly_charges').val(ab.monthly_charges);
           $('#e_discount_per').val(ab.discount);
         }
-  
-  
-  
-        
-       
+
+
+
+
+
       //  $('#edit_agents_form').modal('hide');
         $('#edit_billing_address').modal('show');
 
       } else {
     // alert('called');
       //  $('#edit_agents_form').modal('hide');
-        $('#edit_billing_address').modal('show');        
-         
+        $('#edit_billing_address').modal('show');
+
         // temp for clean a id values
           $('#econtact_person').val('');
           $('#eadd1').val('');
@@ -1653,7 +1653,7 @@ edit_billing_address(){
           $('#eship_city').val('');
           $('#eship_state').val('');
           $('#eship_zip').val('');
-          $('#eship_country').val('');  
+          $('#eship_country').val('');
           $('#econtact_person').val('');
           $('#eadd1').val('');
           $('#eadd2').val('');
@@ -1663,16 +1663,16 @@ edit_billing_address(){
           $('#ecountry').val('');
           $('#e_monthly_charges').val('');
           $('#e_discount_per').val('');
-        
+
 
 
       }
 
-      
+
     } else {
-     
+
     }
-  }, 
+  },
   (error)=>{
       console.log(error);
   });
@@ -1689,7 +1689,7 @@ editShippingAddress(){
   this.editShippingAddresss = false;
   $('#editShippingAddresss').attr('style','display:none');
  }
- 
+
 }
 
 editShippingAddressMain(){
@@ -1729,13 +1729,13 @@ editShippingAddressMain(){
   var ship_country =  $('#eship_country').val();
   var monthly_charges =  $('#e_monthly_charges').val();
   var discount_per =  $('#e_discount_per').val();
- 
+
 
 if(contact_person == "" || add1 == "" || city == "" || state == "" || zip_code == "" || country == ""){
   iziToast.warning({
     message: "Please Fill The Required Field",
     position: 'topRight'
-  }); 
+  });
   return false;
 }
 
@@ -1750,7 +1750,7 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
     iziToast.warning({
       message: "Please Fill The Required Field",
       position: 'topRight'
-    }); 
+    });
     return false;
   }
   else{
@@ -1766,7 +1766,7 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
  }
   let access_token: any=localStorage.getItem('access_token');
   let api_req:any = '{"operation":"agents", "moduleType":"agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"update_agent_billing_det","admin_id": "'+this.admin_id+'","user_id":"'+user_id+'","contact_person":"'+contact_person+'","add1":"'+add1+'","add2":"'+add2+'","city":"'+city+'","state":"'+state+'","zip_code":"'+zip_code+'","country":"'+country+'","edit_ship":"'+edit_ship+'","ship_contact":"'+ship_contact+'","ship_to":"'+ship_to+'","ship_add1":"'+ship_add1+'","ship_add2":"'+ship_add2+'","ship_city":"'+ship_city+'","ship_state":"'+ship_state+'","ship_zip":"'+ship_zip+'","ship_country":"'+ship_country+'","monthly_charges":"'+monthly_charges+'","discount_per":"'+discount_per+'"}}';
-  
+
  // console.log(api_req); return false;
   this.serverService.sendServer(api_req).subscribe((response:any) => {
     if(response.status == true){
@@ -1775,7 +1775,7 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
       this.editShippingAddresss = false;
     } else {
     }
-  }, 
+  },
   (error)=>{
     console.log(error);
   });
@@ -1800,13 +1800,13 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
   var ship_city =  $('#ship_city').val();
   var ship_state =  $('#ship_state').val();
   var ship_zip =  $('#ship_zip').val();
-  var ship_country =  $('#ship_country').val(); 
+  var ship_country =  $('#ship_country').val();
 
 if(contact_person == "" || add1 == "" || city == "" || state == "" || zip_code == "" || country == ""){
   iziToast.warning({
     message: "Please Fill The Required Field",
     position: 'topRight'
-  }); 
+  });
   return false;
 }
 
@@ -1821,13 +1821,13 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
     iziToast.warning({
       message: "Please Fill The Required Field",
       position: 'topRight'
-    }); 
+    });
     return false;
   }
  }
   let access_token: any=localStorage.getItem('access_token');
   let api_req:any = '{"operation":"agents", "moduleType":"agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"update_agent_billing_det","admin_id": "'+this.admin_id+'","user_id":"'+user_id+'","contact_person":"'+contact_person+'","add1":"'+add1+'","add2":"'+add2+'","city":"'+city+'","state":"'+state+'","zip_code":"'+zip_code+'","country":"'+country+'","edit_ship":"'+edit_ship+'","ship_contact":"'+ship_contact+'","ship_to":"'+ship_to+'","ship_add1":"'+ship_add1+'","ship_add2":"'+ship_add2+'","ship_city":"'+ship_city+'","ship_state":"'+ship_state+'","ship_zip":"'+ship_zip+'","ship_country":"'+ship_country+'"}}';
-  
+
  // console.log(api_req); return false;
   this.serverService.sendServer(api_req).subscribe((response:any) => {
     if(response.status == true){
@@ -1835,7 +1835,7 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
       this.editShippingAddresss = false;
     } else {
     }
-  }, 
+  },
   (error)=>{
     console.log(error);
   });
@@ -1846,8 +1846,8 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
 
 
 
-  
- retriveUsersFrom3cx(){ 
+
+ retriveUsersFrom3cx(){
 
 
 
@@ -1879,7 +1879,7 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
   // let api_req:any = '{"operation":"agents", "moduleType":"agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"check_hardware","user_id":"'+login_user+'"}}';
   // this.serverService.sendServer(api_req).subscribe((response:any) => {
   //   if(response.result.data.value=='1'){
-     // this.initsocket();   
+     // this.initsocket();
       Swal.fire({
         title: 'Please Wait...',
         allowEscapeKey: false,
@@ -1890,13 +1890,13 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
             Swal.showLoading();
         }
       });
-        if(this.hardware_id !=''){          
+        if(this.hardware_id !=''){
           var socket_message  =  '[{"cust_id":"'+this.hardware_id+'","data":[{"Name":"getagents"}]}]';
           console.log(socket_message);
-    
+
           this.websocket.send(socket_message);
-    
-        }         
+
+        }
     // }
      else {
       iziToast.error({
@@ -1906,7 +1906,7 @@ if($( "#eedit_ship" ).is( ":checked" ) ){
         // $("#addLicence").modal({"backdrop": "static"});
         this.show_act_wall = true;
     }
-  // }, 
+  // },
   // (error)=>{
   //     console.log(error);
   // });
@@ -1934,15 +1934,15 @@ activateLicenseKey(){
           position: 'topRight'
           });
           $("#addLicence").modal('hide');
-          
+
     } else {
       iziToast.error({
         message: "Please enter a valid key",
         position: 'topRight'
         });
-       
+
     }
-  }, 
+  },
   (error)=>{
       console.log(error);
   });
@@ -1962,7 +1962,7 @@ genInvoice(id,email){
         Swal.showLoading();
     }
   });
- 
+
   let api_req:any = '{"operation":"call_tarrif", "moduleType":"call_tarrif", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"gen_invoice","user_id":"'+id+'","admin_id":"'+admin_id+'"}}';
   this.serverService.sendServer(api_req).subscribe((response:any) => {
     console.log(response);
@@ -1977,7 +1977,7 @@ genInvoice(id,email){
       } else if(response.result.data.data == '2'){
             this.pdfurl = response.result.data.url;
             $("#showGeneratedPdf").modal('show');
-            
+
         }
 
         else if(response.result.data.data == '3'){
@@ -1990,10 +1990,10 @@ genInvoice(id,email){
               text: "click the update user icon -> Update Billing Address",
               icon: 'info',
               showCancelButton: false,
-              confirmButtonColor: '#3085d6',   
+              confirmButtonColor: '#3085d6',
               confirmButtonText: 'Got it'
-            })  
-          
+            })
+
       }
       else if(response.result.data.data == '4'){
         iziToast.error({
@@ -2005,10 +2005,10 @@ genInvoice(id,email){
             text: "Go to profile(by clicking profile Icon)-> Update Billing Address",
             icon: 'info',
             showCancelButton: false,
-            confirmButtonColor: '#3085d6',          
+            confirmButtonColor: '#3085d6',
             confirmButtonText: 'Got it'
           })
-        
+
     }   else if(response.result.data.data == '5'){
             iziToast.error({
              message: "User does not have call plan",
@@ -2019,10 +2019,10 @@ genInvoice(id,email){
           text: "Update your user with voice3CX permission,you should provide plan details for specific user",
           icon: 'info',
           showCancelButton: false,
-          confirmButtonColor: '#3085d6',          
+          confirmButtonColor: '#3085d6',
           confirmButtonText: 'Got it'
         })
-      
+
   }
          else  {
           var arrStr = encodeURIComponent(JSON.stringify(response));
@@ -2037,14 +2037,14 @@ genInvoice(id,email){
         }
 
     }
-  }, 
+  },
   (error)=>{
       console.log(error);
   });
 }
 
 selectReport(){
-  
+
 }
 
 
@@ -2052,7 +2052,7 @@ eventGetChange(){
   // alert(this.voice_manage);
   if(this.voice_manage=='1'){
   $('#add_reports').on('click',function() {
-    var vals = $(this).val();  
+    var vals = $(this).val();
     if(vals.indexOf("3")>-1){
       $("#enablereport").val("3cx");
       $("#enablereport").click();
@@ -2064,7 +2064,7 @@ eventGetChange(){
 }
 
 }
-enablereport(){  
+enablereport(){
    var test = $("#enablereport").val();
 if(test == "3cx")
   this.agent_3cx_rep = true;
@@ -2077,7 +2077,7 @@ eventupdate(){
 
   if(this.voice_manage=='1'){
   $('#edit_reports').on('click',function() {
-    var vals = $(this).val();  
+    var vals = $(this).val();
     if(vals.indexOf("3")>-1){
       $("#updatereport").val("3cx");
       $("#updatereport").click();
@@ -2089,7 +2089,7 @@ eventupdate(){
   })
 }
 }
-updatereport(){  
+updatereport(){
   var test = $("#updatereport").val();
 if(test == "3cx")
  this.upd_agent_3cx_rep = true;
@@ -2098,18 +2098,18 @@ this.upd_agent_3cx_rep = false;
 }
 clictToCall(to){
   // if(to == 'phone'){  this.to_num = $('#phone').val(); } else {  this.to_num = $('#mobile').val(); }
- 
-  
+
+
    if(to == ''){
        iziToast.warning({
          message: "No Number To Call",
          position: 'topRight'
        });
    } else {
- 
- 
+
+
      let access_token: any=localStorage.getItem('access_token');
-   
+
      var extention = localStorage.getItem('ext_int_status');
     // alert(extention);
      if(extention == '2'){
@@ -2119,12 +2119,12 @@ clictToCall(to){
       let api_reqs:any = '{"type": "makecallauto", "number": "'+to+'"}';
       this.serverService.show.next(api_reqs);
      }
- 
+
    }
  }
- showdoc(link){   
+ showdoc(link){
   this.doc_link=link;
- $("#document_model").modal('show');   
+ $("#document_model").modal('show');
 }
 
 }

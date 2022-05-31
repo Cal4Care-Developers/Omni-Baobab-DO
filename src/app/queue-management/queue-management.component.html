@@ -38,7 +38,7 @@
                                 <td>{{offset_count+i+1}}</td>
                                 <td>{{queue.queue_name}}</td>
                                  <td>
-                                    <div [class]="queue.queue_status == 1 ? 'badge badge-success' : queue.queue_status == 4 ? 'badge badge-warning' : 'badge badge-danger'">{{queue.status_name}} </div>                                
+                                    <div [class]="queue.queue_status == 1 ? 'badge badge-success' : queue.queue_status == 4 ? 'badge badge-warning' : 'badge badge-danger'">{{queue.status_name}} </div>
                                 <td>
                                     <span class="user-icon" style="cursor: pointer;"><i class="far fa-edit" (click)="editQueueSettings(queue.queue_id)"></i></span>
                                     <span class="user-icon" style="cursor: pointer;"><i class="fa fa-eye"   (click)="viewQuePerformance(queue.queue_id)"></i></span>
@@ -49,7 +49,7 @@
                              <tr *ngIf="recordNotFound == true">
                                <td colspan="12">Data not found</td>
                             </tr>
-                           
+
                         </table>
                     </div>
                 </div>
@@ -136,7 +136,7 @@
                                 <label for="department_users">Select Queue Users</label>
                                 <input type="text" id="department_users" class="form-control" formControlName="department_users">
                             </div>
-                            
+
                         </div> -->
 
                         <!-- <div class="row">
@@ -259,7 +259,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                 </div>
 
                 <div class="row">

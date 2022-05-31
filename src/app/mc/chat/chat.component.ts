@@ -47,10 +47,10 @@ export class ChatComponent implements OnInit {
 
 
 				if (pagefor == 'chat') {
-					// this.chatPanelDetail(pageid);			
+					// this.chatPanelDetail(pageid);
 					// this.chatPanelView(pageid);
 					this.chatPanelView2("all");
-					// setTimeout(()=>{ 
+					// setTimeout(()=>{
 					//   $(".card-body.chat-content").scrollTop($(".card-body.chat-content")[0].scrollHeight);
 					//   }, 4000);
 					// alert('asas')
@@ -74,7 +74,7 @@ export class ChatComponent implements OnInit {
 			// alert('asass12345678')
 		}
 
-		//this.websocket = new WebSocket("wss://cal4care.info:8089/"); 
+		//this.websocket = new WebSocket("wss://cal4care.info:8089/");
 		this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4004");
 
 
@@ -113,7 +113,7 @@ export class ChatComponent implements OnInit {
 				} else {
 					$('#chatPanelView').click();
 				}
-				//NB else IF Code for mobile App 
+				//NB else IF Code for mobile App
 			} else if (this.socketData.message_type == "mobile_chat") {
 
 				if (this.socketData.message_info.chat_id == $('#chat_detail_id').val()) {
@@ -346,7 +346,7 @@ export class ChatComponent implements OnInit {
 
 				var socket_message = '{"message_type":"chat","message_status":"existing","message_info" : {"chat_id" : "' + chat_msg.chat_id + '","msg_user_id" : "' + chat_msg.msg_user_id + '","msg_user_type" : "2","msg_type":"text","message" : "' + conversion_url + '","queue_id":"1","agent_aviator":"' + self.profile_image + '","agent_name":"' + agent_name[0] + '","chat_images":"' + chat_msg.chat_images + '", "extension":"' + chat_msg.extension + '","profile_image":"'+chat_msg.profile_image+'","chat_msg" : "' + chat_msg.chat_msg + '","user_name":"'+chat_msg.user_name+'","names":"'+agent_name[0]+'"}}';
 
-				// APP RESPONSE	
+				// APP RESPONSE
 				// agent_name: ""
 				// assigned_user: "0"
 				// chatUrl: "https://omnitickets.mconnectapps.com/webbot/?aid=NjQ=&wid=VGVzdA=="
@@ -753,7 +753,7 @@ export class ChatComponent implements OnInit {
 
 	showdoc(link) {
 		//   this.doc_link=link;
-		//  $("#document_model").modal('show');   
+		//  $("#document_model").modal('show');
 		var url = link.split('/');
 		// alert(url)
 		this.doc_link = "https://www.youtube.com/embed/" + url[3];

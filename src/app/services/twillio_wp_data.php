@@ -27,7 +27,7 @@ $inc_wp_response = explode('&',$inc_wp_response);
 
 
 if( $inc_wp_response[0] == 'EventType=READ' || $inc_wp_response[0] == 'EventType=DELIVERED' || $inc_wp_response[1] == 'SmsStatus=sent'){
-	
+
 	if($inc_wp_response[1] == 'SmsStatus=sent'){
 		$message_id = str_replace("MessageSid=","",$inc_wp_response[6]);
 		$message_status = 'SENT';
@@ -35,15 +35,15 @@ if( $inc_wp_response[0] == 'EventType=READ' || $inc_wp_response[0] == 'EventType
 		$message_id = str_replace("MessageSid=","",$inc_wp_response[7]);
 		$message_status = str_replace("EventType=","",$inc_wp_response[0]);
 	}
-	
-	
+
+
 	$element_data = array('action' => 'change_wp_status','MessageId'=>$message_id,'status'=>$message_status);
 	$fields = array('operation' =>'wpchat','moduleType' => 'wpchat','api_type' => 'web', 'element_data' => $element_data);
-	
-	
+
+
 } else {
-	
-		
+
+
 $inc_message = str_replace("Body=","",$inc_wp_response[4]);
 $inc_message = str_replace("+"," ",$inc_message);
 $inc_message = urldecode($inc_message);
@@ -54,7 +54,7 @@ $message_id = str_replace("MessageSid=","",$inc_wp_response[7]);
 
 $element_data = array('action' => 'generate_incoming_wp','From'=>$from_num,'message'=>$inc_message,'To'=>$to_num,'MessageId'=>$message_id);
 $fields = array('operation' =>'wpchat','moduleType' => 'wpchat','api_type' => 'web', 'element_data' => $element_data);
-	
+
 }
 
 
@@ -75,38 +75,38 @@ curl_close($ch);
 
 print_r($result);
 $tnewchat = '[{"from":"whatsapp"}]';
-	
+
 
 ?>
 
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-	
-	<script>  
 
-	var websocket = new WebSocket("wss://socket.mconnectapps.com:5013/"); 
-			websocket.onopen = function(event) { 
+	<script>
+
+	var websocket = new WebSocket("wss://socket.mconnectapps.com:5013/");
+			websocket.onopen = function(event) {
             console.log('open');
             Type();
 		}
 		websocket.onmessage = function(event) {
 			console.log(event.data);
 		};
-		
+
 		websocket.onerror = function(event){
 			console.log('error');
 		};
 		websocket.onclose = function(event){
 			console.log('close');
-		}; 
+		};
 
 		function Type(){
 		var myVariable = <?php echo(json_encode($tnewchat)); ?>;
 		websocket.send(myVariable);
 		}
-		
+
 	</script>
 
-	
+
 	</body>
     <html>
 

@@ -21,13 +21,13 @@ export class CsvContactUploadComponent implements OnInit {
   parsed_data;
   dummyCsv;
   editContact: FormGroup;
-  constructor(private serverService: ServerService, private router:Router,private route: ActivatedRoute) { 
+  constructor(private serverService: ServerService, private router:Router,private route: ActivatedRoute) {
         this.param1 = this.route.snapshot.queryParamMap.get('for');
   }
 
 
   ngOnInit() {
-    let user_id: any =  localStorage.getItem('userId'); 
+    let user_id: any =  localStorage.getItem('userId');
     this.param1 = atob(this.param1);
     var encData = user_id+'forpredictiveDialerContacts';
     if(this.param1 ==  encData){
@@ -35,17 +35,17 @@ export class CsvContactUploadComponent implements OnInit {
     } else {
       this.dummyCsv = 'https://baobabgroup.mconnectapps.com/api/excel.csv';
     }
-    
+
   }
 
 
 upload(){
 
   let access_token: any=localStorage.getItem('access_token');
-  let user_id: any =  localStorage.getItem('userId'); 
-  let admin_id: any =  localStorage.getItem('admin_id'); 
+  let user_id: any =  localStorage.getItem('userId');
+  let admin_id: any =  localStorage.getItem('admin_id');
     var formData = new FormData();
-   
+
 
         if($('#file').val() == ''){
           iziToast.error({
@@ -66,7 +66,7 @@ upload(){
       formData.append('user_id', user_id);
       formData.append('admin_id', admin_id);
     } else {
-      
+
     formData.append('operation', 'contact');
     formData.append('moduleType', 'contact');
     formData.append('api_type', 'web');
@@ -76,14 +76,14 @@ upload(){
     formData.append('user_id', user_id);
     formData.append('admin_id', admin_id);
     }
-  
-  $.ajax({  
-    url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",  
+
+  $.ajax({
+    url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",
     type : 'POST',
     data : formData,
     processData: false,  // tell jQuery not to process the data
-    contentType: false, 
-    success:function(data){ 
+    contentType: false,
+    success:function(data){
       this.parsed_data = JSON.parse(data);
       if(this.parsed_data.result.status == true){
         iziToast.success({
@@ -98,14 +98,14 @@ upload(){
       });
       history.go(-1);
       }
-    }  
-});  
+    }
+});
 
   }
 
 
 
-  
+
 
 
 

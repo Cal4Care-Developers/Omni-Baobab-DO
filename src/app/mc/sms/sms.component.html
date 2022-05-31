@@ -1,4 +1,4 @@
-                 
+
                  <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                         <div class="card fullHeightCard">
@@ -20,8 +20,8 @@
                                     </div>
                                     <div class="m-b-20">
                                         <div id="chat-scroll">
-                                        
-                                         
+
+
                                 <ul class="chat-list list-unstyled m-b-0 chat_list_data" >
                                 <div id="infinitescrool"  class="search-results"
                                 infiniteScroll
@@ -29,9 +29,9 @@
                                 [infiniteScrollThrottle]="50"
                                 (scrolled)="onScroll()"
                                 [scrollWindow]="false">
-                                   
-                              
-                                       
+
+
+
                                                <li class="clearfix" *ngFor="let chat_list of chat_panel_list;let i=index" (click)="chatPanelDetail(chat_list.chat_id)">
 
                                                     <div class="about" >
@@ -41,15 +41,15 @@
                                          alt="..." width="50px" height="50px"style="margin-right: 5px;"/>
                                                           {{chat_list.cus_name}} <span *ngIf="!chat_list.cus_name">{{chat_list.customer_name}}</span>
                   <i id="id_{{chat_list.chat_id}}" [class]="chat_list.read_status == 1 ? 'fas fa-circle agent_active' : ''" aria-hidden="true" style="font-size: 10px; float: right;"></i>
-                                                        
+
                                                         </div>
                                            <!-- <i [class]="chat_list.read_status == 1 ? 'fas fa-circle agent_active' : ''" aria-hidden="true" style="position: relative;left: 130px;bottom: 22px;"></i> -->
 
                                                         <div  style="display: flex;" class="text-small text-muted"> <div class="bullet"></div> {{chat_list.chat_dt}}</div>
                                                     </div>
                                                 </li>
-                                      
-                                              </div>  
+
+                                              </div>
                                   </ul>
 
                                       </div>
@@ -60,7 +60,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9" id="chat_details_view">
                         <div class="card fullHeightCard keep-connect-chat-content" *ngIf="chat_panel_detail_type=='chat_screen'">
-                            
+
                           <a (click)="showdoc('https://youtu.be/kbf8NXA2e3Y')"  target="_blank"><i style="font-size: 24px;
                             float: right;" class="fa fa-exclamation-circle"></i></a>
                           <!-- <a href="https://baobabgroup.mconnectapps.com/api/v1.0/pro_contents/pro_sms.pdf"  target="_blank"><i style="font-size: 24px;padding-right: 20px;
@@ -110,16 +110,16 @@
                  </div>
 
 
-                 <div class="chat-item chat-right" *ngIf="chat_details.msg_user_type == 'agent' && chat_details.msg_user_id == loginUser"><img [src]="chat_details.profile_image != null ? chat_details.profile_image : myImgUrl" > 
+                 <div class="chat-item chat-right" *ngIf="chat_details.msg_user_type == 'agent' && chat_details.msg_user_id == loginUser"><img [src]="chat_details.profile_image != null ? chat_details.profile_image : myImgUrl" >
                    <div class="chat-details">
                      <div class="chat-text {{chat_details.msg_status}}"  style="white-space: pre-line;" >{{chat_details.chat_msg}}</div><div class="chat-time">{{chat_details.chat_dt}}  {{chat_details.chat_time}} <i style="color: red;" class="fas fa-exclamation-triangle" *ngIf="chat_details.msg_status == '0'"></i></div></div>
-                     
+
                     </div>
 
                </div>
 
 
-                 </div> 
+                 </div>
                  <div class="card-footer chat-form">
                    <!-- <form id="chat-form"> -->
                      <textarea class="form-control" id="chat_msg" placeholder="Type a message" style="height: 50px;" (keydown)="onMessageSend($event)" (keyup)="wordCount()" #chat_message></textarea>
@@ -131,7 +131,7 @@
                        <button type="button" class="btn btn-primary" (click)="sendChatMessageData()">
                        <i class="far fa-paper-plane"></i>
                      </button>
-    
+
                  </div>
                </div>
              </div>
@@ -161,21 +161,21 @@
                               </select>
                             </div>
                           </div>
-                
-                                     
+
+
                                   </div>
-                
-                                
-                
+
+
+
                               </div>
-                
+
                               <div class="modal-footer">
                                   <div class="buttons">
                                       <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
                                       <input type="submit" class="btn btn-primary update_agent" value="Assign" (click)="assignTicket(this.phone_num)">
                                   </div>
                               </div>
-                
+
                       </div>
                   </div>
                 </div>
@@ -189,28 +189,28 @@
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                      <div class="modal-body"> 
+                      <div class="modal-body">
                         <div class="row">
                           <div class="col-12 col-md-12">
                             <div class="row">
                               <div class="col-md-12 col-12">
-                                
+
                                   <div class="form-group">
                                       <label for="reports">Select Template</label>
                                       <select name="reports"  id="edit_reports" class="form-control" >
                                           <option *ngFor="let report of list_report" value="{{report.id}}" >{{report.report_name}}</option>
                                       </select>
                                   </div>
-                               
+
                               </div>
-                
-                 
+
+
                             </div>
                           </div>
-                
-                        </div>	
+
+                        </div>
                       </div>
-                
+
                       <div class="modal-footer">
                         <div class="buttons">
                           <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
@@ -235,13 +235,13 @@
                                 <iframe class='myvideo' [src]="this.doc_link | safe"  width="100%" style="height: 575px;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                 <!-- style="margin-bottom: -6px;" width="100%" height="325"  -->
                               <!-- <embed [src]="this.video_link | safe"  width="100%" style="height: 575px;" /> -->
-                      </div>     
+                      </div>
                       <div class="modal-footer" >
                           <div class="buttons">
                               <input type="button" (click)="stop()" data-dismiss="modal" class="btn btn-outline-secondary" value="close">
                           </div>
                       </div>
-                
+
                     </div>
                   </div>
-                </div>  
+                </div>

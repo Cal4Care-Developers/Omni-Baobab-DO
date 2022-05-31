@@ -508,9 +508,12 @@ if(this.has_admin_permission){
 }
   let api_req:any = '{"operation":"wp_instance", "moduleType":"wp_instance", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"getInstanceDetailsForAdmin","user_id":"'+userID+'","admin_id":"'+this.admin_id+'","user_type":"'+user_type+'"}}';
 
+
   this.serverService.sendServer(api_req).subscribe((response:any) => {
     if(response.status==true){
       this.list_wpinsts = response.result.data;
+      console.log("hello whatsapp");
+      console.log(this.list_wpinsts);
   //  if(response.status)
     }
   },
@@ -1004,7 +1007,7 @@ goPridictive(page){
 
 ViewEventDetails(event_id){
   //window.location.reload();
-
+//alert(event_id);
     this.inst_id = btoa(event_id);
     this.router.navigate(['/wp-unoff'], { queryParams: { wp_id: this.inst_id} });
 
@@ -1126,9 +1129,9 @@ showVideofialers(){
 
   notificationscall() {
     this.reqPermission = false;
-    var socket = io.connect('wss://myscoket.mconnectapps.com:4032'); //Baobab.mconnectapps.com Senegal(API Baobabgroup.mconnectapps.com)
-    //var socket = io.connect('wss://myscoket.mconnectapps.com:4052'); //Baobabgroup ML Notification wss://myscoket.mconnectapps.com:4052
-     //var socket = io.connect('wss://myscoket.mconnectapps.com:4053'); //Baobabgroup BF Notification wss://myscoket.mconnectapps.com:4053
+    var socket = io.connect('wss://myscoket.mconnectapps.com:4032'); //Baobab.mconnectapps.com Senegal(API baobabmali.mconnectapps.com)
+   // var socket = io.connect('wss://myscoket.mconnectapps.com:4052'); //Baobabgroup ML Notification wss://myscoket.mconnectapps.com:4052
+    //var socket = io.connect('wss://myscoket.mconnectapps.com:4053'); //Baobabgroup BF Notification wss://myscoket.mconnectapps.com:4053
     //var socket = io.connect('wss://myscoket.mconnectapps.com:4054'); //Baobabgroup IC Notification wss://myscoket.mconnectapps.com:4054
     var self = this;
     socket.on('connect', function () {
@@ -1261,6 +1264,7 @@ showVideofialers(){
       // this.mailPageView = false;
       // this.smsPageView = true;
       if(this.wp_unoff){
+      //  alert(this.instance_value)
          this.i_id= btoa(this.instance_value);
       this.router.navigate(['/wp-unoff'],{ queryParams: { wp_id: this.i_id} });
       }else{

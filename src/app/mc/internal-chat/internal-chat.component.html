@@ -1,16 +1,16 @@
-                 
+
                  <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                         <div class="card fullHeightCard">
                             <div class="body">
                                 <div id="plist" class="people-list chat-search-list">
                                     <div class="chat-search">
-                                       
+
                                    <div class="input-group">
                                        <input type="text" class="form-control"  placeholder="Search..." #chat_search (keyup.enter)="chatPanelList(chat_search.value)">
                                      <input type="hidden" name="open_chat_detail_id" id="open_chat_detail_id" value="0" #open_chat_detail_id (click)='chatPanelDetail(open_chat_detail_id.value)'>
                                      <input type="hidden" name="close_chat_detail_id" id="close_chat_detail_id" value="0" #close_chat_detail_id (click)='chatPanelDetail(close_chat_detail_id.value, 2)'>
-                                     
+
                                      <input type="hidden" id="chatPanelView" (click)='chatPanelView("all")'>
                                      <span ></span>
                                        <div class="input-chat_search-append">
@@ -35,7 +35,7 @@
                                                         <img  class="thumbnail-image" src="{{agents.profile_image}}"
                                                         onerror="this.src='assets/images/user.jpg'"  alt="..." width="50px" style="margin-right: 5px;"/>
                                                         {{agents.agent_name}}
-                                                        
+
                                                         <i [class]="agents.login_status == 1 ? 'fas fa-circle agent_active' : 'fas fa-circle agent_inactive'" aria-hidden="true" style="font-size: 10px;"></i>
                                                         </div>
                                                       <div class="text-small text-muted" style="display: flex;"> <div class="bullet"></div>Admin</div>
@@ -50,7 +50,7 @@
                                                       <div class="text-small text-muted" style="display: flex;"> <div class="bullet"></div>Employee</div>
                                                   </div>
                                               </li>
-                                               
+
                                             </ul>
 
                                         </div>
@@ -95,23 +95,23 @@
                  <div *ngFor="let chat_details of chat_panel_details;let i=index">
                    <div class="chat-item chat-left" *ngIf="chat_details.msg_sender_id != loginUser">
                     <img  class="thumbnail-image" src="{{chat_details.profile_image}}"
-                 onerror="this.src='assets/images/user.jpg'"  alt="avatar" /> 
-                    
+                 onerror="this.src='assets/images/user.jpg'"  alt="avatar" />
+
                    <div class="chat-details">
-                     
+
                      <div class="chat-text" >
                        {{chat_details.chat_msg}}
-       
+
                      </div>
                      <div class="chat-time">{{chat_details.chat_time}}</div>
-                     
+
                    </div>
                  </div>
 
 
                  <div class="chat-item chat-right" *ngIf="chat_details.msg_sender_id == loginUser">
                   <img  class="thumbnail-image" src="{{chat_details.profile_image}}"
-                  onerror="this.src='assets/images/user.jpg'"  alt="avatar" />  
+                  onerror="this.src='assets/images/user.jpg'"  alt="avatar" />
                    <div class="chat-details">
                      <div class="chat-text">{{chat_details.chat_msg}}</div><div class="chat-time">{{chat_details.chat_time}}</div></div>
                    </div>
@@ -131,7 +131,7 @@
                      <h4 *ngIf="this.is_chat_closed == true">Chat Closed</h4>
 
                      <!-- <h3 class="chat-closed"> Chat closed </h3> -->
-    
+
                  </div>
                  <div class="card-footer chat-form" *ngIf="this.is_chat_closed == true">
                      <h4 class="close-text" *ngIf="this.is_chat_closed == true">Chat Closed</h4></div>
@@ -155,13 +155,13 @@
                                 <iframe class='myvideo' [src]="this.doc_link | safe"  width="100%" style="height: 575px;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                 <!-- style="margin-bottom: -6px;" width="100%" height="325"  -->
                               <!-- <embed [src]="this.video_link | safe"  width="100%" style="height: 575px;" /> -->
-                      </div>     
+                      </div>
                       <div class="modal-footer" >
                           <div class="buttons">
                               <input type="button" data-dismiss="modal" (click)="stop()" class="btn btn-outline-secondary" value="close">
                           </div>
                       </div>
-                
+
                     </div>
                   </div>
-                </div>  
+                </div>

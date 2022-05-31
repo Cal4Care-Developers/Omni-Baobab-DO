@@ -35,7 +35,7 @@
 		  &nbsp; Spam/Deleted
 		</a>
 
-	  </div>	 
+	  </div>
 	</div>
 	</div>
 <div class="section-body">
@@ -268,7 +268,7 @@
                                     </td>
 
                                 </tr>
-                   
+
 
                             </tbody>
 
@@ -507,9 +507,9 @@
                         </div>
                         <div class="col-12 col-md-5">
                             <div   class="fl mb-15 robin-limit">
-                                <h6 style="margin-bottom: 0; width: 336px;" class="font-medium2">Round Robin</h6>                           
+                                <h6 style="margin-bottom: 0; width: 336px;" class="font-medium2">Round Robin</h6>
                             <div>
-                                <b class="line-height" *ngIf="has_round_robin">0 = Unlimited</b>                              
+                                <b class="line-height" *ngIf="has_round_robin">0 = Unlimited</b>
                                   <div *ngIf="has_round_robin"class="input-group mb-3">
                                     <input type="text" placeholder="Enter Value" (keyup.enter)="robin_update()" [(ngModel)]="limit_count" class="form-control" #ctrl="ngModel">
                                     <div class="input-group-append">
@@ -521,9 +521,9 @@
                             <!-- <div class="fl padding-15">
                             </div> -->
                         </div>
-                        
+
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -531,23 +531,25 @@
         <div class="col-12 col-lg-4">
             <div class="card" style="padding: 19px 7px 54px 1px;">
                 <div class="card-header" style="display: flex;justify-content: space-between;">
-                    <h4 style="width: auto;">Share Profile Image  <span class="tooltip-container">
+                    <h4 style="width: 50%;">Share Profile Image  <span class="tooltip-container">
                         <span class="cutom-tooltip">Manage to display user's profile pictures in outgoing emails</span>
-                        <i class="fa fa-info-circle" aria-hidden="true"></i>
-                        </span>  
+
+                        </span>
+                        <div><i aria-hidden="true" class="fa fa-info-circle"></i></div>
                     </h4>
-                     <div class="addBtn">                       
+
+                     <div class="addBtn">
                         <h4 class="text-right" style="width: auto;">Manage Delete  <span class="tooltip-container">
                             <span class="cutom-tooltip">Allow the user's to delete the tickets</span>
                             <i class="fa fa-info-circle" aria-hidden="true"></i>
-                            </span>  
+                            </span>
                         </h4>
                     </div>
                 </div>
                 <div class="card-body p-30">
 
                     <div class="row">
-                        
+
 
                         <div class="col-10 col-md-10">
                             <div class="form-check form-check-inline" style="display: flex;justify-content: space-between;" >
@@ -556,7 +558,7 @@
                                     <div class="state p-success">
                                         <label for="profile_pic_share"></label>
                                     </div>
-                                </div>     
+                                </div>
                                 <div class="form-check form-check-inline text-right">
                                     <div (change)="manageDeletePerm()" class="pretty p-switch p-fill">
                                         <input type="checkbox" id="delete_ticket_prem">
@@ -564,12 +566,12 @@
                                             <label for="delete_ticket_prem"></label>
                                         </div>
                                     </div>
-                                </div>                          
-                            </div>                       
+                                </div>
+                            </div>
                         </div>
-                        
+
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -596,15 +598,15 @@
                                 <th>#</th>
                                 <!-- <th>Email</th> -->
                                 <th>Filter Word</th>
-                                
+
                                 <th>Action</th>
                             </tr>
                             <tbody>
                                 <tr *ngFor="let splist of filter_list;let i=index">
                                     <td>{{i+1}}</td>
                                     <!-- <td>{{list.aliseEmail}}</td> -->
-                                    <td>{{splist.filter_word}}</td>                                    
-                                 
+                                    <td>{{splist.filter_word}}</td>
+
                                     <td>
                                         <!-- <span class="user-icon" style="cursor: pointer;"><i class="far fa-edit"
                                                 (click)="EditFilter(splist.id)"></i></span> -->
@@ -1161,7 +1163,7 @@
                             </div>
                         </div>
 
-                        <div class="row"> 
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="add_smtp_dept">Department</label>
@@ -1263,7 +1265,7 @@
                              </div>
                         </div> -->
 
-                        <div class="row"> 
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="edit_smtp_dept">Department</label>
@@ -1316,7 +1318,7 @@
                                 <div class="form-group">
                                     <label for="host_name"> Enter Keyword to Block</label>
                                     <input type="text" id="Add_keyword" class="form-control" placeholder="Incoming Email will be skipped if there is a keyword">
-                                   
+
                                     <div class="error-message message-small" >
                                         This means you will not receive an email if it has a keyword
                                       </div>
@@ -1347,7 +1349,7 @@
                     <h4>Priority Flags</h4>
                     <div class="addBtn">
                         <button type="button" data-toggle="modal" data-target="#add_priority" class="btn btn-primary" >+Add Key</button>
-                    </div>                
+                    </div>
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
@@ -1367,7 +1369,7 @@
                                     <td>
                                         <ul class="badge-list">
                                             <li *ngFor="let item of queue.key_word"><span class="badge">{{item}}</span></li>
-                                       
+
                                         </ul>
                                     </td>
                                     <td>
@@ -1403,7 +1405,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-    
+
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="add_pri_id">Priority</label>
@@ -1415,7 +1417,7 @@
                                     </select>
                                 </div>
                             </div>
-    
+
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="department_name">Key Word (By click Enter Add multiple Codes)</label>
@@ -1433,12 +1435,12 @@
                                                      (matChipInputTokenEnd)="add2($event)">
                                             </mat-chip-list>
                                           </mat-form-field>
-    
+
                                 </div>
                             </div>
                         </div>
                     </div>
-    
+
                     <div class="modal-footer">
                         <div class="buttons">
                             <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="Cancel">
@@ -1446,7 +1448,7 @@
                         </div>
                     </div>
                 </form>
-    
+
             </div>
         </div>
     </div>
@@ -1461,8 +1463,8 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">                        
-                        <div class="row">                   
+                    <div class="modal-body">
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="department_name">Type Keywords <span

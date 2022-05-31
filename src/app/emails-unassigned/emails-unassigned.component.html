@@ -7,7 +7,7 @@
 				</span>
 				&nbsp; My Tickets
 			</a>
-			<a *ngIf="user_type==2" href="#" routerLink="/unassinged-tickets"
+			<a *ngIf="user_type==2 || user_type==3" href="#" routerLink="/unassinged-tickets"
 				class="text-white badge badge badge-warning mr-2 pointer-event-none">
 				<span class="icon">
 					<i class="fas fa-ticket-alt"></i>
@@ -15,21 +15,21 @@
 				&nbsp; Queue Tickets
 			</a>
 
-			<a *ngIf="user_type==2" href="#" routerLink="/ticket-template" class="text-white badge badge badge-primary mr-2">
+			<a *ngIf="user_type==2 " href="#" routerLink="/ticket-template" class="text-white badge badge badge-primary mr-2">
 				<span class="icon">
 					<i class="fas fa-palette"></i>
 				</span>
 				&nbsp; Templates
 			</a>
 
-			<a *ngIf="user_type==2" routerLink="/email-settings" class="text-white badge badge badge-info mr-2">
+			<a *ngIf="user_type==2 " routerLink="/email-settings" class="text-white badge badge badge-info mr-2">
 				<span class="icon">
 					<i class="fas fa-cog"></i>
 				</span>
 				&nbsp; Settings
 			</a>
 
-			<a *ngIf="user_type==2" href="#" routerLink="/spam-list" class="text-white badge badge badge-danger mr-2">
+			<a *ngIf="user_type==2 " href="#" routerLink="/spam-list" class="text-white badge badge badge-danger mr-2">
 				<span class="icon">
 					<i class="fas fa-user-times"></i>
 				</span>
@@ -270,7 +270,7 @@ Row Count End
 			</div>
 
 			<!--------------------------------------
-	Open State Ticket 
+	Open State Ticket
 	------------------------>
 			<!-- <form *ngFor="let item of queue_list"> -->
 			<div *ngIf="this.emptyticket==true" class="ticket-details fl">
@@ -427,7 +427,7 @@ Row Count End
 											{{ticket.ticket_created_at}}
 										</div>
 										<!-- <div *ngIf="ticket.ticket_new_status == '1'" class="ticket-message-details fl">
-			
+
 			<strong><i class="far fa-envelope"></i> {{ticket.ticket_status}} <span class="round-shape-xs"></span></strong>
 			Just Now
 		</div> -->
@@ -511,21 +511,21 @@ Row Count End
 
 
 
-										<!--before edit department 
+										<!--before edit department
 			 <div class="form-group fl">
 				 <div class="dropdown select-option"> -->
 										<!-- <div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
-						
+
 						<select name=""  id="" class="form-control">
 							<span class="dropdown-label-icon"><i class="fas fa-user-plus"></i>
 								<option value='selectedvalue'></option>
 								<option  *ngFor="let name of department">
 										<a href="javascript:void(0)" class="active dropdown-item">{{name.department_name}}</a>
 								<div class="dropdown-divider"></div>
-	
+
 								</option>
-							</span> 
-						</select>	
+							</span>
+						</select>
 					</div> -->
 										<!-- <div class="dropdown-menu"> -->
 										<!-- <div class="pullDown"> -->
@@ -541,7 +541,7 @@ Row Count End
 										<!-- </div> -->
 										<!-- </div> -->
 										<!-- </div>
-			</div> 
+			</div>
 			before edit department end					-->
 										<div class="form-group fl">
 											<div class="dropdown select-option">
@@ -645,7 +645,7 @@ Row Count End
 											<div [style.background-color]="color[i]"
 												class="round-block bg-1 d-flex pointer">{{ticket.first_letter}}</div>
 
-										
+
 										</div> -->
 									</td>
 									<td (click)="viewMyTicket(ticket.ticket_no)">
@@ -721,7 +721,7 @@ Row Count End
 	<div class="form-group fl">
 		<div class="dropdown select-option">
 			<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
-				<span class="dropdown-label-icon">Manikandan</span> 
+				<span class="dropdown-label-icon">Manikandan</span>
 			</div>
 			<div  class="dropdown-menu">
 				<div class="pullDown">
@@ -811,7 +811,7 @@ Row Count End
 														<a href="javascript:void(0)"
 															[ngClass]="(item.status_desc == ticket.ticket_status)? 'dropdown-item active':'dropdown-item'"
 															(click)="changeMyStatus(ticket,ticket.ticket_no, item.status_id,item.status_desc)">{{item.status_desc}}</a>
-														<!-- 
+														<!--
 						<a href="javascript:void(0)" class="dropdown-item">Pending</a>
 						<a href="javascript:void(0)" class="dropdown-item">Resolved</a>
 						<a href="javascript:void(0)" class="dropdown-item">Closed</a> -->
@@ -843,9 +843,9 @@ Row Count End
 	<div class="form-group fl">
 		<div class="dropdown select-option">
 			<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
-				<span class="dropdown-label-icon">Sales: Asia</span> 
+				<span class="dropdown-label-icon">Sales: Asia</span>
 			</div>
-	
+
 			<div  class="dropdown-menu">
 				<div class="pullDown">
 					<div class="dropdown-title" (click)="noToggle()">Search Group</div>
@@ -868,12 +868,12 @@ Row Count End
 		</div>
 	</div>
 	</td>
-	
+
 	<td>
 	<div class="form-group fl">
 		<div class="dropdown select-option">
 			<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
-				<span class="dropdown-label-icon">Manikandan</span> 
+				<span class="dropdown-label-icon">Manikandan</span>
 			</div>
 			<div  class="dropdown-menu">
 				<div class="pullDown">
@@ -915,8 +915,8 @@ Row Count End
 	<span class="dropdown-label-icon">
 	<span class="green-bg-status status-bg"></span>
 	Low
-	</span> 
-	</div> 
+	</span>
+	</div>
 	<div class="dropdown-menu">
 	<div class="dropdown-title" (click)="noToggle()">Select Priority</div>
 	<div class="dropdown-options">
@@ -933,14 +933,14 @@ Row Count End
 	</div>
 	</div>
 	</td>
-	
+
 	<td>
 	<div class="form-group fl">
 		<div class="dropdown select-option">
 			<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
-				<span class="dropdown-label-icon">Open</span> 
+				<span class="dropdown-label-icon">Open</span>
 			</div>
-	
+
 			<div  class="dropdown-menu">
 				<div class="pullDown">
 					<div class="dropdown-title" (click)="noToggle()">Status</div>
@@ -979,9 +979,9 @@ Row Count End
 	<div class="form-group fl">
 		<div class="dropdown select-option">
 			<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
-				<span class="dropdown-label-icon">Sales: Asia</span> 
+				<span class="dropdown-label-icon">Sales: Asia</span>
 			</div>
-	
+
 			<div  class="dropdown-menu">
 				<div class="pullDown">
 					<div class="dropdown-title" (click)="noToggle()">Search Group</div>
@@ -1004,12 +1004,12 @@ Row Count End
 		</div>
 	</div>
 	</td>
-	
+
 	<td>
 	<div class="form-group fl">
 		<div class="dropdown select-option">
 			<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
-				<span class="dropdown-label-icon">Manikandan</span> 
+				<span class="dropdown-label-icon">Manikandan</span>
 			</div>
 			<div  class="dropdown-menu">
 				<div class="pullDown">
@@ -1051,8 +1051,8 @@ Row Count End
 	<span class="dropdown-label-icon">
 	<span class="green-bg-status status-bg"></span>
 	Low
-	</span> 
-	</div> 
+	</span>
+	</div>
 	<div class="dropdown-menu">
 	<div class="dropdown-title" (click)="noToggle()">Select Priority</div>
 	<div class="dropdown-options">
@@ -1069,14 +1069,14 @@ Row Count End
 	</div>
 	</div>
 	</td>
-	
+
 	<td>
 	<div class="form-group fl">
 		<div class="dropdown select-option">
 			<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
-				<span class="dropdown-label-icon">Open</span> 
+				<span class="dropdown-label-icon">Open</span>
 			</div>
-	
+
 			<div  class="dropdown-menu">
 				<div class="pullDown">
 					<div class="dropdown-title" (click)="noToggle()">Status</div>
@@ -1114,9 +1114,9 @@ Row Count End
 	<div class="form-group fl">
 		<div class="dropdown select-option">
 			<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
-				<span class="dropdown-label-icon">Sales: Asia</span> 
+				<span class="dropdown-label-icon">Sales: Asia</span>
 			</div>
-	
+
 			<div  class="dropdown-menu">
 				<div class="pullDown">
 					<div class="dropdown-title" (click)="noToggle()">Search Group</div>
@@ -1139,12 +1139,12 @@ Row Count End
 		</div>
 	</div>
 	</td>
-	
+
 	<td>
 	<div class="form-group fl">
 		<div class="dropdown select-option">
 			<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
-				<span class="dropdown-label-icon">Manikandan</span> 
+				<span class="dropdown-label-icon">Manikandan</span>
 			</div>
 			<div  class="dropdown-menu">
 				<div class="pullDown">
@@ -1186,8 +1186,8 @@ Row Count End
 	<span class="dropdown-label-icon">
 	<span class="red-bg-status status-bg"></span>
 	Urgent
-	</span> 
-	</div> 
+	</span>
+	</div>
 	<div class="dropdown-menu">
 	<div class="dropdown-title" (click)="noToggle()">Select Priority</div>
 	<div class="dropdown-options">
@@ -1204,14 +1204,14 @@ Row Count End
 	</div>
 	</div>
 	</td>
-	
+
 	<td>
 	<div class="form-group fl">
 		<div class="dropdown select-option">
 			<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
-				<span class="dropdown-label-icon">Closed</span> 
+				<span class="dropdown-label-icon">Closed</span>
 			</div>
-	
+
 			<div  class="dropdown-menu">
 				<div class="pullDown">
 					<div class="dropdown-title" (click)="noToggle()">Status</div>
@@ -1249,9 +1249,9 @@ Row Count End
 	<div class="form-group fl">
 		<div class="dropdown select-option">
 			<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
-				<span class="dropdown-label-icon">Sales: Asia</span> 
+				<span class="dropdown-label-icon">Sales: Asia</span>
 			</div>
-	
+
 			<div  class="dropdown-menu">
 				<div class="pullDown">
 					<div class="dropdown-title" (click)="noToggle()">Search Group</div>
@@ -1274,12 +1274,12 @@ Row Count End
 		</div>
 	</div>
 	</td>
-	
+
 	<td>
 	<div class="form-group fl">
 		<div class="dropdown select-option">
 			<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
-				<span class="dropdown-label-icon">Manikandan</span> 
+				<span class="dropdown-label-icon">Manikandan</span>
 			</div>
 			<div  class="dropdown-menu">
 				<div class="pullDown">
@@ -1321,8 +1321,8 @@ Row Count End
 	<span class="dropdown-label-icon">
 	<span class="red-bg-status status-bg"></span>
 	Urgent
-	</span> 
-	</div> 
+	</span>
+	</div>
 	<div class="dropdown-menu">
 	<div class="dropdown-title" (click)="noToggle()">Select Priority</div>
 	<div class="dropdown-options">
@@ -1339,14 +1339,14 @@ Row Count End
 	</div>
 	</div>
 	</td>
-	
+
 	<td>
 	<div class="form-group fl">
 		<div class="dropdown select-option">
 			<div class="select-option-label" data-toggle="dropdown" class="dropdown-toggle">
-				<span class="dropdown-label-icon">Closed</span> 
+				<span class="dropdown-label-icon">Closed</span>
 			</div>
-	
+
 			<div  class="dropdown-menu">
 				<div class="pullDown">
 					<div class="dropdown-title" (click)="noToggle()">Status</div>
@@ -1384,7 +1384,7 @@ Row Count End
 	------------------------>
 
 			<!--------------------------------------
-	In Progress State Ticket 
+	In Progress State Ticket
 	------------------------>
 
 			<!--------------------------------------
@@ -1393,43 +1393,43 @@ Row Count End
 
 
 			<!--------------------------------------
-	close State Ticket 
+	close State Ticket
 	------------------------>
 			<!--------------------------------------
 	close State Ticket End
 	------------------------>
 
 
-			<!-- 
+			<!--
 		Pagging
 	 -->
 			<!-- <div class="card-footer text-right">
 		<nav class="d-inline-block">
 			<ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
-	
+
 				<li class="page-item">
 					<a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'" href="javascript:void(0)" (click)="paginationData.backtab=='show' ? contactsList({'search_text':queue_search.value,'offset':paginationData.start}) : false"><i class="fas fa-angle-left"></i></a>
 				</li>
 				<li class="page-item" *ngIf="paginationData.backtab =='show'">
 					<a class="page-link" href="javascript:void(0)" (click)="contactsList({'search_text':queue_search.value,'offset':paginationData.back})"><i class="fas fa-angle-double-left"></i></a>
 				</li>
-	
-	
+
+
 				<li [class]="pagination.load ==false ? 'page-item active' :'page-item'" *ngFor="let pagination of paginationData.data;let i=index">
 					<a class="page-link" href="javascript:void(0)" (click)=" pagination.load ==true ? contactsList({'search_text':queue_search.value,'offset':pagination.offset_count}) : false">{{pagination.btn_length}} <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
 				</li>
-	
+
 				<li class="page-item" *ngIf="paginationData.nexttab =='show'">
 					<a class="page-link" href="javascript:void(0)" (click)="contactsList({'search_text':queue_search.value,'offset':paginationData.next})"><i class="fas fa-angle-double-right"></i></a>
 				</li>
-	
+
 				<li class="page-item">
 					<a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'" href="javascript:void(0)" (click)="paginationData.nexttab =='show' ? contactsList({'search_text':queue_search.value,'offset':paginationData.end}) : false"><i class="fas fa-angle-right"></i></a>
 				</li>
 			</ul>
 		</nav>
 	</div> -->
-			<!-- 
+			<!--
 		Pagging
 	 -->
 

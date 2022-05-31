@@ -21,7 +21,7 @@ export class ComposeWpComponent implements OnInit {
   singleSMS = true;
   bulkSMS = false;
   groups_list
-  constructor(private serverService: ServerService, private router:Router) { 
+  constructor(private serverService: ServerService, private router:Router) {
     this.compSMS = new FormGroup({
       'mobile_num' :new FormControl(null,Validators.required),
       'country_code':new FormControl(null,Validators.required),
@@ -51,10 +51,10 @@ export class ComposeWpComponent implements OnInit {
     let access_token: any=localStorage.getItem('access_token');
     let user_id: any=localStorage.getItem('userId');
     let api_req:any = '{"operation":"contact", "moduleType":"contact", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"get_senderid","admin_id":"'+this.admin_id +'"}}';
-  
+
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       this.senders_list = response.result.data;
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -81,7 +81,7 @@ export class ComposeWpComponent implements OnInit {
       return false;
     }
 
-    
+
 
     if(this.compSMS.value.message == null && $('#wp_media_file').val() == ''){
       iziToast.error({
@@ -93,7 +93,7 @@ export class ComposeWpComponent implements OnInit {
 
 
             let access_token: any=localStorage.getItem('access_token');
-            let user_id: any =  localStorage.getItem('userId'); 
+            let user_id: any =  localStorage.getItem('userId');
             let agent_req:any = this.compSMS.value;
 
               var formData = new FormData();
@@ -110,26 +110,26 @@ export class ComposeWpComponent implements OnInit {
               formData.append('chat_msg', this.compSMS.value.message);
               formData.append('timezone_id', localStorage.getItem('timezone_id'));
               formData.append('admin_id', localStorage.getItem('admin_id'));
-          
-          
+
+
               console.log(formData);
-            
-            $.ajax({  
-              url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",  
+
+            $.ajax({
+              url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",
               type : 'POST',
               data : formData,
               processData: false,  // tell jQuery not to process the data
-              contentType: false, 
-              success:function(data){ 
+              contentType: false,
+              success:function(data){
                 this.parsed_data = JSON.parse(data);
                 console.log(this.parsed_data);
-                if(this.parsed_data.status == 'true'){    
+                if(this.parsed_data.status == 'true'){
                   iziToast.success({
                     message: "Sent successfully",
                     position: 'topRight'
                   });
                 $("#refresh_page").click();
-                
+
                 //location.reload();
                 } else {
                   iziToast.error({
@@ -139,8 +139,8 @@ export class ComposeWpComponent implements OnInit {
                 // history.go(-1);
                 //location.reload();
                 }
-              }  
-          });  
+              }
+          });
 
   }
 
@@ -169,11 +169,11 @@ smsGroups(){
 
   this.serverService.sendServer(api_req).subscribe((response:any) => {
     if(response.status==true){
-     
+
       this.groups_list = response.result.data;
       console.log(this.groups_list);
-    } 
-  }, 
+    }
+  },
   (error)=>{
       console.log(error);
   });
@@ -213,7 +213,7 @@ if(this.compGroupSMS.value.message == null && $('#wp_media_file_b').val() != '')
 //console.log(mes ); return false;
 
   let access_token: any=localStorage.getItem('access_token');
-  let user_id: any =  localStorage.getItem('userId'); 
+  let user_id: any =  localStorage.getItem('userId');
 
 
     var formData = new FormData();
@@ -229,35 +229,35 @@ if(this.compGroupSMS.value.message == null && $('#wp_media_file_b').val() != '')
     formData.append('group', this.compGroupSMS.value.group );
     formData.append('chat_msg', mes);
 
-  
+
 
 
     console.log(formData);
-  
-  $.ajax({  
-    url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",  
+
+  $.ajax({
+    url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",
     type : 'POST',
     data : formData,
     processData: false,  // tell jQuery not to process the data
-    contentType: false, 
-    success:function(data){ 
+    contentType: false,
+    success:function(data){
       this.parsed_data = JSON.parse(data);
       console.log(this.parsed_data );
-      if(this.parsed_data.status == 'true'){    
+      if(this.parsed_data.status == 'true'){
         iziToast.success({
           message: "Sent successfully",
           position: 'topRight'
         });
         $("#refresh_page").click();
-      
+
       } else {
         iziToast.error({
           message: "Sorry, Some Error Occured",
           position: 'topRight'
       });
       }
-    }  
-});  
+    }
+});
 }
 
 

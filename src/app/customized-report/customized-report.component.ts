@@ -38,10 +38,14 @@ export class CustomizedReportComponent implements OnInit {
 
   titles :any;
   arrStr: string;
+  total_fb_msg: any;
+  fb: any;
+  tot_office_fb: any;
+  tot_out_office_time_fb: any;
   constructor(private serverService: ServerService) { }
 
   ngOnInit(): void {
-    
+
     this.getdate = new FormGroup({
       'from_date' : new FormControl(null),
       'to_date' : new FormControl(null),
@@ -77,8 +81,10 @@ export class CustomizedReportComponent implements OnInit {
         this.avg_out_talk_time = response.result.data.avg_out_talk_time;
         this.total_tickets = response.result.data.total_tickets;
         this.tot_out_office_time_wp = response.result.data.out_off_time;
+        this.tot_out_office_time_fb = response.result.data.out_off_time_fb;
         this.total_wp_msg = response.result.data.one_day_total_whatsapp;
-        
+this.total_fb_msg=response.result.data.one_day_total_facebook;
+this.tot_office_fb = response.result.data.office_time_fb_msg;
         if(response.result.data.first_responce_wp == '' || response.result.data.first_responce_wp == null || response.result.data.first_responce_wp == undefined){
           this.hide_hrs = false;
         }else{
@@ -87,6 +93,7 @@ export class CustomizedReportComponent implements OnInit {
         }
         this.avg_wp_first_ans = response.result.data.avg_wp_first_ans;
         this.tot_office_wp = response.result.data.office_time_whatsapp_msg;
+
         if(response.result.data.first_responce_time == '' || response.result.data.first_responce_time == null || response.result.data.first_responce_time == undefined){
           this.hide_hrs = false;
         }else{
@@ -95,9 +102,9 @@ export class CustomizedReportComponent implements OnInit {
         }
         this.email_ticket_average = response.result.data.email_ticket_average;
         this.incoming_tickets = response.result.data.incoming_tickets;
-
+ this.fb=response.result.data.one_day_total_facebook;
         this.arrStr = encodeURIComponent(JSON.stringify(this.res_data));
-       
+
 				// document.location.href = 'https://uatassaabloyccapi.mconnectapps.com/api/storage/contact/download.php?res='+arrStr;
 
 //           console.log(this.titles);
@@ -142,18 +149,18 @@ export class CustomizedReportComponent implements OnInit {
 //         {
 //           title:'Average Talk Time Outbound'
 //         },
-      
+
 //       ]
 //       let arr3 = this.res_data.map((item, i) => Object.assign({}, item, this.titles[i]));
 // console.log(arr3)
-				
+
 		  } else {
         iziToast.warning({
 					message: "No Records Found. Please try again",
 					position: 'topRight'
 				});
 		  }
-		}, 
+		},
 		(error)=>{
 			console.log(error);
 		});

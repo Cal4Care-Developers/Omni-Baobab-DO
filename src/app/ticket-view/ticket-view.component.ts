@@ -43,19 +43,19 @@ viewMaTicket(ticket){
       this.ticket_status = this.tic_details['ticket_status'];
 
       this.ticket_closed_by = this.tic_details.closed
-    } 
-  }, 
+    }
+  },
   (error)=>{
       console.log(error);
   });
 }
 
-genTicket(ticket_id){ 
-  this.ticket_id = ticket_id; 
+genTicket(ticket_id){
+  this.ticket_id = ticket_id;
     $('#assign_ticket').modal('show');
 }
 
-assignTicket(ticket_id){  
+assignTicket(ticket_id){
 
   let assigned_department_id: any= $('#departments').val();
   console.log(assigned_department_id);
@@ -72,20 +72,20 @@ return false;
         this.serverService.sendServer(api_req).subscribe((response: any) => {
         if (response.result.status == 1) {
                 iziToast.success({
-                    message: "Ticket Assigned Successfully",
+                    message: "Assigned Successfully",
                     position: 'topRight'
                 });
                 this.viewMaTicket(this.ticket_id);
                 $('#assign_ticket').modal('hide');
             } else {
-            
+
                 iziToast.warning({
                     message: "Ticket Not Assigned. Please try again",
                     position: 'topRight'
                 });
-            
+
         }
-  
+
     },
     (error) => {
          iziToast.error({
@@ -107,15 +107,15 @@ getDepartments(){
       this.departments = response.result.data;
     } else {
     }
-  }, 
+  },
   (error)=>{
       console.log(error);
   });
 }
 
 
-rplyTicket(ticket_id){ 
-  this.ticket_id = ticket_id; 
+rplyTicket(ticket_id){
+  this.ticket_id = ticket_id;
     $('#reply_ticket').modal('show');
 }
 
@@ -124,7 +124,7 @@ rplyTicket(ticket_id){
 
 
 
-ReplyTicket(ticket_id){  
+ReplyTicket(ticket_id){
 
   let reply_msg: any= $('#reply_editor').val();
 
@@ -147,14 +147,14 @@ return false;
                 this.viewMaTicket(this.ticket_id);
                 $('#reply_ticket').modal('hide');
             } else {
-            
+
                 iziToast.warning({
                     message: "Ticket Not Replied. Please try again",
                     position: 'topRight'
                 });
-            
+
         }
-  
+
     },
     (error) => {
          iziToast.error({
@@ -189,7 +189,7 @@ closeTicket(ticket_id){
     this.viewMaTicket(this.ticket_id);
     } else {
     }
-  }, 
+  },
   (error)=>{
       console.log(error);
   });

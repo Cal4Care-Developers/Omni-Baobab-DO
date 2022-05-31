@@ -32,11 +32,11 @@ export class InternalChatComponent implements OnInit {
 	admin_list
 	public is_chat_closed = false;
 	doc_link;
-	
+
   constructor(public serverService: ServerService,private _ngZone: NgZone,private route: ActivatedRoute) {
 
 	this.param1 = this.route.snapshot.queryParamMap.get('c');
-	
+
 
    }
 
@@ -50,13 +50,13 @@ export class InternalChatComponent implements OnInit {
 			this.chatPanelView("all");
 		  }
   		this.getAgentsList();
-	//this.websocket = new WebSocket("wss://cal4care.info:8089/"); 
-	this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4004"); 
+	//this.websocket = new WebSocket("wss://cal4care.info:8089/");
+	this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4004");
 
 
-    this.websocket.onopen = function(event) { 
+    this.websocket.onopen = function(event) {
         console.log('socket chat connected');
-        
+
     }
 
     this.websocket.onmessage = function(event) {
@@ -65,7 +65,7 @@ export class InternalChatComponent implements OnInit {
 	  this.socketData = JSON.parse(event.data);
 
       if(this.socketData.message_type == "chat"){
-		
+
 
 		if(this.socketData.message_info.chat_receiver_id == localStorage.getItem('userId')){
 			console.log($('#chat_detail_id').val());
@@ -73,18 +73,18 @@ export class InternalChatComponent implements OnInit {
 
 			$('#open_chat_detail_id').val(this.socketData.message_info.chat_sender_id);
 			$('#open_chat_detail_id').click();
-			
-		} 
 
-      } 
-    
+		}
+
+      }
+
     }
     this.websocket.onerror = function(event){
       console.log('error');
     }
     this.websocket.onclose = function(event){
       console.log('close');
-    } 
+    }
 
 
   }
@@ -101,9 +101,9 @@ export class InternalChatComponent implements OnInit {
         this.agent_list = response.result.data.agent_list;
        this.admin_list = response.result.data.admin_list;
       } else {
-       
+
       }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -126,7 +126,7 @@ ngAfterViewInit() {
 chatautoScroll(){
 
 	if($(".card-body.chat-content").length > 0){
-	setTimeout(()=>{ 
+	setTimeout(()=>{
 	 $(".card-body.chat-content").scrollTop($(".card-body.chat-content")[0].scrollHeight);
 
 	 }, 10);
@@ -143,7 +143,7 @@ chatautoScroll(){
   sendChatMessageData(){
 
 	this.profile_image = localStorage.getItem('profile_image');
-   
+
 
 	if( this.profile_image == null || this.profile_image == 'null' || this.profile_image == 'undefined'){
 	  this.profile_image  = 'https://baobabgroup.mconnectapps.com/api/v1.0/profile_image/user.jpg';
@@ -153,7 +153,7 @@ chatautoScroll(){
 	  var chat_message= $('#chat_msg').val();
 
 
-	  
+
   	chat_message = chat_message.trim();
  	if (chat_message.length > 0) {
 
@@ -173,22 +173,22 @@ chatautoScroll(){
 			api_req.timezone_id=localStorage.getItem('timezone_id');
 			api_req.access_token=localStorage.getItem('access_token');
 			api_req.element_data = chat_req;
-			
+
             this.serverService.sendServer(api_req).subscribe((response:any) => {
-  
+
 	            if(response.result.status==true){
 
 	            var chat_msg= response.result.data;
 				let agent_name =localStorage.getItem('user_name');
 	           var socket_message  =  '{"message_type":"chat","message_status":"existing","message_info" : {"chat_id" : "'+chat_msg.chat_id+'","msg_user_id" : "'+chat_msg.msg_user_id+'","msg_user_type" : "2","msg_type":"text","message" : "'+chat_msg.chat_msg+'","queue_id":"1","agent_aviator":"'+this.profile_image+'","agent_name":"'+agent_name+'","chat_receiver_id":"'+this.chat_detail_key+'","chat_sender_id":"'+this.loginUser+'","sender_name":"'+agent_name+'","sender_image":"'+this.profile_image+'"}}';
 
-	           this.websocket.send(socket_message);	           				
+	           this.websocket.send(socket_message);
 	           		this.chat_panel_details.push(chat_msg);
 	           		this.chatautoScroll();
 	           		$('#chat_msg').val('');
 	            }
-                
-            }, 
+
+            },
             (error)=>{
                 console.log(error);
             });
@@ -224,10 +224,10 @@ chatautoScroll(){
 			api_req.api_type="web";
 			api_req.access_token=localStorage.getItem('access_token');
 			api_req.element_data = chat_req;
-			
+
             this.serverService.sendServer(api_req).subscribe((response:any) => {
 	            if(response.result.status==1){
-	           			
+
 	           			this.chat_panel_list = response.result.data.chat_list;
 
 	           			if(chat_id == "all" || chat_id == "" || chat_id == 0){
@@ -239,12 +239,12 @@ chatautoScroll(){
 							   this.chatPanelDetail(chat_id);
 	           			}
 
-	           			
+
 	           			this.chatautoScroll();
 	           			this.chat_detail_key = chat_id;
 	            }
-                
-            }, 
+
+            },
             (error)=>{
                 console.log(error);
             });
@@ -266,13 +266,13 @@ chatautoScroll(){
 			api_req.api_type="web";
 			api_req.access_token=localStorage.getItem('access_token');
 			api_req.element_data = chat_req;
-			
+
             this.serverService.sendServer(api_req).subscribe((response:any) => {
-            	
+
 			if(response.result.status==1){
 					this.chat_panel_list = response.result.data.chat_list;
 			}
-            }, 
+            },
             (error)=>{
                 console.log(error);
             });
@@ -303,17 +303,17 @@ chatautoScroll(){
 					// } else {
 					// 	this.is_chat_closed = false;
 					// }
-	           			
+
 	           			this.chat_panel_detail_type = "chat_detail";
 	           			this.chat_panel_details = response.result.data.chat_detail_list;
 						   this.customer_name = response.result.data.agent_name;
 						   this.a_profile_image = response.result.data.agent_profile_image;
 
-						   
-						   this.chatautoScroll(); 
+
+						   this.chatautoScroll();
 	            }
-                
-            }, 
+
+            },
             (error)=>{
                 console.log(error);
             });
@@ -322,16 +322,16 @@ chatautoScroll(){
   }
 
 
-  showdoc(link){   
+  showdoc(link){
     //   this.doc_link=link;
-    //  $("#document_model").modal('show');   
+    //  $("#document_model").modal('show');
     var url= link.split('/');
     // alert(url)
     this.doc_link="https://www.youtube.com/embed/"+url[3];
     // alert(this.doc_link)
-  
+
     $("#video_play").modal('show');
-  
+
    } stop(){
 	var el_src = $('.myvideo').attr("src");
 		  $('.myvideo').attr("src",el_src);

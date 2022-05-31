@@ -55,23 +55,23 @@ export class ProfileComponent implements OnInit {
   initsocket(){
     this.loginUser = localStorage.getItem('userId');
     this.admin_id = localStorage.getItem('admin_id');
-  
-    this.user_type = localStorage.getItem('user_type'); 
+
+    this.user_type = localStorage.getItem('user_type');
     if(this.admin_id == '64'){
-      this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4002"); 
+      this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4002");
     } else if(this.admin_id == '201'){
-      this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4003"); 
+      this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4003");
     } else if(this.admin_id == '1230'){
-      this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4015"); 
+      this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4015");
       } else {
-      this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4023"); 
+      this.websocket = new WebSocket("wss://myscoket.mconnectapps.com:4023");
     }
-  
-    this.websocket.onopen = function(event) { 
+
+    this.websocket.onopen = function(event) {
      // $('#sendonload').click();
       console.log('Profile socket connected');
     }
-  
+
     this.websocket.onmessage = function(event) {
     console.log(event.data);
       var result_message = JSON.parse(event.data);
@@ -80,29 +80,29 @@ export class ProfileComponent implements OnInit {
        console.log('matched');
       //  console.log(result_message);
       } else {
-        console.log('not matched');  
+        console.log('not matched');
         return false;
       }
-  
-       if(result_message[0].data[0].status=="false"){   
+
+       if(result_message[0].data[0].status=="false"){
         $('#datagetsfailed').click();
         // Swal.close();
-  
-      } 
+
+      }
       else if(result_message[0].data[0].sipdata=="getagentdet"){
-      
+
         // $('#sip_username_add').val(result_message[0].data[0].sip_username);
         // $('#sip_password_add').val(result_message[0].data[0].sip_password);
         $('#sip_username').val(result_message[0].data[0].sip_username);
         $('#sip_password').val(result_message[0].data[0].sip_password);
       }
     }
-    this.websocket.onerror = function(event){      
+    this.websocket.onerror = function(event){
       console.log('error');
     }
-    this.websocket.onclose = function(event){     
+    this.websocket.onclose = function(event){
       console.log('close');
-    } 
+    }
   }
 myProfile(){
   let api_req:any = new Object();
@@ -157,7 +157,7 @@ myProfile(){
            $('#has_sms').prop('checked', false);
           }
       }
-    }, 
+    },
       (error)=>{
           console.log(error);
       });
@@ -172,9 +172,9 @@ get_timezone(){
       this.queue_list = response.timezone_options;
       console.log(this.queue_list);
     } else {
-     
+
     }
-  }, 
+  },
   (error)=>{
       console.log(error);
   });
@@ -202,12 +202,12 @@ get_timezone(){
 //               this.myProfile();
 //           }
 //       else{
-          
+
 //               iziToast.warning({
 //                   message: "Agent data not updated. Please try again",
 //                   position: 'topRight'
 //               });
-          
+
 //       }
 
 //   },
@@ -224,9 +224,9 @@ get_timezone(){
 
 
 editAgentData(){
- 
+
   let access_token: any=localStorage.getItem('access_token');
-  let user_id: any =  localStorage.getItem('userId'); 
+  let user_id: any =  localStorage.getItem('userId');
   let api_req:any = new Object();
   let agent_req:any = new Object();
 
@@ -260,7 +260,7 @@ var ext =this.editAgent.value.sip_login;
   agent_req.has_contact=this.editAgent.value.has_contact;
   agent_req.has_sms=this.editAgent.value.has_sms;
     var formData = new FormData();
-   
+
 
 
     var json_arr = JSON.stringify(agent_req);
@@ -277,17 +277,17 @@ var ext =this.editAgent.value.sip_login;
 
 
     console.log(formData);
-  
-  $.ajax({  
-    url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",  
+
+  $.ajax({
+    url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",
     type : 'POST',
     data : formData,
     processData: false,  // tell jQuery not to process the data
-    contentType: false, 
-    success:function(data){ 
+    contentType: false,
+    success:function(data){
       this.parsed_data = JSON.parse(data);
       console.log(this.parsed_data );
-      if(this.parsed_data.status == 'true'){   
+      if(this.parsed_data.status == 'true'){
         $("#refresh_profile").click();
         iziToast.success({
           message: "Agent - "+agent_req.agent_name+" updated successfully",
@@ -295,8 +295,8 @@ var ext =this.editAgent.value.sip_login;
       });
 
       setTimeout(() => {
-        $("#refresh_page").click();        
-        }, 2500);     
+        $("#refresh_page").click();
+        }, 2500);
       localStorage.setItem('ext_num',ext);
       //location.reload();
       }else if(this.parsed_data.message) {
@@ -315,8 +315,8 @@ var ext =this.editAgent.value.sip_login;
       // history.go(-1);
       //location.reload();
       }
-    }  
-});  
+    }
+});
 
   }
   reload(){
@@ -353,11 +353,11 @@ var ext =this.editAgent.value.sip_login;
 
         $('#edit_agents_form').modal('hide');
         $('#edit_billing_address').modal('show');
-       
+
       } else {
-       
+
       }
-    }, 
+    },
     (error)=>{
         console.log(error);
     });
@@ -384,7 +384,7 @@ var ext =this.editAgent.value.sip_login;
     // var ship_state =  $('#ship_state').val();
     // var ship_zip =  $('#ship_zip').val();
     // var ship_country =  $('#ship_country').val();
-    let admin_id: any =  localStorage.getItem('admin_id'); 
+    let admin_id: any =  localStorage.getItem('admin_id');
     var user_id = localStorage.getItem('userId');
    // var contact_person =  $('#econtact_person').val();
     var add1 =  $('#eadd1').val();
@@ -400,40 +400,40 @@ var ext =this.editAgent.value.sip_login;
     var account_no =  $('#account_no').val();
     var bank =  $('#bank').val();
     var branch =  $('#branch').val();
-   
+
 
   if(add1 == "" || city == "" || state == "" || zip_code == "" || country == ""){
     iziToast.warning({
       message: "Please Fill The Required Field",
       position: 'topRight'
-    }); 
+    });
     return false;
   }
-  
+
   if(phone == "" || email == "" || toll_free == "" || reg_no == "" || account_no == "" || bank == "" || branch == ""){
     iziToast.warning({
       message: "Please Fill The Required Field",
       position: 'topRight'
-    }); 
+    });
     return false;
   }
 
     let access_token: any=localStorage.getItem('access_token');
     let api_req:any = '{"operation":"agents", "moduleType":"agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"add_admin_biller","admin_id": "'+admin_id+'","user_id":"'+user_id+'","add1":"'+add1+'","add2":"'+add2+'","city":"'+city+'","state":"'+state+'","zip_code":"'+zip_code+'","country":"'+country+'","phone":"'+phone+'","email":"'+email+'","toll_free":"'+toll_free+'","reg_no":"'+reg_no+'","account_no":"'+account_no+'","bank":"'+bank+'","branch":"'+branch+'"}}';
-    
+
    // console.log(api_req); return false;
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.status == true){
         $('#edit_billing_address').modal('hide');
       } else {
       }
-    }, 
+    },
     (error)=>{
       console.log(error);
     });
-  
-  
-  
+
+
+
    }
 
    retriveFrom3cx(dev){

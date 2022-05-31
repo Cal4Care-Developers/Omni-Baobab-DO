@@ -50,7 +50,7 @@ export class TicketSignatureComponent implements OnInit {
     this.user_id = localStorage.getItem('admin_id');
     }
 
- 
+
     this.richTextArea_id = 'richTextArea';
 
     this.initTiny();
@@ -198,7 +198,7 @@ export class TicketSignatureComponent implements OnInit {
         console.log(this.parsed_data);
         Swal.close();
 
-        // if(this.parsed_data.result.status == "Message has been sent successfully"){   
+        // if(this.parsed_data.result.status == "Message has been sent successfully"){
         if (this.parsed_data.status == "true") {
 
           iziToast.success({
@@ -269,7 +269,7 @@ export class TicketSignatureComponent implements OnInit {
 
     // {"operation":"ticket", "moduleType": "ticket", "api_type": "web", "access_token":"", "element_data":{"action":"editTicketSignature","admin_id":"1203","sig_id":"19"}}
 
-    
+
     let access_token: any = localStorage.getItem('access_token');
     let api_req: any = '{"operation":"ticket", "moduleType": "ticket", "api_type": "web", "access_token":"' + access_token + '", "element_data":{"action":"editTicketSignature","admin_id":"' + this.admin_id + '","sig_id":"' + id + '"}}';
 
@@ -348,12 +348,12 @@ var self =this;
       "contentType": false,
       "data": form
     };
-    
+
     $.ajax(settings).done(function (response) {
-      console.log(response); 
+      console.log(response);
      // Swal.close();
       var result = JSON.parse(response);
-      // if(this.parsed_data.result.status == "Message has been sent successfully"){   
+      // if(this.parsed_data.result.status == "Message has been sent successfully"){
       if (result.data == "1") {
         $('#add_deptform').modal('hide');
         iziToast.success({
@@ -384,13 +384,13 @@ var self =this;
     }).then((result) => {
       if (result.value) {
       let access_token: any=localStorage.getItem('access_token');
-    
+
     //   let api_req:any = '{"operation":"predective_dialer_contact", "moduleType":"predective_dialer_contact", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"delete_contact","user_id":"'+this.user_id+'","contact_id":"'+invalidContacts+'"}}';
-     
+
       let api_req: any = '{"operation":"ticket", "moduleType": "ticket", "api_type": "web", "access_token":"' + access_token + '", "element_data":{"action":"deleteSignature","admin_id":"' + this.admin_id + '","sig_id":"' + id + '"}}';
-    
+
       this.serverService.sendServer(api_req).subscribe((response:any) => {
-    
+
       console.log(response);
       if(response.result.data==true){
         iziToast.success({
@@ -404,12 +404,12 @@ var self =this;
         position: 'topRight'
       });
       }
-      }, 
+      },
       (error)=>{
         console.log(error);
       });
-    
-    }  
+
+    }
     })
   }
 

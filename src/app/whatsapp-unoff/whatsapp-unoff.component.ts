@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { NgZone } from '@angular/core';
 import { SafePropertyRead } from '@angular/compiler';
+import { A } from '@angular/cdk/keycodes';
 // import * as abcJS  from '/src/assets/js/recorder.js';
 declare var $:any;
 declare var iziToast:any;
@@ -89,17 +90,30 @@ export class WhatsappUnoffComponent implements OnInit {
 //alert(pageid)
 
       if(pagefor == 'whatsapp_unoff'){
+        console.log(this.chat_detail_key)
 // alert(this.chat_detail_key)
 // alert(pageid)
-        if(this.chat_detail_key==pageid)
+        if(this.chat_detail_key==pageid){
+          // alert('kfy')
             this.chatPanelDetail2(pageid);
-        else
-        this.chatPanelView('all');
-        setTimeout(()=>{
-          $(".card-body.chat-content").scrollTop($(".card-body.chat-content")[0].scrollHeight);
-          }, 4000);
+        }
+        else{
+         // alert(this.chat_ids)
+         if(this.chat_ids!='undefined'&&this.chat_ids!=undefined)
+         {
+          // this.chatPanelView(this.chat_ids);
+          this.NotifychatPanelView(this.chat_ids);
+         }
+else{
+  this.chatPanelView('all');
+}
+       //this.chatPanelDetail(this.chat_ids);
+        // setTimeout(()=>{
+        //   $(".card-body.chat-content").scrollTop($(".card-body.chat-content")[0].scrollHeight);
+        //   }, 4000);
       }
 
+    }
     },
     (err) => {
     }
@@ -246,6 +260,7 @@ sendChatMessageData(){
                  clearTimeout(this.callonce);
 
                    $('#chat_msg').val('');
+                   $('whatsapp_media_with_text').val();
                    iziToast.success({
                     message:'Sent Successfully',
                     position:'topRight'
@@ -313,11 +328,13 @@ sendChatMessageData(){
                   //   $("#tranfer_user option[value='"+this.loginUser+"']").remove();
                      if(chat_id == "all" || chat_id == "" || chat_id == 0){
                        this.chat_panel_detail_type = "chat_screen";
+                        //this.chatPanelView('all');
+                        //this.chatPanelDetail5(chat_id);
                      }
                      else{
                        this.chat_panel_details = response.result.data.chat_detail_list;
                        this.chat_panel_detail_type = "chat_detail";
-                       this.chatPanelDetail(chat_id);
+                       this.chatPanelDetail5(chat_id);
                  clearTimeout(this.callonce);
 
                      }
@@ -368,6 +385,7 @@ sendChatMessageData(){
   //  alert("called");
 
   this.chat_panel_list = response.result.data.chat_list;
+ // console.log(this.chat_panel_list);
   this.user_list=response.result.data.user_list;
  for (var i = 0; i < this.user_list.length; i++) {
   if(this.agentname == this.user_list[i].user_name){
@@ -412,20 +430,60 @@ sendChatMessageData(){
 
   clearTimeout(this.callonce);
   // alert(this.param1);
-  Swal.fire({
-    title: 'Searching',
-    allowEscapeKey: true,
-    allowOutsideClick: false,
-  //  background: '#19191a',
-    showConfirmButton: false,
-    onOpen: ()=>{
-        Swal.showLoading();
-    }
-  });
+  // Swal.fire({
+  //   title: 'Searching',
+  //   allowEscapeKey: true,
+  //   allowOutsideClick: false,
+  // //  background: '#19191a',
+  //   showConfirmButton: false,
+  //   onOpen: ()=>{
+  //       Swal.showLoading();
+  //   }
+  // });
+  let filtervalue= search_text;
+//       console.log(filtervalue)
+//       console.log(this.chat_panel_list)
+
+
+// let datas = this.chat_panel_list.filter(o =>{
+//   console.log(o);
+//    o.customer_name.includes(filtervalue)
+// });
+
+// console.log(datas);
+
+// function filterByString(data, s) {
+//    return data.filter(e => e.id.includes(s) || e.taskname.includes(s))
+//        .sort((a,b) => a.id.includes(s) && !b.id.includes(s) ? -1 : b.id.includes(s) && !a.id.includes(s) ? 1 :0);
+// }
+
+
+  //document.querySelector(this.chat_panel_list).addEventListener('keyup', () => {
+    // FILTER HERE FOR INPUT VALUE8
+//     let data = this.chat_panel_list.filter(results =>
+//       results.customer_name.toLowerCase().includes(filtervalue)
+
+// );
+
+  //});
+
+
+
+  //  let result =  this.chat_panel_list.filter(word => word.customer_name == filtervalue);
+
+  //  this.chat_panel_list=result;
+   //let result = this.chat_panel_list.filter(word => word.customer_name.toLowerCase() == filtervalue.toLowerCase());
+   // console.log(result)
+
+ //
+
+    //alert(result)
+    // let data= result[0];
           let api_req:any = new Object();
         let chat_req:any = new Object();
         chat_req.action="getSearchResForWhatsapp";
         chat_req.search_text=search_text;
+
         chat_req.user_id=this.loginUser;
         chat_req.instance_id=this.param1;
         chat_req.limit=10;
@@ -440,7 +498,9 @@ sendChatMessageData(){
                 Swal.close();
                 if(response.result.status==1){
                   console.log(response);
-                     this.chat_panel_list = response.result.data;
+                 // this.chat_panel_list = data;
+                //  this.chat_panel_list.push(this.chat_panel_list);
+    this.chat_panel_list = response.result.data;
                      //$('#searchText').val();
 
                 }
@@ -463,7 +523,105 @@ sendChatMessageData(){
     chatPanelDetail(chat_id){
       // this.chatPanelView(chat_id);
       this.chat_ids = chat_id;
-      $('#chat_msg').val('');
+     $('#chat_msg').val('');
+          let api_req:any = new Object();
+        let chat_req:any = new Object();
+        chat_req.action="chat_detail_listOFF";
+        chat_req.chat_id=chat_id;
+        chat_req.limit="20";
+				chat_req.offset= 0;
+        chat_req.user_id=this.loginUser;
+        api_req.operation="wpchat";
+        api_req.moduleType="wpchat";
+        api_req.api_type="web";
+        api_req.access_token=localStorage.getItem('access_token');
+        api_req.element_data = chat_req;
+
+              this.serverService.sendServer(api_req).subscribe((response:any) => {
+
+                if(response.result.status == true){
+                  //console.log(response.result.status);
+
+                     this.chat_panel_detail_type = "chat_detail";
+                     this.chat_panel_details = response.result.data.chat_detail_list;
+                     this.customer_name = response.result.data.chat_detail_list[0].customer_name;
+                     this.group_name=response.result.data.chat_detail_list[0].group_name;
+                     this.group_icon=response.result.data.chat_detail_list[0].group_icon;
+                     this.prof_image=response.result.data.chat_detail_list[0].customer_image;
+                     this.offset_count_msg = 0;
+                     if(this.group_name != null){
+                      this.isthisgroup=true;
+                        this.customer_name = this.group_name;
+                     }
+                     else{
+                      this.isthisgroup=false;
+                     this.customer_name = response.result.data.chat_detail_list[0].customer_name;
+
+                     }
+                     this.customer_number = response.result.data.chat_detail_list[0].customer_number;
+
+                     this.forworduser=response.result.data.chat_detail_list[0].f_user_nm;
+                     this.username=response.result.data.chat_detail_list[0].user_name;
+
+
+  if( this.forworduser!=null || this.forworduser!=undefined)
+  {
+      this.transfered=true;
+     // this.transferedforMe=false; agentname
+    //  if(this.username != this.forworduser && (this.username != null ||this.username != undefined) ){
+      if(this.agentname == this.forworduser ){
+              // alert(this.username);
+              this.transferedforMe=true;
+              // this.transfered=false;
+            }
+            else{
+              this.transferedforMe=false;
+
+            }
+  }
+
+  else
+  {
+      this.transfered=false;
+      this.transferedforMe=false;
+
+  }
+  this.chat_detail_key = chat_id;
+  // alert(this.chat_detail_key+"  id 3 details");
+
+                   if(this.rollonce==false){
+
+                  //  this.chatautoScroll();  2-3-21
+
+                     setTimeout(()=>{
+                      $(".card-body.chat-content").scrollTop($(".card-body.chat-content")[0].scrollHeight);
+
+                      }, 10);
+                    }
+
+
+                          // this.rollonce==true;
+
+                        // setTimeout(()=>{
+                        //   this.rollonce==true;
+                        //   this.chatPanelDetail(chat_id);
+                        //     }, 20000);
+                }
+                clearTimeout(this.callonce);
+
+  $("#calloncemore").click();
+
+              },
+              (error)=>{
+                  console.log(error);
+              });
+    }
+
+
+    chatPanelDetail5(chat_id){
+      // this.chatPanelView(chat_id);
+      this.chat_ids = chat_id;
+     //$('#chat_msg').val('');
           let api_req:any = new Object();
         let chat_req:any = new Object();
         chat_req.action="chat_detail_listOFF";
@@ -555,9 +713,6 @@ sendChatMessageData(){
                   console.log(error);
               });
     }
-
-
-
 
 
 
@@ -679,6 +834,7 @@ addWhatsappMedia(){
         $('#whatsapp_media_url').val(this.parsed_data.url);
         $('#whatsapp_media').val('');
         $('#hit_image').click();
+        $('whatsapp_media_with_text').val();
         Swal.close();
 
         iziToast.success({
@@ -761,7 +917,7 @@ addWhatsappMedia(){
 
                 //  this.chatPanelDetail(this.chat_detail_id.nativeElement.value);
                  this.chatPanelDetail(this.chat_detail_key);
-                 $('#chat_msg').val('');
+                  $('#chat_msg').val('');
               }
               else{
                 this.validateQR();
@@ -1475,7 +1631,7 @@ getFileExtension(filename) {
 chatPanelDetail2(chat_id) {
 
   this.chat_ids = chat_id;
-  $('#chat_msg').val('');
+ // $('#chat_msg').val('');
   let api_req: any = new Object();
   let chat_req: any = new Object();
   chat_req.action = "chat_detail_listOFF";
@@ -1587,7 +1743,7 @@ Swal.fire({
 
 this.serverService.sendServer(api_req).subscribe((response:any) => {
   Swal.close()
-  chat_details.delete_status=1;
+ // chat_details.delete_status=1;
 if(response.result.data==1){
 
   Swal.fire(
@@ -1604,6 +1760,54 @@ if(response.result.data==1){
 })
 
             }
+
+
+
+
+
+    NotifychatPanelView(chat_id){
+
+
+        let api_req:any = new Object();
+        let chat_req:any = new Object();
+        chat_req.action="chat_message_panel_unoff";
+        chat_req.chat_id=chat_id;
+        chat_req.user_id=this.loginUser;
+        chat_req.limit= 10;
+        chat_req.offset= 0;
+        chat_req.instance_id=this.param1;
+        chat_req.user_type=this.usertype;
+        api_req.operation="wp_instance";
+        api_req.moduleType="wp_instance";
+        api_req.api_type="web";
+        api_req.access_token=localStorage.getItem('access_token');
+        api_req.element_data = chat_req;
+
+              this.serverService.sendServer(api_req).subscribe((response:any) => {
+                console.log(response);
+                if(response.result.status==1){
+
+                   this.chat_panel_list = response.result.data.chat_list;
+                    this.user_list=response.result.data.user_list;
+                   for (var i = 0; i < this.user_list.length; i++) {
+                    if(this.agentname == this.user_list[i].user_name){
+                      this.user_list.splice(this.user_list.indexOf(this.user_list[i]), 1 );
+                    }
+                  }
+                    clearTimeout(this.callonce);
+
+
+
+                }
+
+              },
+              (error)=>{
+                  console.log(error);
+              });
+
+    }
+
+
 
 }
 

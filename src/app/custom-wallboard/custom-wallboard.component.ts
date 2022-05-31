@@ -721,7 +721,7 @@ Schedulerst(){
 
   getChatCount(){
     let access_token: any=localStorage.getItem('access_token');
-    let api_req:any = '{"operation":"user", "moduleType":"agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"wallboard_counts","user_id":"'+this.loginUser+'"}}';
+    let api_req:any = '{"operation":"user", "moduleType":"agents", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"wallboard_counts","user_id":"'+this.admin_id+'"}}';
     this.serverService.sendServer(api_req).subscribe((response:any) => {
       if(response.status=="true"){
         this.total_wp_count = response.total_wp_count;

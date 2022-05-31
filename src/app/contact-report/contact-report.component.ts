@@ -48,7 +48,7 @@ export class ContactReportComponent implements OnInit {
           if(response.result.status==true){
             this.usersL = response.result.data;
           }
-        }, 
+        },
         (error)=>{
             console.log(error);
         });
@@ -76,27 +76,27 @@ export class ContactReportComponent implements OnInit {
         this.serverService.sendServer(api_req).subscribe((response:any) => {
         console.log(response);
 
-  
+
           if(response.result.status==true){
           this.res = response;
           var arrStr = encodeURIComponent(JSON.stringify(this.res));
           // document.location.href = 'https://baobabgroup.mconnectapps.com/api/storage/contact/download.php?res='+arrStr;
-       
-        
+
+
           var url = 'https://baobabgroup.mconnectapps.com/api/storage/contact/download.php';
           var form = $('<form action="' + url + '" method="post">' +
             '<input type="text" name="res" value="' + arrStr + '" />' +
             '</form>');
           $('body').append(form);
           form.submit();
-        
+
         } else {
           iziToast.warning({
             message: "No Records Found. Please try again",
             position: 'topRight'
         });
         }
-        }, 
+        },
     (error)=>{
         console.log(error);
     });
@@ -144,7 +144,7 @@ export class ContactReportComponent implements OnInit {
       }
     });
     }
-  
+
     getItems(ev: any) {
       const val = ev.target.value;
       this.initializeItems(val);

@@ -9,9 +9,9 @@
                         <button type="button" class="btn btn-primary" (click)="retriveUsersFrom3cx()">+ Retrieve From 3CX</button>
                         <input type="hidden" value="0" id="agentsList" (click)="agentsList({})">
                         <input type="hidden" value="" id="datagetsucced" (click)="datagetsucced()">
-                        <input type="hidden" value="" id="datagetsfailed" (click)="datagetsfailed()"> 
-                        <input type="hidden" value="" id="enablereport" (click)="enablereport()"> 
-                        <input type="hidden" value="" id="updatereport" (click)="updatereport()"> 
+                        <input type="hidden" value="" id="datagetsfailed" (click)="datagetsfailed()">
+                        <input type="hidden" value="" id="enablereport" (click)="enablereport()">
+                        <input type="hidden" value="" id="updatereport" (click)="updatereport()">
                     </div>
                     <a (click)="showdoc('https://baobabgroup.mconnectapps.com/api/v1.0/pro_contents/pro_agents.pdf')"  target="_blank"><i style="font-size: 24px;
                         float: right;" class="fa fa-exclamation-circle"></i></a>
@@ -40,7 +40,7 @@
                                 <th>Action</th>
                             </tr>
 
-                            
+
                             <tbody>
                                 <tr *ngFor="let queue of agents_list;let i=index">
                                     <td>{{this.offset_count+i+1}}</td>
@@ -59,7 +59,7 @@
 
                                     <td><div class="form-check form-check-inline">
                                         <div class="pretty p-switch p-fill">
-                                            <input type="checkbox"   checked="{{queue.user_status == 1 ? 'checked' : ''}}" (click)="actCamp('user_status',queue.user_id)"> 
+                                            <input type="checkbox"   checked="{{queue.user_status == 1 ? 'checked' : ''}}" (click)="actCamp('user_status',queue.user_id)">
                                             <div class="state p-success">
                                                 <label for="has_status"></label>
                                             </div>
@@ -72,14 +72,14 @@
                                         <!-- <input type="hidden" id="geteditonce" (click)="editAgents(queue.user_id)">  -->
 
                                         <span class="user-icon has-tooltip" style="cursor: pointer;"><i class="far fa-trash-alt" (click)="deleteAgentdata(queue.user_id)"><span class="tooltip-modal" style="min-width: 115px;left: -43px;">Delete</span></i></span>
-                                       
+
                                         <span class="user-icon has-tooltip" style="cursor: pointer;"><i class="fa fa-envelope" (click)="sendWelcomeMail(queue.user_id,queue.email_id)"><span class="tooltip-modal" style="min-width: 115px;left: -43px;">Welcome Email</span></i></span>
                                         <!-- <span  class="user-icon has-tooltip" style="cursor: pointer;"><i class="fas fa-file-invoice-dollar" (click)="genInvoice(queue.user_id,queue.email_id)"><span class="tooltip-modal" style="min-width: 115px;left: -43px;">Generate Invoice</span></i></span> -->
                                         <!-- <button type="button" class="btn btn-primary" (click)="sendWelcomeMail(queue.user_id,queue.email_id)">
                                         <span>
                                             <i class="far fa-inbox-out"></i>
                                         </span>
-                                        Send Welcome Mail</button> 
+                                        Send Welcome Mail</button>
                                         <button type="button" class="btn btn-primary" (click)="genInvoice(queue.user_id,queue.email_id)">
                                             <span *ngIf="sendingmail == true">
                                                 <i class="glyphicon glyphicon-refresh spinning"></i>
@@ -222,7 +222,7 @@
                         <!-- <div class="col-md-12">
                             <div class="form-group">
                                 <label for="agent_user_pwd"></label>
-                                <button type="button" class="btn btn-primary" (click)="retriveFrom3cx(sip_login_add.value)" *ngIf="this.hardware_id !=''">Retrive From 3cx</button> 
+                                <button type="button" class="btn btn-primary" (click)="retriveFrom3cx(sip_login_add.value)" *ngIf="this.hardware_id !=''">Retrive From 3cx</button>
                             </div>
                         </div> -->
 
@@ -245,7 +245,7 @@
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
-                                <button type="button" style="margin-top: 30px;" class="btn btn-primary" title="Retrive Sip Details From 3CX" (click)="retriveFrom3cx(sip_login_add.value)" *ngIf="this.hardware_id !=''"><i class="fas fa-download" style="padding: 0px;"></i></button> 
+                                <button type="button" style="margin-top: 30px;" class="btn btn-primary" title="Retrive Sip Details From 3CX" (click)="retriveFrom3cx(sip_login_add.value)" *ngIf="this.hardware_id !=''"><i class="fas fa-download" style="padding: 0px;"></i></button>
                             </div>
                         </div>
 
@@ -258,7 +258,7 @@
                                    </div>
                                </div>
                            </div>
-                           
+
                     </div>  -->
                         <div class="col-md-6 ">
                             <div class="form-group">
@@ -275,22 +275,22 @@
                                             <!-- <li>
                                            {{items.report_name}}
                                         </li>
-                                    </option> -->                                  
-                                </select>                                 
+                                    </option> -->
+                                </select>
                             </div>
-                            
+
                         </div>
 
                         <div class="col-md-4" *ngIf="agent_3cx_rep">
                             <div class="form-group">
-                                <label for="reports">Call Recording group</label>                                    
-                                <select  name="reports" id="recording_grp" class="form-control" >                                   
+                                <label for="reports">Call Recording group</label>
+                                <select  name="reports" id="recording_grp" class="form-control" >
                                         <option *ngFor="let items of agent_grp;let i=index" value="{{items.id}}" >{{items.group_name}}</option>
-                                                                                                      
-                                </select>                                 
-                            </div>                            
+
+                                </select>
+                            </div>
                         </div>
-                        
+
                         <div class="row has-row-space">
                             <div class="col-md-6 ">
                                 <div class="form-check form-check-inline">
@@ -321,8 +321,8 @@
                                     <div class="form-group">
                                         <label for="MPlanName">Call Tariff</label>
                                         <select class="chat-widget form-control" id="MPlanName">
-                                            <option  *ngFor="let item of callTariffs"  value="{{item.id}}">{{item.plan_name}}</option> 
-                                        </select> 
+                                            <option  *ngFor="let item of callTariffs"  value="{{item.id}}">{{item.plan_name}}</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -363,7 +363,7 @@
                                 </div>
                             </div>
                         </div> -->
-                        
+
                         <div class="col-md-6">
                             <div class="form-check form-check-inline">
                                 <div class="pretty p-switch p-fill">
@@ -373,7 +373,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
 
                         <div class="col-md-6 {{this.H_PD}}">
 
@@ -417,7 +417,7 @@
                    <div class="hidden-things">
                     Please Upgrade your package
                 </div>
-            </div> 
+            </div>
 
             <div class="col-md-6 {{this.h_con}}" >
                 <div class="form-check form-check-inline">
@@ -431,7 +431,7 @@
                <div class="hidden-things">
                 Please Upgrade your package
                 </div>
-            </div>   
+            </div>
         <div class="col-md-6 {{this.h_sms}}">
            <div class="form-check form-check-inline">
                <div class="pretty p-switch p-fill">
@@ -444,7 +444,7 @@
            <div class="hidden-things">
             Please Upgrade your package
         </div>
-    </div> 
+    </div>
 
 <div class="col-md-6  {{this.h_chat}}">
        <div class="form-check form-check-inline">
@@ -458,7 +458,7 @@
        <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 
 <div class="col-md-6  {{this.h_int_chat}}">
     <div class="form-check form-check-inline">
@@ -486,7 +486,7 @@
    <div class="hidden-things">
     Please Upgrade your package
 </div>
-</div> 
+</div>
 
 
 <div class="col-md-6  {{this.h_cbot}}">
@@ -501,7 +501,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 
 <div class="col-md-6  {{this.h_fb}}">
     <div class="form-check form-check-inline">
@@ -515,7 +515,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 <div class="col-md-6  {{this.has_wechat}}">
 
     <div class="form-check form-check-inline">
@@ -529,7 +529,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 
 <div class="col-md-6  {{this.has_fax}}">
 
@@ -544,7 +544,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 
 <div class="col-md-6  {{this.has_telegram}}">
 
@@ -559,7 +559,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 <div class="col-md-6  {{this.i_tick}}">
 
     <div class="form-check form-check-inline">
@@ -573,7 +573,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div>  
+</div>
 <div class="col-md-6 {{this.e_tic}}">
 
     <div class="form-check form-check-inline">
@@ -587,7 +587,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 <div class="col-md-6 {{this.h_webinar}}">
 
     <div class="form-check form-check-inline">
@@ -601,7 +601,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 <div class="col-md-6 {{this.dialer_auto_answer}}">
 
     <div class="form-check form-check-inline">
@@ -615,7 +615,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 
 
 <div class="col-md-6 {{this.wall_1}}">
@@ -631,7 +631,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 
 <div class="col-md-6 {{this.wall_2}}">
 
@@ -646,7 +646,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 <div class="col-md-6 {{this.wall_3}}">
 
     <div class="form-check form-check-inline">
@@ -660,7 +660,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 <div class="col-md-6 {{this.wall_4}}">
 
     <div class="form-check form-check-inline">
@@ -674,7 +674,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 <!-- <div class="col-md-6 {{this.wall_5}}">
 
     <div class="form-check form-check-inline">
@@ -716,7 +716,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div>  
+</div>
 <!-- <div class="col-md-6 {{this.wall_9}}">
 
     <div class="form-check form-check-inline">
@@ -743,7 +743,7 @@
     <div class="hidden-things">
         Please Upgrade your packages
     </div>
-</div> 
+</div>
 
 
 <div class="col-md-6 ">
@@ -758,7 +758,7 @@
    <div class="hidden-things">
     Please Upgrade your package
 </div>
-</div> 
+</div>
 
 
 
@@ -785,10 +785,10 @@
             </div>
         </div>
     </div>
-</div>  
+</div>
 
 
-</div> 
+</div>
 
 
 </div>
@@ -916,7 +916,7 @@
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
-                                <button type="button" style="margin-top: 30px;" class="btn btn-primary" title="Retrive Sip Details From 3CX" (click)="retriveFrom3cx(sip_login.value)" *ngIf="this.hardware_id !=''"><i class="fas fa-download" style="padding: 0px;"></i></button> 
+                                <button type="button" style="margin-top: 30px;" class="btn btn-primary" title="Retrive Sip Details From 3CX" (click)="retriveFrom3cx(sip_login.value)" *ngIf="this.hardware_id !=''"><i class="fas fa-download" style="padding: 0px;"></i></button>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -927,14 +927,14 @@
 
                             </div>
                         </div>
-                        
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="phone_number">Phone No</label>
                                 <input type="text" id="phone_number" class="form-control" formControlName="phone_number">
-                                
+
                             </div>
-                        </div> 
+                        </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label  for="reports">Select Report</label>
@@ -946,21 +946,21 @@
                                 </ng-container>
                             </select>
                         </div>
-                    </div> 
+                    </div>
                     <div class="col-md-4" *ngIf="upd_agent_3cx_rep">
                         <div class="form-group">
-                            <label for="reports">Call Recording group</label>                                    
-                            <select  name="reports" id="upd_recording_grp" class="form-control" >                                   
+                            <label for="reports">Call Recording group</label>
+                            <select  name="reports" id="upd_recording_grp" class="form-control" >
                                     <option *ngFor="let items of agent_grp;let i=index" value="{{items.id}}">{{items.group_name}}</option>
-                                                                                                  
-                            </select>                                 
-                        </div>                            
+
+                            </select>
+                        </div>
                     </div>
-                    
+
                             <!-- <div class="col-md-12" *ngIf="this.voice_3cx != 'disabled'">
 
                                 <div class="form-group">
-                                  
+
                                     <div class="input-group">
                                         <label><b>Dialer Widget</b></label>
                                     <input type="text" id="copyClipboard"  class="form-control"  value="{{this.customHtmls}}">
@@ -970,12 +970,12 @@
 
                                             </div>
                                     </span>
-                                       
+
                                     </div>
                                 </div>
                             </div>  -->
-                           
-                  
+
+
                     <!-- <div class="col-md-12" *ngIf="this.h_sms!='disabled'">
                         <div class="form-group">
                             <div class="input-group">
@@ -990,26 +990,26 @@
                         </div>
                     </div>  -->
 
-                   
+
 
                     <!-- <div class="col-md-12">
                         <div class="form-group">
                               <div class="input-group">
                                 <label ><b>Internal Chat Widget</b></label>
-                                
+
                             <input type="text" id="copyClipboard"  class="form-control"  value="{{this.InternalChat}}">
                             <span class="input-group-addon">
                                      <div class="settings-btn-group fl">
                             <a href="{{this.InternalChat}}" class="btn btn-warning" target="_blank"><i class="fas fa-external-link-alt"></i> Try it out!</a>
-                                             
+
                                     </div>
                             </span>
-                               
+
                             </div>
                         </div>
                     </div>  -->
 
-                    
+
                 </div>
 
                 <br />
@@ -1024,7 +1024,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>  
+                    </div>
 
                     <div class="col-md-6 {{this.voice_3cx}}">
 
@@ -1046,8 +1046,8 @@
                                 <div class="form-group">
                                     <label for="MPlanName">Call Tariff</label>
                                     <select class="chat-widget form-control" name="eMPlanName" id="eMPlanName">
-                                        <option  *ngFor="let item of callTariffs" value="{{item.id}}">{{item.plan_name}}</option> 
-                                    </select> 
+                                        <option  *ngFor="let item of callTariffs" value="{{item.id}}">{{item.plan_name}}</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -1089,7 +1089,7 @@
                         </div>
                     </div> -->
 
-              
+
 
                 <div class="col-md-6 ">
                     <div class="form-check form-check-inline">
@@ -1100,9 +1100,9 @@
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
 
-                <div class="col-md-6 {{this.H_PD}}">    
+                <div class="col-md-6 {{this.H_PD}}">
                     <div class="form-check form-check-inline">
                        <div class="pretty p-switch p-fill">
                            <input type="checkbox" id="predective_dialer" formControlName="predective_dialer"  [checked]="selected == this.predective_dialer">
@@ -1118,7 +1118,7 @@
 
 
 
-            <div class="col-md-6 {{this.H_PD}}">    
+            <div class="col-md-6 {{this.H_PD}}">
                 <div class="form-check form-check-inline">
                    <div class="pretty p-switch p-fill">
                        <input type="checkbox" id="predective_dialer_behave" formControlName="predective_dialer_behave"  [checked]="selected == this.predective_dialer_behave">
@@ -1145,7 +1145,7 @@
            <div class="hidden-things">
             Please Upgrade your package
         </div>
-    </div> 
+    </div>
 
 
     <div class="col-md-6 {{this.h_con}}">
@@ -1161,7 +1161,7 @@
             <div class="hidden-things">
                 Please Upgrade your package
             </div>
-</div>   
+</div>
 <div class="col-md-6 {{this.h_sms}}">
     <div class="form-check form-check-inline">
         <div class="pretty p-switch p-fill">
@@ -1174,7 +1174,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 <div class="col-md-6 {{this.h_chat}}">
     <div class="form-check form-check-inline">
         <div class="pretty p-switch p-fill">
@@ -1187,7 +1187,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 
 <div class="col-md-6 {{this.h_int_chat}}">
     <div class="form-check form-check-inline">
@@ -1228,7 +1228,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 <div class="col-md-6 {{this.h_fb}}">
 
     <div class="form-check form-check-inline">
@@ -1242,7 +1242,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 
 <div class="col-md-6 {{this.has_wechat}}">
     <div class="form-check form-check-inline">
@@ -1256,7 +1256,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 
 <div class="col-md-6 {{this.has_fax}}">
     <div class="form-check form-check-inline">
@@ -1285,9 +1285,9 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 <div class="col-md-6 {{this.i_tick}}">
- 
+
     <div class="form-check form-check-inline">
         <div class="pretty p-switch p-fill">
             <input type="checkbox" id="has_internal_ticket" formControlName="has_internal_ticket"  [checked]="selected == this.has_internal_ticket">
@@ -1299,7 +1299,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div>  
+</div>
 <div class="col-md-6 {{this.e_tic}}">
 
     <div class="form-check form-check-inline">
@@ -1313,7 +1313,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 
 <div class="col-md-6 {{this.h_webinar}}">
 
@@ -1328,14 +1328,14 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 <div class="col-md-6 {{this.voice_3cx}} has-tooltip">
     <span class="tooltip-modal" style="left: 50px;right: 50px;"> Incoming call will be answered automatically after 5 seconds</span>
     <div class="form-check form-check-inline">
         <div class="pretty p-switch p-fill">
             <input type="checkbox" id="dialer_auto_answer" formControlName="dialer_auto_answer"  [checked]="selected == this.dialer_auto_answer">
             <div class="state p-success ">
-                <label for="dialer_auto_answer"> 
+                <label for="dialer_auto_answer">
                     Dialer Auto Answer
                 </label>
             </div>
@@ -1344,7 +1344,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 
 <div class="col-md-6 {{this.wall_1}}">
 
@@ -1359,7 +1359,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 
 <div class="col-md-6 {{this.wall_2}}">
 
@@ -1374,7 +1374,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 <div class="col-md-6 {{this.wall_3}}">
 
     <div class="form-check form-check-inline">
@@ -1388,7 +1388,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 <div class="col-md-6 {{this.wall_4}}">
 
     <div class="form-check form-check-inline">
@@ -1402,7 +1402,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div> 
+</div>
 <!-- <div class="col-md-6 {{this.wall_5}}">
 
     <div class="form-check form-check-inline">
@@ -1444,7 +1444,7 @@
     <div class="hidden-things">
         Please Upgrade your package
     </div>
-</div>  
+</div>
 <!-- <div class="col-md-6 {{this.wall_9}}">
 
     <div class="form-check form-check-inline">
@@ -1475,7 +1475,7 @@
     </div>
 
 
-</div> 
+</div>
 
 
 <div class="col-md-6">
@@ -1491,7 +1491,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>  
+                        </div>
                         <div class="col-md-6 {{this.dsk_access}}" *ngIf="this.admin_id == '128'">
                             <div class="form-check form-check-inline">
                                 <div class="pretty p-switch p-fill">
@@ -1515,7 +1515,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>                    
+                        </div>
                     </div>
 
                 </div>
@@ -1595,7 +1595,7 @@ Modal Add Agent
                                                     <div class="state p-primary">
                                                         <label></label>
                                                     </div>
-                                                </div>   
+                                                </div>
                                             </td>
                                             <td>{{item.sip_login}}</td>
                                             <td>{{item.agent_name}}</td>
@@ -1606,7 +1606,7 @@ Modal Add Agent
                                 </table>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -1678,7 +1678,7 @@ Modal Add Agent
                                 <input type="text" id="estate" class="form-control"  >
                             </div>
                         </div>
-                        
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="ecountry">Country *</label>
@@ -1694,7 +1694,7 @@ Modal Add Agent
                         <div class="col-md-12">
                             <div class="form-group">
                                 <div class="input-group">
-                                    <label ><b>Edit Shipping Address (cilck to edit shipping address)</b></label>                                     
+                                    <label ><b>Edit Shipping Address (cilck to edit shipping address)</b></label>
                                 </div>
                             </div>
                             <div class="form-check form-check-inline">
@@ -1705,7 +1705,7 @@ Modal Add Agent
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                     </div><br>  <br>
                     <div class="row" id="editShippingAddresss" style="display:none">
                         <div class="col-md-6">
@@ -1744,7 +1744,7 @@ Modal Add Agent
                                 <input type="text" id="eship_state" class="form-control"  >
                             </div>
                         </div>
-                        
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="eship_country">Country *</label>
@@ -1757,8 +1757,8 @@ Modal Add Agent
                                 <input type="text" id="eship_zip" class="form-control"  >
                             </div>
                         </div>
-                        
-                        
+
+
                     </div>
 
                 </div>
@@ -1802,8 +1802,8 @@ Modal Add Agent
             </div>
           </div>
         </div>
-  
-    
+
+
 
         <div class="modal-footer" >
             <div class="buttons">
@@ -1811,7 +1811,7 @@ Modal Add Agent
                 <input type="button" class="btn btn-primary update_agent" value="Submit"  (click)="activateLicenseKey()">
             </div>
         </div>
-  
+
       </div>
     </div>
   </div>
@@ -1829,15 +1829,15 @@ Modal Add Agent
         <div class="modal-body" style="min-height: 800px;">
                 <embed [src]="this.pdfurl | safe" type="application/pdf" width="100%" style="height: 575px;" />
         </div>
-  
-    
+
+
 
         <div class="modal-footer" >
             <div class="buttons">
                 <input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="close">
             </div>
         </div>
-  
+
       </div>
     </div>
   </div>
@@ -1855,13 +1855,13 @@ Modal Add Agent
 				  <!-- <iframe [src]="this.doc_link | safe"  width="100%" style="height: 575px;" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
 				  <!-- style="margin-bottom: -6px;" width="100%" height="325"  -->
 				<embed [src]="this.doc_link | safe"  width="100%" style="height: 575px;" />
-		</div>     
+		</div>
 		<div class="modal-footer" >
 			<div class="buttons">
 				<input type="button" data-dismiss="modal" class="btn btn-outline-secondary" value="close">
 			</div>
 		</div>
-  
+
 	  </div>
 	</div>
   </div>

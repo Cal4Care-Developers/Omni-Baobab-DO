@@ -260,13 +260,13 @@ export class TicketViewThreadComponent implements OnInit {
   //   let api_req:any = '{"operation":"ticket", "moduleType":"ticket", "api_type": "web", "access_token":"'+access_token+'", "element_data":{"action":"get_dept_settings","user_id":"'+this.admin_id+'"}}';
 
   //   this.serverService.sendServer(api_req).subscribe((response:any) => {
-  //     if(response.result.status==true){       
+  //     if(response.result.status==true){
   //       this.dept_list = response.result.data;
   //       console.log(this.dept_list);
   //     } else {
 
   //     }
-  //   }, 
+  //   },
   //   (error)=>{
   //       console.log(error);
   //   });
@@ -281,7 +281,7 @@ export class TicketViewThreadComponent implements OnInit {
       this.router.navigate(['/ticketing-system-new']);
     }else{
       this.router.navigate(['/ticketing-system-new']);
-      
+
     }
 
     // this._location.back();
@@ -322,7 +322,7 @@ export class TicketViewThreadComponent implements OnInit {
 
         }
 
-        //   if(this.ticket_status_sel !=''){      
+        //   if(this.ticket_status_sel !=''){
         //   this.get_agents_by_department_dup(this.ticket_status_sel)
         // }
 
@@ -406,7 +406,7 @@ export class TicketViewThreadComponent implements OnInit {
           this.get_agents_by_department();
         // $('#ticket_status select').val(response.tick_options[0].ticket_status_id);
 
-        // $('#ticket_status [name=options] option').filter(function() { 
+        // $('#ticket_status [name=options] option').filter(function() {
         //   return ($(this).text() == 'New'); //To select Blue
         // }).prop('selected', true);
         // $('#ticket_status [name="options"]').find('option[value="'+response.tick_options[0].ticket_status_id+'"]').attr("selected",true);
@@ -611,8 +611,8 @@ export class TicketViewThreadComponent implements OnInit {
   //         'success'
   //       );
   //       this.getTicketDetails(this.ticket_t);
-  //     } 
-  //   }, 
+  //     }
+  //   },
   //   (error)=>{
   //     console.log(error);
   //   });
@@ -777,8 +777,8 @@ export class TicketViewThreadComponent implements OnInit {
   //   this.serverService.sendServer(api_req).subscribe((response:any) => {
   //     if(response.status==true){
   //     this.getTicketDetails(this.ticket_t);
-  //     } 
-  //   }, 
+  //     }
+  //   },
   //   (error)=>{
   //     console.log(error);
   //   });
@@ -950,8 +950,8 @@ export class TicketViewThreadComponent implements OnInit {
         // this.queue_list_all = response.ticket_options;
         var mydatas = [];
         mydatas = response.tick_options;
-        // alert(mydatas.length);		
-        // this.queue_list = this.queue_list_all.push(mydatas); 
+        // alert(mydatas.length);
+        // this.queue_list = this.queue_list_all.push(mydatas);
         for (let index = 0; index < mydatas.length; index++) {
           var data = mydatas[index];
           this.ticket_replies.push(data);
