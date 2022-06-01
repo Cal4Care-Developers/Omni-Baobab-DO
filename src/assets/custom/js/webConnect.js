@@ -139,7 +139,7 @@ $(document).ready(function() {
 	// Initialize the library (all console debuggers enabled)
 	Janus.init({debug: "all", callback: function() {
 		// Use a button to start the demo
-		
+
 			$(this).attr('disabled', true).unbind('click');
 			// Make sure the browser supports WebRTC
 			if(!Janus.isWebrtcSupported()) {
@@ -258,8 +258,8 @@ $(document).ready(function() {
 									}
 									var callId = msg["call_id"];
 									var result = msg["result"];
-									//alert(result["event"]); 
-									
+									//alert(result["event"]);
+
 									//console.log('rashid');
 									if(result && result["event"]) {
 										var event = result["event"];
@@ -270,7 +270,7 @@ $(document).ready(function() {
 										}
 										if(event === 'registration_failed') {
 											dialerStatus('DISCONNECTED');
-											// Janus.warn("Registration failed: " + result["code"] + " " + result["reason"]);
+											Janus.warn("Registration failed: " + result["code"] + " " + result["reason"]);
 											$('#server').removeAttr('disabled');
 											$('#username').removeAttr('disabled');
 											$('#authuser').removeAttr('disabled');
@@ -293,6 +293,7 @@ $(document).ready(function() {
 											$('#dialstatus').attr('style', 'background-color: #33f247;');
 											$('#call-text').html(result["username"] + " On Hook");
 											$('#you').removeClass('hide').show().text("Registered as '" + result["username"] + "'");
+                     // console.log(sip_user);
 											// TODO Enable buttons to call now
 											if(!registered) {
 												registered = true;
@@ -302,6 +303,7 @@ $(document).ready(function() {
 												$('#displayname').parent().addClass('hide').hide();
 												$('#password').parent().addClass('hide').hide();
 												$('#register').parent().addClass('hide').hide();
+                       // console.log(sip_user);
 												//$('#registerset').parent().addClass('hide').hide();
 											//	$('#username').parent().parent().append(
 											//		'<button id="addhelper" class="btn btn-xs btn-info pull-right" title="Add a new line" style="display: none">' +
@@ -318,7 +320,7 @@ $(document).ready(function() {
 											// console.log(result);
 											var outcall_number = $('#outcall_number').val();
                                             var audio = document.getElementById('ringingTone');
-											audio.currentTime = 0;											
+											audio.currentTime = 0;
 											$('#ringingTone')[0].play();
 											document.getElementById('ringingTone').muted = false;
 											// TODO Any ringtone?
@@ -337,7 +339,7 @@ $(document).ready(function() {
 											detail_id = text;
 											$('#call_incoming_number').val(detail_id);
 											$('#incoming_call_trigger').click();
-										
+
 
 											// Janus.log("Incoming calls from " + result["username"] + "!");
 											sipcall.callId = callId;
@@ -376,13 +378,13 @@ $(document).ready(function() {
 											if(offerlessInvite)
 												extra = " (no SDP offer provided)"
 												//Incoming calld from sip:104@35.197.146.212:5060!
-											
 
-											
-											
-											
+
+
+
+
 												// var operations = '{"operation":"call","moduleType":"call","api_type":"web","access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJvbW5pLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJvbW5pLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE1OTI5NjkyODMsIm5iZiI6MTU5Mjk2OTI4MywiZXhwIjoxNTkyOTg3MjgzLCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjY0IiwidG9rZW5fYWNjZXNzTmFtZSI6ImNhbDRjYXJlIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.iqUmz6SJTR6GJdrlNBQA7cpZu8SO9YXddrSe7aGtGeI","element_data":{"user_id":"64","action":"call_history_detail","callid":"3551"}}'
-												
+
 
 												$('#accept_calls').html('<div id="accept_callscall" class="dig" ><i class="fa fa-phone" aria-hidden="true"></i></div>');
 
@@ -419,15 +421,15 @@ $(document).ready(function() {
 																// re-INVITES to handle them yourself, specify it here, e.g.:
 																//		body["autoaccept_reinvites"] = false;
 																sipcall.send({ message: body, jsep: jsep });
-																
+
 
 																		call_history_id = $('#call_history_id').val();
 																	//	dialPadDetailView('incoming_call_inprogess', call_history_id);
 																		$('.outgoing-call').hide();
 																		$('#call_duration').show();
-																		$('.call-extra-featurs').show(); 
-																		//$( "#call").addClass("disable-div");  
-																	    
+																		$('.call-extra-featurs').show();
+																		//$( "#call").addClass("disable-div");
+
 																		//$("#incomingCallAnswerBtn").click();
 															},
 															error: function(error) {
@@ -452,7 +454,7 @@ $(document).ready(function() {
 																				// keep PCMA/8000 and telephone-event/8000
 																				if (['pcma/8000', 'telephone-event/8000'].includes(m[2].toLowerCase())) {
 																					codecsKeep.push(m[1])
-																				} 
+																				}
 																				else {
 																					removed.push(m[1])
 																					return false
@@ -488,11 +490,11 @@ $(document).ready(function() {
 
 
 
-												
-												
+
+
 
 													// console.log(incoming);
-												
+
 											// incoming = bootbox.dialog({
 											// 	message: "Incoming calld from " + result["username"] + "!" + transfer + rtpType + extra,
 											// 	title: "Incoming call",
@@ -502,7 +504,7 @@ $(document).ready(function() {
 											// 			label: "Answer",
 											// 			className: "btn-success",
 											// 			callback: function(){
-															
+
 											// 				}
 											// 		},
 											// 		danger: {
@@ -520,7 +522,7 @@ $(document).ready(function() {
 											// console.log(incoming);
 										} else if(event === 'accepting') {
 											//Response to an offerless INVITE, let's wait for an 'accepted'
-											            
+
 										} else if(event === 'progress') {
 											// Janus.log("There's early media from " + result["username"] + ", wairing for the call!", jsep);
 											// Call can start already: handle the remote answer
@@ -540,7 +542,7 @@ $(document).ready(function() {
 											$('.call-extra-featurs').show();
 											callDuration();
 
-										
+
 											//alert('mmame');
 											// toastr.success("Call accepted!");
 											sipcall.callId = callId;
@@ -669,16 +671,16 @@ $(document).ready(function() {
 												//bootbox.alert(result["code"] + " " + result["reason"]);
 											}
 
-											
+
 											// Reset status
-											
+
 											$('#dovideo').removeAttr('disabled').val('');
 											$('#peer').removeAttr('disabled').val('');
 											// fas fa-phone-slash change removed slash
 											$('#call').removeAttr('disabled').html('<span><i class="fas fa-phone"></i></span>')
 												.removeClass("btn-danger").addClass("btn-success")
 												.unbind('click').click(doCall);
-										} 
+										}
 									}
 								},
 								onlocalstream: function(stream) {
@@ -826,7 +828,7 @@ $(document).ready(function() {
 											// 		}
 											// 	}
 											// });
-											
+
 
 
 
@@ -884,7 +886,7 @@ $(document).ready(function() {
 						window.location.reload();
 					}
 				});
-		
+
 	}});
 });
 
@@ -917,7 +919,7 @@ function getinStatusV2() {
 
 // function initCallService(){
 
-	
+
 // 	var Murl = window.location.href; //for current url
 //     var login = /login=([^&]+)/.exec(Murl)[1]; // Value is in [1] ('384' in our case)
 
@@ -948,7 +950,7 @@ function getinStatusV2() {
 //         $('#authuser').val(sip_authentication);
 //         $('#password').val(sip_password);
 //         $('#displayname').val('devomni Channel');
-		
+
 //        // reg(sip_login,sip_authentication,sip_password,sip_url,sip_port);
 //     //     init_page(sip_login,sip_authentication,sip_password,sip_port,sip_url,'');
 //     //    setTimeout( () => { registerUsername(); }, 5000 );
@@ -960,10 +962,10 @@ function getinStatusV2() {
 //     // setTimeout( () => { reg('sip:103@cal4caredemo.3cx.sg','KWEK8baMFB','qx2C0VIysR','sip:cal4caredemo.3cx.sg:5060',"5060"); }, 3000 );
 // 	setTimeout( () => { reg(sip_login,sip_authentication,sip_password,sip_url,sip_port); }, 3000 );
 //             }
-//         });		
+//         });
 
 
-   
+
 // }
 
 function init_page(sip_login,sip_authentication,sip_password,sip_url,sip_port){
@@ -984,7 +986,7 @@ function init_page(sip_login,sip_authentication,sip_password,sip_url,sip_port){
 	//~ register["outbound_proxy"] = "sip:outbound.example.com";
 	console.log({ message: register });
     sipcall.send({ message: register });
-   
+
 }
 
 
@@ -1131,7 +1133,7 @@ function registerUsername() {
 	//			"pn-param": "acme-param",
 	//			"pn-prid": "ZTY4ZDJlMzODE1NmUgKi0K"
     //		};
-   
+
 	if(sipserver === "") {
 		bootbox.confirm("You didn't specify a SIP Registrar: this will cause the plugin to try and conduct a standard (<a href='https://tools.ietf.org/html/rfc3263' target='_blank'>RFC3263</a>) lookup. If this is not what you want or you don't know what this means, hit Cancel and provide a SIP Registrar instead'",
 			function(result) {
@@ -1180,7 +1182,7 @@ function doCall(ev) {
     var username = $('#peer' + suffix).val();
 
 
-	
+
 	if(username === "") {
 	//	bootbox.alert('Please insert a valid SIP address (e.g., sip:pluto@example.com)');
 		$('#peer' + suffix).removeAttr('disabled');
@@ -1224,7 +1226,7 @@ function doCall2(ev) {
     var username = $('#peer' + suffix).val();
 
 
-	
+
 	if(username === "") {
 		//bootbox.alert('Please insert a valid SIP address (e.g., sip:pluto@example.com)');
 		$('#peer' + suffix).removeAttr('disabled');
@@ -1282,7 +1284,7 @@ function doCall3(ev,username) {
     var username = $('#peer' + suffix).val();
 
 
-	
+
 	if(username === "") {
 		// bootbox.alert('Please insert a valid SIP address (e.g., sip:pluto@example.com)');
 		$('#peer' + suffix).removeAttr('disabled');
@@ -1371,7 +1373,7 @@ function actuallyDoCall(handle, uri, doVideo, referId) {
 								// keep PCMA/8000 and telephone-event/8000
 								if (['pcma/8000', 'telephone-event/8000'].includes(m[2].toLowerCase())) {
 									codecsKeep.push(m[1])
-								} 
+								}
 								else {
 									removed.push(m[1])
 									return false
@@ -1796,7 +1798,7 @@ function addHelper(helperCreated) {
 								}
 							});
 					} else if(event === 'hangup') {
-					
+
 						if(incoming != null) {
 							incoming.modal('hide');
 							incoming = null;
@@ -2023,7 +2025,7 @@ function removeHelper(helperId) {
 
 
 var count = 0;
-//initCallService(); 
+//initCallService();
 $(".digit").on('click', function() {
 	var num = ($(this).clone().children().remove().end().text());
 	if (count < 11) {
@@ -2107,13 +2109,13 @@ function registerStatus(){
 		//$('#dialstatus').html(dial_status);
 		$('#dialstatus').attr('style', 'background-color: #33f247;');
 		$('#call-text').html('On Hook');
-		
+
     } else if(dial_status == 'ESTABLISHED'){
 		$('#dialstatus').attr('style', 'background-color: #f2b733;');
 		$('#call-text').html('Established');
         setTimeout( () => { registerStatus2(); }, 30000 );
     } else {
-		
+
 		$('#dialstatus').attr('style', 'background-color: #f23333;');
 		$('#call-text').html('Not yet connected');
         setTimeout( () => { registerStatus2(); }, 30000 );
@@ -2145,11 +2147,11 @@ function dialPadDetailView(view_type, detail_id) {
     //alert(view_type);
     let api_req = new Object();
     let dialpad_req = new Object();
-	
+
 	var Murl = window.location.href; //for current url
     var login = /login=([^&]+)/.exec(Murl)[1]; // Value is in [1] ('384' in our case)
-	
-	
+
+
     dialpad_req.user_id = login;
 	dialpad_req.dialer_type = 'external';
     dialpad_req.action = view_type;
@@ -2182,7 +2184,7 @@ function dialPadDetailView(view_type, detail_id) {
     // var operations = '{"operation":"call","moduleType":"call","api_type":"web","access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJvbW5pLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJvbW5pLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE1OTI5NjkyODMsIm5iZiI6MTU5Mjk2OTI4MywiZXhwIjoxNTkyOTg3MjgzLCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjY0IiwidG9rZW5fYWNjZXNzTmFtZSI6ImNhbDRjYXJlIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.iqUmz6SJTR6GJdrlNBQA7cpZu8SO9YXddrSe7aGtGeI","element_data":{"user_id":"64","action":"call_history_detail","callid":"3551"}}'
 
     $.ajax({
-    
+
         type: "POST",
         url: "https://"+window.location.hostname+"/api/v1.0/index.php",
         data: JSON.stringify(api_req),
@@ -2193,18 +2195,18 @@ function dialPadDetailView(view_type, detail_id) {
             if (response.result.status == 1) {
                 if (view_type == "call_history_detail") {
 					var mainPhone = response.result.data.phone;
-					
+
 					// var sip_urld = $('#sip_urld').val();
 					// mainPhone = "sip:"+mainPhone+"@"+sip_urld;
 
 				//	mainPhone = "'"+mainPhone+"'";
-					
-				
+
+
 
 
                     var number_dialer = "'number_dailer'";
                     var outgoingC = '<div class="contact-panel"><input type="hidden" id="dialpad_number2"><div class="call-screen-panel"><div class="backArrow" onclick="dialPadview('+number_dialer+')" data-toggle="tooltip" title="Back"><i aria-hidden="true" class="fa fa-arrow-left"></i></div><div class="active-call"><div class="caller-img"><img src="assets/images/user.jpg"></div><h4><b>Call Details</b></h4><h5>'+response.result.data.call_data+'</h5><div class="call-duration">'+response.result.data.call_start_dt+'</div></div><div class="botrow"><div class="dig" onclick="dialPadview('+number_dialer+')"><i aria-hidden="true" class="fa fa-th"></i><span class="btn-icon-name">Keypad</span></div><div class="dig" id="call" onclick="doCall2()"><i aria-hidden="true" class="fa fa-phone"></i></div></div></div></div>';
-					$('#dialpad_layout').html(outgoingC); 
+					$('#dialpad_layout').html(outgoingC);
 					$('#dialpad_number2').val(mainPhone);
                 } else if (view_type == "user_detail_view") {
                     this.userDetailView = response.result.data;
@@ -2214,10 +2216,10 @@ function dialPadDetailView(view_type, detail_id) {
                     assignedStatus(customer_id);
 					$('#loaders').hide();
 					 $('#dialpad_layout').show();
-					
+
                     var  number_dialer = "number_dailer";
                     var outgoingC = '<div class="call-screen-panel"><div class="active-call"><div class="caller-img"><img src="assets/images/user.jpg"></div><h4><b>Outgoing Call</b></h4><h5><span class="callee">Call to '+detail_id+'</span></h5><div id="call_duration" style="display:none"><span class="call_minutes" id="call_minutes">00</span>:<span class="call_seconds" id="call_seconds">04</span></div><div class="call-icon outgoing-call" ><span class="ringing_phone"><i class="fa fa-phone"></i></span></div><div class="call-extra-featurs" style="display:none"> <div class="dig"><a class="mute-btn" id="mute_btn" href="javascript:void(0);"><i data-toggle="tooltip"  title="Mute" id="Mute" class="fa fa-microphone unmuted-btn" aria-hidden="true" onclick="custommuteCall()"></i><i data-toggle="tooltip"  title="Muted" id="Muted" class="fa fa-microphone-slash muted-btn" aria-hidden="true" onclick="custommuteCall()"></i><span class="call-action-label">Mute</span></a></div><div class="dig"><a class="hold_btn"  href="javascript:void(0);"><i data-toggle="tooltip" id="hold_btn" title="Hold" class="fa fa-pause" aria-hidden="true" onclick="holdCall()"></i><i data-toggle="tooltip" id="resume_btn" title="Resume" class="fa fa-play " aria-hidden="true" onclick="resumeCall()" style="display:none"></i><span class="call-action-label">Hold/Resume</span></a></div><div class="dig" id="animate-dialpad"><a class="rotate" href="javascript:void(0);" onclick="Callforword()" ><i data-toggle="tooltip" title="Call Forward" class="fas fa-random" aria-hidden="true"></i>  <span class="call-action-label">Transfer / Forward</span> </a> </div><div class="dig"><a class="rotate" href="javascript:void(0);" onclick="transferCall("199")"><i data-toggle="tooltip" title="Calls Transfer" class="fa fa-reply-all" aria-hidden="true"></i></a> <span class="call-action-label">Survey</span> </div></div></div><div class="botrow"><div style="width:100%" class="dig oncall" id="call" onclick="outgoingCallEnd()"><i aria-hidden="true" class="fa fa-phone"></i></div></div></div>';
-				  
+
 				    //var outgoingC = '<div class="call-screen-panel"><div class="active-call"><div class="caller-img"><img src="assets/images/user.jpg"></div><h4><b>Outgoing Call</b></h4><h5><span class="callee">Call to '+detail_id+'</span></h5><div id="call_duration" style="display:none"><span class="call_minutes" id="call_minutes">00</span>:<span class="call_seconds" id="call_seconds">04</span></div><div class="call-icon outgoing-call" ><span class="ringing_phone"><i class="fa fa-phone"></i></span></div><div class="call-extra-featurs" style="display:none"> <div class="dig"><a class="mute-btn" id="mute_btn" href="javascript:void(0);"><i data-toggle="tooltip"  title="Mute" id="Mute" class="fa fa-microphone unmuted-btn" aria-hidden="true" onclick="custommuteCall()"></i><i data-toggle="tooltip"  title="Muted" id="Muted" class="fa fa-microphone-slash muted-btn" aria-hidden="true" onclick="custommuteCall()"></i><span class="call-action-label">Mute</span></a></div><div class="dig"><a class="hold_btn"  href="javascript:void(0);"><i data-toggle="tooltip" id="hold_btn" title="Hold" class="fa fa-pause" aria-hidden="true" onclick="holdCall()"></i><i data-toggle="tooltip" id="resume_btn" title="Resume" class="fa fa-play " aria-hidden="true" onclick="resumeCall()" style="display:none"></i><span class="call-action-label">Hold/Resume</span></a></div><div class="dig" id="animate-dialpad"><a class="rotate" href="javascript:void(0);" onclick="Callforword()" ><i data-toggle="tooltip" title="Call Forward" class="fas fa-random" aria-hidden="true"></i>  <span class="call-action-label">Transfer / Forward</span> </a> </div><div class="dig"><a class="rotate" href="javascript:void(0);" onclick="transferCall("199")"><i data-toggle="tooltip" title="Calls Transfer" class="fa fa-reply-all" aria-hidden="true"></i></a> <span class="call-action-label">Survey</span> </div></div></div><div class="botrow"><div class="dig" onclick="dialPadview('+number_dialer+')"><i aria-hidden="true" class="fa fa-th"></i><span class="btn-icon-name">Keypad</span></div><div class="dig oncall" id="call" onclick="outgoingCallEnd()"><i aria-hidden="true" class="fa fa-phone"></i></div></div></div>';
                     $('#dialpad_layout').html(outgoingC);
 										$('#call_history_id').val(response.result.data);
@@ -2225,13 +2227,13 @@ function dialPadDetailView(view_type, detail_id) {
 												  .removeClass("btn-success").addClass("btn-danger")
 												  .unbind('click').click(doHangup);
                 }  else if (view_type == "incoming_call_inprogess") {
-                   var number_dialer = "number_dailer";     
+                   var number_dialer = "number_dailer";
                     var outgoingC = '<div class="call-screen-panel"><div class="active-call"><div class="caller-img"><img src="assets/images/user.jpg"></div><h4><b>Incoming Call</b></h4><h5><span class="callee">'+response.result.data.call_data+'</span></h5><div id="call_duration"><span class="call_minutes" id="call_minutes">00</span>:<span class="call_seconds" id="call_seconds">04</span></div><div class="call-icon outgoing-call" style="display:none;"><span class="ringing_phone"><i class="fa fa-phone"></i></span></div><div class="call-extra-featurs"><div class="dig"><a class="mute-btn" href="javascript:void(0);" id="mute_btn"><i aria-hidden="true" class="fa fa-microphone unmuted-btn" data-toggle="tooltip" onclick="custommuteCall()"  title="Mute" id="Mute" ></i><i aria-hidden="true" class="fa fa-microphone-slash muted-btn" data-toggle="tooltip" onclick="custommuteCall()"  title="Muted" id="Muted"></i><span class="call-action-label">Mute</span></a></div><div class="dig"><a class="hold_btn" href="javascript:void(0);"><i aria-hidden="true" class="fa fa-pause" data-toggle="tooltip" id="hold_btn" onclick="holdCall()" title="Hold"></i><i aria-hidden="true" class="fa fa-play " data-toggle="tooltip" id="resume_btn" onclick="resumeCall()" style="display:none" title="Resume"></i><span class="call-action-label">Hold/Resume</span></a></div><div class="dig" id="animate-dialpad"><a class="rotate" href="javascript:void(0);" onclick="Callforword()" ><i data-toggle="tooltip" title="Call Forward" class="fas fa-random" aria-hidden="true"></i> <span class="call-action-label">Transfer / Forward</span> </a></div><div class="dig"><a class="rotate" href="javascript:void(0);" onclick="transferCall("199")"><i data-toggle="tooltip" title="Calls Transfer" class="fa fa-reply-all" aria-hidden="true"></i></a> <span class="call-action-label">Survey</span></div></div></div><div class="botrow"><div class="dig" onclick="dialPadview('+number_dialer+')"><i aria-hidden="true" class="fa fa-th"></i><span class="btn-icon-name">Keypad</span></div><div class="dig oncall" id="call" onclick="outgoingCallEnd()"><i aria-hidden="true" class="fa fa-phone"></i></div></div></div>';
-                    $('#dialpad_layout').html(outgoingC); 
+                    $('#dialpad_layout').html(outgoingC);
 					$('#call_history_id').val(response.result.data.callid);
 					$('#call').removeAttr('disabled').removeClass("btn-success").addClass("btn-danger")
 																			.unbind('click').click(doHangup);
-                } 
+                }
 
             }
         },
@@ -2263,7 +2265,7 @@ function outgoingCallEnd() {
 }
 
 // function customgholdCall(){
-    
+
 //     alert(s);
 //     if(($('#hold_btn').length) > 0){
 // 		var body = { request: "hold" };
@@ -2279,8 +2281,8 @@ function outgoingCallEnd() {
 //         $('#hold_btn').css('display','block');
 //         $('#resume_btn').css('display','none');
 //     }
-    
-    
+
+
 // }
 
 
@@ -2303,7 +2305,7 @@ function resumeCall() {
 
 // function incomingCallAccept() {
 
-	
+
 // 	incoming = null;
 // 	//$('#peer').val(result["username"]).attr('disabled', true);
 // 	// Notice that we can only answer if we got an offer: if this was
@@ -2356,14 +2358,14 @@ function resumeCall() {
 // 				//		body["autoaccept_reinvites"] = false;
 // 				sipcall.send({ message: body, jsep: jsep });
 // 				console.log({ message: body, jsep: jsep });
-			
+
 
 // 				call_history_id = $('#call_history_id').val();
 // 				dialPadDetailView('incoming_call_inprogess', call_history_id);
 // 				callDuration();
 // 				$('.outgoing-call').hide();
 // 				$('#call_duration').show();
-// 				$('.call-extra-featurs').show(); 
+// 				$('.call-extra-featurs').show();
 // 				$("#incomingCallAnswerBtn").click();
 
 // 					$('#call').removeAttr('disabled').html('Hangup')
@@ -2395,7 +2397,7 @@ function Callforword(){
 
 
 function TkeyPad(key_data) {
-	
+
     var dailed_number = $('#makeCallForwordNumber').val();
     $('#makeCallForwordNumber').val(dailed_number + key_data);
 }
@@ -2410,9 +2412,9 @@ function dialPadbackSpaceT() {
 
 function makecallTransfer(username){
 	// alert(username);
-	
+
 	var sip_urld = $('#sip_urld').val();
-	$('#outcall_number').val(username);	
+	$('#outcall_number').val(username);
 	username = "sip:"+username+"@"+sip_urld;
 	$('#transferto').val(username);
 	// console.log(username);
@@ -2431,7 +2433,7 @@ function makecallTransfer(username){
 		return;
 	var msg = { request: "transfer", uri: address };
 	// console.log(msg);
-	sipcall.send({ message: msg });	
+	sipcall.send({ message: msg });
 	// $('#traendCallByJs').trigger( "click" );
 	$('#endCallByJs').trigger( "click" );
 
@@ -2441,7 +2443,7 @@ function makecallTransfer(username){
 
 
 function makecallTransfer2(username){
-	
+
 	var sip_urld = $('#sip_urld').val();
 	// $('#outcall_number').val(username);
 	username = "sip:"+username+"@"+sip_urld;
@@ -2454,11 +2456,11 @@ function makecallTransfer2(username){
 	if(address === '')
 		return;
 	var msg = { request: "transfer", uri: address };
-	
+
 	// console.log(msg);
 	sipcall.send({ message: msg });
 	$('#endCallByJs').trigger( "click" );
-	
+
 }
 
 var hookStatuss = '';
@@ -2473,7 +2475,7 @@ function hookStatus(status){
 		$('#status_indi_bar').attr("class", "status-indication-bar dnd-status");
 		$('#reconnect_janus').click();
 		//$('#load_pbx').click();
-	} else if(status=="Connecting.."){ 
+	} else if(status=="Connecting.."){
 		hookStatuss = status;
 		$('#status_indi_bar').attr("class", "status-indication-bar off-hook-status");
 	} else {
@@ -2536,10 +2538,10 @@ function doCallATT(ev) {
 	doVideo = $('#dovideo' + suffix).is(':checked');
 	Janus.log(prefix + "This is a SIP " + (doVideo ? "video" : "audio") + " call (dovideo=" + doVideo + ")");
 	actuallyDoCall(handle, $('#peer' + suffix).val(), doVideo);
-	
+
 
 	holdCall();
-	
+
 
 }
 

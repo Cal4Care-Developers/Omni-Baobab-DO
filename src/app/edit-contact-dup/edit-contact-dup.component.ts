@@ -250,10 +250,10 @@ export class EditContactDupComponent implements OnInit {
 		else {
 			this.user_type = 3;
 		}
-    if ($("body").hasClass("sidebar-mini")) {
-      $("body").removeClass("sidebar-mini");
-      $("body").addClass("sidebar-mini");
-    }
+    // if ($("body").hasClass("sidebar-mini")) {
+    //   $("body").removeClass("sidebar-mini");
+    //   $("body").addClass("sidebar-mini");
+    // }
     // else {
     //   $("body").addClass("sidebar-mini");
     // }

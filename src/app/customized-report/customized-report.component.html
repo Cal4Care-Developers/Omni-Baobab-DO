@@ -88,7 +88,7 @@
                                 <th>Phone inbound </th>
                                 <th>Phone outbound</th>
                                 <th>Whatsapp </th>
-                                <th>Email</th>
+                                <th>Tickets</th>
                                 <th>Facebook</th>
 
                             </tr>
@@ -102,7 +102,7 @@
                                 <td>{{this.customize}}</td>
                                 <td></td>
                                 <!-- <td>{{this.tot_office_wp}}</td> -->
-                                <td>{{ this.total_wp_msg}}</td>
+                                <td>{{this.tot_office_wp}}</td>
                                 <!-- <td></td> -->
                                 <td>{{this.total_tickets}}</td>
                                 <td>{{ this.total_fb_msg}}</td>
@@ -115,7 +115,8 @@
                                 <td>{{this.tot_out_office_time_wp}}</td>
 
                                 <td></td>
-                                <td>{{this.tot_office_wp}}</td>
+
+                                <td>{{ this.tot_out_office_time_fb}}</td>
                                 </tr>
 
                                 <tr *ngIf="show_table">
@@ -125,7 +126,7 @@
                                 <td>{{this.total_wp_msg}}</td>
                                 <!-- <td></td> -->
                                 <td>{{this.incoming_tickets}}</td>
-                                <td>{{this.incoming_tickets}}</td>
+                                <td>{{this.tot_office_fb}}</td>
                                 </tr>
 
                                 <tr *ngIf="show_table">
