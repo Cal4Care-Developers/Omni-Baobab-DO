@@ -388,6 +388,7 @@ changeAgentsdata(){
   let socketData = $('#mrVoipAData').val();
   let mData = JSON.parse(socketData);
   this.agentsQueData = mData[0].data;
+
 }
 
 loggedQueues(){

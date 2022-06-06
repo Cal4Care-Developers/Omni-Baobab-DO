@@ -72,6 +72,7 @@ export class EditContactDupComponent implements OnInit {
   websocket;
   email_id: string;
   type_appellant: any;
+  created_at:any;
   constructor(private serverService: ServerService, private router: Router, private route: ActivatedRoute, private sanitizer: DomSanitizer, public modalService: NgbModal) {
 
 
@@ -695,7 +696,7 @@ editConatcts(){
             'country_code' : response.result.data.country_code
           });
           this.contact_id = response.result.data.contact_id;
-
+//created_at=response.result.data.updated_at;
           $('#dup_departments').val(response.result.data.department).prop('selected', true);
           $('#dup_res_departments').val(response.result.data.res_dept).prop('selected', true);
           this.created_time = response.result.data.created_at;
@@ -867,6 +868,7 @@ if(this.admin_id == this.uadmin_id){
 
 
 }
+
 
 addNotes(id){
   this.router.navigate(['/activity'], { queryParams: { contact_id: id, phone : this.param1 } });

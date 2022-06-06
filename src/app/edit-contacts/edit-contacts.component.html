@@ -5,10 +5,10 @@
 				<h4><i class="fa fa-address-book" aria-hidden="true"></i>
 					Edit Contacts</h4>
           <div class="addBtn" >
-            <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+            <button type="button" class="btn btn-secondary" style="background-color:#30353e !important;" (click)="closeModal()">Close</button>
           </div>
 			</div>
-			</div>
+    </div>
 			<form [formGroup]="editContact" (ngSubmit)="updateContact(this.contact_id)" *ngIf="alladmin">
 
 			<!-- <div class="row">
@@ -59,7 +59,9 @@
 					<div class="card">
 						<div class="card-header ">
 							<h4>Add Contacts</h4>
-						</div>
+              <small><strong>Created date:{{ this.created_time }}</strong></small>&nbsp;&nbsp;
+              <small><strong>Modified date:{{ this.modified_time}}</strong></small>
+            </div>
 						<div class="card-body p-0">
 							<div class="form-panel">
 								<div class="row">
@@ -788,7 +790,7 @@
                 </div>
                 <div class="col-md-12">
                     <div class="buttons form-group">
-                        <input type="button" class="btn btn-secondary" (click)="toggleClass()" value="Close"
+                        <input type="button" class="btn btn-secondary" style="background-color:#30353e !important;" (click)="toggleClass()" value="Close"
                             type="button">
                         <input type="button" class="btn btn-primary" value="Update Wrapup"
                             (click)="addWrapupcode()">
