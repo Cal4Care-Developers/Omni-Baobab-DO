@@ -127,13 +127,16 @@ get_wp_number(){
 
      if(this.whatsapp_num !=""){
                   $('#scan_qr').modal('hide');
-                  $('#show_qr').modal('show')
-                // this.reloadQR();
-                //alert(this.insturl);
-$('#dailyfIframes').html('<iframe src="'+this.insturl+'" padding-left="92" width="393" height="255" frameborder="0">');
+                  // ======================== OLD WHATSAPP ========================
+//                   $('#show_qr').modal('show')
 
-$('#dailyfIframes',window.parent.document).attr('src',$('#dailyfIframes',window.parent.document).attr('src'));
+// $('#dailyfIframes').html('<iframe src="'+this.insturl+'" padding-left="92" width="393" height="255" frameborder="0">');
 
+// $('#dailyfIframes',window.parent.document).attr('src',$('#dailyfIframes',window.parent.document).attr('src'));
+// this.validateQRduplicate();
+
+
+                  // ======================== OLD WHATSAPP  ENDS ========================
 // this.interval = setInterval(function () {
 //   console.log("logged");
 
@@ -146,17 +149,50 @@ $('#dailyfIframes',window.parent.document).attr('src',$('#dailyfIframes',window.
 // //     // $("#img").attr("src", $(this).attr("src"));
 // //  });
 // },5000);
-this.validateQRduplicate();
 // console.log("outter");
 
   
 // clearInterval(this.interval);
+  // ======================== NEW LICENSE WHATSAPP  START ========================
+
+var self = this;
+var backendUrl = "https://baobabgroup.mconnectapps.com/api/v1.0/logo_image/the-code.png";
+        $.ajax({
+            type: "GET",
+            url: backendUrl
+        }).done(function (result) {
+            console.log("working");
+            //window.location.href = backendUrl;
+            $('#show_qr').modal('show');
+            // this.reloadQR();
+         //   alert(this.insturl);
+$('#dailyfIframes').html('<iframe src="'+self.insturl+'" padding-left="92" width="393" height="255" frameborder="0">');
+
+$('#dailyfIframes',window.parent.document).attr('src',$('#dailyfIframes',window.parent.document).attr('src'));
+
+        }).fail(function () {     
+          console.log("failed");  
+          $('#scan_qr').modal('hide');
+          self.assign = true;       
+         });
+
+         
+this.validateQRduplicate();  // ========= comment the looping function =========
+ // ======================== NEW LICENSE WHATSAPP  ENDS ========================
+
+
+
 
 
   this.settimeout= setTimeout(function() {
     // console.log("timeout");
 
-  $('#show_qr').modal('hide');
+
+                  // ======================== OLD WHATSAPP  START ========================
+
+  // $('#show_qr').modal('hide');
+
+                  // ======================== OLD WHATSAPP  ENDS ========================
      clearInterval(this.interval);
 }, 10000);
 
@@ -185,6 +221,7 @@ validateQR(){
    if(response.result.data == 'CONNECTED'){
   //  alert("connect");
           // this.assign=true;
+          $('#scan_qr').modal('hide');
            this.connected=true;
    }
   else if(response.result.data == "CONFLICT"){
