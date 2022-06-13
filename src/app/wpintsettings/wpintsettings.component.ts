@@ -156,7 +156,7 @@ get_wp_number(){
   // ======================== NEW LICENSE WHATSAPP  START ========================
 
 var self = this;
-var backendUrl = "https://baobabgroup.mconnectapps.com/api/v1.0/logo_image/the-code.png";
+var backendUrl = "https://baobabgroup.mconnectapps.com/api/v1.0/logo_image/the-code-senagal.png";
         $.ajax({
             type: "GET",
             url: backendUrl
@@ -166,9 +166,9 @@ var backendUrl = "https://baobabgroup.mconnectapps.com/api/v1.0/logo_image/the-c
             $('#show_qr').modal('show');
             // this.reloadQR();
          //   alert(this.insturl);
-$('#dailyfIframes').html('<iframe src="'+self.insturl+'" padding-left="92" width="393" height="255" frameborder="0">');
+$('#dailyfIframes').html('<iframe src="'+backendUrl+'" padding-left="92" width="393" height="255" frameborder="0">');
 
-$('#dailyfIframes',window.parent.document).attr('src',$('#dailyfIframes',window.parent.document).attr('src'));
+// $('#dailyfIframes',window.parent.document).attr('src',$('#dailyfIframes',window.parent.document).attr('src'));
 
         }).fail(function () {     
           console.log("failed");  
