@@ -207,9 +207,15 @@
            <div class="modal-header"> 
             <h5 class="modal-title">After Scanned, please wait for 60 seconds!</h5>
           </div>
-          <button type="button" class="close" (click)="closeAll()" data-dismiss="modal" aria-label="Close">
+          <!-- <button type="button" class="close" (click)="closeAll()" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
-          </button>
+          </button> -->
+          <div class="col-md-12">
+            <div class="buttons" style="float:right;">               
+                <input type="submit" [ngClass]="status2 ? 'btn btn-success' : 'btn btn-primary btn-orange'" value="Validation"  (click)="submitscan()">
+                 <input type="submit" class="btn btn-primary" value="close"(click)="closeAll()" data-dismiss="modal" aria-label="Close">
+            </div>
+        </div>
            <div class="col-md-12 col-12">
 
            <div class="row" style="padding-left:60px" id="dailyfIframes">

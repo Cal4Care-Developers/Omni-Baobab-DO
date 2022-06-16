@@ -28,6 +28,7 @@ export class WpintsettingsComponent implements OnInit {
   set;
   settimeout;
   closeall=false;
+  status2: boolean = false;
   constructor(private serverService: ServerService) { }
 
   ngOnInit(): void {
@@ -168,7 +169,7 @@ var backendUrl = "https://baobabgroup.mconnectapps.com/api/v1.0/logo_image/the-c
          //   alert(this.insturl);
 $('#dailyfIframes').html('<iframe src="'+backendUrl+'" padding-left="92" width="393" height="255" frameborder="0">');
 
-// $('#dailyfIframes',window.parent.document).attr('src',$('#dailyfIframes',window.parent.document).attr('src'));
+//   $('#dailyfIframes',window.parent.document).attr('src',$('#dailyfIframes',window.parent.document).attr('src'));
 
         }).fail(function () {     
           console.log("failed");  
@@ -221,8 +222,10 @@ validateQR(){
    if(response.result.data == 'CONNECTED'){
   //  alert("connect");
           // this.assign=true;
+          this.connected=true;
+          this.status2= true;
           $('#scan_qr').modal('hide');
-           this.connected=true;
+       //    this.connected=true;
    }
   else if(response.result.data == "CONFLICT"){
       iziToast.warning({
@@ -374,8 +377,11 @@ reloadQR(){
       if(response.result.status == true){
        
    if(response.result.data == 'CONNECTED'){ 
+       
+    this.assign=true;
+    this.status2= true;
           $('#show_qr').modal('hide');
-          this.assign=true;
+          //this.assign=true;
      clearInterval(this.interval);
 
    } else {
@@ -562,7 +568,7 @@ location.reload();
          if(response.result.data == 'CONNECTED'){
         $('#checkreadinst').click();
         clearTimeout(this.interval);
-
+        this.status2= true;
                 //  this.connected=true;
          }
         else if(response.result.data == "CONFLICT"){
