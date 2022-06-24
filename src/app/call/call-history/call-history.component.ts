@@ -315,7 +315,7 @@ Swal.close();
 				// document.location.href = 'https://uatassaabloyccapi.mconnectapps.com/api/storage/contact/download.php?res='+arrStr;
 
 
-				var url = 'https://baobabgroup.mconnectapps.com/api/storage/contact/aux_code_report.php';
+				var url = 'https://baobabbfaso.mconnectapps.com/api/storage/contact/aux_code_report.php';
 				var form = $('<form target="_blank" action="' + url + '" method="post">' +
 					'<input type="text" name="res" value="' + arrStr + '" />' +
 					'</form>');

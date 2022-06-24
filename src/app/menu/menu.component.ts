@@ -254,7 +254,7 @@ console.log(this.socketData);
             iziToast.show({
               theme: 'dark',
               title: 'Hi',
-              image: 'https://baobabgroup.mconnectapps.com/api/v1.0/logo_image/omni-channels-logo.jpg',
+              image: 'https://baobabbfaso.mconnectapps.com/api/v1.0/logo_image/omni-channels-logo.jpg',
               imageWidth: 100,
               message: 'New Chat Message',
               position: 'topRight', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
@@ -321,7 +321,7 @@ console.log(this.socketData);
                     iziToast.show({
                       theme: 'dark',
                       title: this.socketData.message_info.customer_name,
-                      image: 'https://baobabgroup.mconnectapps.com/api/v1.0/logo_image/omni-channels-logo.jpg',
+                      image: 'https://baobabbfaso.mconnectapps.com/api/v1.0/logo_image/omni-channels-logo.jpg',
                       imageWidth: 100,
                       message:'Existing Message',
                       position: 'topRight', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
@@ -371,7 +371,7 @@ console.log(this.socketData);
                 iziToast.show({
                   theme: 'dark',
                   title: 'Hi',
-                  image: 'https://baobabgroup.mconnectapps.com/api/v1.0/logo_image/omni-channels-logo.jpg',
+                  image: 'https://baobabbfaso.mconnectapps.com/api/v1.0/logo_image/omni-channels-logo.jpg',
                   imageWidth: 100,
                   message: 'Chat Was Closed By Customer',
                   position: 'topRight', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
@@ -1129,9 +1129,9 @@ showVideofialers(){
 
   notificationscall() {
     this.reqPermission = false;
-   var socket = io.connect('wss://myscoket.mconnectapps.com:4032'); //Baobab.mconnectapps.com Senegal(API baobabmali.mconnectapps.com)
+   //var socket = io.connect('wss://myscoket.mconnectapps.com:4032'); //Baobab.mconnectapps.com Senegal(API baobabmali.mconnectapps.com)
    // var socket = io.connect('wss://myscoket.mconnectapps.com:4052'); //Baobabgroup ML Notification wss://myscoket.mconnectapps.com:4052
-  //var socket = io.connect('wss://myscoket.mconnectapps.com:4053'); //Baobabgroup BF Notification wss://myscoket.mconnectapps.com:4053
+  var socket = io.connect('wss://myscoket.mconnectapps.com:4053'); //Baobabgroup BF Notification wss://myscoket.mconnectapps.com:4053
   // var socket = io.connect('wss://myscoket.mconnectapps.com:4054'); //Baobabgroup IC Notification wss://myscoket.mconnectapps.com:4054
     var self = this;
     socket.on('connect', function () {

@@ -65,7 +65,7 @@ has_round_robin = false;
     this.user_id = localStorage.getItem('admin_id');
     this.admin_id_enc=btoa(this.admin_id);
     // this.customHtml = 'https://'+window.location.hostname+'/webchat/?aid='+btoa(this.admin_id);
-    this.customHtml = 'https://baobabgroup.mconnectapps.com/webchat/?aid='+this.admin_id_enc;
+    this.customHtml = 'https://baobabbfaso.mconnectapps.com/webchat/?aid='+this.admin_id_enc;
 
     this.listConsentFormms();
     this.get_timezone();
@@ -104,7 +104,7 @@ listChatWidget(){
 
 
       // this.customHtml = 'https://'+window.location.hostname+'/webchat/?aid='+btoa(this.admin_id)+'&wid='+btoa(response.result.data[0].widget_name);
-      this.customHtml = 'https://baobabgroup.mconnectapps.com/webchat/?aid='+this.admin_id_enc+'&wid='+btoa(response.result.data[0].widget_name);
+      this.customHtml = 'https://baobabbfaso.mconnectapps.com/webchat/?aid='+this.admin_id_enc+'&wid='+btoa(response.result.data[0].widget_name);
        this.chatWigets =  response.result.data;
        this.currWidgetName = response.result.data[0].widget_name;
        $('#widget_edit_name').val(response.result.data[0].widget_name);
@@ -343,7 +343,7 @@ listChatWidget(){
       if(response.status==true){
 
       // this.customHtml = 'https://'+window.location.hostname+'/webchat/?aid='+btoa(this.admin_id)+'&wid='+btoa(response.result.data.widget_name);
-      this.customHtml = 'https://baobabgroup.mconnectapps.com/webchat/?aid='+this.admin_id_enc+'&wid='+btoa(response.result.data.widget_name);
+      this.customHtml = 'https://baobabbfaso.mconnectapps.com/webchat/?aid='+this.admin_id_enc+'&wid='+btoa(response.result.data.widget_name);
        $('#widget_edit_name').val(response.result.data.widget_name);
        $('#widgetColor').val(response.result.data.color);
        $('#behaviour').val(response.result.data.behaviour);
@@ -601,7 +601,7 @@ listChatWidget(){
       console.log(formData);
 
     $.ajax({
-      url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",
+      url:"https://baobabbfaso.mconnectapps.com/api/v1.0/index_new.php",
       type : 'POST',
       data : formData,
       processData: false,  // tell jQuery not to process the data

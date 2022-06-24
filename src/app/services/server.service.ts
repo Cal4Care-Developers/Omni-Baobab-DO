@@ -47,9 +47,9 @@ export class ServerService {
 
      this.admin_id= localStorage.getItem('admin_id');
     //   if(this.admin_id == "64")
-    //         return this.http.post("https://baobabgroup.mconnectapps.com/api/v1.0/index.php", postData,httpOptions);
+    //         return this.http.post("https://baobabbfaso.mconnectapps.com/api/v1.0/index.php", postData,httpOptions);
     //   else
-            return this.http.post("https://baobabgroup.mconnectapps.com/api/v1.0/index.php", postData,httpOptions);
+            return this.http.post("https://baobabbfaso.mconnectapps.com/api/v1.0/index.php", postData,httpOptions);
         // return this.http.post("https://" + window.location.hostname + "/api/v1.0/index.php", postData,httpOptions);
 
 
@@ -60,7 +60,7 @@ export class ServerService {
             'Content-Type':  'application/json'
           })
         };
-        return this.http.post("https://baobabgroup.mconnectapps.com/api/v1.0/index.php", postData,httpOptions);
+        return this.http.post("https://baobabbfaso.mconnectapps.com/api/v1.0/index.php", postData,httpOptions);
        }
        MDy_Contacts_API(postData: any[]) {
         const httpOptions = {

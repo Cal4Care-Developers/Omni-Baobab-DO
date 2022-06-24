@@ -26,7 +26,7 @@ const preview = document.getElementById("audio-playback");
 //    fd.append('user_id', user_id);
 //    fd.append('chat_id', chat_id);
 //   // where `.ext` matches file `MIME` type
-//   return fetch("https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php", {method:"POST", body:fd})
+//   return fetch("https://baobabbfaso.mconnectapps.com/api/v1.0/index_new.php", {method:"POST", body:fd})
 // })
 // .then(response => response.ok)
 // .then(res => console.log(res))
@@ -36,7 +36,7 @@ const preview = document.getElementById("audio-playback");
 //     const formData = new FormData();
 //    alert('123')
 //     formData.append('audiofile',$('#audio-playback').attr("src"));
-//     return fetch('https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php', {
+//     return fetch('https://baobabbfaso.mconnectapps.com/api/v1.0/index_new.php', {
 //        method: 'POST',
 //        body: formData
 //     });

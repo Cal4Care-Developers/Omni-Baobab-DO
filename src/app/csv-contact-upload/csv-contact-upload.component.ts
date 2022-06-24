@@ -31,9 +31,9 @@ export class CsvContactUploadComponent implements OnInit {
     this.param1 = atob(this.param1);
     var encData = user_id+'forpredictiveDialerContacts';
     if(this.param1 ==  encData){
-      this.dummyCsv = 'https://baobabgroup.mconnectapps.com/api/excel_pre.csv';
+      this.dummyCsv = 'https://baobabbfaso.mconnectapps.com/api/excel_pre.csv';
     } else {
-      this.dummyCsv = 'https://baobabgroup.mconnectapps.com/api/excel.csv';
+      this.dummyCsv = 'https://baobabbfaso.mconnectapps.com/api/excel.csv';
     }
 
   }
@@ -78,7 +78,7 @@ upload(){
     }
 
   $.ajax({
-    url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",
+    url:"https://baobabbfaso.mconnectapps.com/api/v1.0/index_new.php",
     type : 'POST',
     data : formData,
     processData: false,  // tell jQuery not to process the data

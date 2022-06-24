@@ -146,7 +146,7 @@ chatautoScroll(){
 
 
 	if( this.profile_image == null || this.profile_image == 'null' || this.profile_image == 'undefined'){
-	  this.profile_image  = 'https://baobabgroup.mconnectapps.com/api/v1.0/profile_image/user.jpg';
+	  this.profile_image  = 'https://baobabbfaso.mconnectapps.com/api/v1.0/profile_image/user.jpg';
 	} else {
 	  this.profile_image = localStorage.getItem('profile_image');
 	}

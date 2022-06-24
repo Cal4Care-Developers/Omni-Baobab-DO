@@ -53,7 +53,7 @@ export class CustomizedReportComponent implements OnInit {
     this.not_found = true;
   }
   getReports(arrStr){
-    var url = 'https://baobabgroup.mconnectapps.com/api/storage/contact/customized_report.php';
+    var url = 'https://baobabbfaso.mconnectapps.com/api/storage/contact/customized_report.php';
     var form = $('<form target="_blank" action="' + url + '" method="post">' +
       '<input type="text" name="res" value="' + arrStr + '" />' +
       '</form>');

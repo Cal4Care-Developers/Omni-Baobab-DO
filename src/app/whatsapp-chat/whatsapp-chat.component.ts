@@ -388,7 +388,7 @@ addWhatsappMedia(){
     console.log(formData);
 
   $.ajax({
-    url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",
+    url:"https://baobabbfaso.mconnectapps.com/api/v1.0/index_new.php",
     type : 'POST',
     data : formData,
     processData: false,  // tell jQuery not to process the data

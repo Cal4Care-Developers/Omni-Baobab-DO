@@ -62,7 +62,7 @@ $fields = array('operation' =>'wpchat','moduleType' => 'wpchat','api_type' => 'w
 
 
 $post = http_build_query($fields);
-$url = 'https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php';
+$url = 'https://baobabbfaso.mconnectapps.com/api/v1.0/index_new.php';
 
 $ch = curl_init();
 

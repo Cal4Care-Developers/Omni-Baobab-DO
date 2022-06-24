@@ -820,8 +820,8 @@ addWhatsappMedia(){
     });
 
   $.ajax({
-      //  url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",
-    url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",
+      //  url:"https://baobabbfaso.mconnectapps.com/api/v1.0/index_new.php",
+    url:"https://baobabbfaso.mconnectapps.com/api/v1.0/index_new.php",
     type : 'POST',
     data : formData,
     processData: false,  // tell jQuery not to process the data
@@ -1438,8 +1438,8 @@ addWhatsappVoice(){
      fd.append('user_id', user_id);
      fd.append('chat_id', chat_id);
     // where `.ext` matches file `MIME` type
-    var responsenew= fetch("https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php", {method:"POST", body:fd})
-//return fetch("https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php", {method:"POST", body:fd})
+    var responsenew= fetch("https://baobabbfaso.mconnectapps.com/api/v1.0/index_new.php", {method:"POST", body:fd})
+//return fetch("https://baobabbfaso.mconnectapps.com/api/v1.0/index_new.php", {method:"POST", body:fd})
   console.log(responsenew)
   return responsenew
 
@@ -1504,8 +1504,8 @@ addWhatsappVoice(){
 //     });
 
 //  $.ajax({
-//       // url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",
-//     url:"https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",
+//       // url:"https://baobabbfaso.mconnectapps.com/api/v1.0/index_new.php",
+//     url:"https://baobabbfaso.mconnectapps.com/api/v1.0/index_new.php",
 //     type : 'POST',
 //     data : formData,
 //     processData: false,  // tell jQuery not to process the data

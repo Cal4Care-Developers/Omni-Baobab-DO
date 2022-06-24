@@ -295,8 +295,8 @@ export class ChatComponent implements OnInit {
 		// form.append("up_files", fileInput.files[0], "/C:/Users/mdras/Desktop/matrix-failed.png");
 
 		var settings = {
-			"url": "https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",
-			// "url": "https://baobabgroup.mconnectapps.com/api/v1.0/index_new.php",
+			"url": "https://baobabbfaso.mconnectapps.com/api/v1.0/index_new.php",
+			// "url": "https://baobabbfaso.mconnectapps.com/api/v1.0/index_new.php",
 			"method": "POST",
 			"timeout": 0,
 			"headers": {

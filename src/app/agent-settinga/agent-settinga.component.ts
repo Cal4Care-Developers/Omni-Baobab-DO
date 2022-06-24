@@ -2027,8 +2027,8 @@ genInvoice(id,email){
          else  {
           var arrStr = encodeURIComponent(JSON.stringify(response));
 
-          // document.location.href = 'https://baobabgroup.mconnectapps.com/api/storage/contact/download.php?res='+arrStr;
-          var url = 'https://baobabgroup.mconnectapps.com/api/storage/invoice/invoice.php';
+          // document.location.href = 'https://baobabbfaso.mconnectapps.com/api/storage/contact/download.php?res='+arrStr;
+          var url = 'https://baobabbfaso.mconnectapps.com/api/storage/invoice/invoice.php';
           var form = $('<form action="' + url + '" method="post">' +
             '<input type="text" name="res" value="' + arrStr + '" />' +
             '</form>');

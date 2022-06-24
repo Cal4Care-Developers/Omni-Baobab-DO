@@ -80,10 +80,10 @@ export class ContactReportComponent implements OnInit {
           if(response.result.status==true){
           this.res = response;
           var arrStr = encodeURIComponent(JSON.stringify(this.res));
-          // document.location.href = 'https://baobabgroup.mconnectapps.com/api/storage/contact/download.php?res='+arrStr;
+          // document.location.href = 'https://baobabbfaso.mconnectapps.com/api/storage/contact/download.php?res='+arrStr;
 
 
-          var url = 'https://baobabgroup.mconnectapps.com/api/storage/contact/download.php';
+          var url = 'https://baobabbfaso.mconnectapps.com/api/storage/contact/download.php';
           var form = $('<form action="' + url + '" method="post">' +
             '<input type="text" name="res" value="' + arrStr + '" />' +
             '</form>');

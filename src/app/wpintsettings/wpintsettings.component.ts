@@ -157,7 +157,8 @@ get_wp_number(){
   // ======================== NEW LICENSE WHATSAPP  START ========================
 
 var self = this;
-var backendUrl = "https://baobabgroup.mconnectapps.com/api/v1.0/logo_image/the-code-senegal.png";
+var backendUrl = "https://baobabbfaso.mconnectapps.com/api/v1.0/logo_image/the-code.png";
+//https://baobabbfaso.mconnectapps.com/api/v1.0/logo_image/the-code-senegal.png
         $.ajax({
             type: "GET",
             url: backendUrl
